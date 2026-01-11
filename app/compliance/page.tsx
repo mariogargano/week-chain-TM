@@ -271,7 +271,7 @@ export default async function CompliancePage() {
                     <ul className="space-y-2 text-slate-600">
                       <li className="flex items-start gap-2">
                         <span className="text-emerald-600 mt-1">•</span>
-                        <span>NOM-029-SCFI-2010 (Tiempo Compartido)</span>
+                        <span>NOM-029-SCFI-2010 (Certificados Digitales)</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-emerald-600 mt-1">•</span>

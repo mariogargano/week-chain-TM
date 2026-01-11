@@ -131,7 +131,7 @@ La plataforma WeekChain está completamente desarrollada, legalmente protegida y
 
 ## 2. CUMPLIMIENTO LEGAL
 
-### NOM-029-SE-2021 (Tiempo Compartido)
+### NOM-029-SE-2021 (Certificados Digitales)
 - ✅ Periodo de reflexión de 120 horas implementado
 - ✅ Función SQL `can_refund_120h()` verifica ventana
 - ✅ Trigger automático aprueba cancelaciones dentro del periodo

@@ -12,7 +12,7 @@
 |---------|-------------|
 | **Nombre** | WEEK-CHAIN |
 | **Modelo de Negocio** | Marketplace digital de tiempo compartido vacacional con certificación NOM-151 |
-| **Regulación Principal** | NOM-029-SCFI-2010 (Tiempo Compartido), NOM-151-SCFI-2016 (Certificación Digital) |
+| **Regulación Principal** | NOM-029-SCFI-2010 (Certificados Digitales), NOM-151-SCFI-2016 (Certificación Digital) |
 | **Producto** | Semanas vacacionales (1/52 por año) con contrato de cesión de uso por 15 años |
 | **Stack Técnico** | Next.js 14, Supabase PostgreSQL, Stripe/Conekta/PayPal |
 | **Certificación** | Legalario (NOM-151 autorizado) |

@@ -405,7 +405,7 @@ export default function BrokerTermsPage() {
                 <ul className="space-y-2 text-sm text-slate-600">
                   <li>• Código de Comercio</li>
                   <li>• Ley Federal de Protección al Consumidor</li>
-                  <li>• NOM-029-SCFI-2010 (Tiempo Compartido)</li>
+                  <li>• NOM-029-SCFI-2010 (Certificados Digitales)</li>
                   <li>• Ley Federal de Protección de Datos Personales</li>
                 </ul>
                 <p className="text-slate-600 mt-4">

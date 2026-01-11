@@ -49,7 +49,7 @@ export default function ContratoModeloClient() {
             <CardTitle className="text-2xl">
               CONTRATO DE DERECHO DE USO TEMPORAL
               <br />
-              <span className="text-lg font-normal">(Tiempo Compartido)</span>
+              <span className="text-lg font-normal">(Certificados Digitales)</span>
             </CardTitle>
             <CardDescription>
               Conforme a la NOM-029-SCFI-2010 y la Ley Federal de Protección al Consumidor

@@ -322,7 +322,7 @@ if (existing) {
 
 #### ✅ Cumplimiento Completo
 
-**1. NOM-029-SE-2021 (Tiempo Compartido)**
+**1. NOM-029-SE-2021 (Certificados Digitales)**
 
 **Verificación:**
 - ✅ Periodo de reflexión 120h implementado

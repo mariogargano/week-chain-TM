@@ -539,7 +539,7 @@ export default function ValuationPage() {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
                   <div>
                     <p className="font-medium">Ley Federal de Protección al Consumidor</p>
-                    <p className="text-sm text-slate-600">Art. 65-65 BIS (Tiempo Compartido)</p>
+                    <p className="text-sm text-slate-600">Art. 65-65 BIS (Certificados Digitales)</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">

@@ -365,7 +365,7 @@ const nom151Hash = crypto
 
 **Estado:** ✅ COMPLIANT - Hash SHA-256 verificable
 
-#### NOM-029-SE-2021 (Tiempo Compartido)
+#### NOM-029-SE-2021 (Certificados Digitales)
 ```typescript
 // En términos:
 - Periodo de reflexión: 5 días hábiles
@@ -652,7 +652,7 @@ const auditTermsInteraction = async (action: string) => {
 
 ### Cumplimiento Legal
 - ✅ NOM-151-SCFI-2016 (Documentos Digitales)
-- ✅ NOM-029-SE-2021 (Tiempo Compartido)
+- ✅ NOM-029-SE-2021 (Certificados Digitales)
 - ✅ LFPDPPP (Protección de Datos)
 - ✅ PCI-DSS (Pagos con tarjeta)
 - ✅ AML/KYC (Anti-lavado)

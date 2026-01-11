@@ -202,7 +202,7 @@ export default function DPAPage() {
                   <ul className="text-sm text-gray-600 space-y-2">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                      Gestión de contratos de derecho de uso temporal (tiempo compartido)
+                      Gestión de contratos de derecho de uso temporal (Certificados Digitales)
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />

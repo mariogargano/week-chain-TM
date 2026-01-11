@@ -311,7 +311,7 @@ Todas las relaciones definidas
 
 ## 7. ⚖️ CUMPLIMIENTO LEGAL
 
-### ✅ NOM-029-SE-2021 (Tiempo Compartido)
+### ✅ NOM-029-SE-2021 (Certificados Digitales)
 ```
 ✅ Ventana de reembolso 120 horas
 ✅ Función SQL: can_refund_120h()
