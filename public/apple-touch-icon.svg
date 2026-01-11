@@ -1,0 +1,19 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Updated gradient to match official logo.png colors (soft pastel) -->
+    <linearGradient id="weekchainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8b4c4"/>
+      <stop offset="50%" style="stop-color:#d4c4e8"/>
+      <stop offset="100%" style="stop-color:#b4e4e8"/>
+    </linearGradient>
+    <linearGradient id="borderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c8a8d4"/>
+      <stop offset="100%" style="stop-color:#a8d4d8"/>
+    </linearGradient>
+  </defs>
+  <!-- Changed to circle to match logo -->
+  <circle cx="90" cy="90" r="87" fill="url(#weekchainGradient)"/>
+  <circle cx="90" cy="90" r="87" fill="none" stroke="url(#borderGradient)" stroke-width="3"/>
+  <!-- Simplified W letter for better visibility -->
+  <text x="90" y="120" font-family="Arial, sans-serif" font-size="100" font-weight="bold" fill="white" text-anchor="middle">W</text>
+</svg>
