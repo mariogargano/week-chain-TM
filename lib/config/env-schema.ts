@@ -35,12 +35,12 @@ const envSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string().min(1),
   NEXT_PUBLIC_GOOGLE_CLIENT_ID: z.string().min(1),
 
-  // Legalario (NOM-151 Certification)
-  LEGALARIO_API_KEY: z.string().min(1),
-  LEGALARIO_WEBHOOK_SECRET: z.string().min(1),
+  // Legalario (NOM-151 Certification) - OPTIONAL
+  LEGALARIO_API_KEY: z.string().min(1).optional(),
+  LEGALARIO_WEBHOOK_SECRET: z.string().min(1).optional(),
   LEGALARIO_API_URL: z.string().url().default("https://api.legalario.com"),
 
-  // EasyLex (NOM-151 PSC Provider)
+  // EasyLex (NOM-151 PSC Provider) - PRIMARY
   EASYLEX_API_KEY: z.string().min(1).optional(),
   EASYLEX_WEBHOOK_SECRET: z.string().min(1).optional(),
   EASYLEX_API_URL: z.string().url().default("https://sandboxapi.easylex.com"),
@@ -49,6 +49,10 @@ const envSchema = z.object({
 
   // Redirect URL for dev
   NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL: z.string().url().optional(),
+
+  // Inngest env vars that were being referenced
+  INNGEST_SIGNING_KEY: z.string().min(1).optional(),
+  INNGEST_EVENT_KEY: z.string().min(1).optional(),
 })
 
 export type EnvSchema = z.infer<typeof envSchema>
