@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import {
@@ -7,17 +7,12 @@ import {
   ArrowRight,
   AlertTriangle,
   CheckCircle2,
-  Building2,
-  User,
   Shield,
   FileText,
   Globe,
   CreditCard,
   Smartphone,
   QrCode,
-  Crown,
-  Gift,
-  Calendar,
   CheckCircle,
 } from "lucide-react"
 import type { Metadata } from "next"
@@ -26,7 +21,7 @@ import { BrokerDashboardPreview } from "@/components/broker-dashboard-preview"
 export const metadata: Metadata = {
   title: "Programa de Intermediación | WEEK-CHAIN™",
   description:
-    "Únete al programa de intermediación WEEK-CHAIN™. Obtén hasta 6% de honorarios por cada venta efectiva de servicios vacacionales. Registro disponible en todos los países.",
+    "Únete al programa de intermediación WEEK-CHAIN™. Obtén 4% de honorarios por cada venta efectiva de servicios vacacionales. Registro disponible en todos los países.",
 }
 
 export default function BrokerProgramaPage() {
@@ -50,14 +45,14 @@ export default function BrokerProgramaPage() {
               </Badge>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 tracking-tight">
-              Obtén hasta <span className="text-[#FF9AA2]">6%</span> de Honorarios
+              Obtén <span className="text-[#FF9AA2]">4%</span> de Honorarios
               <br />
               por Cada Venta Efectiva
             </h1>
             <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Únete al programa de intermediación de WEEK-CHAIN™ y obtén honorarios por facilitar la contratación de
-              servicios de tiempo compartido vacacional. Puedes registrarte como persona física o empresa desde
-              cualquier país.
+              Únete al programa de intermediación de WEEK-CHAIN™ y obtén 4% de honorarios por cada referido directo que
+              compre un certificado vacacional. Sistema simple y transparente sin niveles. Puedes registrarte como
+              persona física o empresa desde cualquier país.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -239,9 +234,7 @@ export default function BrokerProgramaPage() {
       </section>
 
       {/* Tipos de Registro */}
-      <section className="px-4 py-16 md:py-20">
-        
-      </section>
+      <section className="px-4 py-16 md:py-20"></section>
 
       {/* Sistema de Honorarios */}
       <section className="px-4 py-16 md:py-20 bg-gradient-to-b from-white to-slate-50">
@@ -249,259 +242,75 @@ export default function BrokerProgramaPage() {
           <div className="text-center mb-12">
             <Badge className="mb-4 bg-slate-100 text-slate-700 border-slate-200">Sistema de Honorarios</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              Honorarios por Intermediación Comercial
+              Comisión Flat sobre Referidos Directos
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Recibe honorarios por cada venta efectiva que facilites. Sistema escalonado y transparente basado
-              exclusivamente en tu desempeño comercial.
+              Recibe 4% de honorarios por cada venta efectiva de tus referidos directos. Sistema simple y transparente,
+              sin niveles ni complicaciones.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
-            {/* Entry Tier */}
-            <div className="relative mx-auto w-full" style={{ maxWidth: "340px" }}>
-              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 shadow-2xl h-full">
+          <div className="flex justify-center mb-10">
+            <div className="relative w-full max-w-md">
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 shadow-2xl">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-slate-400 to-transparent rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
-                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-slate-500 to-transparent rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2" />
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#FF9AA2] to-transparent rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
+                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-[#C7CEEA] to-transparent rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2" />
                 </div>
 
                 {/* Header */}
-                <div className="relative flex items-center justify-between mb-4">
+                <div className="relative flex items-center justify-between mb-6">
                   <div>
-                    <div className="text-xl font-bold text-white tracking-tight">
-                      WEEK-CHAIN<span className="text-slate-400 text-xs align-super">™</span>
+                    <div className="text-2xl font-bold text-white tracking-tight">
+                      WEEK-CHAIN<span className="text-[#FF9AA2] text-xs align-super">™</span>
                     </div>
-                    <div className="text-xs text-slate-400 mt-0.5">Sistema Intermediarios</div>
+                    <div className="text-sm text-slate-400 mt-1">Sistema Intermediarios</div>
                   </div>
-                  <Badge className="bg-slate-700 text-slate-300 border-slate-600">ENTRY</Badge>
+                  <Badge className="bg-gradient-to-r from-[#FF9AA2] to-[#C7CEEA] text-white border-none">FLAT 4%</Badge>
                 </div>
 
                 {/* Percentage */}
-                <div className="relative text-center mb-4">
-                  <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-slate-700 to-slate-800 border-2 border-slate-600 flex items-center justify-center shadow-lg">
-                    <span className="text-4xl font-bold text-white">4%</span>
+                <div className="relative text-center mb-6">
+                  <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-[#FF9AA2]/30 to-[#C7CEEA]/20 border-4 border-[#FF9AA2] flex items-center justify-center shadow-lg">
+                    <span className="text-5xl font-bold text-white">4%</span>
                   </div>
-                  <p className="text-[#B5EAD7] text-[10px] mt-2 font-medium">IVA incluido</p>
+                  <p className="text-[#B5EAD7] text-sm mt-3 font-medium">Sobre cada venta de referido directo</p>
                 </div>
 
-                {/* Costo Gratis */}
-                <div className="relative mb-4">
-                  <div className="inline-flex w-full justify-center">
-                    <div className="px-6 py-2 bg-green-500/20 border border-green-500/40 rounded-lg">
-                      <p className="text-green-400 font-bold text-sm tracking-wider">COSTO GRATIS</p>
+                {/* Features */}
+                <div className="space-y-4">
+                  <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-300 text-sm">Comisión</span>
+                      <span className="text-white font-bold text-xl">4% Flat</span>
                     </div>
                   </div>
-                </div>
 
-                {/* Weeks Range */}
-                <div className="relative bg-slate-800/50 rounded-lg p-3 mb-3 border border-slate-700">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400 text-sm">Rango</span>
-                    <span className="text-white font-bold text-lg">
-                      0 / 23 <span className="text-sm font-normal text-slate-400">WEEK</span>
-                    </span>
-                  </div>
-                </div>
-
-                {/* Badge Type */}
-                <div className="relative bg-slate-800/50 rounded-lg p-3 mb-3 border border-slate-700">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400 text-sm">Badge</span>
-                    <div className="flex items-center gap-2">
-                      <Award className="h-4 w-4 text-slate-400" />
-                      <span className="text-white font-semibold">STANDARD</span>
+                  <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-300 text-sm">Costo de Registro</span>
+                      <span className="text-green-400 font-bold text-lg">GRATIS</span>
                     </div>
                   </div>
-                </div>
 
-                {/* Benefit Extra */}
-                <div className="relative bg-slate-800/50 rounded-lg p-3 border border-slate-700">
-                  <div className="text-center">
-                    <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Beneficio Extra</p>
-                    <p className="text-slate-400 font-semibold">NO</p>
-                  </div>
-                </div>
-
-                {/* Bottom Decoration */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600" />
-              </div>
-            </div>
-
-            {/* Silver Tier */}
-            <div className="relative mx-auto w-full" style={{ maxWidth: "340px" }}>
-              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 shadow-2xl h-full border border-[#C0C0C0]/30">
-                {/* Background Pattern */}
-                <div className="absolute inset-0 opacity-15">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#C0C0C0] to-transparent rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
-                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-[#E8E8E8] to-transparent rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2" />
-                </div>
-
-                {/* Popular Tag */}
-                <div className="absolute -top-0 -right-0">
-                  <div className="bg-gradient-to-r from-[#C0C0C0] to-[#E8E8E8] text-slate-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-2xl">
-                    POPULAR
-                  </div>
-                </div>
-
-                {/* Header */}
-                <div className="relative flex items-center justify-between mb-4">
-                  <div>
-                    <div className="text-xl font-bold text-white tracking-tight">
-                      WEEK-CHAIN<span className="text-[#C0C0C0] text-xs align-super">™</span>
-                    </div>
-                    <div className="text-xs text-slate-400 mt-0.5">Sistema Intermediarios</div>
-                  </div>
-                  <Badge className="bg-gradient-to-r from-[#C0C0C0] to-[#E8E8E8] text-slate-900 border-[#C0C0C0]">
-                    SILVER
-                  </Badge>
-                </div>
-
-                {/* Percentage */}
-                <div className="relative text-center mb-4">
-                  <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-[#C0C0C0]/30 to-[#E8E8E8]/20 border-2 border-[#C0C0C0] flex items-center justify-center shadow-lg">
-                    <span className="text-4xl font-bold text-white">5%</span>
-                  </div>
-                  <p className="text-[#B5EAD7] text-[10px] mt-2 font-medium">IVA incluido</p>
-                </div>
-
-                {/* Costo Gratis */}
-                <div className="relative mb-4">
-                  <div className="inline-flex w-full justify-center">
-                    <div className="px-6 py-2 bg-green-500/20 border border-green-500/40 rounded-lg">
-                      <p className="text-green-400 font-bold text-sm tracking-wider">COSTO GRATIS</p>
+                  <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-300 text-sm">Niveles</span>
+                      <span className="text-white font-semibold">Solo Directos</span>
                     </div>
                   </div>
-                </div>
 
-                {/* Weeks Range */}
-                <div className="relative bg-slate-800/50 rounded-lg p-3 mb-3 border border-[#C0C0C0]/30">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400 text-sm">Rango</span>
-                    <span className="text-white font-bold text-lg">
-                      24 / 47 <span className="text-sm font-normal text-slate-400">WEEK</span>
-                    </span>
-                  </div>
-                </div>
-
-                {/* Badge Type */}
-                <div className="relative bg-slate-800/50 rounded-lg p-3 mb-3 border border-[#C0C0C0]/30">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400 text-sm">Badge</span>
-                    <div className="flex items-center gap-2">
-                      <Award className="h-4 w-4 text-[#C0C0C0]" />
-                      <span className="text-[#E8E8E8] font-semibold">SILVER</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Benefit Extra */}
-                <div className="relative bg-gradient-to-br from-[#C0C0C0]/10 to-[#E8E8E8]/5 rounded-lg p-3 border border-[#C0C0C0]/30">
-                  <div className="text-center">
-                    <p className="text-[#C0C0C0] text-xs uppercase tracking-wider mb-1">Beneficio Extra</p>
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <Gift className="h-4 w-4 text-[#C0C0C0]" />
-                      <p className="text-white font-bold text-lg">1 WEEK</p>
-                    </div>
-                    <p className="text-slate-400 text-sm">Uso propio</p>
-                    <div className="flex items-center justify-center gap-1 mt-1">
-                      <Calendar className="h-3 w-3 text-slate-500" />
-                      <p className="text-slate-500 text-xs">x 1 AÑO</p>
+                  <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                    <div className="text-center">
+                      <p className="text-slate-400 text-xs uppercase tracking-wider mb-2">Sistema</p>
+                      <p className="text-white font-bold text-lg">Simple y Transparente</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Bottom Decoration */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#C0C0C0] via-[#E8E8E8] to-[#C0C0C0]" />
-              </div>
-            </div>
-
-            {/* Elite Tier */}
-            <div className="relative mx-auto w-full" style={{ maxWidth: "340px" }}>
-              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 shadow-2xl h-full border border-[#FFD700]/30">
-                {/* Background Pattern */}
-                <div className="absolute inset-0 opacity-15">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#FFD700] to-transparent rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
-                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-[#FFA500] to-transparent rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2" />
-                </div>
-
-                {/* Elite Tag */}
-                <div className="absolute -top-0 -right-0">
-                  <div className="bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-slate-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-2xl">
-                    ELITE
-                  </div>
-                </div>
-
-                {/* Header */}
-                <div className="relative flex items-center justify-between mb-4">
-                  <div>
-                    <div className="text-xl font-bold text-white tracking-tight">
-                      WEEK-CHAIN<span className="text-[#FFD700] text-xs align-super">™</span>
-                    </div>
-                    <div className="text-xs text-slate-400 mt-0.5">Sistema Intermediarios</div>
-                  </div>
-                  <Badge className="bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-slate-900 border-[#FFD700]">
-                    ELITE
-                  </Badge>
-                </div>
-
-                {/* Percentage */}
-                <div className="relative text-center mb-4">
-                  <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-[#FFD700]/30 to-[#FFA500]/20 border-2 border-[#FFD700] flex items-center justify-center shadow-lg">
-                    <span className="text-4xl font-bold text-white">6%</span>
-                  </div>
-                  <p className="text-[#B5EAD7] text-[10px] mt-2 font-medium">IVA incluido</p>
-                </div>
-
-                {/* Costo Gratis */}
-                <div className="relative mb-4">
-                  <div className="inline-flex w-full justify-center">
-                    <div className="px-6 py-2 bg-green-500/20 border border-green-500/40 rounded-lg">
-                      <p className="text-green-400 font-bold text-sm tracking-wider">COSTO GRATIS</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Weeks Range */}
-                <div className="relative bg-slate-800/50 rounded-lg p-3 mb-3 border border-[#FFD700]/30">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400 text-sm">Rango</span>
-                    <span className="text-white font-bold text-lg">
-                      48 / 96 <span className="text-sm font-normal text-slate-400">WEEK</span>
-                    </span>
-                  </div>
-                </div>
-
-                {/* Badge Type */}
-                <div className="relative bg-slate-800/50 rounded-lg p-3 mb-3 border border-[#FFD700]/30">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400 text-sm">Badge</span>
-                    <div className="flex items-center gap-2">
-                      <Crown className="h-4 w-4 text-[#FFD700]" />
-                      <span className="text-[#FFD700] font-semibold">GOLD</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Benefit Extra */}
-                <div className="relative bg-gradient-to-br from-[#FFD700]/10 to-[#FFA500]/5 rounded-lg p-3 border border-[#FFD700]/30">
-                  <div className="text-center">
-                    <p className="text-[#FFD700] text-xs uppercase tracking-wider mb-1">Beneficio Extra</p>
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <Gift className="h-4 w-4 text-[#FFD700]" />
-                      <p className="text-white font-bold text-lg">2 WEEKS</p>
-                    </div>
-                    <p className="text-slate-400 text-sm">Uso propio</p>
-                    <div className="flex items-center justify-center gap-1 mt-1">
-                      <Calendar className="h-3 w-3 text-slate-500" />
-                      <p className="text-slate-500 text-xs">x 1 AÑO</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Bottom Decoration */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FFD700] via-[#FFA500] to-[#FFD700]" />
+                <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FF9AA2] via-[#C7CEEA] to-[#FF9AA2]" />
               </div>
             </div>
           </div>
@@ -536,8 +345,8 @@ export default function BrokerProgramaPage() {
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
                   <p className="text-slate-600 text-sm">
-                    <strong>Ascenso automático:</strong> Al alcanzar el rango de semanas, subes de nivel
-                    automáticamente.
+                    <strong>Seguimiento en tiempo real:</strong> Monitorea todas tus ventas y comisiones desde tu
+                    dashboard personal.
                   </p>
                 </div>
               </div>
@@ -576,7 +385,7 @@ export default function BrokerProgramaPage() {
             <Badge className="mb-4 bg-slate-100 text-slate-700 border-slate-200">Broker Extra Benefit</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">¿Qué obtienes al registrarte?</h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Beneficios exclusivos disponibles para todos los niveles de intermediarios WEEK-CHAIN™
+              Beneficios exclusivos para todos los intermediarios WEEK-CHAIN™
             </p>
           </div>
 

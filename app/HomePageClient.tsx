@@ -213,40 +213,44 @@ export function HomePageClient() {
           {/* Buyer Benefits Section */}
           <section
             aria-labelledby="buyer-benefits-title"
-            className="relative bg-gradient-to-br from-slate-50 via-white to-slate-100 px-4 sm:px-6 py-12 sm:py-16 md:py-24 overflow-hidden"
+            className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 px-4 sm:px-6 py-12 sm:py-16 md:py-24 overflow-hidden"
           >
+            {/* Background decorations */}
+            <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+
             <div className="container mx-auto max-w-6xl relative z-10 mb-8">
-              <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-6 shadow-lg">
+              <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl p-6 shadow-lg backdrop-blur-sm">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 mt-1">
-                    <Scale className="h-8 w-8 text-amber-600" />
+                    <Scale className="h-8 w-8 text-amber-400" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">
+                    <h3 className="text-lg font-bold text-white mb-2">
                       Aviso Legal Importante - Smart Vacational Certificate (SVC)
                     </h3>
-                    <div className="space-y-2 text-sm text-slate-700">
+                    <div className="space-y-2 text-sm text-slate-300">
                       <p className="font-semibold">
                         Este certificado otorga un{" "}
-                        <span className="text-amber-700">derecho personal, temporal y revocable</span> de solicitar uso
+                        <span className="text-amber-400">derecho personal, temporal y revocable</span> de solicitar uso
                         vacacional por hasta 15 años, sujeto a disponibilidad.
                       </p>
                       <div className="grid sm:grid-cols-2 gap-2 mt-3">
                         <div className="flex items-start gap-2">
-                          <span className="text-red-600 font-bold">✗</span>
-                          <span>NO es propiedad inmobiliaria</span>
+                          <span className="text-red-400 font-bold">✗</span>
+                          <span className="text-slate-200">NO es propiedad inmobiliaria</span>
                         </div>
                         <div className="flex items-start gap-2">
-                          <span className="text-red-600 font-bold">✗</span>
-                          <span>NO es tiempo compartido</span>
+                          <span className="text-red-400 font-bold">✗</span>
+                          <span className="text-slate-200">NO es tiempo compartido</span>
                         </div>
                         <div className="flex items-start gap-2">
-                          <span className="text-red-600 font-bold">✗</span>
-                          <span>NO es inversión financiera</span>
+                          <span className="text-red-400 font-bold">✗</span>
+                          <span className="text-slate-200">NO es inversión financiera</span>
                         </div>
                         <div className="flex items-start gap-2">
-                          <span className="text-red-600 font-bold">✗</span>
-                          <span>NO garantiza destinos específicos</span>
+                          <span className="text-red-400 font-bold">✗</span>
+                          <span className="text-slate-200">NO garantiza destinos específicos</span>
                         </div>
                       </div>
                     </div>
@@ -259,11 +263,11 @@ export function HomePageClient() {
               <div className="mb-8 text-center">
                 <h2
                   id="buyer-benefits-title"
-                  className="mb-3 text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 tracking-tight"
+                  className="mb-3 text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight"
                 >
                   Características del Sistema SVC
                 </h2>
-                <p className="mb-8 md:mb-12 text-base sm:text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
+                <p className="mb-8 md:mb-12 text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto">
                   Derecho temporal de solicitud de uso vacacional. Todas las solicitudes están sujetas a disponibilidad
                   del sistema y no constituyen garantía de acceso a fechas, destinos o propiedades específicas.
                 </p>
@@ -272,117 +276,117 @@ export function HomePageClient() {
               <div className="space-y-8">
                 {/* Service Features */}
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-blue-500" />
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-blue-400" />
                     Características del Servicio
                   </h3>
                   <div className="grid gap-3 grid-cols-2 md:grid-cols-5">
-                    <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm hover:shadow-md transition-shadow">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500">
-                        <Key className="h-5 w-5 text-white" />
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-blue-500/30 transition-all duration-300 hover:scale-105">
+                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20 border border-blue-500/30">
+                        <Key className="h-5 w-5 text-blue-400" />
                       </div>
-                      <h4 className="font-bold text-slate-900 text-sm mb-1">15 Años de Vigencia</h4>
-                      <p className="text-xs text-slate-500">
+                      <h4 className="font-bold text-white text-sm mb-1">15 Años de Vigencia</h4>
+                      <p className="text-xs text-slate-400">
                         Derecho temporal de solicitar estancias anuales, sujeto a disponibilidad
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm hover:shadow-md transition-shadow">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500">
-                        <Coins className="h-5 w-5 text-white" />
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300 hover:scale-105">
+                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/20 border border-emerald-500/30">
+                        <Coins className="h-5 w-5 text-emerald-400" />
                       </div>
-                      <h4 className="font-bold text-slate-900 text-sm mb-1">Sin Cuotas Anuales</h4>
-                      <p className="text-xs text-slate-500">
+                      <h4 className="font-bold text-white text-sm mb-1">Sin Cuotas Anuales</h4>
+                      <p className="text-xs text-slate-400">
                         Pago único sin mantenimiento. No constituye inversión ni ahorro
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm hover:shadow-md transition-shadow">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500">
-                        <Calendar className="h-5 w-5 text-white" />
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-purple-500/30 transition-all duration-300 hover:scale-105">
+                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/20 border border-purple-500/30">
+                        <Calendar className="h-5 w-5 text-purple-400" />
                       </div>
-                      <h4 className="font-bold text-slate-900 text-sm mb-1">Solicitudes Flexibles</h4>
-                      <p className="text-xs text-slate-500">
+                      <h4 className="font-bold text-white text-sm mb-1">Solicitudes Flexibles</h4>
+                      <p className="text-xs text-slate-400">
                         Sin asignación previa de fechas. Solicita cuando desees vacacionar
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm hover:shadow-md transition-shadow">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500">
-                        <Plane className="h-5 w-5 text-white" />
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-amber-500/30 transition-all duration-300 hover:scale-105">
+                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/20 border border-amber-500/30">
+                        <Plane className="h-5 w-5 text-amber-400" />
                       </div>
-                      <h4 className="font-bold text-slate-900 text-sm mb-1">Red de Destinos</h4>
-                      <p className="text-xs text-slate-500">
+                      <h4 className="font-bold text-white text-sm mb-1">Red de Destinos</h4>
+                      <p className="text-xs text-slate-400">
                         Acceso según disponibilidad. No asigna propiedades específicas
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm hover:shadow-md transition-shadow">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500">
-                        <Award className="h-5 w-5 text-white" />
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300 hover:scale-105">
+                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500/20 border border-orange-500/30">
+                        <Award className="h-5 w-5 text-orange-400" />
                       </div>
-                      <h4 className="font-bold text-slate-900 text-sm mb-1">Destinos Evaluados</h4>
-                      <p className="text-xs text-slate-500">Alojamientos participantes verificados operativamente</p>
+                      <h4 className="font-bold text-white text-sm mb-1">Destinos Evaluados</h4>
+                      <p className="text-xs text-slate-400">Alojamientos participantes verificados operativamente</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Legal & Security Framework */}
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-slate-700" />
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-slate-400" />
                     Marco Legal y Seguridad
                   </h3>
                   <div className="grid gap-3 grid-cols-2 md:grid-cols-5">
-                    <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm hover:shadow-md transition-shadow">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-600">
-                        <Shield className="h-5 w-5 text-white" />
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-slate-500/30 transition-all duration-300 hover:scale-105">
+                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-600/20 border border-slate-500/30">
+                        <Shield className="h-5 w-5 text-slate-400" />
                       </div>
-                      <h4 className="font-bold text-slate-900 text-sm mb-1">Documentación Formal</h4>
-                      <p className="text-xs text-slate-500">Contrato de servicios conforme a legislación mexicana</p>
+                      <h4 className="font-bold text-white text-sm mb-1">Documentación Formal</h4>
+                      <p className="text-xs text-slate-400">Contrato de servicios conforme a legislación mexicana</p>
                     </div>
 
-                    <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm hover:shadow-md transition-shadow">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-rose-400">
-                        <Lock className="h-5 w-5 text-white" />
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-rose-500/30 transition-all duration-300 hover:scale-105">
+                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-rose-400/20 border border-rose-400/30">
+                        <Lock className="h-5 w-5 text-rose-400" />
                       </div>
-                      <h4 className="font-bold text-slate-900 text-sm mb-1">Pagos Seguros</h4>
-                      <p className="text-xs text-slate-500">Procesamiento con protocolos de seguridad operativos</p>
+                      <h4 className="font-bold text-white text-sm mb-1">Pagos Seguros</h4>
+                      <p className="text-xs text-slate-400">Procesamiento con protocolos de seguridad operativos</p>
                     </div>
 
-                    <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm hover:shadow-md transition-shadow">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500">
-                        <FileCheck className="h-5 w-5 text-white" />
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-teal-500/30 transition-all duration-300 hover:scale-105">
+                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/20 border border-teal-500/30">
+                        <FileCheck className="h-5 w-5 text-teal-400" />
                       </div>
-                      <h4 className="font-bold text-slate-900 text-sm mb-1">Certificación NOM-151</h4>
-                      <p className="text-xs text-slate-500">Documentos digitales con validez legal y trazabilidad</p>
+                      <h4 className="font-bold text-white text-sm mb-1">Certificación NOM-151</h4>
+                      <p className="text-xs text-slate-400">Documentos digitales con validez legal y trazabilidad</p>
                     </div>
 
-                    <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm hover:shadow-md transition-shadow">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500">
-                        <CheckCircle2 className="h-5 w-5 text-white" />
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-indigo-500/30 transition-all duration-300 hover:scale-105">
+                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500/20 border border-indigo-500/30">
+                        <CheckCircle2 className="h-5 w-5 text-indigo-400" />
                       </div>
-                      <h4 className="font-bold text-slate-900 text-sm mb-1">Verificación KYC</h4>
-                      <p className="text-xs text-slate-500">Proceso de identidad para seguridad del sistema</p>
+                      <h4 className="font-bold text-white text-sm mb-1">Verificación KYC</h4>
+                      <p className="text-xs text-slate-400">Proceso de identidad para seguridad del sistema</p>
                     </div>
 
-                    <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm hover:shadow-md transition-shadow">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-600">
-                        <Scale className="h-5 w-5 text-white" />
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all duration-300 hover:scale-105">
+                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-600/20 border border-cyan-500/30">
+                        <Scale className="h-5 w-5 text-cyan-400" />
                       </div>
-                      <h4 className="font-bold text-slate-900 text-sm mb-1">Términos Transparentes</h4>
-                      <p className="text-xs text-slate-500">Marco contractual que rige el derecho temporal de uso</p>
+                      <h4 className="font-bold text-white text-sm mb-1">Términos Transparentes</h4>
+                      <p className="text-xs text-slate-400">Marco contractual que rige el derecho temporal de uso</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 bg-slate-100 border border-slate-300 rounded-xl p-5 text-center">
-                <p className="text-sm text-slate-700">
-                  <span className="font-bold text-slate-900">Modelo de Solicitud:</span> El certificado SVC otorga el
-                  derecho de <span className="font-semibold">enviar solicitudes</span> de uso vacacional, no de reservar
-                  directamente. Todas las solicitudes están sujetas a revisión, disponibilidad y aceptación del sistema
-                  conforme al flujo REQUEST → OFFER → CONFIRM establecido en el contrato.
+              <div className="mt-8 bg-slate-800/50 border border-slate-700/50 rounded-xl p-5 text-center backdrop-blur-sm">
+                <p className="text-sm text-slate-300">
+                  <span className="font-bold text-white">Modelo de Solicitud:</span> El certificado SVC otorga el
+                  derecho de <span className="font-semibold text-blue-400">enviar solicitudes</span> de uso vacacional,
+                  no de reservar directamente. Todas las solicitudes están sujetas a revisión, disponibilidad y
+                  aceptación del sistema conforme al flujo REQUEST → OFFER → CONFIRM establecido en el contrato.
                 </p>
               </div>
             </div>
@@ -392,93 +396,7 @@ export function HomePageClient() {
           <section
             aria-labelledby="how-it-works-title"
             className="relative bg-gradient-to-b from-white to-slate-50 px-4 sm:px-6 py-16 sm:py-20 md:py-24 overflow-hidden"
-          >
-            <div className="container mx-auto max-w-7xl relative z-10">
-              <div className="text-center mb-12 md:mb-16">
-                <h2
-                  id="how-it-works-title"
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight"
-                >
-                  ¿Cómo Solicitar tu Semana?
-                </h2>
-                <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-                  Proceso de solicitud de uso vacacional con tu Smart Vacational Certificate
-                </p>
-              </div>
-
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                <div className="relative order-2 lg:order-1">
-                  <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                    <img
-                      src="/happy-couple-receiving-vacation-home-keys-luxury-r.jpg"
-                      alt="Pareja feliz recibiendo confirmación de su reservación vacacional"
-                      className="w-full h-auto object-cover"
-                    />
-                    <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="h-12 w-12 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center flex-shrink-0">
-                          <CheckCircle2 className="h-6 w-6 text-white" />
-                        </div>
-                        <div>
-                          <p className="font-bold text-slate-900">¡Reservación Confirmada!</p>
-                          <p className="text-sm text-slate-600">Tu semana vacacional está lista</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="absolute -top-4 -right-4 h-24 w-24 bg-amber-400/20 rounded-full blur-2xl" />
-                  <div className="absolute -bottom-4 -left-4 h-32 w-32 bg-blue-400/20 rounded-full blur-2xl" />
-                </div>
-
-                <div className="space-y-4 order-1 lg:order-2">
-                  {steps.map((item, i) => (
-                    <div
-                      key={i}
-                      className="flex gap-4 p-4 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
-                    >
-                      <div className="flex-shrink-0">
-                        <div className="h-12 w-12 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg">
-                          {item.step}
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <item.icon className="h-4 w-4 text-slate-500" />
-                          <h3 className="font-bold text-slate-900">{item.title}</h3>
-                        </div>
-                        <p className="text-sm text-slate-600">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
-
-                  <div className="relative mt-6 p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 shadow-lg">
-                    <div className="absolute -top-3 left-4">
-                      <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
-                        <Sparkles className="h-3.5 w-3.5" />
-                        SERVICIO OPCIONAL
-                      </span>
-                    </div>
-                    <div className="pt-2">
-                      <h4 className="text-lg font-bold text-slate-900 mb-2">WEEK-Management</h4>
-                      <p className="text-sm text-slate-700 mb-3">
-                        Solicita gestión operativa de renta cuando no uses tu derecho, sujeto a disponibilidad y demanda
-                      </p>
-                      <div className="flex flex-col gap-1.5">
-                        <div className="flex items-center gap-2 text-amber-700 font-semibold text-sm">
-                          <CheckCircle2 className="h-4 w-4" />
-                          <span>Gestión en plataformas externas</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-amber-700 font-semibold text-sm">
-                          <CheckCircle2 className="h-4 w-4" />
-                          <span>Sujeto a comisiones operativas</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+          ></section>
 
           {/* CTA Section */}
           <section

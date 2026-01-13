@@ -151,9 +151,9 @@ function BrokerDashboardContent() {
     const leadsList = leadsData.data || []
 
     const totalSales = reservationsList.reduce((sum, r) => sum + (r.usdc_equivalent || 0), 0)
-    const commission = totalSales * 0.06
+    const commission = totalSales * 0.04
     const pendingReservations = reservationsList.filter((r) => r.status === "pending")
-    const pendingCommission = pendingReservations.reduce((sum, r) => sum + (r.usdc_equivalent || 0), 0) * 0.06
+    const pendingCommission = pendingReservations.reduce((sum, r) => sum + (r.usdc_equivalent || 0), 0) * 0.04
     const completedReservations = reservationsList.filter((r) => r.status === "completed")
     const closingRate = reservationsList.length > 0 ? (completedReservations.length / reservationsList.length) * 100 : 0
 
@@ -161,7 +161,7 @@ function BrokerDashboardContent() {
     const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1)
     const thisMonthReservations = reservationsList.filter((r) => new Date(r.created_at) >= thisMonthStart)
     const thisMonthSales = thisMonthReservations.reduce((sum, r) => sum + (r.usdc_equivalent || 0), 0)
-    const thisMonthCommission = thisMonthSales * 0.06
+    const thisMonthCommission = thisMonthSales * 0.04
 
     const uniqueWallets = new Set(reservationsList.map((r) => r.user_wallet))
     const activeClients = uniqueWallets.size
@@ -198,7 +198,7 @@ function BrokerDashboardContent() {
       return {
         month: d.toLocaleDateString("es-ES", { month: "short" }),
         ventas: monthSales.reduce((sum, r) => sum + (r.usdc_equivalent || 0), 0),
-        honorarios: monthSales.reduce((sum, r) => sum + (r.usdc_equivalent || 0), 0) * 0.06,
+        honorarios: monthSales.reduce((sum, r) => sum + (r.usdc_equivalent || 0), 0) * 0.04,
         deals: monthSales.length,
       }
     })
@@ -220,7 +220,7 @@ function BrokerDashboardContent() {
   }
 
   const exportToCSV = () => {
-    const headers = ["Fecha", "Propiedad", "Ubicación", "Semana", "Temporada", "Monto", "Honorarios (6%)", "Estado"]
+    const headers = ["Fecha", "Propiedad", "Ubicación", "Semana", "Temporada", "Monto", "Honorarios (4%)", "Estado"]
     const rows = reservations.map((r) => [
       new Date(r.created_at).toLocaleDateString(),
       r.properties?.name || "N/A",
@@ -228,7 +228,7 @@ function BrokerDashboardContent() {
       r.weeks?.week_number || "N/A",
       r.weeks?.season || "N/A",
       r.usdc_equivalent || 0,
-      ((r.usdc_equivalent || 0) * 0.06).toFixed(2),
+      ((r.usdc_equivalent || 0) * 0.04).toFixed(2),
       r.status,
     ])
 
@@ -455,7 +455,7 @@ function BrokerDashboardContent() {
                   <p className="text-sm text-slate-400">Volumen Total</p>
                 </div>
                 <div className="bg-gradient-to-r from-amber-500/20 to-amber-600/20 rounded-xl p-4 border border-amber-500/30">
-                  <p className="text-amber-400 font-bold text-2xl">6%</p>
+                  <p className="text-amber-400 font-bold text-2xl">4%</p>
                   <p className="text-sm text-slate-400">Tasa de Honorarios</p>
                 </div>
                 <div className="bg-gradient-to-r from-purple-500/20 to-purple-600/20 rounded-xl p-4 border border-purple-500/30">
@@ -611,7 +611,7 @@ function BrokerDashboardContent() {
                         </TableCell>
                         <TableCell className="text-white">${r.usdc_equivalent?.toLocaleString()}</TableCell>
                         <TableCell className="text-emerald-400 font-medium">
-                          ${((r.usdc_equivalent || 0) * 0.06).toLocaleString()}
+                          ${((r.usdc_equivalent || 0) * 0.04).toLocaleString()}
                         </TableCell>
                         <TableCell>
                           <Badge
@@ -644,7 +644,7 @@ function BrokerDashboardContent() {
           {/* Footer */}
           <div className="text-center py-6">
             <p className="text-slate-500 text-sm">
-              WEEK-CHAIN™ · Panel de Intermediario · Los honorarios son calculados al 6% sobre ventas efectivas
+              WEEK-CHAIN™ · Panel de Intermediario · Los honorarios son calculados al 4% sobre ventas efectivas
             </p>
           </div>
         </div>

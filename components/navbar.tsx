@@ -19,6 +19,7 @@ import {
   Globe,
   TrendingUp,
   ArrowLeftRight,
+  Play,
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { LanguageSelector } from "@/components/language-selector"
@@ -164,6 +165,11 @@ export function Navbar() {
       label: "Intermediarios",
       href: "/broker-programa",
       icon: <TrendingUp className="w-4 h-4" />,
+    },
+    {
+      label: "Cómo Funciona",
+      href: "/proceso-completo",
+      icon: <Play className="w-4 h-4" />,
     },
   ]
 
