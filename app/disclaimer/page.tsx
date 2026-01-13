@@ -31,9 +31,8 @@ export default function DisclaimerPage() {
           <AlertTitle className="text-lg font-bold text-amber-900">Aviso Importante - Lectura Obligatoria</AlertTitle>
           <AlertDescription className="text-amber-800 leading-relaxed mt-2">
             Los Smart Vacational Certificates (SVC) de WEEK-CHAIN otorgan derechos personales y temporales de solicitud
-            de uso vacacional por hasta 15 años. NO son propiedad inmobiliaria, tiempo compartido tradicional, inversión
-            financiera ni instrumentos que generen rendimientos. Lea cuidadosamente este disclaimer antes de adquirir un
-            certificado.
+            de uso vacacional por hasta 15 años. NO son propiedad inmobiliaria, inversión financiera ni instrumentos que
+            generen rendimientos. Lea cuidadosamente este disclaimer antes de adquirir un certificado.
           </AlertDescription>
         </Alert>
 
@@ -58,7 +57,8 @@ export default function DisclaimerPage() {
                   <strong>Copropiedad:</strong> No constituye participación en propiedad de ninguna clase
                 </li>
                 <li>
-                  <strong>Tiempo compartido tradicional:</strong> No asigna semanas específicas con propiedad
+                  <strong>Servicio de propiedad compartida:</strong> No asigna semanas específicas con derechos de
+                  propiedad
                 </li>
                 <li>
                   <strong>Fracción inmobiliaria:</strong> No representa división de propiedad

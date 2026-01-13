@@ -87,14 +87,14 @@ export default function BrokerProgramaPage() {
             <div>
               <p className="font-semibold text-amber-800 mb-2">Aviso Legal Importante</p>
               <p className="text-sm text-amber-700 leading-relaxed">
-                Los honorarios derivan exclusivamente de servicios de intermediación comercial en la venta de servicios
-                de tiempo compartido vacacional conforme a la NOM-029-SCFI-2010.
+                Los honorarios derivan exclusivamente de servicios de intermediación comercial en la venta de
+                certificados de uso vacacional conforme a la NOM-029-SCFI-2010.
                 <strong>
                   {" "}
                   No constituyen inversión, rendimiento financiero ni esquema de compensación basado en reclutamiento.
                 </strong>{" "}
-                Los pagos se realizan únicamente por ventas efectivas de servicios a usuarios finales. El intermediario
-                actúa como facilitador comercial, no como agente inmobiliario.
+                Los pagos se realizan únicamente por ventas efectivas de certificados a usuarios finales. El
+                intermediario actúa como facilitador comercial independiente.
               </p>
             </div>
           </div>

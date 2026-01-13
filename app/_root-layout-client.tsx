@@ -42,7 +42,7 @@ export function RootLayoutClient({ children, interVariable }: RootLayoutClientPr
             <BetaBanner />
             <ScrollToTop />
             <Navbar />
-            <main id="main-content" className="min-h-[calc(100vh-4rem)] pt-20">
+            <main id="main-content" className="min-h-[calc(100vh-4rem)] pt-16 sm:pt-20">
               {children}
             </main>
             <SiteFooter />

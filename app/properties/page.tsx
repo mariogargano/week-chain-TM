@@ -18,15 +18,13 @@ import {
   Sparkles,
   Eye,
   Info,
-  CalendarIcon,
 } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import Image from "next/image"
-import { MexicoMapTriggerButton } from "@/components/mexico-map-popup"
 import { NotaryBadge } from "@/components/notary-badge"
-import { DashboardCalendarDemo } from "@/components/dashboard-calendar-demo"
+// import { DashboardCalendarDemo } from "@/components/dashboard-calendar-demo"
 
 export const dynamic = "force-dynamic"
 
@@ -515,46 +513,6 @@ export default function PropertiesPage() {
           {PARTICIPATING_DESTINATIONS.map((destination) => (
             <DestinationCard key={destination.id} destination={destination} />
           ))}
-        </div>
-      </section>
-
-      <section className="px-4 py-12">
-        <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-8">
-            <Badge className="bg-white/80 text-[#FF6B6B] border border-[#FFB5BA]/50 mb-4 backdrop-blur-sm">
-              <CalendarIcon className="w-3 h-3 mr-1" />
-              Vista Previa Dashboard
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
-              Tu{" "}
-              <span className="bg-gradient-to-r from-[#FF9AA2] to-[#C7CEEA] bg-clip-text text-transparent">
-                Dashboard Personal
-              </span>
-            </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Visualiza cómo gestionarás tus solicitudes de uso vacacional en tu dashboard personal. Calendario
-              interactivo, seguimiento de reservaciones, y control total de tus certificados.
-            </p>
-          </div>
-          <DashboardCalendarDemo />
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-4 sm:px-6 py-16 sm:py-24 bg-gradient-to-br from-[#B5EAD7]/10 via-white to-[#FFDAC1]/10">
-        <div className="container mx-auto max-w-4xl">
-          <div className="relative bg-gradient-to-r from-slate-800 to-slate-900 rounded-3xl p-8 md:p-12 overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#FF9AA2]/20 to-[#C7CEEA]/20 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-br from-[#B5EAD7]/20 to-[#FFDAC1]/20 rounded-full blur-3xl" />
-            <div className="relative text-center">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Explora Más Destinos de Referencia</h2>
-              <p className="text-slate-300 max-w-xl mx-auto mb-8">
-                Descubre más ejemplos de alojamientos participantes en nuestro sistema. Recuerda que el acceso está
-                sujeto a disponibilidad y no garantiza destinos específicos.
-              </p>
-              <MexicoMapTriggerButton />
-            </div>
-          </div>
         </div>
       </section>
     </div>

@@ -16,10 +16,7 @@ import {
   ArrowRight,
   Calendar,
   CheckCircle2,
-  Coins,
   Shield,
-  Sparkles,
-  Key,
   Plane,
   Lock,
   FileCheck,
@@ -28,8 +25,8 @@ import {
   ChevronDown,
   Briefcase,
 } from "lucide-react"
-import { Navbar } from "@/components/navbar"
 import { GlobalInfrastructureSection } from "@/components/global-infrastructure-section"
+import Image from "next/image"
 
 const homepageFaqs = [
   {
@@ -186,7 +183,7 @@ export function HomePageClient() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      {/* Removed duplicate Navbar import - already in root layout */}
       <div className="flex-1 bg-background">
         <FAQJsonLd faqs={homepageFaqs} />
 
@@ -242,15 +239,15 @@ export function HomePageClient() {
                         </div>
                         <div className="flex items-start gap-2">
                           <span className="text-red-400 font-bold">✗</span>
-                          <span className="text-slate-200">NO es tiempo compartido</span>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <span className="text-red-400 font-bold">✗</span>
                           <span className="text-slate-200">NO es inversión financiera</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <span className="text-red-400 font-bold">✗</span>
                           <span className="text-slate-200">NO garantiza destinos específicos</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="text-red-400 font-bold">✗</span>
+                          <span className="text-slate-200">NO es copropiedad fraccional</span>
                         </div>
                       </div>
                     </div>
@@ -273,121 +270,78 @@ export function HomePageClient() {
                 </p>
               </div>
 
-              <div className="space-y-8">
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-purple-50 via-indigo-50 to-purple-50 rounded-2xl border-2 border-purple-200">
+                  <div className="flex-shrink-0">
+                    <Image
+                      src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=029"
+                      alt="Solana Blockchain"
+                      width={40}
+                      height={40}
+                      className="w-10 h-10"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                      Registro Blockchain Solana
+                      <Award className="w-4 h-4 text-purple-600" />
+                    </h4>
+                    <p className="text-xs text-slate-600 mt-1">
+                      Cada certificado registrado en blockchain Solana para trazabilidad inmutable y verificación
+                      transparente.
+                      <span className="font-semibold text-purple-700"> NO es NFT comercializable.</span>
+                    </p>
+                  </div>
+                </div>
+
                 {/* Service Features */}
                 <div>
                   <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-blue-400" />
-                    Características del Servicio
+                    <FileCheck className="w-5 h-5 text-emerald-400" />
+                    Características del Certificado
                   </h3>
-                  <div className="grid gap-3 grid-cols-2 md:grid-cols-5">
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-blue-500/30 transition-all duration-300 hover:scale-105">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20 border border-blue-500/30">
-                        <Key className="h-5 w-5 text-blue-400" />
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <Shield className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-white">Vigencia de 15 Años</p>
+                        <p className="text-xs text-slate-300">Derecho temporal de solicitar estancias anuales</p>
                       </div>
-                      <h4 className="font-bold text-white text-sm mb-1">15 Años de Vigencia</h4>
-                      <p className="text-xs text-slate-400">
-                        Derecho temporal de solicitar estancias anuales, sujeto a disponibilidad
-                      </p>
-                    </div>
-
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300 hover:scale-105">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/20 border border-emerald-500/30">
-                        <Coins className="h-5 w-5 text-emerald-400" />
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <Lock className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-white">Registro Blockchain Inmutable</p>
+                        <p className="text-xs text-slate-300">
+                          Solana blockchain para trazabilidad y verificación transparente
+                        </p>
                       </div>
-                      <h4 className="font-bold text-white text-sm mb-1">Sin Cuotas Anuales</h4>
-                      <p className="text-xs text-slate-400">
-                        Pago único sin mantenimiento. No constituye inversión ni ahorro
-                      </p>
-                    </div>
-
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-purple-500/30 transition-all duration-300 hover:scale-105">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/20 border border-purple-500/30">
-                        <Calendar className="h-5 w-5 text-purple-400" />
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <FileCheck className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-white">Certificación Digital NOM-151</p>
+                        <p className="text-xs text-slate-300">
+                          Documentos con validez legal y firma electrónica avanzada
+                        </p>
                       </div>
-                      <h4 className="font-bold text-white text-sm mb-1">Solicitudes Flexibles</h4>
-                      <p className="text-xs text-slate-400">
-                        Sin asignación previa de fechas. Solicita cuando desees vacacionar
-                      </p>
-                    </div>
-
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-amber-500/30 transition-all duration-300 hover:scale-105">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/20 border border-amber-500/30">
-                        <Plane className="h-5 w-5 text-amber-400" />
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <Award className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-white">Sin Cuotas de Mantenimiento</p>
+                        <p className="text-xs text-slate-300">Pago único sin cargos recurrentes</p>
                       </div>
-                      <h4 className="font-bold text-white text-sm mb-1">Red de Destinos</h4>
-                      <p className="text-xs text-slate-400">
-                        Acceso según disponibilidad. No asigna propiedades específicas
-                      </p>
-                    </div>
-
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300 hover:scale-105">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500/20 border border-orange-500/30">
-                        <Award className="h-5 w-5 text-orange-400" />
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <Scale className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-white">Cumplimiento Legal Total</p>
+                        <p className="text-xs text-slate-300">Conforme NOM-029, PROFECO y legislación mexicana</p>
                       </div>
-                      <h4 className="font-bold text-white text-sm mb-1">Destinos Evaluados</h4>
-                      <p className="text-xs text-slate-400">Alojamientos participantes verificados operativamente</p>
-                    </div>
-                  </div>
+                    </li>
+                  </ul>
                 </div>
-
-                {/* Legal & Security Framework */}
-                <div>
-                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-slate-400" />
-                    Marco Legal y Seguridad
-                  </h3>
-                  <div className="grid gap-3 grid-cols-2 md:grid-cols-5">
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-slate-500/30 transition-all duration-300 hover:scale-105">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-600/20 border border-slate-500/30">
-                        <Shield className="h-5 w-5 text-slate-400" />
-                      </div>
-                      <h4 className="font-bold text-white text-sm mb-1">Documentación Formal</h4>
-                      <p className="text-xs text-slate-400">Contrato de servicios conforme a legislación mexicana</p>
-                    </div>
-
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-rose-500/30 transition-all duration-300 hover:scale-105">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-rose-400/20 border border-rose-400/30">
-                        <Lock className="h-5 w-5 text-rose-400" />
-                      </div>
-                      <h4 className="font-bold text-white text-sm mb-1">Pagos Seguros</h4>
-                      <p className="text-xs text-slate-400">Procesamiento con protocolos de seguridad operativos</p>
-                    </div>
-
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-teal-500/30 transition-all duration-300 hover:scale-105">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/20 border border-teal-500/30">
-                        <FileCheck className="h-5 w-5 text-teal-400" />
-                      </div>
-                      <h4 className="font-bold text-white text-sm mb-1">Certificación NOM-151</h4>
-                      <p className="text-xs text-slate-400">Documentos digitales con validez legal y trazabilidad</p>
-                    </div>
-
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-indigo-500/30 transition-all duration-300 hover:scale-105">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500/20 border border-indigo-500/30">
-                        <CheckCircle2 className="h-5 w-5 text-indigo-400" />
-                      </div>
-                      <h4 className="font-bold text-white text-sm mb-1">Verificación KYC</h4>
-                      <p className="text-xs text-slate-400">Proceso de identidad para seguridad del sistema</p>
-                    </div>
-
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-4 text-center backdrop-blur-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all duration-300 hover:scale-105">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-600/20 border border-cyan-500/30">
-                        <Scale className="h-5 w-5 text-cyan-400" />
-                      </div>
-                      <h4 className="font-bold text-white text-sm mb-1">Términos Transparentes</h4>
-                      <p className="text-xs text-slate-400">Marco contractual que rige el derecho temporal de uso</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 bg-slate-800/50 border border-slate-700/50 rounded-xl p-5 text-center backdrop-blur-sm">
-                <p className="text-sm text-slate-300">
-                  <span className="font-bold text-white">Modelo de Solicitud:</span> El certificado SVC otorga el
-                  derecho de <span className="font-semibold text-blue-400">enviar solicitudes</span> de uso vacacional,
-                  no de reservar directamente. Todas las solicitudes están sujetas a revisión, disponibilidad y
-                  aceptación del sistema conforme al flujo REQUEST → OFFER → CONFIRM establecido en el contrato.
-                </p>
               </div>
             </div>
           </section>
@@ -396,7 +350,42 @@ export function HomePageClient() {
           <section
             aria-labelledby="how-it-works-title"
             className="relative bg-gradient-to-b from-white to-slate-50 px-4 sm:px-6 py-16 sm:py-20 md:py-24 overflow-hidden"
-          ></section>
+          >
+            {/* Content for How It Works Section */}
+            <div className="container mx-auto max-w-6xl">
+              <div className="text-center mb-12">
+                <h2
+                  id="how-it-works-title"
+                  className="mb-4 text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight"
+                >
+                  {howItWorks.title || fallback.howItWorks.title}
+                </h2>
+                <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                  {howItWorks.subtitle || fallback.howItWorks.subtitle}
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                {steps.map((step) => (
+                  <div
+                    key={step.step}
+                    className="relative bg-white p-6 rounded-2xl border-2 border-slate-200 hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+                  >
+                    <div className="absolute -top-4 left-6 bg-gradient-to-br from-blue-500 to-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                      {step.step}
+                    </div>
+                    <div className="mb-4 mt-4">
+                      <step.icon className="w-12 h-12 text-blue-500 group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-3">{step.title}</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">{step.description}</p>
+                  </div>
+                ))}
+              </div>
+
+              
+            </div>
+          </section>
 
           {/* CTA Section */}
           <section

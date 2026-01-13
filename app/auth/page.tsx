@@ -103,17 +103,41 @@ export default function AuthPage() {
 
       if (data.user) {
         console.log("[v0] Login successful, fetching user role...")
-        const { data: userData } = await supabase.from("users").select("role").eq("id", data.user.id).single()
 
-        const role = userData?.role || "member"
+        const { data: userData } = await supabase
+          .from("users")
+          .select("role, full_name")
+          .eq("id", data.user.id)
+          .single()
+
+        const role = userData?.role || "user"
         console.log("[v0] User role:", role)
 
+        // Role-based routing
+        let dashboardPath = "/dashboard/member" // Default fallback
+
         if (role === "admin" || role === "super_admin") {
-          router.push("/dashboard/admin")
+          dashboardPath = "/dashboard/admin"
+        } else if (role === "broker" || role === "broker_elite") {
+          dashboardPath = "/dashboard/broker"
+        } else if (role === "management") {
+          dashboardPath = "/management"
+        } else if (role === "notaria") {
+          dashboardPath = "/notaria"
+        } else if (role === "service_provider") {
+          dashboardPath = "/dashboard/service-provider"
+        } else if (role === "vafi_manager") {
+          dashboardPath = "/dashboard/vafi"
+        } else if (role === "dao_member") {
+          dashboardPath = "/dashboard/dao"
+        } else if (role === "property_owner") {
+          dashboardPath = "/dashboard/owner"
         } else {
-          router.push("/dashboard/member")
+          dashboardPath = "/dashboard/member"
         }
 
+        console.log("[v0] Redirecting to:", dashboardPath)
+        router.push(dashboardPath)
         toast.success("¡Bienvenido de vuelta!")
       }
     } catch (error: any) {

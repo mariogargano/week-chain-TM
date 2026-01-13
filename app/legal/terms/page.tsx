@@ -74,14 +74,15 @@ function TermsContent() {
       <section>
         <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">2. NATURALEZA DEL SERVICIO</h2>
         <p className="mb-4">
-          Los certificados digitales emitidos por WEEK-CHAIN representan <strong>derechos de uso vacacional</strong> y
-          NO son:
+          Los certificados digitales emitidos por WEEK-CHAIN representan{" "}
+          <strong>derechos de uso vacacional temporal</strong> registrados en blockchain Solana para trazabilidad
+          inmutable, y NO son:
         </p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Instrumentos financieros ni valores bursátiles</li>
           <li>Promesas de retorno financiero</li>
           <li>Participaciones accionarias</li>
-          <li>Propiedad inmobiliaria</li>
+          <li>Propiedad inmobiliaria o copropiedad</li>
         </ul>
       </section>
 
@@ -132,6 +133,25 @@ function TermsContent() {
           </p>
           <p className="mb-2">
             <strong>Horario:</strong> Lunes a Viernes, 9:00 - 18:00 hrs
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">7. TECNOLOGÍA BLOCKCHAIN SOLANA</h2>
+        <p className="mb-4">
+          WEEK-CHAIN utiliza la blockchain de Solana para registrar de forma inmutable cada certificado SVC emitido:
+        </p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Cada certificado se registra en Solana con un hash único</li>
+          <li>La trazabilidad es pública y verificable por cualquier usuario</li>
+          <li>Los registros en blockchain NO constituyen propiedad digital ni activo financiero</li>
+          <li>La blockchain solo sirve como capa de verificación y auditoría</li>
+        </ul>
+        <div className="bg-purple-100 dark:bg-purple-900 rounded-lg p-6 mt-4">
+          <p className="mb-2">
+            <strong>Aclaración Importante:</strong> El registro en blockchain Solana NO convierte el certificado en
+            criptomoneda, NFT comercializable ni activo digital con valor de mercado.
           </p>
         </div>
       </section>

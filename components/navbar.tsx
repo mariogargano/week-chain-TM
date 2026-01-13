@@ -7,26 +7,31 @@ import {
   Menu,
   X,
   Store,
-  LayoutDashboard,
   UserCircle,
   LogOut,
   HandCoins,
   Briefcase,
-  Building2,
-  ChevronDown,
   Calendar,
   ShoppingBag,
   Globe,
   TrendingUp,
-  ArrowLeftRight,
   Play,
+  MapPin,
+  ChevronDown,
+  Shield,
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { LanguageSelector } from "@/components/language-selector"
 import { useTranslations } from "@/lib/i18n/use-translations"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu"
 
 const fallbackNav = {
   aboutUs: "Nosotros",
@@ -152,334 +157,290 @@ export function Navbar() {
 
   const navItems = [
     {
-      label: "Destinos Participantes",
+      label: "Nuestros Destinos",
       href: "/properties",
-      icon: <Building2 className="w-4 h-4" />,
-    },
-    {
-      label: "Servicios",
-      href: "/services",
-      icon: <Store className="w-4 h-4" />,
-    },
-    {
-      label: "Intermediarios",
-      href: "/broker-programa",
-      icon: <TrendingUp className="w-4 h-4" />,
+      icon: <MapPin className="w-5 h-5" />,
+      color: "text-blue-600",
+      hoverColor: "hover:text-blue-700",
+      bgHover: "hover:bg-blue-50",
     },
     {
       label: "Cómo Funciona",
       href: "/proceso-completo",
-      icon: <Play className="w-4 h-4" />,
+      icon: <Play className="w-5 h-5" />,
+      color: "text-emerald-600",
+      hoverColor: "hover:text-emerald-700",
+      bgHover: "hover:bg-emerald-50",
     },
   ]
 
   const ecosystemItems = [
     {
-      label: "Administración",
-      href: "/week-management",
-      icon: <Briefcase className="w-4 h-4" />,
-      description: "Administración de certificados",
-    },
-    {
-      label: "Solicitudes",
-      href: "/week-booking",
-      icon: <ShoppingBag className="w-4 h-4" />,
-      description: "Sistema de solicitudes",
-    },
-    {
-      label: "Certificado Bodas",
-      href: "/week-wedding",
-      icon: <Calendar className="w-4 h-4" />,
-      description: "Certificado temático",
-    },
-    {
-      label: "WEEK Live In Style",
-      href: "/week-live-style",
-      icon: <Store className="w-4 h-4" />,
+      label: "WEEK-In Life",
+      href: "/week-in-life",
+      icon: <Store className="w-5 h-5" />,
+      color: "text-blue-500",
       description: "Blog & Lifestyle",
     },
     {
-      label: "Coordinación",
-      href: "/week-market",
-      icon: <ArrowLeftRight className="w-4 h-4" />,
-      description: "Coordinación de solicitudes",
+      label: "WEEK-Management",
+      href: "/week-management",
+      icon: <Briefcase className="w-5 h-5" />,
+      color: "text-purple-500",
+      description: "Gestión de certificados",
     },
     {
-      label: "VA-FI",
+      label: "WEEK-Agent",
+      href: "/broker-programa",
+      icon: <TrendingUp className="w-5 h-5" />,
+      color: "text-emerald-500",
+      description: "Programa de comisiones 4%",
+    },
+    {
+      label: "WEEK-Wedding",
+      href: "/week-wedding",
+      icon: <Calendar className="w-5 h-5" />,
+      color: "text-pink-500",
+      description: "Experiencias especiales",
+    },
+    {
+      label: "WEEK-Service",
+      href: "/services",
+      icon: <Store className="w-5 h-5" />,
+      color: "text-cyan-500",
+      description: "Servicios vacacionales",
+    },
+    {
+      label: "WEEK-Booking",
+      href: "/week-booking",
+      icon: <ShoppingBag className="w-5 h-5" />,
+      color: "text-amber-500",
+      description: "Sistema de reservas",
+    },
+    {
+      label: "WEEK VA-FI",
       href: "/va-fi",
-      icon: <HandCoins className="w-4 h-4" />,
-      description: "Protocolo de verificación",
+      icon: <HandCoins className="w-5 h-5" />,
+      color: "text-yellow-500",
+      description: "Protocolo financiero",
+    },
+    {
+      label: "WEEK-Fundación",
+      href: "/fundacion",
+      icon: <Globe className="w-5 h-5" />,
+      color: "text-rose-500",
+      description: "Impacto social",
+    },
+    {
+      label: "WEEK-Insurance",
+      href: "/week-insurance",
+      icon: <Shield className="w-5 h-5" />,
+      color: "text-indigo-500",
+      description: "Protección vacacional",
     },
   ]
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 bg-white ${
-          scrolled ? "shadow-2xl border-b-4 border-[#FF9AA2]" : "shadow-lg"
+        className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
+          scrolled ? "bg-white/95 backdrop-blur-lg shadow-xl border-b border-slate-200" : "bg-white shadow-md"
         }`}
-        style={{
-          backgroundColor: "#ffffff",
-          zIndex: 9999,
-        }}
       >
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-16 sm:h-20">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0 relative z-[10000]">
-              <Image
-                src="/logo.png"
-                alt="WEEK-CHAIN Logo"
-                width={48}
-                height={48}
-                className="w-10 h-10 sm:w-12 sm:h-12"
-                priority
-              />
-              <div>
-                <span className="font-bold text-slate-900 text-base sm:text-lg lg:text-xl">WEEK-CHAIN</span>
-                <span className="text-[9px] sm:text-[10px] text-slate-500 block -mt-0.5 sm:-mt-1 leading-tight">
-                  Smart Vacational Certificate
-                </span>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo - Enhanced logo with better spacing */}
+            <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
+              <div className="relative">
+                <Image
+                  src="/logo.png"
+                  alt="WEEK-CHAIN Logo"
+                  width={56}
+                  height={56}
+                  className="w-12 h-12 sm:w-14 sm:h-14 transition-transform group-hover:scale-105"
+                  priority
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-slate-900 text-lg sm:text-xl tracking-tight">WEEK-CHAIN</span>
+                <span className="text-[10px] sm:text-xs text-slate-500 font-medium">Smart Vacational Certificate</span>
               </div>
             </Link>
 
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+            {/* Desktop Navigation - Premium design with better visual hierarchy */}
+            <nav className="hidden lg:flex items-center gap-2">
               {navItems.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="flex items-center gap-1.5 px-3 xl:px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-[#FF9AA2] transition-colors rounded-lg hover:bg-slate-50 whitespace-nowrap"
+                  className={`group flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all rounded-xl ${item.bgHover} ${item.hoverColor}`}
                 >
-                  {item.icon}
-                  <span>{item.label}</span>
+                  <span className={`${item.color} group-hover:scale-110 transition-transform`}>{item.icon}</span>
+                  <span className="whitespace-nowrap">{item.label}</span>
                 </Link>
               ))}
 
-              {/* Dropdown Ecosistema Week */}
+              {/* Mundo-WEEK Dropdown - Enhanced dropdown with premium styling */}
               <DropdownMenu open={ecosystemOpen} onOpenChange={setEcosystemOpen}>
                 <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-1.5 px-3 xl:px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-[#FF9AA2] transition-colors rounded-lg hover:bg-slate-50 whitespace-nowrap">
-                    <Globe className="w-4 h-4" /> {/* Changed from Briefcase to Globe icon */}
-                    <span>Mundo-WEEK </span>
-                    <ChevronDown className={`w-4 h-4 transition-transform ${ecosystemOpen ? "rotate-180" : ""}`} />
+                  <button className="group flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#FF9AA2] transition-all rounded-xl hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50">
+                    <Globe className="w-5 h-5 text-purple-600 group-hover:rotate-12 transition-transform" />
+                    <span className="whitespace-nowrap">Mundo-WEEK</span>
+                    <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-64">
+                <DropdownMenuContent className="w-72 p-2 shadow-xl border-slate-200">
+                  <div className="px-3 py-2 mb-2">
+                    <p className="text-xs font-semibold text-slate-900">Ecosistema WEEK-CHAIN</p>
+                    <p className="text-[10px] text-slate-500 mt-0.5">Explora todas nuestras plataformas</p>
+                  </div>
+                  <DropdownMenuSeparator />
                   {ecosystemItems.map((item) => (
                     <DropdownMenuItem key={item.label} asChild>
-                      <Link href={item.href} className="flex items-start gap-3 px-3 py-3 cursor-pointer">
-                        <div className="mt-0.5">{item.icon}</div>
+                      <Link
+                        href={item.href}
+                        className="flex items-start gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors"
+                      >
+                        <span className={`${item.color} mt-0.5`}>{item.icon}</span>
                         <div className="flex-1">
-                          <div className="font-medium text-slate-900">{item.label}</div>
-                          <div className="text-xs text-slate-500">{item.description}</div>
+                          <p className="text-sm font-semibold text-slate-900">{item.label}</p>
+                          <p className="text-xs text-slate-500 mt-0.5">{item.description}</p>
                         </div>
                       </Link>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
-
-              <Link
-                href="/week-fundacion"
-                className="flex items-center gap-1.5 px-3 xl:px-4 py-2.5 text-sm font-medium text-[#FF9AA2] hover:text-[#FF8A92] transition-colors rounded-lg hover:bg-pink-50 whitespace-nowrap border border-[#FF9AA2]/20"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
-                <span>WEEK Fundación</span>
-              </Link>
             </nav>
 
-            {/* Right Side - Desktop */}
-            <div className="hidden sm:flex items-center gap-2 lg:gap-3 relative z-[60]">
+            {/* Right Side Actions - Better authentication UI */}
+            <div className="hidden lg:flex items-center gap-3">
               <LanguageSelector />
 
               {isAuthenticated ? (
-                <>
-                  <Link href="/dashboard">
-                    <Button
-                      variant="default"
-                      size="sm"
-                      className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A92] hover:to-[#FFA7A2] text-white gap-2 whitespace-nowrap shadow-sm"
-                    >
-                      <LayoutDashboard className="w-4 h-4" />
-                      <span className="hidden lg:inline">{nav.myPanel}</span>
-                      <span className="lg:hidden">Panel</span>
-                    </Button>
-                  </Link>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleSignOut}
-                    className="text-slate-600 hover:text-red-600 hover:bg-red-50"
-                  >
-                    <LogOut className="w-4 h-4" />
-                  </Button>
-                </>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] text-white rounded-xl font-semibold text-sm hover:shadow-lg transition-all">
+                      <UserCircle className="w-5 h-5" />
+                      <span className="max-w-[120px] truncate">{userName || "Usuario"}</span>
+                      <ChevronDown className="w-4 h-4" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end">
+                    <div className="px-3 py-2 border-b">
+                      <p className="text-sm font-semibold text-slate-900">{userName}</p>
+                      <p className="text-xs text-slate-500 truncate">{userEmail}</p>
+                    </div>
+                    <DropdownMenuItem asChild>
+                      <Link href="/dashboard" className="flex items-center gap-2">
+                        <UserCircle className="w-4 h-4" />
+                        <span>{nav.myPanel}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
+                      <LogOut className="w-4 h-4 mr-2" />
+                      <span>{nav.signOut}</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               ) : (
                 <Link href="/auth">
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A92] hover:to-[#FFA7A2] text-white gap-2 whitespace-nowrap shadow-sm"
-                  >
-                    <UserCircle className="w-4 h-4" />
-                    <span className="hidden lg:inline">Comenzar</span>
-                    <span className="lg:hidden">Iniciar</span>
+                  <Button className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] text-white font-bold text-base px-6 py-2.5 h-auto hover:shadow-lg transition-all rounded-xl">
+                    COMENZAR
                   </Button>
                 </Link>
               )}
             </div>
 
-            {/* Mobile Menu Button and Language Selector for Mobile */}
-            <div className="flex sm:hidden items-center relative z-[60]">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hover:bg-slate-100 border-2 border-slate-300 shadow-md min-w-[48px] min-h-[48px] rounded-lg"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label={mobileMenuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
-              >
-                {mobileMenuOpen ? (
-                  <X className="w-6 h-6 text-slate-900" />
-                ) : (
-                  <Menu className="w-6 h-6 text-slate-900" />
-                )}
-              </Button>
-            </div>
+            {/* Mobile Menu Button - Enhanced mobile button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
-      </header>
 
-      {mobileMenuOpen && (
-        <>
-          {/* Overlay */}
-          <div
-            className="lg:hidden fixed inset-0 bg-black/30 backdrop-blur-sm z-[9998]"
-            onClick={() => setMobileMenuOpen(false)}
-            aria-hidden="true"
-          />
+        {/* Mobile Menu - Premium mobile menu design */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t border-slate-200 bg-white">
+            <div className="container mx-auto px-4 py-4 space-y-1">
+              {navItems.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 font-semibold transition-colors ${item.bgHover}`}
+                >
+                  <span className={item.color}>{item.icon}</span>
+                  <span>{item.label}</span>
+                </Link>
+              ))}
 
-          {/* Menu Content */}
-          <div className="lg:hidden fixed inset-x-0 top-16 sm:top-20 bottom-0 bg-white z-[9999] overflow-y-auto shadow-2xl border-t border-slate-200">
-            <div className="container mx-auto px-4 py-6 pb-safe">
-              <div className="mb-6 pb-4 border-b border-slate-200">
-                <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-2">
-                  {nav.language}
-                </div>
-                <LanguageSelector />
+              <div className="pt-2 pb-1">
+                <p className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Mundo-WEEK</p>
               </div>
 
-              <nav className="flex flex-col gap-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className="flex items-center gap-3 px-4 py-4 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-xl transition-all active:scale-[0.98] min-h-[56px]"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center shrink-0 shadow-sm">
-                      {item.icon}
-                    </div>
-                    <span className="text-base">{item.label}</span>
-                  </Link>
-                ))}
-
-                {/* Sección Ecosistema Week en mobile */}
-                <div className="border-t border-slate-200 my-4" />
-                <div className="px-2 mb-2">
-                  <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Ecosistema Week</div>
-                </div>
-                {ecosystemItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className="flex items-center gap-3 px-4 py-4 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-xl transition-all active:scale-[0.98] min-h-[56px]"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#FF9AA2] to-[#FFB7B2] flex items-center justify-center shrink-0 shadow-sm text-white">
-                      {item.icon}
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-base">{item.label}</div>
-                      <div className="text-xs text-slate-500">{item.description}</div>
-                    </div>
-                  </Link>
-                ))}
-
-                <div className="border-t border-slate-200 my-4" />
+              {ecosystemItems.map((item) => (
                 <Link
-                  href="/week-fundacion"
-                  className="flex items-center gap-3 px-4 py-4 text-base font-medium text-white bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] rounded-xl shadow-md min-h-[56px]"
+                  key={item.label}
+                  href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 transition-colors"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      />
-                    </svg>
-                  </div>
+                  <span className={item.color}>{item.icon}</span>
                   <div className="flex-1">
-                    <div className="text-base font-semibold">WEEK Fundación</div>
-                    <div className="text-xs text-white/80">Fundación Humanitaria</div>
+                    <p className="font-semibold text-sm">{item.label}</p>
+                    <p className="text-xs text-slate-500">{item.description}</p>
                   </div>
                 </Link>
+              ))}
 
-                <div className="border-t border-slate-200 my-4" />
-
-                {/* Auth Actions */}
-                {isAuthenticated ? (
-                  <div className="space-y-3">
-                    {userName && (
-                      <div className="px-4 py-3 bg-slate-50 rounded-xl">
-                        <div className="text-sm font-medium text-slate-900">{userName}</div>
-                        {userEmail && <div className="text-xs text-slate-500 mt-0.5">{userEmail}</div>}
-                      </div>
-                    )}
-                    <Link
-                      href="/dashboard"
-                      className="flex items-center gap-3 px-4 py-4 text-base font-medium bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] text-white rounded-xl shadow-md min-h-[56px]"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <LayoutDashboard className="w-5 h-5" />
-                      {nav.myPanel}
-                    </Link>
-                    <button
-                      onClick={() => {
-                        handleSignOut()
-                        setMobileMenuOpen(false)
-                      }}
-                      className="flex items-center gap-3 px-4 py-4 text-base font-medium text-red-600 hover:bg-red-50 rounded-xl w-full transition-colors min-h-[56px]"
-                    >
-                      <LogOut className="w-5 h-5" />
-                      {nav.signOut}
-                    </button>
+              {isAuthenticated ? (
+                <div className="pt-4 mt-4 border-t border-slate-200 space-y-2">
+                  <div className="px-4 py-2">
+                    <p className="font-semibold text-slate-900">{userName}</p>
+                    <p className="text-xs text-slate-500 truncate">{userEmail}</p>
                   </div>
-                ) : (
                   <Link
-                    href="/auth"
-                    className="flex items-center gap-3 px-4 py-4 text-base font-medium bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] text-white rounded-xl shadow-md min-h-[56px]"
+                    href="/dashboard"
                     onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 text-slate-700 font-semibold"
                   >
                     <UserCircle className="w-5 h-5" />
-                    Comenzar
+                    <span>{nav.myPanel}</span>
                   </Link>
-                )}
-              </nav>
+                  <button
+                    onClick={() => {
+                      handleSignOut()
+                      setMobileMenuOpen(false)
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 font-semibold hover:bg-red-50"
+                  >
+                    <LogOut className="w-5 h-5" />
+                    <span>{nav.signOut}</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="pt-4 mt-4 border-t border-slate-200">
+                  <Link href="/auth" onClick={() => setMobileMenuOpen(false)} className="block w-full">
+                    <Button className="w-full bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] text-white font-bold text-base py-6 hover:shadow-lg transition-all rounded-xl">
+                      COMENZAR
+                    </Button>
+                  </Link>
+                </div>
+              )}
+
+              <div className="pt-4">
+                <LanguageSelector />
+              </div>
             </div>
           </div>
-        </>
-      )}
+        )}
+      </header>
     </>
   )
 }
