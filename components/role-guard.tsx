@@ -27,51 +27,49 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
         const supabase = createClient()
 
         const {
-          data: { session },
-        } = await supabase.auth.getSession()
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser()
 
-        if (!session?.user?.email) {
-          console.log("[v0] No session found, redirecting to auth")
+        if (userError || !user?.email) {
+          console.log("[v0] No authenticated user, redirecting to auth")
           router.push("/auth")
           return
         }
 
-        const email = session.user.email.toLowerCase()
+        const email = user.email.toLowerCase()
         setUserEmail(email)
 
         console.log("[v0] Checking authorization for:", email, "Required roles:", allowedRoles)
 
-        if (email === ADMIN_EMAIL.toLowerCase()) {
-          if (allowedRoles.includes("admin")) {
-            const { data: adminUser } = await supabase.from("admin_users").select("*").eq("email", email).single()
+        if (email === ADMIN_EMAIL.toLowerCase() && allowedRoles.includes("admin")) {
+          console.log("[v0] Admin email detected - granting access")
 
-            if (!adminUser) {
-              console.log("[v0] Creating admin user record with correct schema")
-              const { error: createError } = await supabase.from("admin_users").insert({
-                id: session.user.id, // Use user id as primary key
-                email: email,
-                name: "Administrador WEEK-CHAIN",
-                role: "super_admin",
-                password_hash: "", // Empty for OAuth users
-                updated_at: new Date().toISOString(),
-                created_at: new Date().toISOString(),
-              })
+          const { error: upsertError } = await supabase.from("admin_users").upsert(
+            {
+              id: user.id,
+              email: email,
+              name: "Administrador WEEK-CHAIN",
+              role: "super_admin",
+              password_hash: "",
+              updated_at: new Date().toISOString(),
+              created_at: new Date().toISOString(),
+            },
+            {
+              onConflict: "email", // Use email as conflict key
+              ignoreDuplicates: false, // Always update
+            },
+          )
 
-              if (createError) {
-                console.error("[v0] Failed to create admin user:", createError)
-                setError(`Error al crear usuario administrador: ${createError.message}`)
-                setIsLoading(false)
-                return
-              }
-            }
-
-            console.log("[v0] Admin access granted")
-            localStorage.setItem("user_role", "admin")
-            localStorage.setItem("user_email", email)
-            setIsAuthorized(true)
-            setIsLoading(false)
-            return
+          if (upsertError) {
+            console.warn("[v0] Admin user upsert warning:", upsertError.message)
           }
+
+          localStorage.setItem("user_role", "admin")
+          localStorage.setItem("user_email", email)
+          setIsAuthorized(true)
+          setIsLoading(false)
+          return
         }
 
         const roleInfo = await getUserRoleByEmail(email)
@@ -108,9 +106,14 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
       console.log("[v0] Auth state changed:", event)
       if (event === "SIGNED_OUT") {
         setIsAuthorized(false)
+        localStorage.removeItem("user_role")
+        localStorage.removeItem("user_email")
         router.push("/auth")
       } else if (event === "TOKEN_REFRESHED") {
-        console.log("[v0] Token refreshed successfully")
+        console.log("[v0] Token refreshed successfully - maintaining session")
+      } else if (event === "SIGNED_IN") {
+        console.log("[v0] User signed in - rechecking authorization")
+        checkAuthorization()
       }
     })
 
