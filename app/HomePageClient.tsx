@@ -198,17 +198,17 @@ export function HomePageClient() {
             </section>
           </article>
 
+          {/* DynamicCertificateShowcase */}
+          <DynamicCertificateShowcase />
+
           {/* Platform Showcase - Now shows properties */}
           <PlatformShowcase />
-
-          {/* Global Infrastructure Section */}
-          <GlobalInfrastructureSection />
 
           {/* NoMaintenanceBanner */}
           <NoMaintenanceBanner />
 
-          {/* Dynamic Certificate Showcase */}
-          <DynamicCertificateShowcase />
+          {/* Global Infrastructure Section */}
+          <GlobalInfrastructureSection />
 
           {/* Buyer Benefits Section */}
           <section
@@ -263,7 +263,7 @@ export function HomePageClient() {
                 >
                   Características del Sistema SVC
                 </h2>
-                <p className="text-sm sm:text-base text-slate-600 max-w-3xl mx-auto">
+                <p className="mb-8 md:mb-12 text-base sm:text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
                   Derecho temporal de solicitud de uso vacacional. Todas las solicitudes están sujetas a disponibilidad
                   del sistema y no constituyen garantía de acceso a fechas, destinos o propiedades específicas.
                 </p>

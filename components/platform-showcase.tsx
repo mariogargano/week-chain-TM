@@ -25,16 +25,52 @@ export function PlatformShowcase() {
   useEffect(() => {
     const defaultProperties: Property[] = [
       {
-        id: "uxan-tulum",
-        name: "UXAN",
+        id: "uxan-villa-aruma",
+        name: "UXAN Villa Aruma",
         location: "Riviera Maya",
         city: "Tulum",
         country: "México",
-        image_url: "/images/12.jpeg",
+        image_url: "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7207a97f94e0d5d60adc_0000.jpg",
+        price: 15900,
+        max_guests: 6,
+        bedrooms: 3,
+        bathrooms: 3,
+      },
+      {
+        id: "uxan-villa-naab",
+        name: "UXAN Villa Naab",
+        location: "Riviera Maya",
+        city: "Tulum",
+        country: "México",
+        image_url: "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c725309cc9bd18f1c442d_0009.jpg",
+        price: 14800,
+        max_guests: 6,
+        bedrooms: 3,
+        bathrooms: 3,
+      },
+      {
+        id: "uxan-villa-cora",
+        name: "UXAN Villa Cora",
+        location: "Riviera Maya",
+        city: "Tulum",
+        country: "México",
+        image_url: "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7265d811d8c5b87393f3_Cora_10.jpg",
         price: 12500,
-        max_guests: 8,
-        bedrooms: 4,
-        bathrooms: 4,
+        max_guests: 4,
+        bedrooms: 2,
+        bathrooms: 2,
+      },
+      {
+        id: "uxan-loft-saasil",
+        name: "UXAN Loft Saasil",
+        location: "Riviera Maya",
+        city: "Tulum",
+        country: "México",
+        image_url: "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7221bf5472a2eb02db6f_0000.jpg",
+        price: 9500,
+        max_guests: 3,
+        bedrooms: 1,
+        bathrooms: 1,
       },
       {
         id: "vila-ksamil",
@@ -73,18 +109,6 @@ export function PlatformShowcase() {
         bathrooms: 3,
       },
       {
-        id: "casa-bacalar",
-        name: "Casa Bacalar",
-        location: "Laguna de los Siete Colores",
-        city: "Bacalar",
-        country: "México",
-        image_url: "/modern-luxury-villa-bacalar-lagoon-mexico-overwate.jpg",
-        price: 9800,
-        max_guests: 6,
-        bedrooms: 3,
-        bathrooms: 3,
-      },
-      {
         id: "villa-positano",
         name: "Villa Positano",
         location: "Costa Amalfitana",
@@ -95,30 +119,6 @@ export function PlatformShowcase() {
         max_guests: 10,
         bedrooms: 5,
         bathrooms: 5,
-      },
-      {
-        id: "chalet-dolomites",
-        name: "Chalet Dolomiti",
-        location: "Dolomitas",
-        city: "Cortina d'Ampezzo",
-        country: "Italia",
-        image_url: "/luxury-alpine-chalet-dolomites-italy-mountain-view.jpg",
-        price: 14200,
-        max_guests: 8,
-        bedrooms: 4,
-        bathrooms: 4,
-      },
-      {
-        id: "finca-puebla",
-        name: "Finca Cholula",
-        location: "Valle de Puebla",
-        city: "Cholula",
-        country: "México",
-        image_url: "/colonial-hacienda-cholula-puebla-mexico-pyramid-vi.jpg",
-        price: 8900,
-        max_guests: 12,
-        bedrooms: 6,
-        bathrooms: 4,
       },
     ]
 
@@ -165,7 +165,7 @@ export function PlatformShowcase() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-12 max-w-7xl mx-auto">
           {properties.map((property) => (
-            <Link href="/destinos" key={property.id} className="group">
+            <Link href="/properties" key={property.id} className="group">
               <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-slate-100">
                 {/* Property Image */}
                 <div className="relative h-48 md:h-56 overflow-hidden">

@@ -22,26 +22,110 @@ import {
 } from "lucide-react"
 
 const PAX_CERTIFICATE_CATALOG = [
-  // 2 PAX
-  { id: "2pax-1est", pax: 2, estancias: 1, price_usd: 3500, beta_cap: 8 },
-  { id: "2pax-2est", pax: 2, estancias: 2, price_usd: 6000, beta_cap: 6 },
-  { id: "2pax-3est", pax: 2, estancias: 3, price_usd: 8000, beta_cap: 4 },
-  { id: "2pax-4est", pax: 2, estancias: 4, price_usd: 10000, beta_cap: 2 },
-  // 4 PAX
-  { id: "4pax-1est", pax: 4, estancias: 1, price_usd: 5000, beta_cap: 10 },
-  { id: "4pax-2est", pax: 4, estancias: 2, price_usd: 9000, beta_cap: 8 },
-  { id: "4pax-3est", pax: 4, estancias: 3, price_usd: 12000, beta_cap: 5 },
-  { id: "4pax-4est", pax: 4, estancias: 4, price_usd: 15000, beta_cap: 3 },
-  // 6 PAX
-  { id: "6pax-1est", pax: 6, estancias: 1, price_usd: 7500, beta_cap: 6 },
-  { id: "6pax-2est", pax: 6, estancias: 2, price_usd: 13000, beta_cap: 5 },
-  { id: "6pax-3est", pax: 6, estancias: 3, price_usd: 18000, beta_cap: 3 },
-  { id: "6pax-4est", pax: 6, estancias: 4, price_usd: 20000, beta_cap: 1 },
-  // 8 PAX
-  { id: "8pax-1est", pax: 8, estancias: 1, price_usd: 10000, beta_cap: 3 },
-  { id: "8pax-2est", pax: 8, estancias: 2, price_usd: 15000, beta_cap: 2 },
-  { id: "8pax-3est", pax: 8, estancias: 3, price_usd: 20000, beta_cap: 1 },
-  { id: "8pax-4est", pax: 8, estancias: 4, price_usd: 25000, beta_cap: 1 },
+  // 2 PAX - 1 semana (Alta conversión 80%)
+  {
+    id: "2pax-1week",
+    pax: 2,
+    estancias: 1,
+    weeks: 1,
+    price_usd: 6500,
+    beta_cap: 15,
+    target: "Parejas, luna de miel, profesionales",
+  },
+  // 2 PAX - 2 semanas (Media-Alta conversión 60%)
+  {
+    id: "2pax-2week",
+    pax: 2,
+    estancias: 1,
+    weeks: 2,
+    price_usd: 11000,
+    beta_cap: 12,
+    target: "Parejas con más tiempo",
+  },
+
+  // 4 PAX - 1 semana (Alta conversión 75%)
+  {
+    id: "4pax-1week",
+    pax: 4,
+    estancias: 1,
+    weeks: 1,
+    price_usd: 8500,
+    beta_cap: 18,
+    target: "Familia pequeña, 2 niños",
+  },
+  // 4 PAX - 2 semanas (Media-Alta conversión 65%)
+  {
+    id: "4pax-2week",
+    pax: 4,
+    estancias: 1,
+    weeks: 2,
+    price_usd: 15000,
+    beta_cap: 15,
+    target: "Familia pequeña, vacaciones largas",
+  },
+
+  // 6 PAX - 1 semana (Media conversión 60%)
+  {
+    id: "6pax-1week",
+    pax: 6,
+    estancias: 1,
+    weeks: 1,
+    price_usd: 12000,
+    beta_cap: 12,
+    target: "Familia grande, 3-4 niños",
+  },
+  // 6 PAX - 2 semanas (Media conversión 50%)
+  {
+    id: "6pax-2week",
+    pax: 6,
+    estancias: 1,
+    weeks: 2,
+    price_usd: 22000,
+    beta_cap: 10,
+    target: "Familia grande, vacaciones largas",
+  },
+
+  // 8 PAX - 1 semana (Media-Baja conversión 50%)
+  {
+    id: "8pax-1week",
+    pax: 8,
+    estancias: 1,
+    weeks: 1,
+    price_usd: 16000,
+    beta_cap: 8,
+    target: "Grupos, familia extendida",
+  },
+  // 8 PAX - 2 semanas (Media-Baja conversión 40%)
+  {
+    id: "8pax-2week",
+    pax: 8,
+    estancias: 1,
+    weeks: 2,
+    price_usd: 30000,
+    beta_cap: 5,
+    target: "Grupos grandes, eventos",
+  },
+
+  // 10 PAX - 1 semana (Baja conversión 35%)
+  {
+    id: "10pax-1week",
+    pax: 10,
+    estancias: 1,
+    weeks: 1,
+    price_usd: 20000,
+    beta_cap: 5,
+    target: "Grupos muy grandes, eventos",
+  },
+  // 10 PAX - 2 semanas (Baja conversión 25%)
+  {
+    id: "10pax-2week",
+    pax: 10,
+    estancias: 1,
+    weeks: 2,
+    price_usd: 35000,
+    beta_cap: 3,
+    target: "Ultra premium, bodas, reuniones",
+  },
 ]
 
 // Datos de ejemplo para la animación del certificado
@@ -100,7 +184,7 @@ export function DynamicCertificateShowcase() {
   const [isAnimating, setIsAnimating] = useState(false)
 
   const [selectedPax, setSelectedPax] = useState(2)
-  const [selectedEstancias, setSelectedEstancias] = useState(1)
+  const [selectedWeeks, setSelectedWeeks] = useState(1)
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
 
   useEffect(() => {
@@ -119,9 +203,7 @@ export function DynamicCertificateShowcase() {
   const SeasonIcon = seasonConfig[data.season].icon
   const certNumber = `WC-${data.week.toString().padStart(2, "0")}-${2025}-${(currentIndex + 1).toString().padStart(4, "0")}`
 
-  const selectedProduct = PAX_CERTIFICATE_CATALOG.find(
-    (p) => p.pax === selectedPax && p.estancias === selectedEstancias,
-  )
+  const selectedProduct = PAX_CERTIFICATE_CATALOG.find((p) => p.pax === selectedPax && p.weeks === selectedWeeks)
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("en-US")
@@ -263,47 +345,8 @@ export function DynamicCertificateShowcase() {
             </div>
           </div>
 
+          {/* PAX Calculator Card */}
           <div className="space-y-6">
-            {/* Features list */}
-            <div className="space-y-4 mb-8">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center">
-                  <Shield className="h-6 w-6 text-amber-500" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-lg font-semibold text-white mb-1">Certificación NOM-151</h3>
-                  <p className="text-slate-400 text-sm">
-                    Cada certificado cumple con la Norma Oficial Mexicana para documentos digitales con validez legal
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center">
-                  <Verified className="h-6 w-6 text-emerald-500" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-lg font-semibold text-white mb-1">Verificable al Instante</h3>
-                  <p className="text-slate-400 text-sm">
-                    Escanea el código QR para verificar la autenticidad y vigencia de cualquier certificado
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center">
-                  <Calendar className="h-6 w-6 text-blue-500" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-lg font-semibold text-white mb-1">15 Años de Derechos de Solicitud</h3>
-                  <p className="text-slate-400 text-sm">
-                    Tu certificado te permite solicitar estancias cada año durante 15 años, sujeto a disponibilidad
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* PAX Calculator Card */}
             <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
               <h3 className="text-xl font-bold text-white mb-6 text-center">Calcula tu Certificado Digital</h3>
 
@@ -332,31 +375,31 @@ export function DynamicCertificateShowcase() {
                     variant="outline"
                     size="icon"
                     className="h-12 w-12 rounded-full border-slate-600 bg-transparent hover:bg-slate-700"
-                    onClick={() => setSelectedPax(Math.min(8, selectedPax + 2))}
-                    disabled={selectedPax >= 8}
+                    onClick={() => setSelectedPax(Math.min(10, selectedPax + 2))}
+                    disabled={selectedPax >= 10}
                   >
                     <Plus className="h-5 w-5 text-white" />
                   </Button>
                 </div>
               </div>
 
-              {/* Estancias Selector */}
               <div className="mb-6">
-                <label className="text-sm text-slate-400 mb-3 block">
-                  ¿Cuántas estancias deseas solicitar por año?
-                </label>
-                <div className="grid grid-cols-4 gap-2">
-                  {[1, 2, 3, 4].map((est) => (
+                <label className="text-sm text-slate-400 mb-3 block">¿Cuántas semanas deseas por año?</label>
+                <p className="text-xs text-slate-500 mb-3">
+                  Cada certificado otorga derecho a solicitar la duración seleccionada por año durante 15 años
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  {[1, 2].map((weeks) => (
                     <button
-                      key={est}
-                      onClick={() => setSelectedEstancias(est)}
-                      className={`py-3 px-4 rounded-xl font-semibold transition-all ${
-                        selectedEstancias === est
-                          ? "bg-amber-500 text-white"
+                      key={weeks}
+                      onClick={() => setSelectedWeeks(weeks)}
+                      className={`py-4 px-6 rounded-xl font-semibold transition-all ${
+                        selectedWeeks === weeks
+                          ? "bg-amber-500 text-white shadow-lg shadow-amber-500/30"
                           : "bg-slate-700/50 text-slate-300 hover:bg-slate-700"
                       }`}
                     >
-                      {est}
+                      {weeks} {weeks === 1 ? "Semana" : "Semanas"}
                     </button>
                   ))}
                 </div>
@@ -380,12 +423,18 @@ export function DynamicCertificateShowcase() {
                   <div className="flex items-center justify-between text-sm text-slate-300 mb-4 pb-4 border-b border-white/10">
                     <span>Derecho anual de solicitud:</span>
                     <span className="font-semibold text-white">
-                      Hasta {selectedEstancias} estancia{selectedEstancias === 1 ? "" : "s"} (7 noches c/u)
+                      {selectedWeeks} {selectedWeeks === 1 ? "semana" : "semanas"} (7 noches c/u)
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-sm text-slate-300 mb-4">
                     <span>Vigencia:</span>
                     <span className="font-semibold text-amber-400">15 años</span>
+                  </div>
+
+                  <div className="mb-4">
+                    <Badge className="w-full justify-center bg-blue-500/20 text-blue-400 border-blue-500/30">
+                      Ideal para: {selectedProduct.target}
+                    </Badge>
                   </div>
 
                   <div className="mb-4 p-3 bg-slate-900/50 rounded-lg border border-slate-700">
@@ -405,6 +454,45 @@ export function DynamicCertificateShowcase() {
                   </Button>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+
+        {/* Features list */}
+        <div className="space-y-4 mb-8">
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center">
+              <Shield className="h-6 w-6 text-amber-500" />
+            </div>
+            <div className="text-left">
+              <h3 className="text-lg font-semibold text-white mb-1">Certificación NOM-151</h3>
+              <p className="text-slate-400 text-sm">
+                Cada certificado cumple con la Norma Oficial Mexicana para documentos digitales con validez legal
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+              <Verified className="h-6 w-6 text-emerald-500" />
+            </div>
+            <div className="text-left">
+              <h3 className="text-lg font-semibold text-white mb-1">Verificable al Instante</h3>
+              <p className="text-slate-400 text-sm">
+                Escanea el código QR para verificar la autenticidad y vigencia de cualquier certificado
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center">
+              <Calendar className="h-6 w-6 text-blue-500" />
+            </div>
+            <div className="text-left">
+              <h3 className="text-lg font-semibold text-white mb-1">15 Años de Derechos de Solicitud</h3>
+              <p className="text-slate-400 text-sm">
+                Tu certificado te permite solicitar estancias cada año durante 15 años, sujeto a disponibilidad
+              </p>
             </div>
           </div>
         </div>
@@ -429,7 +517,7 @@ export function DynamicCertificateShowcase() {
                   <div className="flex justify-between">
                     <span className="text-slate-400">Derecho anual de solicitud</span>
                     <span className="text-white font-semibold">
-                      Hasta {selectedEstancias} estancia{selectedEstancias === 1 ? "" : "s"}
+                      {selectedWeeks} {selectedWeeks === 1 ? "semana" : "semanas"}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -437,8 +525,8 @@ export function DynamicCertificateShowcase() {
                     <span className="text-amber-400 font-semibold">15 años</span>
                   </div>
                   <div className="pt-3 border-t border-slate-700 flex justify-between">
-                    <span className="text-slate-400">Precio total</span>
-                    <span className="text-2xl text-white font-bold">${formatPrice(selectedProduct.price_usd)} USD</span>
+                    <span className="text-slate-400">Total</span>
+                    <span className="text-2xl font-bold text-white">${formatPrice(selectedProduct.price_usd)} USD</span>
                   </div>
                 </div>
 
@@ -495,7 +583,7 @@ export function DynamicCertificateShowcase() {
               <div>
                 <h4 className="text-white font-semibold mb-2">Información Legal Importante</h4>
                 <ul className="text-xs text-slate-400 space-y-1.5">
-                  <li>• El precio representa capacidad de uso (personas y estancias anuales)</li>
+                  <li>• El precio representa capacidad de uso (personas y duración anual)</li>
                   <li>• NO constituye propiedad inmobiliaria ni activo financiero</li>
                   <li>• Certificado otorga derecho de solicitud sujeto a disponibilidad</li>
                   <li>• No garantiza fechas, destinos ni propiedades específicas</li>

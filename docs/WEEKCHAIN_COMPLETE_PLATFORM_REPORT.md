@@ -1112,7 +1112,7 @@ Response
 
 ---
 
-### 💰 B. Stripe (Pagos Internacionales)
+### 💳 B. Stripe (Pagos Internacionales)
 
 **Propósito:** Procesamiento de pagos en USD/EUR
 
@@ -1297,17 +1297,17 @@ const RATE_LIMIT = {
 #### **NOM-029 (Comercio Electrónico)**
 
 **Requisitos:**
-- ✅ Click-wrap agreement con checkbox
-- ✅ Términos y condiciones visibles antes de compra
-- ✅ Política de privacidad
-- ✅ Política de devoluciones
-- ✅ Información de contacto
-- ✅ Información clara de precios
-- ✅ Derecho de retracto (5 días hábiles)
+- ✅ Click-wrap agreement with checkbox
+- ✅ Terms and conditions visible before purchase
+- ✅ Privacy policy
+- ✅ Return policy
+- ✅ Contact information
+- ✅ Clear pricing information
+- ✅ Right of withdrawal (5 business days)
 
 **Implementación:**
 - `components/consent-checkpoint.tsx` - Click-wrap UI
-- `components/terms-acceptance-dialog.tsx` - Modal de términos
+- `components/terms-acceptance-dialog.tsx` - Modal of terms
 - `app/legal/terminos-y-condiciones/page.tsx`
 - `app/legal/privacidad/page.tsx`
 - `app/legal/devoluciones/page.tsx`
@@ -1348,7 +1348,7 @@ const RATE_LIMIT = {
 - Device fingerprinting
 - Velocity checks (multiple purchases)
 - KYC verification (Persona)
-- Manual review para montos altos
+- Manual review for high amounts
 
 **Tabla:**
 - `fraud_alerts`
@@ -1488,7 +1488,7 @@ INSERT INTO properties (
 );
 ```
 
-**IMPORTANTE:** NO crear weeks para UXAN, el modelo es REQUEST → OFFER → CONFIRM.
+**IMPORTANTE:** NO crear weeks for UXAN, el modelo es REQUEST → OFFER → CONFIRM.
 
 ---
 
@@ -1671,7 +1671,7 @@ logger.info("Reservation created", {
 ```typescript
 // En formularios de registro y login
 <ReCAPTCHA
-  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+  sitekey="[REDACTED - Configure via environment variables]"
   onChange={handleCaptcha}
 />
 ```

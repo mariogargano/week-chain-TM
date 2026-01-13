@@ -15,6 +15,7 @@ export interface ConektaOrder {
   amount: number
   currency: string
   payment_status: string
+  created_at?: number
   checkout?: {
     id: string
     url: string
@@ -137,6 +138,7 @@ class ConektaClient {
         amount: body.line_items[0].unit_price,
         currency: body.currency,
         payment_status: "pending",
+        created_at: Date.now(),
         metadata: body.metadata,
       }
 
@@ -188,6 +190,7 @@ class ConektaClient {
         amount: 100000,
         currency: "MXN",
         payment_status: "paid",
+        created_at: Date.now(),
       } as ConektaOrder
     }
 

@@ -12,7 +12,6 @@ import { OrganizationJsonLd, WebsiteJsonLd, LocalBusinessJsonLd } from "@/compon
 import { GoogleAnalytics } from "@/components/analytics/google-analytics"
 import { MicrosoftClarity } from "@/components/analytics/microsoft-clarity"
 import { BetaBanner } from "@/components/beta-banner"
-import { ComplianceBanner } from "@/components/compliance-banner"
 
 interface RootLayoutClientProps {
   children: React.ReactNode
@@ -40,7 +39,6 @@ export function RootLayoutClient({ children, interVariable }: RootLayoutClientPr
         </a>
         <PostHogProvider>
           <LanguageProvider>
-            <ComplianceBanner />
             <BetaBanner />
             <ScrollToTop />
             <Navbar />

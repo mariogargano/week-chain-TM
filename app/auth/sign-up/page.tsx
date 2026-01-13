@@ -7,11 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { Chrome, UserPlus } from "lucide-react"
+import { UserPlus } from "lucide-react"
 import { analytics } from "@/lib/analytics/events"
 import { isDemoMode } from "@/lib/config/environment"
 import { validatePassword } from "@/lib/utils/password-validation"
@@ -187,6 +186,8 @@ export default function SignUpPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
+              {/* Comment out Google OAuth since it's not properly configured */}
+              {/* 
               <div className="space-y-3">
                 <Button
                   onClick={handleGoogleSignUp}
@@ -206,6 +207,7 @@ export default function SignUpPage() {
                   O CON EMAIL
                 </span>
               </div>
+              */}
 
               <form onSubmit={handleSignUp} className="space-y-4">
                 <div className="space-y-2">
