@@ -288,18 +288,19 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-slate-50 to-blue-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Control Global WEEK-CHAIN</h1>
-            <p className="text-slate-600">Bienvenido, {adminEmail}</p>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-200 to-emerald-200 bg-clip-text text-transparent">
+              Control Global WEEK-CHAIN
+            </h1>
+            <p className="text-blue-200 mt-1">Bienvenido, {adminEmail}</p>
           </div>
           <div className="flex gap-2">
             <Button
               variant="outline"
-              className="border-blue-200 text-blue-600 hover:bg-blue-50 bg-white"
+              className="border-blue-400/30 text-blue-200 hover:bg-white/10 bg-white/5 backdrop-blur"
               onClick={() => fetchDashboardData()}
               disabled={refreshing}
             >
@@ -310,15 +311,15 @@ export default function AdminDashboard() {
         </div>
 
         <Card
-          className={`border-4 ${
+          className={`border-2 backdrop-blur-xl ${
             globalMetrics.systemStatus === "RED"
-              ? "border-red-500 bg-gradient-to-br from-red-500 to-red-600"
+              ? "border-red-400 bg-gradient-to-br from-red-500/20 to-red-600/20"
               : globalMetrics.systemStatus === "ORANGE"
-                ? "border-orange-500 bg-gradient-to-br from-orange-500 to-orange-600"
+                ? "border-orange-400 bg-gradient-to-br from-orange-500/20 to-orange-600/20"
                 : globalMetrics.systemStatus === "YELLOW"
-                  ? "border-yellow-500 bg-gradient-to-br from-yellow-500 to-yellow-600"
-                  : "border-green-500 bg-gradient-to-br from-green-500 to-green-600"
-          } text-white shadow-2xl`}
+                  ? "border-yellow-400 bg-gradient-to-br from-yellow-500/20 to-yellow-600/20"
+                  : "border-emerald-400 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20"
+          } shadow-2xl`}
         >
           <CardContent className="p-8">
             <div className="flex items-center justify-between">
@@ -358,7 +359,7 @@ export default function AdminDashboard() {
 
         <div className="grid gap-4 md:grid-cols-4">
           <Card
-            className={`border-2 ${stopSaleFlags.silver ? "border-red-300 bg-red-50" : "border-green-300 bg-green-50"}`}
+            className={`border-2 backdrop-blur-lg ${stopSaleFlags.silver ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
           >
             <CardContent className="p-4">
               <p className="text-sm font-medium text-slate-700">Silver</p>
@@ -369,7 +370,7 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
           <Card
-            className={`border-2 ${stopSaleFlags.gold ? "border-red-300 bg-red-50" : "border-green-300 bg-green-50"}`}
+            className={`border-2 backdrop-blur-lg ${stopSaleFlags.gold ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
           >
             <CardContent className="p-4">
               <p className="text-sm font-medium text-slate-700">Gold</p>
@@ -380,7 +381,7 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
           <Card
-            className={`border-2 ${stopSaleFlags.platinum ? "border-red-300 bg-red-50" : "border-green-300 bg-green-50"}`}
+            className={`border-2 backdrop-blur-lg ${stopSaleFlags.platinum ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
           >
             <CardContent className="p-4">
               <p className="text-sm font-medium text-slate-700">Platinum</p>
@@ -391,7 +392,7 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
           <Card
-            className={`border-2 ${stopSaleFlags.signature ? "border-red-300 bg-red-50" : "border-green-300 bg-green-50"}`}
+            className={`border-2 backdrop-blur-lg ${stopSaleFlags.signature ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
           >
             <CardContent className="p-4">
               <p className="text-sm font-medium text-slate-700">Signature</p>
@@ -404,36 +405,36 @@ export default function AdminDashboard() {
         </div>
 
         <div>
-          <h2 className="text-xl font-bold text-slate-900 mb-4">Módulos de Control Global</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">Módulos de Control Global</h2>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {quickActions.map((action) => {
               const Icon = action.icon
               return (
                 <Link key={action.href} href={action.href}>
-                  <Card className="group cursor-pointer border-2 border-blue-100 bg-white transition-all hover:border-blue-400 hover:shadow-lg hover:shadow-blue-100">
+                  <Card className="group cursor-pointer border-2 border-blue-400/30 bg-white/5 backdrop-blur-lg transition-all hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/20 hover:bg-white/10">
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
-                        <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg group-hover:from-blue-600 group-hover:to-indigo-600 transition-all">
+                        <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg group-hover:from-blue-400 group-hover:to-indigo-500 transition-all group-hover:scale-110">
                           <Icon className="h-6 w-6 text-white" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                          <h3 className="font-bold text-white group-hover:text-blue-200 transition-colors">
                             {action.title}
                           </h3>
-                          <p className="text-sm text-slate-600">{action.description}</p>
+                          <p className="text-sm text-blue-200/70">{action.description}</p>
                           <div className="mt-2 flex items-center gap-2">
-                            <span className="text-xs font-medium text-slate-500">{action.stats}</span>
+                            <span className="text-xs font-medium text-blue-300">{action.stats}</span>
                             {action.badge && (
                               <Badge
                                 variant="secondary"
-                                className={action.badgeColor || "bg-blue-100 text-blue-700 text-xs"}
+                                className={action.badgeColor || "bg-blue-500/30 text-blue-100 text-xs backdrop-blur"}
                               >
                                 {action.badge}
                               </Badge>
                             )}
                           </div>
                         </div>
-                        <ArrowUpRight className="h-5 w-5 text-slate-400 group-hover:text-blue-500 transition-colors" />
+                        <ArrowUpRight className="h-5 w-5 text-blue-400 group-hover:text-blue-200 transition-colors group-hover:translate-x-1 group-hover:-translate-y-1" />
                       </div>
                     </CardContent>
                   </Card>
@@ -443,38 +444,37 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Recent Activity */}
-        <Card className="border-2 border-blue-100 bg-white">
-          <CardHeader className="border-b border-blue-50">
-            <CardTitle className="text-lg text-slate-900">Actividad Reciente</CardTitle>
-            <CardDescription>Últimas acciones en la plataforma</CardDescription>
+        <Card className="border-2 border-blue-400/30 bg-white/5 backdrop-blur-lg">
+          <CardHeader className="border-b border-blue-400/30">
+            <CardTitle className="text-lg text-white">Actividad Reciente</CardTitle>
+            <CardDescription className="text-blue-200/70">Últimas acciones en la plataforma</CardDescription>
           </CardHeader>
           <CardContent className="pt-4">
             {recentActivity.length > 0 ? (
               <div className="space-y-3">
                 {recentActivity.map((activity, i) => (
                   <Link key={i} href={activity.link}>
-                    <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer border border-slate-200">
+                    <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors cursor-pointer border border-blue-400/20 bg-white/5">
                       <div
                         className={`h-2 w-2 rounded-full ${
                           activity.status === "success"
-                            ? "bg-green-500"
+                            ? "bg-emerald-400"
                             : activity.status === "pending"
-                              ? "bg-amber-500"
-                              : "bg-blue-500"
+                              ? "bg-amber-400"
+                              : "bg-blue-400"
                         }`}
                       />
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-slate-900">{activity.action}</p>
-                        <p className="text-xs text-slate-500">{activity.time}</p>
+                        <p className="text-sm font-medium text-white">{activity.action}</p>
+                        <p className="text-xs text-blue-300">{activity.time}</p>
                       </div>
-                      <Eye className="h-4 w-4 text-slate-400" />
+                      <Eye className="h-4 w-4 text-blue-400" />
                     </div>
                   </Link>
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-slate-500 text-center py-8">No hay actividad reciente</p>
+              <p className="text-sm text-blue-300 text-center py-8">No hay actividad reciente</p>
             )}
           </CardContent>
         </Card>

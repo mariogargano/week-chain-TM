@@ -25,6 +25,7 @@ export async function updateSession(request: NextRequest) {
   })
 
   // Session refresh should only happen on explicit user actions, not on every request
+  await supabase.auth.getUser()
 
   return supabaseResponse
 }
