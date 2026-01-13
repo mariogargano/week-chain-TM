@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { getUserRoleByEmail, ADMIN_EMAIL, type UserRole } from "@/lib/auth/roles"
@@ -27,12 +26,10 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
       try {
         const supabase = createClient()
 
-        // Get current session first
         const {
           data: { session },
         } = await supabase.auth.getSession()
 
-        // No session = redirect to auth
         if (!session?.user?.email) {
           console.log("[v0] No session found, redirecting to auth")
           router.push("/auth")
@@ -44,30 +41,25 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
 
         console.log("[v0] Checking authorization for:", email, "Required roles:", allowedRoles)
 
-        // Check if admin email
         if (email === ADMIN_EMAIL.toLowerCase()) {
           if (allowedRoles.includes("admin")) {
-            // Verify admin_users table for extra security
             const { data: adminUser } = await supabase.from("admin_users").select("*").eq("email", email).single()
 
             if (!adminUser) {
-              // Auto-create admin user if not exists
-              console.log("[v0] Creating admin user record")
-              const { error: createError } = await supabase.from("admin_users").upsert(
-                {
-                  email: email,
-                  name: "Administrador WEEK-CHAIN",
-                  role: "super_admin",
-                  status: "active",
-                  user_id: session.user.id,
-                  updated_at: new Date().toISOString(),
-                },
-                { onConflict: "email" },
-              )
+              console.log("[v0] Creating admin user record with correct schema")
+              const { error: createError } = await supabase.from("admin_users").insert({
+                id: session.user.id, // Use user id as primary key
+                email: email,
+                name: "Administrador WEEK-CHAIN",
+                role: "super_admin",
+                password_hash: "", // Empty for OAuth users
+                updated_at: new Date().toISOString(),
+                created_at: new Date().toISOString(),
+              })
 
               if (createError) {
                 console.error("[v0] Failed to create admin user:", createError)
-                setError("Error al crear usuario administrador")
+                setError(`Error al crear usuario administrador: ${createError.message}`)
                 setIsLoading(false)
                 return
               }
@@ -82,7 +74,6 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
           }
         }
 
-        // Get role from email
         const roleInfo = await getUserRoleByEmail(email)
         const role = roleInfo?.role || "user"
 
