@@ -49,43 +49,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Update Supabase session
   const response = await updateSession(request)
-
-  if (request.nextUrl.pathname.startsWith("/dashboard/admin")) {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-    if (supabaseUrl && supabaseAnonKey) {
-      const { createServerClient } = await import("@supabase/ssr")
-
-      const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-        cookies: {
-          getAll() {
-            return request.cookies.getAll()
-          },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-          },
-        },
-      })
-
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      // No user - redirect to login
-      if (!user) {
-        const loginUrl = new URL("/auth", request.url)
-        loginUrl.searchParams.set("next", request.nextUrl.pathname)
-        return NextResponse.redirect(loginUrl)
-      }
-
-      if (user.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-        return NextResponse.redirect(new URL("/dashboard/user", request.url))
-      }
-    }
-  }
 
   // Protected routes check
   const protectedRoutes = [
