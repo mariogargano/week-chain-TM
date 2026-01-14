@@ -221,7 +221,7 @@ export function Navbar() {
       description: "Sistema de reservas",
     },
     {
-      label: "WEEK VA-FI",
+      label: "WEEK-VA-FI",
       href: "/va-fi",
       icon: <HandCoins className="w-5 h-5" />,
       color: "text-yellow-500",
@@ -314,16 +314,23 @@ export function Navbar() {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
+
+              <Link href="/auth">
+                <button className="group flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FFC3C7] hover:shadow-lg transition-all rounded-xl hover:scale-105 shadow-md shadow-pink-300/40 border border-pink-200">
+                  <Play className="w-5 h-5 fill-white group-hover:scale-110 transition-transform" />
+                  <span className="whitespace-nowrap">COMENZAR</span>
+                </button>
+              </Link>
             </nav>
 
             {/* Right Side Actions - Better authentication UI */}
             <div className="hidden lg:flex items-center gap-3">
-              <LanguageSelector />
-
-              <Link href="/auth">
-                <Button className="relative bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FFC3C7] text-white font-black text-lg px-8 py-4 h-auto hover:shadow-2xl transition-all rounded-2xl animate-pulse hover:animate-none hover:scale-105 shadow-lg shadow-pink-300/50 border-2 border-pink-300">
-                  <span className="relative z-10">COMENZAR</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-rose-400 opacity-0 hover:opacity-20 rounded-2xl transition-opacity" />
+              <Link href="/auth/login">
+                <Button
+                  variant="outline"
+                  className="border-slate-300 text-slate-700 font-semibold text-sm px-5 py-2.5 h-auto hover:bg-slate-50 transition-all rounded-lg bg-transparent"
+                >
+                  Iniciar Sesión
                 </Button>
               </Link>
 
@@ -331,7 +338,7 @@ export function Navbar() {
                 <Link href="/auth/login">
                   <Button
                     variant="outline"
-                    className="border-slate-300 text-slate-700 font-semibold text-sm px-5 py-2.5 h-auto hover:bg-slate-50 transition-all rounded-xl bg-transparent"
+                    className="border-slate-300 text-slate-700 font-semibold text-sm px-5 py-2.5 h-auto hover:bg-slate-50 transition-all rounded-lg bg-transparent"
                   >
                     Iniciar Sesión
                   </Button>
@@ -339,7 +346,7 @@ export function Navbar() {
               ) : (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold text-sm transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-sm transition-all">
                       <UserCircle className="w-5 h-5" />
                       <span className="max-w-[120px] truncate">{userName || "Usuario"}</span>
                       <ChevronDown className="w-4 h-4" />
@@ -364,6 +371,8 @@ export function Navbar() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
+
+              <LanguageSelector />
             </div>
 
             {/* Mobile Menu Button - Enhanced mobile button */}
@@ -414,8 +423,8 @@ export function Navbar() {
 
               <div className="pt-4 mt-4 border-t border-slate-200 space-y-2">
                 <Link href="/auth" onClick={() => setMobileMenuOpen(false)}>
-                  <Button className="w-full bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FFC3C7] text-white font-black text-lg py-4 animate-pulse hover:animate-none shadow-lg shadow-pink-300/50 border-2 border-pink-300">
-                    <span className="relative z-10">COMENZAR</span>
+                  <Button className="w-full bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FFC3C7] text-white font-black text-base py-4 animate-pulse hover:animate-none shadow-lg shadow-pink-300/40 border border-pink-200 rounded-md">
+                    COMENZAR
                   </Button>
                 </Link>
 
