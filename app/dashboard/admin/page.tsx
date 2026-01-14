@@ -288,11 +288,12 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <div className="flex items-center justify-between bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-slate-900">
+      {/* Fixed Header */}
+      <div className="flex-shrink-0 border-b border-white/10 bg-white/5 backdrop-blur-lg">
+        <div className="flex items-center justify-between p-6">
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-200 to-emerald-200 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-200 to-emerald-200 bg-clip-text text-transparent">
               Control Global WEEK-CHAIN
             </h1>
             <p className="text-blue-200 mt-1">Bienvenido, {adminEmail}</p>
@@ -309,175 +310,180 @@ export default function AdminDashboard() {
             </Button>
           </div>
         </div>
+      </div>
 
-        <Card
-          className={`border-2 backdrop-blur-xl ${
-            globalMetrics.systemStatus === "RED"
-              ? "border-red-400 bg-gradient-to-br from-red-500/20 to-red-600/20"
-              : globalMetrics.systemStatus === "ORANGE"
-                ? "border-orange-400 bg-gradient-to-br from-orange-500/20 to-orange-600/20"
-                : globalMetrics.systemStatus === "YELLOW"
-                  ? "border-yellow-400 bg-gradient-to-br from-yellow-500/20 to-yellow-600/20"
-                  : "border-emerald-400 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20"
-          } shadow-2xl`}
-        >
-          <CardContent className="p-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-white/90">ESTADO DEL SISTEMA</p>
-                <p className="text-5xl font-bold mt-2">{globalMetrics.systemStatus}</p>
-                <p className="text-lg text-white/90 mt-2">
-                  Utilización: {globalMetrics.currentUtilization.toFixed(1)}% de capacidad
-                </p>
-                <div className="flex gap-4 mt-4 text-sm">
-                  <div>
-                    <span className="text-white/70">Supply Total:</span>{" "}
-                    <span className="font-bold">{globalMetrics.totalSupplyWeeks} semanas</span>
-                  </div>
-                  <div>
-                    <span className="text-white/70">Capacidad Segura (70%):</span>{" "}
-                    <span className="font-bold">{globalMetrics.safeCapacityWeeks} semanas</span>
-                  </div>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="text-sm text-white/80">
-                  <div>{globalMetrics.totalSupplyProperties} propiedades activas</div>
-                  <div>{globalMetrics.activeCountries} países operando</div>
-                  <div className="mt-4">
-                    <Badge className="bg-white/20 text-white text-base px-4 py-2">
-                      {globalMetrics.waitlistSize > 0
-                        ? `${globalMetrics.waitlistSize} en lista de espera`
-                        : "Sin lista de espera"}
-                    </Badge>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="grid gap-4 md:grid-cols-4">
+      {/* Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="p-6 space-y-6">
           <Card
-            className={`border-2 backdrop-blur-lg ${stopSaleFlags.silver ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
+            className={`border-2 backdrop-blur-xl ${
+              globalMetrics.systemStatus === "RED"
+                ? "border-red-400 bg-gradient-to-br from-red-500/20 to-red-600/20"
+                : globalMetrics.systemStatus === "ORANGE"
+                  ? "border-orange-400 bg-gradient-to-br from-orange-500/20 to-orange-600/20"
+                  : globalMetrics.systemStatus === "YELLOW"
+                    ? "border-yellow-400 bg-gradient-to-br from-yellow-500/20 to-yellow-600/20"
+                    : "border-emerald-400 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20"
+            } shadow-2xl`}
           >
-            <CardContent className="p-4">
-              <p className="text-sm font-medium text-slate-700">Silver</p>
-              <p className="text-2xl font-bold">{certificatesActive.silver} activos</p>
-              <Badge className={stopSaleFlags.silver ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
-                {stopSaleFlags.silver ? "VENTAS DETENIDAS" : "Abierto"}
-              </Badge>
-            </CardContent>
-          </Card>
-          <Card
-            className={`border-2 backdrop-blur-lg ${stopSaleFlags.gold ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
-          >
-            <CardContent className="p-4">
-              <p className="text-sm font-medium text-slate-700">Gold</p>
-              <p className="text-2xl font-bold">{certificatesActive.gold} activos</p>
-              <Badge className={stopSaleFlags.gold ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
-                {stopSaleFlags.gold ? "VENTAS DETENIDAS" : "Abierto"}
-              </Badge>
-            </CardContent>
-          </Card>
-          <Card
-            className={`border-2 backdrop-blur-lg ${stopSaleFlags.platinum ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
-          >
-            <CardContent className="p-4">
-              <p className="text-sm font-medium text-slate-700">Platinum</p>
-              <p className="text-2xl font-bold">{certificatesActive.platinum} activos</p>
-              <Badge className={stopSaleFlags.platinum ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
-                {stopSaleFlags.platinum ? "VENTAS DETENIDAS" : "Abierto"}
-              </Badge>
-            </CardContent>
-          </Card>
-          <Card
-            className={`border-2 backdrop-blur-lg ${stopSaleFlags.signature ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
-          >
-            <CardContent className="p-4">
-              <p className="text-sm font-medium text-slate-700">Signature</p>
-              <p className="text-2xl font-bold">{certificatesActive.signature} activos</p>
-              <Badge className={stopSaleFlags.signature ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
-                {stopSaleFlags.signature ? "VENTAS DETENIDAS" : "Abierto"}
-              </Badge>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div>
-          <h2 className="text-2xl font-bold text-white mb-4">Módulos de Control Global</h2>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {quickActions.map((action) => {
-              const Icon = action.icon
-              return (
-                <Link key={action.href} href={action.href}>
-                  <Card className="group cursor-pointer border-2 border-blue-400/30 bg-white/5 backdrop-blur-lg transition-all hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/20 hover:bg-white/10">
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg group-hover:from-blue-400 group-hover:to-indigo-500 transition-all group-hover:scale-110">
-                          <Icon className="h-6 w-6 text-white" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-bold text-white group-hover:text-blue-200 transition-colors">
-                            {action.title}
-                          </h3>
-                          <p className="text-sm text-blue-200/70">{action.description}</p>
-                          <div className="mt-2 flex items-center gap-2">
-                            <span className="text-xs font-medium text-blue-300">{action.stats}</span>
-                            {action.badge && (
-                              <Badge
-                                variant="secondary"
-                                className={action.badgeColor || "bg-blue-500/30 text-blue-100 text-xs backdrop-blur"}
-                              >
-                                {action.badge}
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                        <ArrowUpRight className="h-5 w-5 text-blue-400 group-hover:text-blue-200 transition-colors group-hover:translate-x-1 group-hover:-translate-y-1" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              )
-            })}
-          </div>
-        </div>
-
-        <Card className="border-2 border-blue-400/30 bg-white/5 backdrop-blur-lg">
-          <CardHeader className="border-b border-blue-400/30">
-            <CardTitle className="text-lg text-white">Actividad Reciente</CardTitle>
-            <CardDescription className="text-blue-200/70">Últimas acciones en la plataforma</CardDescription>
-          </CardHeader>
-          <CardContent className="pt-4">
-            {recentActivity.length > 0 ? (
-              <div className="space-y-3">
-                {recentActivity.map((activity, i) => (
-                  <Link key={i} href={activity.link}>
-                    <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors cursor-pointer border border-blue-400/20 bg-white/5">
-                      <div
-                        className={`h-2 w-2 rounded-full ${
-                          activity.status === "success"
-                            ? "bg-emerald-400"
-                            : activity.status === "pending"
-                              ? "bg-amber-400"
-                              : "bg-blue-400"
-                        }`}
-                      />
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-white">{activity.action}</p>
-                        <p className="text-xs text-blue-300">{activity.time}</p>
-                      </div>
-                      <Eye className="h-4 w-4 text-blue-400" />
+            <CardContent className="p-8">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-white/90">ESTADO DEL SISTEMA</p>
+                  <p className="text-5xl font-bold mt-2">{globalMetrics.systemStatus}</p>
+                  <p className="text-lg text-white/90 mt-2">
+                    Utilización: {globalMetrics.currentUtilization.toFixed(1)}% de capacidad
+                  </p>
+                  <div className="flex gap-4 mt-4 text-sm">
+                    <div>
+                      <span className="text-white/70">Supply Total:</span>{" "}
+                      <span className="font-bold">{globalMetrics.totalSupplyWeeks} semanas</span>
                     </div>
-                  </Link>
-                ))}
+                    <div>
+                      <span className="text-white/70">Capacidad Segura (70%):</span>{" "}
+                      <span className="font-bold">{globalMetrics.safeCapacityWeeks} semanas</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm text-white/80">
+                    <div>{globalMetrics.totalSupplyProperties} propiedades activas</div>
+                    <div>{globalMetrics.activeCountries} países operando</div>
+                    <div className="mt-4">
+                      <Badge className="bg-white/20 text-white text-base px-4 py-2">
+                        {globalMetrics.waitlistSize > 0
+                          ? `${globalMetrics.waitlistSize} en lista de espera`
+                          : "Sin lista de espera"}
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
               </div>
-            ) : (
-              <p className="text-sm text-blue-300 text-center py-8">No hay actividad reciente</p>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+
+          <div className="grid gap-4 md:grid-cols-4">
+            <Card
+              className={`border-2 backdrop-blur-lg ${stopSaleFlags.silver ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
+            >
+              <CardContent className="p-4">
+                <p className="text-sm font-medium text-slate-700">Silver</p>
+                <p className="text-2xl font-bold">{certificatesActive.silver} activos</p>
+                <Badge className={stopSaleFlags.silver ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
+                  {stopSaleFlags.silver ? "VENTAS DETENIDAS" : "Abierto"}
+                </Badge>
+              </CardContent>
+            </Card>
+            <Card
+              className={`border-2 backdrop-blur-lg ${stopSaleFlags.gold ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
+            >
+              <CardContent className="p-4">
+                <p className="text-sm font-medium text-slate-700">Gold</p>
+                <p className="text-2xl font-bold">{certificatesActive.gold} activos</p>
+                <Badge className={stopSaleFlags.gold ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
+                  {stopSaleFlags.gold ? "VENTAS DETENIDAS" : "Abierto"}
+                </Badge>
+              </CardContent>
+            </Card>
+            <Card
+              className={`border-2 backdrop-blur-lg ${stopSaleFlags.platinum ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
+            >
+              <CardContent className="p-4">
+                <p className="text-sm font-medium text-slate-700">Platinum</p>
+                <p className="text-2xl font-bold">{certificatesActive.platinum} activos</p>
+                <Badge className={stopSaleFlags.platinum ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
+                  {stopSaleFlags.platinum ? "VENTAS DETENIDAS" : "Abierto"}
+                </Badge>
+              </CardContent>
+            </Card>
+            <Card
+              className={`border-2 backdrop-blur-lg ${stopSaleFlags.signature ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
+            >
+              <CardContent className="p-4">
+                <p className="text-sm font-medium text-slate-700">Signature</p>
+                <p className="text-2xl font-bold">{certificatesActive.signature} activos</p>
+                <Badge className={stopSaleFlags.signature ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
+                  {stopSaleFlags.signature ? "VENTAS DETENIDAS" : "Abierto"}
+                </Badge>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold text-white mb-4">Módulos de Control Global</h2>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {quickActions.map((action) => {
+                const Icon = action.icon
+                return (
+                  <Link key={action.href} href={action.href}>
+                    <Card className="group cursor-pointer border-2 border-blue-400/30 bg-white/5 backdrop-blur-lg transition-all hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/20 hover:bg-white/10">
+                      <CardContent className="p-6">
+                        <div className="flex items-start gap-4">
+                          <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg group-hover:from-blue-400 group-hover:to-indigo-500 transition-all group-hover:scale-110">
+                            <Icon className="h-6 w-6 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-bold text-white group-hover:text-blue-200 transition-colors">
+                              {action.title}
+                            </h3>
+                            <p className="text-sm text-blue-200/70">{action.description}</p>
+                            <div className="mt-2 flex items-center gap-2">
+                              <span className="text-xs font-medium text-blue-300">{action.stats}</span>
+                              {action.badge && (
+                                <Badge
+                                  variant="secondary"
+                                  className={action.badgeColor || "bg-blue-500/30 text-blue-100 text-xs backdrop-blur"}
+                                >
+                                  {action.badge}
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                          <ArrowUpRight className="h-5 w-5 text-blue-400 group-hover:text-blue-200 transition-colors group-hover:translate-x-1 group-hover:-translate-y-1" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+
+          <Card className="border-2 border-blue-400/30 bg-white/5 backdrop-blur-lg">
+            <CardHeader className="border-b border-blue-400/30">
+              <CardTitle className="text-lg text-white">Actividad Reciente</CardTitle>
+              <CardDescription className="text-blue-200/70">Últimas acciones en la plataforma</CardDescription>
+            </CardHeader>
+            <CardContent className="pt-4">
+              {recentActivity.length > 0 ? (
+                <div className="space-y-3">
+                  {recentActivity.map((activity, i) => (
+                    <Link key={i} href={activity.link}>
+                      <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors cursor-pointer border border-blue-400/20 bg-white/5">
+                        <div
+                          className={`h-2 w-2 rounded-full ${
+                            activity.status === "success"
+                              ? "bg-emerald-400"
+                              : activity.status === "pending"
+                                ? "bg-amber-400"
+                                : "bg-blue-400"
+                          }`}
+                        />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-white">{activity.action}</p>
+                          <p className="text-xs text-blue-300">{activity.time}</p>
+                        </div>
+                        <Eye className="h-4 w-4 text-blue-400" />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-blue-300 text-center py-8">No hay actividad reciente</p>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   )

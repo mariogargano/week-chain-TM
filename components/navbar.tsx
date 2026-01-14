@@ -91,6 +91,9 @@ export function Navbar() {
           data: { session },
         } = await supabase.auth.getSession()
 
+        console.log("[v0] Auth check - Session:", session ? "EXISTS" : "NULL")
+        console.log("[v0] isAuthenticated will be set to:", !!session?.user)
+
         if (session?.user) {
           setIsAuthenticated(true)
           setUserEmail(session.user.email || null)
@@ -317,10 +320,26 @@ export function Navbar() {
             <div className="hidden lg:flex items-center gap-3">
               <LanguageSelector />
 
-              {isAuthenticated ? (
+              <Link href="/auth">
+                <Button className="relative bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FFC3C7] text-white font-black text-lg px-8 py-4 h-auto hover:shadow-2xl transition-all rounded-2xl animate-pulse hover:animate-none hover:scale-105 shadow-lg shadow-pink-300/50 border-2 border-pink-300">
+                  <span className="relative z-10">COMENZAR</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-rose-400 opacity-0 hover:opacity-20 rounded-2xl transition-opacity" />
+                </Button>
+              </Link>
+
+              {!isAuthenticated ? (
+                <Link href="/auth/login">
+                  <Button
+                    variant="outline"
+                    className="border-slate-300 text-slate-700 font-semibold text-sm px-5 py-2.5 h-auto hover:bg-slate-50 transition-all rounded-xl bg-transparent"
+                  >
+                    Iniciar Sesión
+                  </Button>
+                </Link>
+              ) : (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] text-white rounded-xl font-semibold text-sm hover:shadow-lg transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold text-sm transition-all">
                       <UserCircle className="w-5 h-5" />
                       <span className="max-w-[120px] truncate">{userName || "Usuario"}</span>
                       <ChevronDown className="w-4 h-4" />
@@ -344,12 +363,6 @@ export function Navbar() {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              ) : (
-                <Link href="/auth">
-                  <Button className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] text-white font-bold text-base px-6 py-2.5 h-auto hover:shadow-lg transition-all rounded-xl">
-                    COMENZAR
-                  </Button>
-                </Link>
               )}
             </div>
 
@@ -399,40 +412,46 @@ export function Navbar() {
                 </Link>
               ))}
 
-              {isAuthenticated ? (
-                <div className="pt-4 mt-4 border-t border-slate-200 space-y-2">
-                  <div className="px-4 py-2">
-                    <p className="font-semibold text-slate-900">{userName}</p>
-                    <p className="text-xs text-slate-500 truncate">{userEmail}</p>
-                  </div>
-                  <Link
-                    href="/dashboard"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 text-slate-700 font-semibold"
-                  >
-                    <UserCircle className="w-5 h-5" />
-                    <span>{nav.myPanel}</span>
-                  </Link>
-                  <button
-                    onClick={() => {
-                      handleSignOut()
-                      setMobileMenuOpen(false)
-                    }}
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 font-semibold hover:bg-red-50"
-                  >
-                    <LogOut className="w-5 h-5" />
-                    <span>{nav.signOut}</span>
-                  </button>
-                </div>
-              ) : (
-                <div className="pt-4 mt-4 border-t border-slate-200">
-                  <Link href="/auth" onClick={() => setMobileMenuOpen(false)} className="block w-full">
-                    <Button className="w-full bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] text-white font-bold text-base py-6 hover:shadow-lg transition-all rounded-xl">
-                      COMENZAR
+              <div className="pt-4 mt-4 border-t border-slate-200 space-y-2">
+                <Link href="/auth" onClick={() => setMobileMenuOpen(false)}>
+                  <Button className="w-full bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FFC3C7] text-white font-black text-lg py-4 animate-pulse hover:animate-none shadow-lg shadow-pink-300/50 border-2 border-pink-300">
+                    <span className="relative z-10">COMENZAR</span>
+                  </Button>
+                </Link>
+
+                {!isAuthenticated ? (
+                  <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)}>
+                    <Button variant="outline" className="w-full bg-transparent">
+                      Iniciar Sesión
                     </Button>
                   </Link>
-                </div>
-              )}
+                ) : (
+                  <div className="space-y-2">
+                    <div className="px-4 py-2">
+                      <p className="font-semibold text-slate-900">{userName}</p>
+                      <p className="text-xs text-slate-500 truncate">{userEmail}</p>
+                    </div>
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 text-slate-700 font-semibold"
+                    >
+                      <UserCircle className="w-5 h-5" />
+                      <span>{nav.myPanel}</span>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleSignOut()
+                        setMobileMenuOpen(false)
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 font-semibold hover:bg-red-50"
+                    >
+                      <LogOut className="w-5 h-5" />
+                      <span>{nav.signOut}</span>
+                    </button>
+                  </div>
+                )}
+              </div>
 
               <div className="pt-4">
                 <LanguageSelector />
