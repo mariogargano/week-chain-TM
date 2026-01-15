@@ -24,6 +24,7 @@ import {
   Scale,
   ChevronDown,
   Briefcase,
+  X,
 } from "lucide-react"
 import { GlobalInfrastructureSection } from "@/components/global-infrastructure-section"
 import Image from "next/image"
@@ -137,6 +138,7 @@ const fallback = {
 export function HomePageClient() {
   const t = useTranslations()
   const [showBrokerSection, setShowBrokerSection] = useState(false)
+  const [showLegalNotice, setShowLegalNotice] = useState(true)
 
   useEffect(() => {
     console.log("[v0] HomePageClient mounted successfully")
@@ -198,16 +200,7 @@ export function HomePageClient() {
           {/* DynamicCertificateShowcase */}
           <DynamicCertificateShowcase />
 
-          {/* Platform Showcase - Now shows properties */}
-          <PlatformShowcase />
-
-          {/* NoMaintenanceBanner */}
-          <NoMaintenanceBanner />
-
-          {/* Global Infrastructure Section */}
-          <GlobalInfrastructureSection />
-
-          {/* Buyer Benefits Section */}
+          {/* Buyer Benefits Section - SVC Characteristics */}
           <section
             aria-labelledby="buyer-benefits-title"
             className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 px-4 sm:px-6 py-12 sm:py-16 md:py-24 overflow-hidden"
@@ -216,45 +209,56 @@ export function HomePageClient() {
             <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
 
-            <div className="container mx-auto max-w-6xl relative z-10 mb-8">
-              <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl p-6 shadow-lg backdrop-blur-sm">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 mt-1">
-                    <Scale className="h-8 w-8 text-amber-400" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-white mb-2">
-                      Aviso Legal Importante - Smart Vacational Certificate (SVC)
-                    </h3>
-                    <div className="space-y-2 text-sm text-slate-300">
-                      <p className="font-semibold">
-                        Este certificado otorga un{" "}
-                        <span className="text-amber-400">derecho personal, temporal y revocable</span> de solicitar uso
-                        vacacional por hasta 15 años, sujeto a disponibilidad.
-                      </p>
-                      <div className="grid sm:grid-cols-2 gap-2 mt-3">
-                        <div className="flex items-start gap-2">
-                          <span className="text-red-400 font-bold">✗</span>
-                          <span className="text-slate-200">NO es propiedad inmobiliaria</span>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <span className="text-red-400 font-bold">✗</span>
-                          <span className="text-slate-200">NO es inversión financiera</span>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <span className="text-red-400 font-bold">✗</span>
-                          <span className="text-slate-200">NO garantiza destinos específicos</span>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <span className="text-red-400 font-bold">✗</span>
-                          <span className="text-slate-200">NO es copropiedad fraccional</span>
+            {showLegalNotice && (
+              <div className="container mx-auto max-w-6xl relative z-10 mb-8">
+                <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl p-6 shadow-lg backdrop-blur-sm relative">
+                  {/* X button to close */}
+                  <button
+                    onClick={() => setShowLegalNotice(false)}
+                    className="absolute top-3 right-3 p-2 rounded-full bg-amber-500/20 hover:bg-amber-500/40 transition-colors"
+                    aria-label="Cerrar aviso legal"
+                  >
+                    <X className="w-5 h-5 text-amber-400" />
+                  </button>
+
+                  <div className="flex items-start gap-4 pr-10">
+                    <div className="flex-shrink-0 mt-1">
+                      <Scale className="h-8 w-8 text-amber-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-white mb-2">
+                        Aviso Legal Importante - Smart Vacational Certificate (SVC)
+                      </h3>
+                      <div className="space-y-2 text-sm text-slate-300">
+                        <p className="font-semibold">
+                          Este certificado otorga un{" "}
+                          <span className="text-amber-400">derecho personal, temporal y revocable</span> de solicitar
+                          uso vacacional por hasta 15 años, sujeto a disponibilidad.
+                        </p>
+                        <div className="grid sm:grid-cols-2 gap-2 mt-3">
+                          <div className="flex items-start gap-2">
+                            <span className="text-red-400 font-bold">✗</span>
+                            <span className="text-slate-200">NO es propiedad inmobiliaria</span>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <span className="text-red-400 font-bold">✗</span>
+                            <span className="text-slate-200">NO es inversión financiera</span>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <span className="text-red-400 font-bold">✗</span>
+                            <span className="text-slate-200">NO garantiza destinos específicos</span>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <span className="text-red-400 font-bold">✗</span>
+                            <span className="text-slate-200">NO es copropiedad fraccional</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
 
             <div className="container mx-auto max-w-6xl relative z-10">
               <div className="mb-8 text-center">
@@ -346,6 +350,15 @@ export function HomePageClient() {
             </div>
           </section>
 
+          {/* Platform Showcase - Now shows properties */}
+          <PlatformShowcase />
+
+          {/* NoMaintenanceBanner */}
+          <NoMaintenanceBanner />
+
+          {/* Global Infrastructure Section */}
+          <GlobalInfrastructureSection />
+
           {/* How It Works Section */}
           <section
             aria-labelledby="how-it-works-title"
@@ -382,8 +395,6 @@ export function HomePageClient() {
                   </div>
                 ))}
               </div>
-
-              
             </div>
           </section>
 

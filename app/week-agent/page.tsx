@@ -2,11 +2,9 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
-import { Users, Globe, DollarSign, CheckCircle2, Shield, Clock, Award, Sparkles } from "lucide-react"
+import { Users, Globe, DollarSign, CheckCircle2, Shield, Clock, Award, Sparkles, ArrowRight } from "lucide-react"
 
 export default function WeekAgentPage() {
-  console.log("[v0] WeekAgentPage rendering")
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-slate-50">
       {/* Hero Section with CTA */}
@@ -27,43 +25,46 @@ export default function WeekAgentPage() {
 
             {/* Main Heading */}
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight">
-              <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
-                Conviértete en
-              </span>
+              <span className="text-white">Obtén </span>
+              <span className="text-amber-400">4%</span>
+              <span className="text-white"> de Honorarios</span>
               <br />
-              <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 bg-clip-text text-transparent">
-                WEEK-Agent
-              </span>
+              <span className="text-white">por Cada Venta Efectiva</span>
             </h1>
 
-            {/* Subtitle with 4% highlight */}
+            {/* Description */}
             <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-              Obtén <span className="text-amber-400 font-bold text-3xl">4%</span>{" "}
-              <span className="text-amber-400 font-bold">de Honorarios</span>
-              <br />
-              por Cada Venta Efectiva
+              Únete al programa de intermediación de WEEK-CHAIN y obtén 4% de honorarios por cada referido directo que
+              compre un certificado vacacional. Sistema simple y transparente sin niveles.
             </p>
 
-            {/* CTA Button - SUPER VISIBLE */}
-            <div className="pt-8">
+            <div className="pt-8 flex justify-center">
               <a
                 href="/auth"
-                onClick={() => console.log("[v0] APLICAR AHORA button clicked")}
-                className="inline-block animate-pulse bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-600 hover:via-amber-500 hover:to-amber-600 text-slate-950 font-black text-2xl px-16 py-8 rounded-2xl shadow-2xl border-4 border-amber-300 hover:scale-110 transition-all duration-300 cursor-pointer"
                 style={{
-                  boxShadow: "0 25px 50px -12px rgba(245, 158, 11, 0.5)",
-                  textDecoration: "none",
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "12px",
+                  gap: "16px",
+                  padding: "24px 64px",
+                  fontSize: "24px",
+                  fontWeight: "900",
+                  color: "#0f172a",
+                  backgroundColor: "#f59e0b",
+                  borderRadius: "16px",
+                  border: "4px solid #fcd34d",
+                  boxShadow: "0 25px 50px -12px rgba(245, 158, 11, 0.6)",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                  transition: "transform 0.2s ease",
                 }}
+                onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
               >
                 APLICAR AHORA
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
+                <ArrowRight style={{ width: "32px", height: "32px" }} />
               </a>
             </div>
+            {/* FIN BOTON */}
 
             {/* Security indicators */}
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-slate-400 pt-6">
@@ -92,7 +93,6 @@ export default function WeekAgentPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Benefit Cards */}
             {[
               {
                 icon: DollarSign,
@@ -154,21 +154,9 @@ export default function WeekAgentPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              {
-                step: "1",
-                title: "Regístrate",
-                description: "Completa tu aplicación y verifica tu identidad",
-              },
-              {
-                step: "2",
-                title: "Recibe Capacitación",
-                description: "Accede a materiales y herramientas de venta",
-              },
-              {
-                step: "3",
-                title: "Comienza a Ganar",
-                description: "Facilita ventas y recibe tu 4% de honorarios",
-              },
+              { step: "1", title: "Regístrate", description: "Completa tu aplicación y verifica tu identidad" },
+              { step: "2", title: "Recibe Capacitación", description: "Accede a materiales y herramientas de venta" },
+              { step: "3", title: "Comienza a Ganar", description: "Facilita ventas y recibe tu 4% de honorarios" },
             ].map((step, index) => (
               <div key={index} className="text-center">
                 <div className="w-20 h-20 bg-amber-500 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6">
@@ -214,23 +202,33 @@ export default function WeekAgentPage() {
           <h2 className="text-3xl md:text-5xl font-bold mb-6">¿Listo para ser WEEK-Agent?</h2>
           <p className="text-xl text-slate-300 mb-10">Únete a cientos de agentes exitosos en toda Latinoamérica</p>
 
-          <a
-            href="/auth"
-            onClick={() => console.log("[v0] COMENZAR AHORA button clicked")}
-            className="inline-block bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-600 hover:via-amber-500 hover:to-amber-600 text-slate-950 font-black text-xl px-12 py-6 rounded-xl shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer"
-            style={{
-              boxShadow: "0 25px 50px -12px rgba(245, 158, 11, 0.5)",
-              textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "12px",
-            }}
-          >
-            COMENZAR AHORA
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </a>
+          <div className="flex justify-center">
+            <a
+              href="/auth"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "12px",
+                padding: "20px 48px",
+                fontSize: "20px",
+                fontWeight: "800",
+                color: "#0f172a",
+                backgroundColor: "#f59e0b",
+                borderRadius: "12px",
+                border: "3px solid #fcd34d",
+                boxShadow: "0 20px 40px -10px rgba(245, 158, 11, 0.5)",
+                textDecoration: "none",
+                cursor: "pointer",
+                transition: "transform 0.2s ease",
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            >
+              COMENZAR AHORA
+              <ArrowRight style={{ width: "24px", height: "24px" }} />
+            </a>
+          </div>
+          {/* FIN BOTON */}
         </div>
       </section>
     </div>
