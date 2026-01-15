@@ -14,6 +14,7 @@ import {
   Smartphone,
   QrCode,
   CheckCircle,
+  Lock,
 } from "lucide-react"
 import type { Metadata } from "next"
 import { BrokerDashboardPreview } from "@/components/broker-dashboard-preview"
@@ -562,23 +563,53 @@ export default function BrokerProgramaPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="px-4 py-16 md:py-20 bg-slate-900 text-white">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">¿Listo para ser parte del equipo WEEK-CHAIN™?</h2>
-          <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
-            Únete a nuestro programa de intermediación y comienza a generar honorarios por facilitar la contratación de
+      <section className="relative px-4 py-20 md:py-28 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="container mx-auto max-w-4xl relative z-10 text-center">
+          <div className="inline-block mb-6 px-6 py-2 bg-amber-500/20 border-2 border-amber-500/40 rounded-full">
+            <span className="text-amber-400 font-bold text-sm flex items-center gap-2">
+              <Award className="w-4 h-4" />
+              Programa Exclusivo
+            </span>
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            ¿Listo para ser parte del equipo WEEK-CHAIN™?
+          </h2>
+
+          <p className="text-xl text-slate-300 mb-4">
+            Únete a nuestro programa de intermediación y comienza a generar{" "}
+            <span className="text-amber-400 font-bold">4% de honorarios</span> por facilitar la contratación de
             servicios vacacionales de calidad. Registro disponible en todos los países.
           </p>
-          <Button
-            asChild
-            size="lg"
-            className="bg-white text-slate-900 hover:bg-slate-100 font-semibold px-8 py-6 text-lg rounded-xl"
-          >
-            <Link href="/broker/apply">
-              Aplicar Ahora
-              <ArrowRight className="ml-2 h-5 w-5" />
+
+          <div className="mt-12 mb-8">
+            <Link href="/auth">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-600 hover:via-amber-500 hover:to-amber-600 text-slate-900 font-black text-2xl px-16 py-8 h-auto rounded-2xl shadow-2xl shadow-amber-500/50 border-4 border-amber-300 hover:scale-110 transition-all duration-300 hover:shadow-amber-400/70 animate-pulse"
+              >
+                APLICAR AHORA
+                <ArrowRight className="ml-4 h-8 w-8" />
+              </Button>
             </Link>
-          </Button>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-slate-400 mt-8">
+            <div className="flex items-center gap-2">
+              <Lock className="w-5 h-5 text-emerald-400" />
+              <span>Proceso 100% seguro</span>
+            </div>
+            <span className="hidden sm:inline text-slate-600">•</span>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-blue-400" />
+              <span>Respuesta en 24-48 horas</span>
+            </div>
+          </div>
         </div>
       </section>
     </div>

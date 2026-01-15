@@ -179,7 +179,7 @@ export function Navbar() {
 
   const ecosystemItems = [
     {
-      label: "WEEK-In Life",
+      label: "WEEK-Style",
       href: "/week-in-life",
       icon: <Store className="w-5 h-5" />,
       color: "text-blue-500",
@@ -378,32 +378,32 @@ export function Navbar() {
             {/* Mobile Menu Button - Enhanced mobile button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors"
+              className="lg:hidden p-3 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors active:scale-95"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
             </button>
           </div>
         </div>
 
         {/* Mobile Menu - Premium mobile menu design */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200 bg-white">
-            <div className="container mx-auto px-4 py-4 space-y-1">
+          <div className="lg:hidden border-t border-slate-200 bg-white shadow-xl">
+            <div className="container mx-auto px-4 py-6 space-y-2 max-h-[calc(100vh-80px)] overflow-y-auto">
               {navItems.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 font-semibold transition-colors ${item.bgHover}`}
+                  className={`flex items-center gap-4 px-5 py-4 rounded-xl text-slate-700 font-semibold transition-all active:scale-95 ${item.bgHover} text-base`}
                 >
-                  <span className={item.color}>{item.icon}</span>
+                  <span className={`${item.color} text-xl`}>{item.icon}</span>
                   <span>{item.label}</span>
                 </Link>
               ))}
 
-              <div className="pt-2 pb-1">
-                <p className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Mundo-WEEK</p>
+              <div className="pt-4 pb-2">
+                <p className="px-5 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Ecosistema WEEK</p>
               </div>
 
               {ecosystemItems.map((item) => (
@@ -411,19 +411,20 @@ export function Navbar() {
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 transition-colors"
+                  className="flex items-start gap-4 px-5 py-4 rounded-xl text-slate-700 hover:bg-slate-50 transition-all active:scale-95"
                 >
-                  <span className={item.color}>{item.icon}</span>
+                  <span className={`${item.color} text-xl mt-0.5`}>{item.icon}</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-sm">{item.label}</p>
-                    <p className="text-xs text-slate-500">{item.description}</p>
+                    <p className="font-bold text-base">{item.label}</p>
+                    <p className="text-sm text-slate-500 mt-1">{item.description}</p>
                   </div>
                 </Link>
               ))}
 
-              <div className="pt-4 mt-4 border-t border-slate-200 space-y-2">
+              <div className="pt-6 mt-6 border-t-2 border-slate-200 space-y-3">
                 <Link href="/auth" onClick={() => setMobileMenuOpen(false)}>
-                  <Button className="w-full bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FFC3C7] text-white font-black text-base py-4 animate-pulse hover:animate-none shadow-lg shadow-pink-300/40 border border-pink-200 rounded-md">
+                  <Button className="w-full bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FFC3C7] text-white font-black text-lg py-6 hover:shadow-xl transition-all shadow-lg shadow-pink-300/50 border-2 border-pink-200 rounded-xl hover:scale-105">
+                    <Play className="w-6 h-6 fill-white mr-2" />
                     COMENZAR
                   </Button>
                 </Link>
