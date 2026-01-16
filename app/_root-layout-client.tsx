@@ -12,6 +12,7 @@ import { OrganizationJsonLd, WebsiteJsonLd, LocalBusinessJsonLd } from "@/compon
 import { GoogleAnalytics } from "@/components/analytics/google-analytics"
 import { MicrosoftClarity } from "@/components/analytics/microsoft-clarity"
 import { BetaBanner } from "@/components/beta-banner"
+import { PasswordProtectionOverlay } from "@/components/password-protection-overlay"
 
 interface RootLayoutClientProps {
   children: React.ReactNode
@@ -31,6 +32,8 @@ export function RootLayoutClient({ children, interVariable }: RootLayoutClientPr
         <MicrosoftClarity />
       </head>
       <body className="font-sans antialiased">
+        <PasswordProtectionOverlay />
+
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-slate-900 focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
