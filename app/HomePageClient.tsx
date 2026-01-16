@@ -212,16 +212,15 @@ export function HomePageClient() {
             {showLegalNotice && (
               <div className="container mx-auto max-w-6xl relative z-10 mb-8">
                 <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl p-6 shadow-lg backdrop-blur-sm relative">
-                  {/* X button to close */}
                   <button
                     onClick={() => setShowLegalNotice(false)}
-                    className="absolute top-3 right-3 p-2 rounded-full bg-amber-500/20 hover:bg-amber-500/40 transition-colors"
+                    className="absolute top-2 right-2 w-10 h-10 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 transition-colors shadow-lg z-50"
                     aria-label="Cerrar aviso legal"
                   >
-                    <X className="w-5 h-5 text-amber-400" />
+                    <X className="w-6 h-6 text-white" strokeWidth={3} />
                   </button>
 
-                  <div className="flex items-start gap-4 pr-10">
+                  <div className="flex items-start gap-4 pr-12">
                     <div className="flex-shrink-0 mt-1">
                       <Scale className="h-8 w-8 text-amber-400" />
                     </div>

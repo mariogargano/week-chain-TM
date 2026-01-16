@@ -15,6 +15,7 @@ import {
   QrCode,
   CheckCircle,
   Lock,
+  Sparkles,
 } from "lucide-react"
 import type { Metadata } from "next"
 import { BrokerDashboardPreview } from "@/components/broker-dashboard-preview"
@@ -570,36 +571,22 @@ export default function BrokerProgramaPage() {
         </div>
 
         <div className="container mx-auto max-w-4xl relative z-10 text-center">
-          <div className="inline-block mb-6 px-6 py-2 bg-amber-500/20 border-2 border-amber-500/40 rounded-full">
-            <span className="text-amber-400 font-bold text-sm flex items-center gap-2">
-              <Award className="w-4 h-4" />
-              Programa Exclusivo
-            </span>
-          </div>
+          <Badge className="mb-6 bg-amber-500/20 text-amber-300 border-amber-500/30 text-base font-semibold px-6 py-2">
+            <Sparkles className="w-4 h-4 mr-2 inline" />
+            Programa Exclusivo
+          </Badge>
 
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             ¿Listo para ser parte del equipo WEEK-CHAIN™?
           </h2>
 
-          <p className="text-xl text-slate-300 mb-4">
+          <p className="text-xl text-slate-300 mb-8">
             Únete a nuestro programa de intermediación y comienza a generar{" "}
             <span className="text-amber-400 font-bold">4% de honorarios</span> por facilitar la contratación de
             servicios vacacionales de calidad. Registro disponible en todos los países.
           </p>
 
-          <div className="mt-12 mb-8">
-            <Link href="/auth">
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-600 hover:via-amber-500 hover:to-amber-600 text-slate-900 font-black text-2xl px-16 py-8 h-auto rounded-2xl shadow-2xl shadow-amber-500/50 border-4 border-amber-300 hover:scale-110 transition-all duration-300 hover:shadow-amber-400/70 animate-pulse"
-              >
-                APLICAR AHORA
-                <ArrowRight className="ml-4 h-8 w-8" />
-              </Button>
-            </Link>
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-slate-400 mt-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-slate-400 mb-10">
             <div className="flex items-center gap-2">
               <Lock className="w-5 h-5 text-emerald-400" />
               <span>Proceso 100% seguro</span>
@@ -610,6 +597,14 @@ export default function BrokerProgramaPage() {
               <span>Respuesta en 24-48 horas</span>
             </div>
           </div>
+
+          <a
+            href="/broker/apply"
+            className="inline-flex items-center gap-4 px-16 py-6 text-2xl font-black text-black bg-yellow-400 hover:bg-yellow-300 rounded-2xl border-4 border-yellow-300 shadow-[0_20px_50px_rgba(251,191,36,0.5)] hover:scale-110 transition-all duration-300"
+          >
+            APLICAR AHORA
+            <ArrowRight className="w-8 h-8" />
+          </a>
         </div>
       </section>
     </div>

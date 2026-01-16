@@ -17,13 +17,11 @@ export default function WeekAgentPage() {
 
         <div className="container mx-auto max-w-5xl relative z-10">
           <div className="text-center space-y-8">
-            {/* Badge */}
             <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 text-sm font-semibold px-6 py-2">
               <Sparkles className="w-4 h-4 mr-2" />
               Programa Exclusivo WEEK-Agent
             </Badge>
 
-            {/* Main Heading */}
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight">
               <span className="text-white">Obtén </span>
               <span className="text-amber-400">4%</span>
@@ -32,41 +30,21 @@ export default function WeekAgentPage() {
               <span className="text-white">por Cada Venta Efectiva</span>
             </h1>
 
-            {/* Description */}
             <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Únete al programa de intermediación de WEEK-CHAIN y obtén 4% de honorarios por cada referido directo que
               compre un certificado vacacional. Sistema simple y transparente sin niveles.
             </p>
 
-            <div className="pt-8 flex justify-center">
+            <div className="pt-8">
               <a
-                href="/auth"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "16px",
-                  padding: "24px 64px",
-                  fontSize: "24px",
-                  fontWeight: "900",
-                  color: "#0f172a",
-                  backgroundColor: "#f59e0b",
-                  borderRadius: "16px",
-                  border: "4px solid #fcd34d",
-                  boxShadow: "0 25px 50px -12px rgba(245, 158, 11, 0.6)",
-                  textDecoration: "none",
-                  cursor: "pointer",
-                  transition: "transform 0.2s ease",
-                }}
-                onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-                onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                href="/broker/apply"
+                className="inline-flex items-center gap-4 px-16 py-6 text-2xl font-black text-black bg-yellow-400 hover:bg-yellow-300 rounded-2xl border-4 border-yellow-300 shadow-[0_20px_50px_rgba(251,191,36,0.5)] hover:scale-110 transition-all duration-300"
               >
                 APLICAR AHORA
-                <ArrowRight style={{ width: "32px", height: "32px" }} />
+                <ArrowRight className="w-8 h-8" />
               </a>
             </div>
-            {/* FIN BOTON */}
 
-            {/* Security indicators */}
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-slate-400 pt-6">
               <div className="flex items-center gap-2">
                 <Shield className="w-5 h-5 text-emerald-400" />
@@ -97,7 +75,7 @@ export default function WeekAgentPage() {
               {
                 icon: DollarSign,
                 title: "4% de Comisión",
-                description: "Honorarios fijos por cada venta efectiva de certificados vacacionales",
+                description: "Honorarios fijos por cada venta efectiva",
                 color: "text-amber-500",
               },
               {
@@ -127,7 +105,7 @@ export default function WeekAgentPage() {
               {
                 icon: Award,
                 title: "Soporte Dedicado",
-                description: "Equipo profesional disponible 24/7 para ti",
+                description: "Equipo profesional disponible 24/7",
                 color: "text-cyan-500",
               },
             ].map((benefit, index) => (
@@ -202,33 +180,13 @@ export default function WeekAgentPage() {
           <h2 className="text-3xl md:text-5xl font-bold mb-6">¿Listo para ser WEEK-Agent?</h2>
           <p className="text-xl text-slate-300 mb-10">Únete a cientos de agentes exitosos en toda Latinoamérica</p>
 
-          <div className="flex justify-center">
-            <a
-              href="/auth"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "12px",
-                padding: "20px 48px",
-                fontSize: "20px",
-                fontWeight: "800",
-                color: "#0f172a",
-                backgroundColor: "#f59e0b",
-                borderRadius: "12px",
-                border: "3px solid #fcd34d",
-                boxShadow: "0 20px 40px -10px rgba(245, 158, 11, 0.5)",
-                textDecoration: "none",
-                cursor: "pointer",
-                transition: "transform 0.2s ease",
-              }}
-              onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-            >
-              COMENZAR AHORA
-              <ArrowRight style={{ width: "24px", height: "24px" }} />
-            </a>
-          </div>
-          {/* FIN BOTON */}
+          <a
+            href="/broker/apply"
+            className="inline-flex items-center gap-3 px-12 py-5 text-xl font-black text-black bg-yellow-400 hover:bg-yellow-300 rounded-xl border-4 border-yellow-300 shadow-[0_20px_50px_rgba(251,191,36,0.5)] hover:scale-110 transition-all duration-300"
+          >
+            COMENZAR AHORA
+            <ArrowRight className="w-6 h-6" />
+          </a>
         </div>
       </section>
     </div>

@@ -194,7 +194,7 @@ export function Navbar() {
     },
     {
       label: "WEEK-Agent",
-      href: "/broker-programa",
+      href: "/week-agent",
       icon: <TrendingUp className="w-5 h-5" />,
       color: "text-emerald-500",
       description: "Programa de comisiones 4%",
@@ -252,7 +252,7 @@ export function Navbar() {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Logo - Enhanced logo with better spacing */}
+            {/* Logo */}
             <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
               <div className="relative">
                 <Image
@@ -270,7 +270,7 @@ export function Navbar() {
               </div>
             </Link>
 
-            {/* Desktop Navigation - Premium design with better visual hierarchy */}
+            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-2">
               {navItems.map((item) => (
                 <Link
@@ -283,7 +283,7 @@ export function Navbar() {
                 </Link>
               ))}
 
-              {/* Mundo-WEEK Dropdown - Enhanced dropdown with premium styling */}
+              {/* Mundo-WEEK Dropdown */}
               <DropdownMenu open={ecosystemOpen} onOpenChange={setEcosystemOpen}>
                 <DropdownMenuTrigger asChild>
                   <button className="group flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#FF9AA2] transition-all rounded-xl hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50">
@@ -316,24 +316,15 @@ export function Navbar() {
               </DropdownMenu>
 
               <Link href="/auth">
-                <button className="group flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FFC3C7] hover:shadow-lg transition-all rounded-xl hover:scale-105 shadow-md shadow-pink-300/40 border border-pink-200">
+                <button className="group flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FF9AA2] hover:shadow-lg transition-all rounded-xl hover:scale-105 shadow-md shadow-pink-300/40 border border-pink-300">
                   <Play className="w-5 h-5 fill-white group-hover:scale-110 transition-transform" />
-                  <span className="whitespace-nowrap">COMENZAR</span>
+                  <span>COMENZAR</span>
                 </button>
               </Link>
             </nav>
 
-            {/* Right Side Actions - Better authentication UI */}
+            {/* Right Side Actions - Solo si esta autenticado */}
             <div className="hidden lg:flex items-center gap-3">
-              <Link href="/auth/login">
-                <Button
-                  variant="outline"
-                  className="border-slate-300 text-slate-700 font-semibold text-sm px-5 py-2.5 h-auto hover:bg-slate-50 transition-all rounded-lg bg-transparent"
-                >
-                  Iniciar Sesión
-                </Button>
-              </Link>
-
               {!isAuthenticated ? (
                 <Link href="/auth/login">
                   <Button
@@ -375,7 +366,7 @@ export function Navbar() {
               <LanguageSelector />
             </div>
 
-            {/* Mobile Menu Button - Enhanced mobile button */}
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="lg:hidden p-3 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors active:scale-95"
@@ -386,7 +377,7 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Menu - Premium mobile menu design */}
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden border-t border-slate-200 bg-white shadow-xl">
             <div className="container mx-auto px-4 py-6 space-y-2 max-h-[calc(100vh-80px)] overflow-y-auto">
@@ -423,7 +414,7 @@ export function Navbar() {
 
               <div className="pt-6 mt-6 border-t-2 border-slate-200 space-y-3">
                 <Link href="/auth" onClick={() => setMobileMenuOpen(false)}>
-                  <Button className="w-full bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FFC3C7] text-white font-black text-lg py-6 hover:shadow-xl transition-all shadow-lg shadow-pink-300/50 border-2 border-pink-200 rounded-xl hover:scale-105">
+                  <Button className="w-full bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FF9AA2] text-white font-black text-lg py-6 hover:shadow-xl transition-all shadow-lg shadow-pink-300/50 border-2 border-pink-200 rounded-xl hover:scale-105">
                     <Play className="w-6 h-6 fill-white mr-2" />
                     COMENZAR
                   </Button>
@@ -431,7 +422,7 @@ export function Navbar() {
 
                 {!isAuthenticated ? (
                   <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)}>
-                    <Button variant="outline" className="w-full bg-transparent">
+                    <Button variant="outline" className="w-full bg-transparent mt-3">
                       Iniciar Sesión
                     </Button>
                   </Link>
