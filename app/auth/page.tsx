@@ -480,47 +480,112 @@ export default function AuthPage() {
       </Card>
 
       {showTermsDialog && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-amber-100">
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#FFFFFF",
+              padding: "32px",
+              borderRadius: "16px",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+              width: "100%",
+              maxWidth: "600px",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              margin: "16px",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+              <div style={{ padding: "8px", borderRadius: "8px", backgroundColor: "#FEF3C7" }}>
                 <Shield className="h-6 w-6 text-amber-600" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">Términos y Condiciones</h2>
+              <h2 style={{ fontSize: "24px", fontWeight: "bold", color: "#111827" }}>Términos y Condiciones</h2>
             </div>
 
-            <div className="mb-6 p-4 bg-slate-50 rounded-lg border border-slate-200 max-h-[300px] overflow-y-auto">
-              <div className="space-y-4 text-sm text-slate-700">
-                <p className="font-semibold">
+            <div
+              style={{
+                marginBottom: "24px",
+                padding: "16px",
+                backgroundColor: "#F8FAFC",
+                borderRadius: "8px",
+                border: "1px solid #E2E8F0",
+                maxHeight: "250px",
+                overflowY: "auto",
+              }}
+            >
+              <div style={{ fontSize: "14px", color: "#475569" }}>
+                <p style={{ fontWeight: "600", marginBottom: "16px" }}>
                   Para proteger tanto a usted como a WEEK-CHAIN, debe aceptar nuestros términos legales antes de
                   continuar con el inicio de sesión con Google.
                 </p>
 
-                <h3 className="font-semibold text-slate-900 mt-4">Términos Principales:</h3>
-                <ul className="list-disc list-inside space-y-2 ml-2">
-                  <li>Los certificados digitales de WEEK-CHAIN representan derechos de uso vacacional por 15 años</li>
-                  <li>No constituyen propiedad inmobiliaria ni instrumento financiero</li>
-                  <li>Sujeto a las regulaciones mexicanas NOM-029-SE-2021 y NOM-151-SCFI-2016</li>
-                  <li>Tiene un periodo de reflexión de 5 días hábiles para cancelar su compra</li>
-                  <li>Sus datos personales serán tratados conforme a la LFPDPPP</li>
+                <h3 style={{ fontWeight: "600", color: "#0F172A", marginTop: "16px", marginBottom: "8px" }}>
+                  Términos Principales:
+                </h3>
+                <ul style={{ listStyle: "disc", paddingLeft: "24px" }}>
+                  <li style={{ marginBottom: "8px" }}>
+                    Los certificados digitales de WEEK-CHAIN representan derechos de uso vacacional por 15 años
+                  </li>
+                  <li style={{ marginBottom: "8px" }}>
+                    No constituyen propiedad inmobiliaria ni instrumento financiero
+                  </li>
+                  <li style={{ marginBottom: "8px" }}>
+                    Sujeto a las regulaciones mexicanas NOM-029-SE-2021 y NOM-151-SCFI-2016
+                  </li>
+                  <li style={{ marginBottom: "8px" }}>
+                    Tiene un periodo de reflexión de 5 días hábiles para cancelar su compra
+                  </li>
+                  <li style={{ marginBottom: "8px" }}>Sus datos personales serán tratados conforme a la LFPDPPP</li>
                 </ul>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg border border-slate-200 mb-6">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "16px",
+                padding: "20px",
+                backgroundColor: "#FFFBEB",
+                borderRadius: "12px",
+                border: "2px solid #F59E0B",
+                marginBottom: "24px",
+              }}
+            >
               <input
                 type="checkbox"
                 id="accept-terms-google"
                 checked={hasAccepted}
                 onChange={(e) => setHasAccepted(e.target.checked)}
-                className="mt-1 h-5 w-5 rounded border-gray-300 text-amber-600 focus:ring-amber-500 cursor-pointer"
+                style={{
+                  width: "28px",
+                  height: "28px",
+                  cursor: "pointer",
+                  accentColor: "#F59E0B",
+                  flexShrink: 0,
+                }}
               />
-              <label htmlFor="accept-terms-google" className="text-sm text-slate-700 cursor-pointer">
-                He leído y acepto los{" "}
+              <label
+                htmlFor="accept-terms-google"
+                style={{ fontSize: "15px", color: "#78350F", cursor: "pointer", lineHeight: "1.5" }}
+              >
+                <strong>He leído y acepto</strong> los{" "}
                 <a
                   href="/legal/terms"
                   target="_blank"
-                  className="text-amber-600 hover:underline font-medium"
+                  style={{ color: "#D97706", fontWeight: "600", textDecoration: "underline" }}
                   rel="noreferrer"
                 >
                   Términos y Condiciones
@@ -529,7 +594,7 @@ export default function AuthPage() {
                 <a
                   href="/legal/privacy"
                   target="_blank"
-                  className="text-amber-600 hover:underline font-medium"
+                  style={{ color: "#D97706", fontWeight: "600", textDecoration: "underline" }}
                   rel="noreferrer"
                 >
                   Aviso de Privacidad
@@ -538,25 +603,49 @@ export default function AuthPage() {
               </label>
             </div>
 
-            <div className="flex gap-3">
-              <Button
+            <div style={{ display: "flex", gap: "16px" }}>
+              <button
                 onClick={() => {
                   setShowTermsDialog(false)
                   setPendingAction(null)
                   setHasAccepted(false)
                 }}
-                variant="outline"
-                className="flex-1 h-12"
+                type="button"
+                style={{
+                  flex: 1,
+                  height: "56px",
+                  padding: "16px 24px",
+                  backgroundColor: "#FFFFFF",
+                  border: "2px solid #D1D5DB",
+                  borderRadius: "12px",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  color: "#374151",
+                  cursor: "pointer",
+                }}
               >
                 Cancelar
-              </Button>
-              <Button
+              </button>
+              <button
                 onClick={handleTermsAcceptance}
                 disabled={!hasAccepted}
-                className="flex-1 h-12 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:opacity-50"
+                type="button"
+                style={{
+                  flex: 1,
+                  height: "56px",
+                  padding: "16px 24px",
+                  background: hasAccepted ? "linear-gradient(to right, #F59E0B, #EA580C)" : "#D1D5DB",
+                  border: "none",
+                  borderRadius: "12px",
+                  fontSize: "16px",
+                  fontWeight: "700",
+                  color: hasAccepted ? "#FFFFFF" : "#9CA3AF",
+                  cursor: hasAccepted ? "pointer" : "not-allowed",
+                  boxShadow: hasAccepted ? "0 4px 14px rgba(245, 158, 11, 0.4)" : "none",
+                }}
               >
-                Aceptar y Continuar
-              </Button>
+                {hasAccepted ? "✓ Aceptar y Continuar" : "Marca la casilla primero"}
+              </button>
             </div>
           </div>
         </div>
