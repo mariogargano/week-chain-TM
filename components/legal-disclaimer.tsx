@@ -21,14 +21,25 @@ export function LegalDisclaimer() {
             <p className="text-sm text-white font-medium mb-1">Aviso Legal Importante</p>
             <p className="text-xs text-slate-300 leading-relaxed">{LEGAL_COPY.SVC_FULL}</p>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex-shrink-0 text-slate-400 hover:text-white hover:bg-slate-800"
+          <button
             onClick={() => setIsVisible(false)}
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              backgroundColor: '#ef4444',
+              border: '2px solid #ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              flexShrink: 0,
+              boxShadow: '0 4px 12px rgba(239, 68, 68, 0.4)',
+            }}
+            aria-label="Cerrar aviso legal"
           >
-            <X className="h-4 w-4" />
-          </Button>
+            <X style={{ width: '24px', height: '24px', color: '#ffffff' }} />
+          </button>
         </div>
       </div>
     </div>

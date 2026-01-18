@@ -197,82 +197,17 @@ export function HomePageClient() {
             </section>
           </article>
 
-          {/* DynamicCertificateShowcase */}
-          <DynamicCertificateShowcase />
-
-          {/* Buyer Benefits Section - SVC Characteristics */}
-          <section
-            aria-labelledby="buyer-benefits-title"
-            className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 px-4 sm:px-6 py-12 sm:py-16 md:py-24 overflow-hidden"
-          >
+          {/* DynamicCertificateShowcase con Características integradas */}
+          <section className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 overflow-hidden">
             {/* Background decorations */}
             <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-
-            {showLegalNotice && (
-              <div className="container mx-auto max-w-6xl relative z-10 mb-8">
-                <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl p-6 shadow-lg backdrop-blur-sm relative">
-                  <button
-                    onClick={() => setShowLegalNotice(false)}
-                    className="absolute top-2 right-2 w-10 h-10 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 transition-colors shadow-lg z-50"
-                    aria-label="Cerrar aviso legal"
-                  >
-                    <X className="w-6 h-6 text-white" strokeWidth={3} />
-                  </button>
-
-                  <div className="flex items-start gap-4 pr-12">
-                    <div className="flex-shrink-0 mt-1">
-                      <Scale className="h-8 w-8 text-amber-400" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-bold text-white mb-2">
-                        Aviso Legal Importante - Smart Vacational Certificate (SVC)
-                      </h3>
-                      <div className="space-y-2 text-sm text-slate-300">
-                        <p className="font-semibold">
-                          Este certificado otorga un{" "}
-                          <span className="text-amber-400">derecho personal, temporal y revocable</span> de solicitar
-                          uso vacacional por hasta 15 años, sujeto a disponibilidad.
-                        </p>
-                        <div className="grid sm:grid-cols-2 gap-2 mt-3">
-                          <div className="flex items-start gap-2">
-                            <span className="text-red-400 font-bold">✗</span>
-                            <span className="text-slate-200">NO es propiedad inmobiliaria</span>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <span className="text-red-400 font-bold">✗</span>
-                            <span className="text-slate-200">NO es inversión financiera</span>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <span className="text-red-400 font-bold">✗</span>
-                            <span className="text-slate-200">NO garantiza destinos específicos</span>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <span className="text-red-400 font-bold">✗</span>
-                            <span className="text-slate-200">NO es copropiedad fraccional</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <div className="container mx-auto max-w-6xl relative z-10">
-              <div className="mb-8 text-center">
-                <h2
-                  id="buyer-benefits-title"
-                  className="mb-3 text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight"
-                >
-                  Características del Sistema SVC
-                </h2>
-                <p className="mb-8 md:mb-12 text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto">
-                  Derecho temporal de solicitud de uso vacacional. Todas las solicitudes están sujetas a disponibilidad
-                  del sistema y no constituyen garantía de acceso a fechas, destinos o propiedades específicas.
-                </p>
-              </div>
-
+            
+            {/* Certificado */}
+            <DynamicCertificateShowcase />
+            
+            {/* Características del Certificado - Integradas */}
+            <div className="container mx-auto max-w-6xl relative z-10 px-4 sm:px-6 pb-12 sm:pb-16 md:pb-24">
               <div className="space-y-6">
                 <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-purple-50 via-indigo-50 to-purple-50 rounded-2xl border-2 border-purple-200">
                   <div className="flex-shrink-0">
