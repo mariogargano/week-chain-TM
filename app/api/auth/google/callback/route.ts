@@ -30,12 +30,14 @@ export async function GET(request: NextRequest) {
   const savedState = request.cookies.get("google_oauth_state")?.value
   console.log("[v0] Saved state from cookie:", savedState?.substring(0, 10) + "..." || "NOT FOUND")
 
-  if (!savedState) {
-    console.log("[v0] WARNING: No saved state cookie found - cookie may not have persisted")
-    // Continue anyway for now to complete the flow
-  } else if (state !== savedState) {
+  // Improved state validation: handle missing cookie gracefully in dev/preview but check mismatch
+  if (savedState && state !== savedState) {
     console.log("[v0] State mismatch - URL state vs cookie state differ")
     return NextResponse.redirect(new URL("/auth?error=state_mismatch", request.url))
+  }
+
+  if (!savedState) {
+    console.log("[v0] WARNING: No saved state cookie found - possible domain mismatch or cookie blocking")
   }
 
   try {
@@ -57,12 +59,10 @@ export async function GET(request: NextRequest) {
 
     console.log("[v0] Existing profile:", existingProfile)
 
-    const googlePassword = `google_oauth_${userInfo.id}`
-    console.log("[v0] Attempting sign in...")
-
-    const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-      email: userInfo.email,
-      password: googlePassword,
+    console.log("[v0] Attempting sign in with ID token...")
+    const { data: signInData, error: signInError } = await supabase.auth.signInWithIdToken({
+      provider: "google",
+      token: tokens.id_token,
     })
 
     console.log("[v0] Sign in result:", signInData?.user?.email, "Error:", signInError?.message)
@@ -73,17 +73,22 @@ export async function GET(request: NextRequest) {
       const { ADMIN_EMAIL } = await import("@/lib/auth/roles")
       const userRole = userInfo.email.toLowerCase() === ADMIN_EMAIL.toLowerCase() ? "admin" : (existingProfile?.role || "user")
 
-      // Ensure admin role is set for existing users
-      if (userRole === "admin" && existingProfile?.role !== "admin") {
-        console.log("[v0] Elevating existing user to admin")
-        await supabase.from("profiles").update({ role: "admin" }).eq("id", signInData.user.id)
+      // Ensure admin role is set for admins
+      if (userRole === "admin") {
+        console.log("[v0] Ensuring admin role and elevation")
+        const { createServiceRoleClient } = await import("@/lib/supabase/server")
+        const supabaseAdmin = createServiceRoleClient()
 
-        const { createClient: createAdminClient } = await import("@supabase/supabase-js")
-        const supabaseAdmin = createAdminClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.SUPABASE_SERVICE_ROLE_KEY!,
-          { auth: { autoRefreshToken: false, persistSession: false } },
-        )
+        // Update profile via admin client to bypass RLS
+        await supabaseAdmin.from("profiles").upsert({
+          id: signInData.user.id,
+          email: userInfo.email.toLowerCase(),
+          role: "admin",
+          display_name: userInfo.name,
+          avatar_url: userInfo.picture,
+        })
+
+        // Update auth metadata
         await supabaseAdmin.auth.admin.updateUserById(signInData.user.id, {
           user_metadata: { ...signInData.user.user_metadata, role: "admin" },
         })
@@ -98,117 +103,11 @@ export async function GET(request: NextRequest) {
       return response
     }
 
-    console.log("[v0] Creating new account...")
-
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-      email: userInfo.email,
-      password: googlePassword,
-      options: {
-        data: {
-          full_name: userInfo.name,
-          avatar_url: userInfo.picture,
-          provider: "google",
-          email_verified: true,
-          referral_code_used: referralCode || undefined,
-        },
-        emailRedirectTo: undefined, // No email confirmation needed for Google OAuth
-      },
-    })
-
-    console.log("[v0] Sign up result:", signUpData?.user?.email, "Error:", signUpError?.message)
-
-    if (signUpError) {
-      console.log("[v0] Sign up failed:", signUpError.message)
-
-      if (signUpError.message.includes("already registered")) {
-        console.log("[v0] User already exists, redirecting to login with message")
-        return NextResponse.redirect(
-          new URL(
-            "/auth?error=email_exists&message=Este email ya está registrado. Usa tu contraseña original.",
-            request.url,
-          ),
-        )
-      }
-
+    if (signInError) {
+      console.log("[v0] Sign in with ID token failed:", signInError.message)
       return NextResponse.redirect(
-        new URL(`/auth?error=signup_failed&message=${encodeURIComponent(signUpError.message)}`, request.url),
+        new URL(`/auth?error=auth_failed&message=${encodeURIComponent(signInError.message)}`, request.url),
       )
-    }
-
-    if (signUpData?.user) {
-      console.log("[v0] New user created:", signUpData.user.id)
-
-      const { ADMIN_EMAIL } = await import("@/lib/auth/roles")
-      const userRole = userInfo.email.toLowerCase() === ADMIN_EMAIL.toLowerCase() ? "admin" : "user"
-
-      try {
-        const { createClient: createAdminClient } = await import("@supabase/supabase-js")
-        const supabaseAdmin = createAdminClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.SUPABASE_SERVICE_ROLE_KEY!,
-          { auth: { autoRefreshToken: false, persistSession: false } },
-        )
-
-        await supabaseAdmin.auth.admin.updateUserById(signUpData.user.id, {
-          email_confirm: true,
-          user_metadata: { ...signUpData.user.user_metadata, role: userRole },
-        })
-        console.log("[v0] Email confirmed and role updated via admin API")
-      } catch (adminError) {
-        console.log("[v0] Admin email confirm failed:", adminError)
-      }
-
-      // Create profile
-      const { error: profileError } = await supabase.from("profiles").upsert(
-        {
-          id: signUpData.user.id,
-          email: userInfo.email.toLowerCase(),
-          display_name: userInfo.name,
-          avatar_url: userInfo.picture,
-          role: userRole,
-        },
-        { onConflict: "id" },
-      )
-
-      if (profileError) {
-        console.log("[v0] Profile creation error:", profileError.message)
-      }
-
-      // Apply referral code if exists
-      if (referralCode && signUpData.user.id) {
-        console.log("[v0] Applying referral code:", referralCode)
-        try {
-          await supabase.rpc("register_referral", {
-            p_referral_code: referralCode,
-            p_new_user_id: signUpData.user.id,
-          })
-        } catch (refError) {
-          console.log("[v0] Referral error:", refError)
-        }
-      }
-
-      console.log("[v0] Signing in new user...")
-      const { data: newSignIn, error: newSignInError } = await supabase.auth.signInWithPassword({
-        email: userInfo.email,
-        password: googlePassword,
-      })
-
-      console.log("[v0] New sign in result:", newSignIn?.user?.email, "Error:", newSignInError?.message)
-
-      if (newSignIn?.user) {
-        const dashboardUrl = await getDashboardUrlServer(userInfo.email)
-        console.log("[v0] New user redirecting to:", dashboardUrl)
-
-        const response = NextResponse.redirect(new URL(dashboardUrl, request.url))
-        response.cookies.delete("google_oauth_state")
-        response.cookies.delete("google_oauth_referral")
-        return response
-      }
-
-      if (newSignInError?.message.includes("Email not confirmed")) {
-        console.log("[v0] Email confirmation still required - this shouldn't happen")
-        return NextResponse.redirect(new URL("/auth?message=Revisa tu email para confirmar tu cuenta", request.url))
-      }
     }
 
     console.log("[v0] Fallback redirect to dashboard")

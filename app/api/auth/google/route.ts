@@ -37,14 +37,17 @@ export async function GET(request: Request) {
     const response = NextResponse.redirect(authUrl)
 
     const isProduction = process.env.NODE_ENV === "production"
+    const host = request.headers.get("host") || ""
+    const isMainDomain = host.includes("week-chain.com")
+
     const cookieOptions = {
       httpOnly: true,
-      secure: isProduction,
+      secure: isProduction || host.includes("localhost") === false,
       sameSite: "lax" as const,
       maxAge: 600,
       path: "/",
-      // Set domain for www subdomain in production
-      ...(isProduction && { domain: ".week-chain.com" }),
+      // Only set domain if we are on the main domain, to avoid issues on Vercel preview URLs
+      ...(isMainDomain && { domain: ".week-chain.com" }),
     }
 
     response.cookies.set("google_oauth_state", randomState, cookieOptions)
