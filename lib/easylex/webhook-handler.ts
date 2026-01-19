@@ -30,7 +30,7 @@ export function verifyEasylexSignature(
   timestamp: number,
 ): WebhookVerificationResult {
   try {
-    const env = getEnv()
+    const { config } = require("@/lib/config")
 
     // 1. Verify timestamp to prevent replay attacks
     const now = Date.now()
@@ -44,7 +44,7 @@ export function verifyEasylexSignature(
 
     // 2. Compute expected signature: HMAC-SHA256(secret, timestamp + "." + payload)
     const signedPayload = `${timestamp}.${rawBody}`
-    const hmac = createHmac("sha256", env.EASYLEX_WEBHOOK_SECRET)
+    const hmac = createHmac("sha256", config.easylex.webhookSecret)
     hmac.update(signedPayload)
     const expectedSignature = hmac.digest("hex")
 

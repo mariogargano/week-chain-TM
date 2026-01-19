@@ -38,7 +38,7 @@ export default function CertificationsPage() {
   }
 
   async function retryCertification(certId: string) {
-    await fetch("/api/legalario/init-contract", {
+    await fetch("/api/easylex/init-signature", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ certificateId: certId }),
@@ -47,10 +47,10 @@ export default function CertificationsPage() {
   }
 
   async function certifyContract(contractId: string) {
-    await fetch("/api/legalario/init-contract", {
+    await fetch("/api/easylex/init-signature", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contractId }),
+      body: JSON.stringify({ certificateId: contractId }),
     })
     loadCertificates()
   }
@@ -87,7 +87,7 @@ export default function CertificationsPage() {
     <div className="p-6 space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Certificaciones NOM-151</h1>
-        <p className="text-muted-foreground">Gestión de certificaciones legales vía Legalario</p>
+        <p className="text-muted-foreground">Gestión de certificaciones legales vía EasyLex</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -120,7 +120,7 @@ export default function CertificationsPage() {
       <Card>
         <CardHeader>
           <CardTitle>Certificados</CardTitle>
-          <CardDescription>Historial de certificaciones NOM-151 vía Legalario</CardDescription>
+          <CardDescription>Historial de certificaciones NOM-151 vía EasyLex</CardDescription>
         </CardHeader>
         <CardContent>
           {loading ? (
@@ -155,7 +155,7 @@ export default function CertificationsPage() {
                               size="sm"
                               variant="outline"
                               onClick={() => window.open(cert.certificate_url, "_blank")}
-                              title="Ver Certificado Legalario"
+                              title="Ver Certificado EasyLex"
                             >
                               <Download className="w-4 h-4" />
                             </Button>

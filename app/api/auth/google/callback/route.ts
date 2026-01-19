@@ -68,7 +68,27 @@ export async function GET(request: NextRequest) {
     console.log("[v0] Sign in result:", signInData?.user?.email, "Error:", signInError?.message)
 
     if (signInData?.user) {
-      console.log("[v0] Sign in successful, getting dashboard URL...")
+      console.log("[v0] Sign in successful, checking role...")
+
+      const { ADMIN_EMAIL } = await import("@/lib/auth/roles")
+      const userRole = userInfo.email.toLowerCase() === ADMIN_EMAIL.toLowerCase() ? "admin" : (existingProfile?.role || "user")
+
+      // Ensure admin role is set for existing users
+      if (userRole === "admin" && existingProfile?.role !== "admin") {
+        console.log("[v0] Elevating existing user to admin")
+        await supabase.from("profiles").update({ role: "admin" }).eq("id", signInData.user.id)
+
+        const { createClient: createAdminClient } = await import("@supabase/supabase-js")
+        const supabaseAdmin = createAdminClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.SUPABASE_SERVICE_ROLE_KEY!,
+          { auth: { autoRefreshToken: false, persistSession: false } },
+        )
+        await supabaseAdmin.auth.admin.updateUserById(signInData.user.id, {
+          user_metadata: { ...signInData.user.user_metadata, role: "admin" },
+        })
+      }
+
       const dashboardUrl = await getDashboardUrlServer(userInfo.email)
       console.log("[v0] Redirecting to:", dashboardUrl)
 
@@ -118,6 +138,9 @@ export async function GET(request: NextRequest) {
     if (signUpData?.user) {
       console.log("[v0] New user created:", signUpData.user.id)
 
+      const { ADMIN_EMAIL } = await import("@/lib/auth/roles")
+      const userRole = userInfo.email.toLowerCase() === ADMIN_EMAIL.toLowerCase() ? "admin" : "user"
+
       try {
         const { createClient: createAdminClient } = await import("@supabase/supabase-js")
         const supabaseAdmin = createAdminClient(
@@ -128,8 +151,9 @@ export async function GET(request: NextRequest) {
 
         await supabaseAdmin.auth.admin.updateUserById(signUpData.user.id, {
           email_confirm: true,
+          user_metadata: { ...signUpData.user.user_metadata, role: userRole },
         })
-        console.log("[v0] Email confirmed via admin API")
+        console.log("[v0] Email confirmed and role updated via admin API")
       } catch (adminError) {
         console.log("[v0] Admin email confirm failed:", adminError)
       }
@@ -141,7 +165,7 @@ export async function GET(request: NextRequest) {
           email: userInfo.email.toLowerCase(),
           display_name: userInfo.name,
           avatar_url: userInfo.picture,
-          role: "user",
+          role: userRole,
         },
         { onConflict: "id" },
       )

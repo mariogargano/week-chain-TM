@@ -37,24 +37,27 @@
 
 ---
 
-### 2. Configurar Credenciales Legalario
+### 2. Configurar Credenciales EasyLex
 **Tiempo estimado:** 15 minutos
 **Prioridad:** 🔴 CRÍTICA
 
 **Variables a agregar en Vercel:**
 ```env
-LEGALARIO_API_KEY=tu_api_key_aqui
-LEGALARIO_WEBHOOK_SECRET=tu_webhook_secret_aqui
+EASYLEX_API_KEY=tu_api_key_aqui
+EASYLEX_WEBHOOK_SECRET=tu_webhook_secret_aqui
+EASYLEX_API_URL=https://api.easylex.com
+EASYLEX_WIDGET_URL=https://wg.easylex.com
+EASYLEX_ENVIRONMENT=production
 ```
 
 **Pasos:**
-1. Obtener credenciales de Legalario.
+1. Obtener credenciales de EasyLex.
 2. Agregar en Vercel → Settings → Environment Variables.
 3. Redeploy la aplicación.
 
 **Webhook URL:**
 ```
-https://tu-dominio.vercel.app/api/legalario/webhook
+https://tu-dominio.vercel.app/api/easylex/webhook
 ```
 
 ---
@@ -86,7 +89,7 @@ https://tu-dominio.vercel.app/api/legalario/webhook
 - [ ] Verificar certificación NOM-151 iniciada
 
 #### Flujo de Certificación
-- [ ] Esperar callback de Legalario (o simular)
+- [ ] Esperar callback de EasyLex (o simular)
 - [ ] Verificar folio generado
 - [ ] Verificar hash SHA-256
 - [ ] Verificar status "certified"

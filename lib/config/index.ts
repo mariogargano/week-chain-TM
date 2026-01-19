@@ -31,7 +31,14 @@ const envSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
   NEXT_PUBLIC_GOOGLE_CLIENT_ID: z.string().min(1).optional(),
 
-  // Legalario (NOM-151 Certification)
+  // EasyLex (NOM-151 Certification)
+  EASYLEX_API_KEY: z.string().min(1).optional(),
+  EASYLEX_WEBHOOK_SECRET: z.string().min(1).optional(),
+  EASYLEX_API_URL: z.string().url().default("https://sandboxapi.easylex.com"),
+  EASYLEX_WIDGET_URL: z.string().url().default("https://sandboxwg.easylex.com"),
+  EASYLEX_ENVIRONMENT: z.enum(["sandbox", "production"]).default("sandbox"),
+
+  // Legalario (Legacy)
   LEGALARIO_API_KEY: z.string().min(1).optional(),
   LEGALARIO_WEBHOOK_SECRET: z.string().min(1).optional(),
   LEGALARIO_API_URL: z.string().url().default("https://api.legalario.com/v1"),
@@ -96,6 +103,14 @@ export const config = {
     get secretKey() { return getEnv().CONEKTA_SECRET_KEY },
     get webhookSecret() { return getEnv().CONEKTA_WEBHOOK_SECRET },
     get isDemoMode() { return getEnv().CONEKTA_SECRET_KEY === "demo_mode" || !config.isProduction },
+  },
+
+  easylex: {
+    get apiKey() { return getEnv().EASYLEX_API_KEY },
+    get webhookSecret() { return getEnv().EASYLEX_WEBHOOK_SECRET },
+    get apiUrl() { return getEnv().EASYLEX_API_URL },
+    get widgetUrl() { return getEnv().EASYLEX_WIDGET_URL },
+    get environment() { return getEnv().EASYLEX_ENVIRONMENT },
   },
 
   legalario: {

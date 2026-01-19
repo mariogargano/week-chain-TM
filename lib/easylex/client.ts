@@ -42,13 +42,13 @@ export class EasylexClient {
   private config: EasylexConfig
 
   constructor() {
-    const env = getEnv()
+    const { config } = require("@/lib/config")
 
     this.config = {
-      apiUrl: env.EASYLEX_API_URL || "https://sandboxapi.easylex.com",
-      widgetUrl: env.EASYLEX_WIDGET_URL || "https://sandboxwg.easylex.com",
-      apiKey: env.EASYLEX_API_KEY || "",
-      environment: (env.EASYLEX_ENVIRONMENT as "sandbox" | "production") || "sandbox",
+      apiUrl: config.easylex.apiUrl || "https://sandboxapi.easylex.com",
+      widgetUrl: config.easylex.widgetUrl || "https://sandboxwg.easylex.com",
+      apiKey: config.easylex.apiKey || "",
+      environment: config.easylex.environment || "sandbox",
     }
   }
 
