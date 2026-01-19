@@ -79,8 +79,10 @@ function OfCounselDashboardContent() {
   }
 
   return (
-    <div className="container mx-auto p-6 max-w-7xl">
-      {/* Header */}
+    <div className="fixed inset-0 bg-slate-50/50 pt-20 overflow-hidden flex flex-col">
+      <div className="flex-1 overflow-y-auto p-6">
+        <div className="container mx-auto max-w-7xl">
+          {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#C7CEEA] to-[#B5EAD7]">
@@ -373,7 +375,9 @@ function OfCounselDashboardContent() {
             </Button>
           </div>
         </CardContent>
-      </Card>
+          </Card>
+        </div>
+      </div>
     </div>
   )
 }

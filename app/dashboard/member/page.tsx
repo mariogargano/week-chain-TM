@@ -635,7 +635,7 @@ export default function MemberDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="fixed inset-0 bg-gradient-to-br from-slate-50 to-slate-100 pt-20 overflow-hidden flex flex-col">
       <Navbar />
 
       {profile?.referral_code && (
@@ -646,7 +646,7 @@ export default function MemberDashboardPage() {
         />
       )}
 
-      <main className="container mx-auto px-4 py-8 pt-24">
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
@@ -1312,7 +1312,7 @@ export default function MemberDashboardPage() {
               </div>
             </div>
           </div>
-        </div>
+          </div>
       </main>
     </div>
   )

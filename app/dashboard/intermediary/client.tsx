@@ -114,8 +114,10 @@ export function IntermediaryDashboardClient({ profile, commissions, leads }: Int
   }
 
   return (
-    <div className="container max-w-7xl py-8">
-      {/* Header */}
+    <div className="fixed inset-0 bg-slate-50/50 pt-20 overflow-hidden flex flex-col">
+      <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+        <div className="container max-w-7xl">
+          {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold mb-2">Dashboard de Intermediario</h1>
         <div className="flex items-center gap-2">
@@ -332,7 +334,9 @@ export function IntermediaryDashboardClient({ profile, commissions, leads }: Int
             </CardContent>
           </Card>
         </TabsContent>
-      </Tabs>
+        </Tabs>
+        </div>
+      </div>
     </div>
   )
 }

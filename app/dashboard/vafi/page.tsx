@@ -117,9 +117,10 @@ function VaFiDashboardContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8">
+    <div className="fixed inset-0 bg-gradient-to-br from-slate-50 to-slate-100 pt-20 overflow-hidden flex flex-col">
       <Navbar />
-      <div className="max-w-2xl mx-auto mt-8">
+      <div className="flex-1 overflow-y-auto p-8">
+        <div className="max-w-2xl mx-auto mt-8">
         <Link href="/dashboard" className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-8">
           <ArrowLeft className="h-4 w-4" />
           Volver al Dashboard
@@ -139,6 +140,7 @@ function VaFiDashboardContent() {
             </Button>
           </CardContent>
         </Card>
+        </div>
       </div>
     </div>
   )

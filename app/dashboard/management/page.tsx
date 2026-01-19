@@ -255,8 +255,9 @@ function ManagementDashboardContent() {
   return (
     <>
       <Navbar user={true} />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
+      <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 pt-20 overflow-hidden flex flex-col">
+        <div className="flex-1 overflow-y-auto p-6">
+          <div className="max-w-7xl mx-auto space-y-6">
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
@@ -762,6 +763,7 @@ function ManagementDashboardContent() {
               </div>
             </TabsContent>
           </Tabs>
+          </div>
         </div>
       </div>
     </>

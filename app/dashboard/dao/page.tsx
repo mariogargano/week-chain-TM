@@ -114,9 +114,10 @@ function DAODashboardContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#C7CEEA]/20 via-[#FFB7B2]/20 to-[#B5EAD7]/20 p-8">
+    <div className="fixed inset-0 bg-gradient-to-br from-[#C7CEEA]/20 via-[#FFB7B2]/20 to-[#B5EAD7]/20 pt-20 overflow-hidden flex flex-col">
       <Navbar />
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="flex-1 overflow-y-auto p-8">
+        <div className="max-w-7xl mx-auto space-y-8">
         <div>
           <h1 className="text-4xl font-bold text-slate-900 text-balance">Dashboard DAO</h1>
           <p className="text-slate-700 mt-2 text-pretty">Gobernanza y votaciones de la comunidad</p>
@@ -229,7 +230,8 @@ function DAODashboardContent() {
               })
             )}
           </div>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   )

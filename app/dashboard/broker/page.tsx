@@ -274,8 +274,9 @@ function BrokerDashboardContent() {
   return (
     <>
       <Navbar user={true} />
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        <div className="max-w-7xl mx-auto p-6 space-y-6">
+      <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-20 overflow-hidden flex flex-col">
+        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          <div className="max-w-7xl mx-auto space-y-6">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-4">
@@ -646,6 +647,7 @@ function BrokerDashboardContent() {
             <p className="text-slate-500 text-sm">
               WEEK-CHAIN™ · Panel de Intermediario · Los honorarios son calculados al 4% sobre ventas efectivas
             </p>
+          </div>
           </div>
         </div>
       </div>

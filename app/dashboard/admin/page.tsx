@@ -263,7 +263,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-slate-900">
+    <div className="fixed inset-0 flex flex-col overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-slate-900">
       {/* Fixed Header */}
       <div className="flex-shrink-0 border-b border-white/10 bg-white/5 backdrop-blur-lg">
         <div className="flex items-center justify-between p-6">

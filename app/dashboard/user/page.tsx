@@ -126,9 +126,10 @@ export default function UserDashboardPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-gradient-to-br from-[#FFF5F5] via-[#F5F0FF] to-[#F0F5FF] pt-24 pb-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
+      <main className="fixed inset-0 bg-gradient-to-br from-[#FFF5F5] via-[#F5F0FF] to-[#F0F5FF] pt-20 overflow-hidden flex flex-col">
+        <div className="flex-1 overflow-y-auto pt-4 pb-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Header */}
           <div className="mb-8">
             <div className="flex items-center gap-4 mb-2">
               <div className="h-16 w-16 rounded-full bg-gradient-to-r from-[#FF9AA2] to-[#C7CEEA] flex items-center justify-center text-white text-2xl font-bold">
@@ -431,6 +432,7 @@ export default function UserDashboardPage() {
               </Card>
             </TabsContent>
           </Tabs>
+          </div>
         </div>
       </main>
     </>
