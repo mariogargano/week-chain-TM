@@ -1,15 +1,26 @@
 import { createClient } from "@/lib/supabase/server"
 import { NextResponse } from "next/server"
+import { verifyConektaSignature } from "@/lib/conekta/signature-verifier"
+import { createPurchaseVoucher } from "@/lib/vouchers/service"
 import { logger } from "@/lib/config/logger"
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
-    const event = body
+    const rawBody = await request.text()
+    const signature = request.headers.get("x-conekta-signature")
 
-    logger.info("Conekta webhook received", { type: event.type })
+    // Security check: Verify signature
+    if (!verifyConektaSignature(rawBody, signature)) {
+      return NextResponse.json({ error: "Invalid signature" }, { status: 401 })
+    }
 
-    const supabase = await createClient()
+    const event = JSON.parse(rawBody)
+    logger.info("Conekta webhook received and verified", { type: event.type })
+
+    // Use service role client for webhook processing as it's server-to-server
+    // and needs to bypass RLS for system updates
+    const { createServiceRoleClient } = await import("@/lib/supabase/server")
+    const supabase = createServiceRoleClient()
 
     // Handle successful payment
     if (event.type === "order.paid") {
@@ -26,10 +37,10 @@ export async function POST(request: Request) {
         .eq("conekta_order_id", order.id)
 
       if (updateError) {
-        logger.error("Error updating fiat payment", { error: updateError })
+        logger.error("Error updating fiat payment", { error: updateError, orderId: order.id })
       }
 
-      // Get payment info
+      // Get payment info to create voucher
       const { data: fiatPayment } = await supabase
         .from("fiat_payments")
         .select("*")
@@ -66,7 +77,6 @@ export async function POST(request: Request) {
             if (completedPayments === totalPayments) {
               logger.info("All partial payments completed, confirming voucher", { groupId: paymentGroupId })
 
-              // Find the voucher for this payment group
               const { data: voucher } = await supabase
                 .from("purchase_vouchers")
                 .select("*")
@@ -74,7 +84,6 @@ export async function POST(request: Request) {
                 .single()
 
               if (voucher && voucher.status === "pending") {
-                // Update voucher to confirmed
                 await supabase
                   .from("purchase_vouchers")
                   .update({
@@ -91,10 +100,9 @@ export async function POST(request: Request) {
             }
           }
         } else {
-          const voucherResponse = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/vouchers/create`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
+          // Direct voucher creation using service function instead of internal API call
+          try {
+            const result = await createPurchaseVoucher(supabase, {
               user_wallet: fiatPayment.user_wallet,
               property_id: fiatPayment.property_id,
               week_id: fiatPayment.week_id,
@@ -104,13 +112,20 @@ export async function POST(request: Request) {
               amount_paid_currency: fiatPayment.currency,
               amount_paid: fiatPayment.amount,
               conekta_order_id: order.id,
-            }),
-          })
+            })
 
-          const voucherData = await voucherResponse.json()
-
-          if (voucherData.success) {
-            await supabase.from("fiat_payments").update({ voucher_id: voucherData.voucher.id }).eq("id", fiatPayment.id)
+            if (result.success) {
+              await supabase.from("fiat_payments").update({ voucher_id: result.voucher.id }).eq("id", fiatPayment.id)
+              logger.info("Voucher created and linked to payment", {
+                paymentId: fiatPayment.id,
+                voucherId: result.voucher.id
+              })
+            }
+          } catch (voucherError: any) {
+            logger.error("Failed to create voucher from webhook", {
+              error: voucherError.message,
+              orderId: order.id
+            })
           }
         }
       }
@@ -127,11 +142,13 @@ export async function POST(request: Request) {
           failed_at: new Date().toISOString(),
         })
         .eq("conekta_order_id", order.id)
+
+      logger.info("Payment failure recorded", { orderId: order.id, type: event.type })
     }
 
     return NextResponse.json({ received: true })
-  } catch (error) {
-    logger.error("Conekta webhook error", { error })
+  } catch (error: any) {
+    logger.error("Conekta webhook error", { error: error.message })
     return NextResponse.json({ error: "Webhook handler failed" }, { status: 500 })
   }
 }

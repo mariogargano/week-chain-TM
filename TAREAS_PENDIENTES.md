@@ -37,29 +37,24 @@
 
 ---
 
-### 2. Configurar Credenciales Mifiel
+### 2. Configurar Credenciales Legalario
 **Tiempo estimado:** 15 minutos
 **Prioridad:** 🔴 CRÍTICA
 
 **Variables a agregar en Vercel:**
 ```env
-MIFIEL_APP_ID=tu_app_id_aqui
-MIFIEL_SECRET_KEY=tu_secret_key_aqui
-MIFIEL_WEBHOOK_USER=tu_webhook_user_aqui
-MIFIEL_WEBHOOK_SECRET=tu_webhook_secret_aqui
+LEGALARIO_API_KEY=tu_api_key_aqui
+LEGALARIO_WEBHOOK_SECRET=tu_webhook_secret_aqui
 ```
 
 **Pasos:**
-1. Crear cuenta en https://mifiel.com
-2. Ir a Settings → API
-3. Generar App ID y Secret Key
-4. Crear credenciales de webhook
-5. Agregar en Vercel → Settings → Environment Variables
-6. Redeploy la aplicación
+1. Obtener credenciales de Legalario.
+2. Agregar en Vercel → Settings → Environment Variables.
+3. Redeploy la aplicación.
 
 **Webhook URL:**
 ```
-https://tu-dominio.vercel.app/api/mifiel/callback
+https://tu-dominio.vercel.app/api/legalario/webhook
 ```
 
 ---
@@ -91,7 +86,7 @@ https://tu-dominio.vercel.app/api/mifiel/callback
 - [ ] Verificar certificación NOM-151 iniciada
 
 #### Flujo de Certificación
-- [ ] Esperar callback de Mifiel (o simular)
+- [ ] Esperar callback de Legalario (o simular)
 - [ ] Verificar folio generado
 - [ ] Verificar hash SHA-256
 - [ ] Verificar status "certified"
