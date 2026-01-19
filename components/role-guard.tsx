@@ -42,43 +42,34 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
 
         console.log("[v0] Checking authorization for:", email, "Required roles:", allowedRoles)
 
+        // Fast-track check via session metadata (populated by our OAuth callback)
+        const sessionRole = user.app_metadata?.role || user.user_metadata?.role
+        if (sessionRole === "admin" && allowedRoles.includes("admin")) {
+          console.log("[v0] Admin role detected in metadata - granting access")
+          localStorage.setItem("user_role", "admin")
+          localStorage.setItem("user_email", email)
+          setIsAuthorized(true)
+          setIsLoading(false)
+          return
+        }
+
         if (email === ADMIN_EMAIL.toLowerCase() && allowedRoles.includes("admin")) {
           console.log("[v0] Admin email detected - granting access")
 
-          const { data: existingAdmin } = await supabase.from("admin_users").select("id").eq("email", email).single()
-
-          if (!existingAdmin) {
-            // Insert new admin user
-            const { error: insertError } = await supabase.from("admin_users").insert({
-              id: user.id,
-              email: email,
-              name: "Administrador WEEK-CHAIN",
-              role: "super_admin",
-              password_hash: "",
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString(),
-            })
-
-            if (insertError) {
-              console.error("[v0] Admin user insert error:", insertError)
-            } else {
-              console.log("[v0] Admin user created successfully")
-            }
-          } else {
-            // Update existing admin user
-            const { error: updateError } = await supabase
-              .from("admin_users")
-              .update({
-                updated_at: new Date().toISOString(),
+          // Use a non-blocking background check for admin_users table consistency
+          supabase.from("admin_users").select("id").eq("email", email).single().then(({ data: existingAdmin }) => {
+            if (!existingAdmin) {
+              supabase.from("admin_users").insert({
+                id: user.id,
+                email: email,
+                name: user.user_metadata?.full_name || "Admin",
+                role: "super_admin",
+                status: "active"
+              }).then(({ error }) => {
+                if (error) console.error("[v0] Background admin creation error:", error)
               })
-              .eq("email", email)
-
-            if (updateError) {
-              console.warn("[v0] Admin user update warning:", updateError.message)
-            } else {
-              console.log("[v0] Admin user updated successfully")
             }
-          }
+          })
 
           localStorage.setItem("user_role", "admin")
           localStorage.setItem("user_email", email)

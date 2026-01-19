@@ -76,42 +76,17 @@ export default function AdminDashboard() {
         return
       }
 
-      const { data: adminUser } = await supabase
-        .from("admin_users")
-        .select("*")
-        .eq("email", session.user.email.toLowerCase())
-        .eq("status", "active")
-        .single()
+      // Use RoleGuard for main protection, here we just verify session role
+      const userRole = session.user.app_metadata?.role || session.user.user_metadata?.role
+      const { ADMIN_EMAIL } = await import("@/lib/auth/roles")
+      const isAdminEmail = session.user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()
 
-      if (!adminUser) {
-        // If email matches corporativo@morises.com but not in admin_users, auto-create
-        if (session.user.email.toLowerCase() === "corporativo@morises.com") {
-          const { error: createError } = await supabase.from("admin_users").upsert(
-            {
-              email: session.user.email.toLowerCase(),
-              name: "Administrador WEEK-CHAIN",
-              role: "super_admin",
-              status: "active",
-              user_id: session.user.id,
-              updated_at: new Date().toISOString(),
-            },
-            { onConflict: "email" },
-          )
-
-          if (createError) {
-            console.error("[v0] Failed to create admin user:", createError)
-            router.push("/dashboard")
-            return
-          }
-
-          setAdminEmail(session.user.email)
-        } else {
-          console.log("[v0] User is not admin, redirecting to user dashboard")
-          router.push("/dashboard")
-          return
-        }
-      } else {
+      if (userRole === "admin" || isAdminEmail) {
         setAdminEmail(session.user.email)
+      } else {
+        console.log("[v0] Non-admin session in admin dashboard, redirecting")
+        router.push("/dashboard")
+        return
       }
 
       const [capacityResponse, users, kyc, reservationReqs] = await Promise.all([

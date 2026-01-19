@@ -73,22 +73,21 @@ export async function GET(request: NextRequest) {
       const { ADMIN_EMAIL } = await import("@/lib/auth/roles")
       const userRole = userInfo.email.toLowerCase() === ADMIN_EMAIL.toLowerCase() ? "admin" : (existingProfile?.role || "user")
 
-      // Ensure admin role is set for admins
+      console.log("[v0] Ensuring profile and role elevation")
+      const { createServiceRoleClient } = await import("@/lib/supabase/server")
+      const supabaseAdmin = createServiceRoleClient()
+
+      // Update profile for ALL users to ensure consistency
+      await supabaseAdmin.from("profiles").upsert({
+        id: signInData.user.id,
+        email: userInfo.email.toLowerCase(),
+        role: userRole,
+        display_name: userInfo.name,
+        avatar_url: userInfo.picture,
+      })
+
+      // Update auth metadata for admins
       if (userRole === "admin") {
-        console.log("[v0] Ensuring admin role and elevation")
-        const { createServiceRoleClient } = await import("@/lib/supabase/server")
-        const supabaseAdmin = createServiceRoleClient()
-
-        // Update profile via admin client to bypass RLS
-        await supabaseAdmin.from("profiles").upsert({
-          id: signInData.user.id,
-          email: userInfo.email.toLowerCase(),
-          role: "admin",
-          display_name: userInfo.name,
-          avatar_url: userInfo.picture,
-        })
-
-        // Update auth metadata
         await supabaseAdmin.auth.admin.updateUserById(signInData.user.id, {
           user_metadata: { ...signInData.user.user_metadata, role: "admin" },
         })

@@ -60,6 +60,7 @@ export async function middleware(request: NextRequest) {
     "/dashboard/service-provider",
     "/dashboard/vafi",
     "/dashboard/dao",
+    "/dashboard/admin",
   ]
   const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
 

@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/client"
 import { logger } from "@/lib/config/logger"
 
-export const ADMIN_EMAIL = "corporativo@morises.com"
+export const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "corporativo@morises.com"
 
 export type UserRole =
   | "admin"
