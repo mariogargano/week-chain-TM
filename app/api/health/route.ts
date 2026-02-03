@@ -1,30 +1,28 @@
 import { NextResponse } from "next/server"
-import { getEnv } from "@/lib/config/env-schema"
+import { config } from "@/lib/config"
 import { createClient } from "@supabase/supabase-js"
 
 export const dynamic = "force-dynamic"
 
 export async function GET() {
   try {
-    const env = getEnv()
-
     // Test Supabase connection
-    const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY, {
+    const supabase = createClient(config.supabase.url, config.supabase.serviceRoleKey, {
       auth: { persistSession: false },
     })
 
-    const { error: dbError } = await supabase.from("legal_contracts").select("count").limit(1)
+    const { error: dbError } = await supabase.from("profiles").select("count").limit(1)
 
     const health = {
       status: "healthy",
       timestamp: new Date().toISOString(),
-      environment: env.NODE_ENV,
-      solana_network: env.SOLANA_NETWORK,
+      environment: config.env.NODE_ENV,
+      solana_network: config.solana.network,
       checks: {
         database: dbError ? "unhealthy" : "healthy",
-        legalario: env.LEGALARIO_API_KEY ? "configured" : "not_configured",
-        conekta: env.CONEKTA_SECRET_KEY ? "configured" : "not_configured",
-        solana: env.SOLANA_KEYPAIR_BASE64 ? "configured" : "not_configured",
+        easylex: config.easylex.apiKey ? "configured" : "not_configured",
+        conekta: config.conekta.secretKey ? "configured" : "not_configured",
+        solana: config.solana.rpcUrl ? "healthy" : "not_configured",
       },
     }
 

@@ -293,9 +293,10 @@ export default function TeamWorkspace() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 overflow-hidden flex flex-col">
       <Navbar user={true} />
 
+      <div className="flex-1 overflow-y-auto">
       <div className="max-w-[1600px] mx-auto p-6 space-y-6">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
@@ -660,6 +661,7 @@ export default function TeamWorkspace() {
             </Tabs>
           </div>
         </div>
+      </div>
       </div>
     </div>
   )

@@ -52,8 +52,8 @@ export default async function MyWeeksPage() {
     .order("created_at", { ascending: false })
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-white">
+    <div className="fixed inset-0 bg-background overflow-hidden flex flex-col">
+      <header className="flex-shrink-0 border-b bg-white">
         <div className="container mx-auto flex h-16 items-center justify-between px-6">
           <h1 className="text-2xl font-bold">WEEK-CHAIN</h1>
           <nav className="flex items-center gap-4">
@@ -67,6 +67,7 @@ export default async function MyWeeksPage() {
         </div>
       </header>
 
+      <div className="flex-1 overflow-y-auto">
       <div className="container mx-auto max-w-7xl px-6 py-8">
         <div className="mb-8">
           <h2 className="text-3xl font-bold">Mis Semanas</h2>
@@ -207,6 +208,7 @@ export default async function MyWeeksPage() {
             </CardContent>
           </Card>
         )}
+      </div>
       </div>
     </div>
   )

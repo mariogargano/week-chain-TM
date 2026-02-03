@@ -43,7 +43,9 @@ export default function MyCertificatesPage() {
   }
 
   return (
-    <div className="p-8 max-w-6xl mx-auto space-y-6">
+    <div className="fixed inset-0 pt-20 overflow-hidden flex flex-col">
+      <div className="flex-1 overflow-y-auto p-8">
+      <div className="max-w-6xl mx-auto space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-slate-900">Mis Certificados</h1>
         <p className="text-slate-600 mt-2">Gestiona tus certificados digitales y solicita facturas</p>
@@ -146,6 +148,8 @@ export default function MyCertificatesPage() {
           }}
         />
       )}
+      </div>
+      </div>
     </div>
   )
 }

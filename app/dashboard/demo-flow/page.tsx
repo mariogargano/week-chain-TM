@@ -70,8 +70,8 @@ export default async function DemoFlowPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-white">
+    <div className="fixed inset-0 bg-background overflow-hidden flex flex-col">
+      <header className="flex-shrink-0 border-b bg-white">
         <div className="container mx-auto flex h-16 items-center justify-between px-6">
           <h1 className="text-2xl font-bold">WEEK-CHAIN</h1>
           <Button variant="ghost" asChild>
@@ -83,6 +83,7 @@ export default async function DemoFlowPage() {
         </div>
       </header>
 
+      <div className="flex-1 overflow-y-auto">
       <div className="container mx-auto max-w-5xl px-6 py-8">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
@@ -156,6 +157,7 @@ export default async function DemoFlowPage() {
             </div>
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   )
