@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@custom-variant dark (&:is(.dark *));
+
 :root {
   /* Aplicando paleta de colores pastel personalizada del usuario */
   /* Colores base de la paleta proporcionada */
@@ -51,7 +53,7 @@
   --chart-4: var(--color-mint);
   --chart-5: var(--color-lavender);
 
-  --radius: 0.75rem;
+  --radius: 0.75rem; /* User's radius, takes precedence over Shadcn's 0.625rem */
   --sidebar: oklch(0.99 0.005 280);
   --sidebar-foreground: oklch(0.25 0.02 280);
   --sidebar-primary: oklch(0.75 0.08 320);
