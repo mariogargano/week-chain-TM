@@ -171,20 +171,20 @@ function NotariaDashboardContent() {
 
   if (loading) {
     return (
-      <>
+      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
         <Navbar user={true} />
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center">
           <p className="text-slate-600">Cargando dashboard...</p>
         </div>
-      </>
+      </div>
     )
   }
 
   return (
-    <>
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       <Navbar user={true} />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
+      <div className="flex-1 overflow-y-auto pt-16">
+        <div className="max-w-7xl mx-auto p-6 space-y-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-700 via-slate-600 to-slate-500 bg-clip-text text-transparent">
@@ -521,7 +521,7 @@ function NotariaDashboardContent() {
           </Tabs>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

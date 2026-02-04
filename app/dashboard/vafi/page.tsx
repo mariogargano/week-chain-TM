@@ -110,35 +110,40 @@ function VaFiDashboardContent() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-slate-600">Cargando préstamos...</p>
+      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
+        <Navbar />
+        <div className="flex-1 flex items-center justify-center">
+          <p className="text-slate-600">Cargando préstamos...</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8">
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
       <Navbar />
-      <div className="max-w-2xl mx-auto mt-8">
-        <Link href="/dashboard" className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-8">
-          <ArrowLeft className="h-4 w-4" />
-          Volver al Dashboard
-        </Link>
+      <div className="flex-1 overflow-y-auto pt-16 p-8">
+        <div className="max-w-2xl mx-auto mt-8">
+          <Link href="/dashboard" className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-8">
+            <ArrowLeft className="h-4 w-4" />
+            Volver al Dashboard
+          </Link>
 
-        <Card className="border-amber-200 bg-amber-50">
-          <CardContent className="py-16 text-center">
-            <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <AlertCircle className="h-8 w-8 text-amber-600" />
-            </div>
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">Módulo VA-FI™ No Disponible</h1>
-            <p className="text-slate-700 mb-6 max-w-md mx-auto">
-              El módulo VA-FI™ no está habilitado actualmente. Esta funcionalidad estará disponible próximamente.
-            </p>
-            <Button asChild variant="outline">
-              <Link href="/dashboard">Volver al Dashboard</Link>
-            </Button>
-          </CardContent>
-        </Card>
+          <Card className="border-amber-200 bg-amber-50">
+            <CardContent className="py-16 text-center">
+              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <AlertCircle className="h-8 w-8 text-amber-600" />
+              </div>
+              <h1 className="text-2xl font-bold text-slate-900 mb-4">Módulo VA-FI™ No Disponible</h1>
+              <p className="text-slate-700 mb-6 max-w-md mx-auto">
+                El módulo VA-FI™ no está habilitado actualmente. Esta funcionalidad estará disponible próximamente.
+              </p>
+              <Button asChild variant="outline">
+                <Link href="/dashboard">Volver al Dashboard</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   )

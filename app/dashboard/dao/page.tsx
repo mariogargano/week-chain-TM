@@ -107,129 +107,134 @@ function DAODashboardContent() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-slate-600">Cargando propuestas...</p>
+      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-[#C7CEEA]/20 via-[#FFB7B2]/20 to-[#B5EAD7]/20">
+        <Navbar />
+        <div className="flex-1 flex items-center justify-center">
+          <p className="text-slate-600">Cargando propuestas...</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#C7CEEA]/20 via-[#FFB7B2]/20 to-[#B5EAD7]/20 p-8">
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-[#C7CEEA]/20 via-[#FFB7B2]/20 to-[#B5EAD7]/20">
       <Navbar />
-      <div className="max-w-7xl mx-auto space-y-8">
-        <div>
-          <h1 className="text-4xl font-bold text-slate-900 text-balance">Dashboard DAO</h1>
-          <p className="text-slate-700 mt-2 text-pretty">Gobernanza y votaciones de la comunidad</p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
-            <div className="flex items-center gap-4">
-              <div className="p-4 bg-blue-100 rounded-xl">
-                <Clock className="h-8 w-8 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-600">Propuestas Activas</p>
-                <p className="text-3xl font-bold text-slate-900">{stats.activeProposals}</p>
-              </div>
-            </div>
-          </Card>
-
-          <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
-            <div className="flex items-center gap-4">
-              <div className="p-4 bg-purple-100 rounded-xl">
-                <Vote className="h-8 w-8 text-purple-600" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-600">Total Votos</p>
-                <p className="text-3xl font-bold text-slate-900">{stats.totalVotes}</p>
-              </div>
-            </div>
-          </Card>
-
-          <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
-            <div className="flex items-center gap-4">
-              <div className="p-4 bg-green-100 rounded-xl">
-                <CheckCircle className="h-8 w-8 text-green-600" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-600">Aprobadas</p>
-                <p className="text-3xl font-bold text-slate-900">{stats.passed}</p>
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-slate-900 text-balance">Propuestas</h2>
-            <Button className="bg-[#FF9AA2] hover:bg-[#FF9AA2]/90 focus-visible:ring-2 focus-visible:ring-[#FF9AA2] focus-visible:ring-offset-2">
-              Nueva Propuesta
-            </Button>
+      <div className="flex-1 overflow-y-auto pt-16 p-8">
+        <div className="max-w-7xl mx-auto space-y-8">
+          <div>
+            <h1 className="text-4xl font-bold text-slate-900 text-balance">Dashboard DAO</h1>
+            <p className="text-slate-700 mt-2 text-pretty">Gobernanza y votaciones de la comunidad</p>
           </div>
 
-          <div className="space-y-4">
-            {proposals.length === 0 ? (
-              <p className="text-slate-600 text-center py-8">No hay propuestas activas</p>
-            ) : (
-              proposals.map((proposal) => {
-                const totalVotes = proposal.votes_for + proposal.votes_against
-                const forPercentage = totalVotes > 0 ? (proposal.votes_for / totalVotes) * 100 : 0
+          <div className="grid gap-6 md:grid-cols-3">
+            <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
+              <div className="flex items-center gap-4">
+                <div className="p-4 bg-blue-100 rounded-xl">
+                  <Clock className="h-8 w-8 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-600">Propuestas Activas</p>
+                  <p className="text-3xl font-bold text-slate-900">{stats.activeProposals}</p>
+                </div>
+              </div>
+            </Card>
 
-                return (
-                  <div
-                    key={proposal.id}
-                    className="p-6 border border-slate-200 rounded-xl hover:shadow-md transition-shadow"
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="font-semibold text-slate-900 text-balance">{proposal.title}</h3>
-                          {getStatusBadge(proposal.status)}
-                        </div>
-                        <p className="text-sm text-slate-600 mb-4 text-pretty">{proposal.description}</p>
+            <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
+              <div className="flex items-center gap-4">
+                <div className="p-4 bg-purple-100 rounded-xl">
+                  <Vote className="h-8 w-8 text-purple-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-600">Total Votos</p>
+                  <p className="text-3xl font-bold text-slate-900">{stats.totalVotes}</p>
+                </div>
+              </div>
+            </Card>
 
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-600">A favor: {proposal.votes_for}</span>
-                            <span className="text-slate-600">En contra: {proposal.votes_against}</span>
+            <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
+              <div className="flex items-center gap-4">
+                <div className="p-4 bg-green-100 rounded-xl">
+                  <CheckCircle className="h-8 w-8 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-600">Aprobadas</p>
+                  <p className="text-3xl font-bold text-slate-900">{stats.passed}</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-slate-900 text-balance">Propuestas</h2>
+              <Button className="bg-[#FF9AA2] hover:bg-[#FF9AA2]/90 focus-visible:ring-2 focus-visible:ring-[#FF9AA2] focus-visible:ring-offset-2">
+                Nueva Propuesta
+              </Button>
+            </div>
+
+            <div className="space-y-4">
+              {proposals.length === 0 ? (
+                <p className="text-slate-600 text-center py-8">No hay propuestas activas</p>
+              ) : (
+                proposals.map((proposal) => {
+                  const totalVotes = proposal.votes_for + proposal.votes_against
+                  const forPercentage = totalVotes > 0 ? (proposal.votes_for / totalVotes) * 100 : 0
+
+                  return (
+                    <div
+                      key={proposal.id}
+                      className="p-6 border border-slate-200 rounded-xl hover:shadow-md transition-shadow"
+                    >
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <h3 className="font-semibold text-slate-900 text-balance">{proposal.title}</h3>
+                            {getStatusBadge(proposal.status)}
                           </div>
-                          <div className="w-full bg-slate-200 rounded-full h-2">
-                            <div
-                              className="bg-green-500 h-2 rounded-full transition-all"
-                              style={{ width: `${forPercentage}%` }}
-                            />
+                          <p className="text-sm text-slate-600 mb-4 text-pretty">{proposal.description}</p>
+
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-slate-600">A favor: {proposal.votes_for}</span>
+                              <span className="text-slate-600">En contra: {proposal.votes_against}</span>
+                            </div>
+                            <div className="w-full bg-slate-200 rounded-full h-2">
+                              <div
+                                className="bg-green-500 h-2 rounded-full transition-all"
+                                style={{ width: `${forPercentage}%` }}
+                              />
+                            </div>
+                            <p className="text-xs text-slate-500">Quórum requerido: {proposal.quorum_required} votos</p>
                           </div>
-                          <p className="text-xs text-slate-500">Quórum requerido: {proposal.quorum_required} votos</p>
                         </div>
                       </div>
+
+                      {proposal.status === "active" && (
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={() => vote(proposal.id, true)}
+                            size="sm"
+                            className="bg-green-500 hover:bg-green-600 focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                          >
+                            Votar a Favor
+                          </Button>
+                          <Button
+                            onClick={() => vote(proposal.id, false)}
+                            size="sm"
+                            variant="outline"
+                            className="focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2"
+                          >
+                            Votar en Contra
+                          </Button>
+                        </div>
+                      )}
                     </div>
-
-                    {proposal.status === "active" && (
-                      <div className="flex gap-2">
-                        <Button
-                          onClick={() => vote(proposal.id, true)}
-                          size="sm"
-                          className="bg-green-500 hover:bg-green-600 focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                        >
-                          Votar a Favor
-                        </Button>
-                        <Button
-                          onClick={() => vote(proposal.id, false)}
-                          size="sm"
-                          variant="outline"
-                          className="focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2"
-                        >
-                          Votar en Contra
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                )
-              })
-            )}
-          </div>
-        </Card>
+                  )
+                })
+              )}
+            </div>
+          </Card>
+        </div>
       </div>
     </div>
   )

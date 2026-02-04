@@ -124,10 +124,10 @@ export default function UserDashboardPage() {
   const uniqueDestinations = new Set(userWeeks.map((w) => w.property)).size
 
   return (
-    <>
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-[#FFF5F5] via-[#F5F0FF] to-[#F0F5FF]">
       <Navbar />
-      <main className="min-h-screen bg-gradient-to-br from-[#FFF5F5] via-[#F5F0FF] to-[#F0F5FF] pt-24 pb-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 overflow-y-auto pt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center gap-4 mb-2">
@@ -433,6 +433,6 @@ export default function UserDashboardPage() {
           </Tabs>
         </div>
       </main>
-    </>
+    </div>
   )
 }

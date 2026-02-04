@@ -53,8 +53,14 @@ export async function middleware(request: NextRequest) {
 
   // Protected routes check
   const protectedRoutes = [
+    "/dashboard/admin",
     "/dashboard/member",
     "/dashboard/user",
+    "/dashboard/broker",
+    "/dashboard/owner",
+    "/dashboard/notaria",
+    "/dashboard/intermediary",
+    "/dashboard/workspace",
     "/management",
     "/notaria",
     "/dashboard/service-provider",
