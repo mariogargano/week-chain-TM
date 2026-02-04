@@ -15,10 +15,11 @@ import {
   Eye,
   RefreshCw,
 } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { Session } from "@supabase/supabase-js"
 
 export default function AdminDashboard() {
   const router = useRouter()
@@ -26,6 +27,10 @@ export default function AdminDashboard() {
   const [error, setError] = useState<string | null>(null)
   const [adminEmail, setAdminEmail] = useState<string | null>(null)
   const [refreshing, setRefreshing] = useState(false)
+  const [isRedirecting, setIsRedirecting] = useState(false)
+  const [authChecked, setAuthChecked] = useState(false)
+  const fetchedRef = useRef(false)
+  const [session, setSession] = useState<Session | null>(null)
 
   const [globalMetrics, setGlobalMetrics] = useState({
     totalSupplyWeeks: 0,
@@ -61,25 +66,35 @@ export default function AdminDashboard() {
   const [recentActivity, setRecentActivity] = useState<any[]>([])
 
   const fetchDashboardData = async () => {
+    // Prevent multiple redirects
+    if (isRedirecting) return
+    
     try {
       setRefreshing(true)
       setError(null)
 
       const supabase = createClient()
 
+      // Use getUser() instead of getSession() for more reliable auth check
       const {
-        data: { session },
-      } = await supabase.auth.getSession()
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser()
 
-      if (!session?.user?.email) {
-        router.push("/auth")
+      if (userError || !user?.email) {
+        if (!isRedirecting) {
+          setIsRedirecting(true)
+          router.replace("/auth")
+        }
         return
       }
+      
+      setAuthChecked(true)
 
       const { data: adminUser } = await supabase
         .from("admin_users")
         .select("*")
-        .eq("email", session.user.email.toLowerCase())
+        .eq("email", user.email.toLowerCase())
         .eq("status", "active")
         .single()
 
@@ -89,7 +104,7 @@ export default function AdminDashboard() {
         // Add more admin emails here as needed
       ]
 
-      const userEmail = session.user.email?.toLowerCase() || ""
+      const userEmail = user.email?.toLowerCase() || ""
       
       // Also check if user has admin role in profiles table
       const { data: profileData } = await supabase
@@ -106,7 +121,7 @@ export default function AdminDashboard() {
         const { error: createError } = await supabase.from("admin_users").upsert(
           {
             email: userEmail,
-            name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || "Administrador",
+            name: user.user_metadata?.full_name || user.user_metadata?.name || "Administrador",
             role: "super_admin",
             status: "active",
             updated_at: new Date().toISOString(),
@@ -123,10 +138,12 @@ export default function AdminDashboard() {
 
         setAdminEmail(userEmail)
       } else if (adminUser) {
-        setAdminEmail(session.user.email || "")
+        setAdminEmail(user.email || "")
       } else {
-        console.log("[v0] User is not admin, redirecting to user dashboard")
-        router.push("/dashboard")
+        if (!isRedirecting) {
+          setIsRedirecting(true)
+          router.replace("/dashboard")
+        }
         return
       }
 
@@ -196,6 +213,8 @@ export default function AdminDashboard() {
   }
 
   useEffect(() => {
+    if (fetchedRef.current) return
+    fetchedRef.current = true
     fetchDashboardData()
   }, [])
 
