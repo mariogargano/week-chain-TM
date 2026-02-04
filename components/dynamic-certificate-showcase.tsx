@@ -233,120 +233,8 @@ export function DynamicCertificateShowcase() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start mb-16">
-          {/* Certificate Card - Left Side */}
-          <div
-            className={`relative transition-all duration-300 ${isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
-          >
-            <div className="relative w-full max-w-md mx-auto">
-              {/* Card */}
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10">
-                {/* Background Image */}
-                <div className="relative h-48 md:h-56">
-                  <img
-                    src={data.image || "/placeholder.svg"}
-                    alt={data.destination}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90" />
-
-                  {/* Top badges */}
-                  <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-                    <Badge className="bg-black/50 backdrop-blur-sm text-white border-white/20">
-                      <Verified className="h-3 w-3 mr-1 text-emerald-400" />
-                      NOM-151
-                    </Badge>
-                    <span className="text-3xl">{data.flag}</span>
-                  </div>
-
-                  {/* Week number overlay */}
-                  <div className="absolute bottom-4 left-4">
-                    <div className="text-white">
-                      <span className="text-xs uppercase tracking-wider text-white/70">Semana</span>
-                      <div className="text-5xl font-bold leading-none">{data.week}</div>
-                    </div>
-                  </div>
-
-                  {/* Season badge */}
-                  <div className="absolute bottom-4 right-4">
-                    <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/20">
-                      <SeasonIcon className={`h-3.5 w-3.5 mr-1 ${seasonConfig[data.season].color}`} />
-                      {seasonConfig[data.season].label}
-                    </Badge>
-                  </div>
-                </div>
-
-                {/* Card content */}
-                <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-5">
-                  <div className="mb-4">
-                    <h3 className="text-xl font-bold text-white mb-1">{data.destination}</h3>
-                    <div className="flex items-center gap-1.5 text-slate-400 text-sm">
-                      <MapPin className="h-3.5 w-3.5" />
-                      {data.location}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                    <div>
-                      <p className="text-xs text-slate-500 uppercase tracking-wider">Titular</p>
-                      <p className="text-white font-medium">{data.holder}</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="text-right">
-                        <p className="text-xs text-slate-500 uppercase tracking-wider">Vigencia</p>
-                        <p className="text-amber-400 font-semibold">15 Años</p>
-                      </div>
-                      <div className="h-12 w-12 bg-white rounded-lg p-1.5 flex items-center justify-center">
-                        <QrCode className="h-full w-full text-slate-900" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Certificate number */}
-                  <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Shield className="h-4 w-4 text-amber-500" />
-                      <span className="text-xs text-slate-500 font-mono">{certNumber}</span>
-                    </div>
-                    <img
-                      src="/week-chain-logo-white.png"
-                      alt="WEEK-CHAIN"
-                      className="h-4 opacity-50"
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none"
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Decorative elements */}
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl" />
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl" />
-            </div>
-
-            {/* Dots indicator */}
-            <div className="flex justify-center gap-2 mt-6">
-              {certificateData.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => {
-                    setIsAnimating(true)
-                    setTimeout(() => {
-                      setCurrentIndex(i)
-                      setIsAnimating(false)
-                    }, 300)
-                  }}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    i === currentIndex ? "bg-amber-500 w-6" : "bg-white/30 hover:bg-white/50"
-                  }`}
-                  aria-label={`Ver certificado ${i + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* PAX Calculator Card */}
-          <div className="space-y-6">
+          {/* PAX Calculator Card - First on mobile */}
+          <div className="space-y-6 order-1 lg:order-2">
             <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
               <h3 className="text-xl font-bold text-white mb-6 text-center">Calcula tu Certificado Digital</h3>
 
@@ -454,6 +342,118 @@ export function DynamicCertificateShowcase() {
                   </Button>
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* Certificate Card - Second on mobile */}
+          <div
+            className={`relative transition-all duration-300 order-2 lg:order-1 ${isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+          >
+            <div className="relative w-full max-w-md mx-auto">
+              {/* Card */}
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10">
+                {/* Background Image */}
+                <div className="relative h-48 md:h-56">
+                  <img
+                    src={data.image || "/placeholder.svg"}
+                    alt={data.destination}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90" />
+
+                  {/* Top badges */}
+                  <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
+                    <Badge className="bg-black/50 backdrop-blur-sm text-white border-white/20">
+                      <Verified className="h-3 w-3 mr-1 text-emerald-400" />
+                      NOM-151
+                    </Badge>
+                    <span className="text-3xl">{data.flag}</span>
+                  </div>
+
+                  {/* Week number overlay */}
+                  <div className="absolute bottom-4 left-4">
+                    <div className="text-white">
+                      <span className="text-xs uppercase tracking-wider text-white/70">Semana</span>
+                      <div className="text-5xl font-bold leading-none">{data.week}</div>
+                    </div>
+                  </div>
+
+                  {/* Season badge */}
+                  <div className="absolute bottom-4 right-4">
+                    <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/20">
+                      <SeasonIcon className={`h-3.5 w-3.5 mr-1 ${seasonConfig[data.season].color}`} />
+                      {seasonConfig[data.season].label}
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Card content */}
+                <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-5">
+                  <div className="mb-4">
+                    <h3 className="text-xl font-bold text-white mb-1">{data.destination}</h3>
+                    <div className="flex items-center gap-1.5 text-slate-400 text-sm">
+                      <MapPin className="h-3.5 w-3.5" />
+                      {data.location}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                    <div>
+                      <p className="text-xs text-slate-500 uppercase tracking-wider">Titular</p>
+                      <p className="text-white font-medium">{data.holder}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="text-right">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Vigencia</p>
+                        <p className="text-amber-400 font-semibold">15 Años</p>
+                      </div>
+                      <div className="h-12 w-12 bg-white rounded-lg p-1.5 flex items-center justify-center">
+                        <QrCode className="h-full w-full text-slate-900" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Certificate number */}
+                  <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Shield className="h-4 w-4 text-amber-500" />
+                      <span className="text-xs text-slate-500 font-mono">{certNumber}</span>
+                    </div>
+                    <img
+                      src="/week-chain-logo-white.png"
+                      alt="WEEK-CHAIN"
+                      className="h-4 opacity-50"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none"
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Decorative elements */}
+              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl" />
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl" />
+            </div>
+
+            {/* Dots indicator */}
+            <div className="flex justify-center gap-2 mt-6">
+              {certificateData.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setIsAnimating(true)
+                    setTimeout(() => {
+                      setCurrentIndex(i)
+                      setIsAnimating(false)
+                    }, 300)
+                  }}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    i === currentIndex ? "bg-amber-500 w-6" : "bg-white/30 hover:bg-white/50"
+                  }`}
+                  aria-label={`Ver certificado ${i + 1}`}
+                />
+              ))}
             </div>
           </div>
         </div>

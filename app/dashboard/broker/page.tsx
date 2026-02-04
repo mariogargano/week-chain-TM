@@ -259,22 +259,19 @@ function BrokerDashboardContent() {
 
   if (loading) {
     return (
-      <>
-        <Navbar user={true} />
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-slate-400">Cargando dashboard...</p>
-          </div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-slate-400">Cargando dashboard...</p>
         </div>
-      </>
+      </div>
     )
   }
 
   return (
-    <>
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <Navbar user={true} />
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="flex-1 overflow-y-auto pt-16">
         <div className="max-w-7xl mx-auto p-6 space-y-6">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -649,7 +646,7 @@ function BrokerDashboardContent() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
