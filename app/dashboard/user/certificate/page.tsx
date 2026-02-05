@@ -5,7 +5,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Navbar } from "@/components/navbar"
-import { createBrowserClient } from "@supabase/ssr"
+import { createClient } from "@/lib/supabase/client"
+import { useMemo } from "react"
 import {
   Download,
   Share2,
@@ -103,6 +104,7 @@ export default function HolderCertificatePage() {
   const [loading, setLoading] = useState(true)
   const [copied, setCopied] = useState(false)
   const [qrDataUrl, setQrDataUrl] = useState<string>("")
+  const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
     fetchCertificates()
@@ -129,10 +131,6 @@ export default function HolderCertificatePage() {
   }
 
   const fetchCertificates = async () => {
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    )
     const {
       data: { user },
     } = await supabase.auth.getUser()

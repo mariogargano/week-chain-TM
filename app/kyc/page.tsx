@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { useRouter } from "next/navigation"
-import { createBrowserClient } from "@supabase/ssr"
+import { createClient } from "@/lib/supabase/client"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Shield, CheckCircle2, Clock, XCircle } from "lucide-react"
 import { toast } from "sonner"
@@ -14,10 +14,7 @@ export default function KYCPage() {
   const [user, setUser] = useState<any>(null)
   const [kycStatus, setKycStatus] = useState<string | null>(null)
 
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  )
+  const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
     checkUser()

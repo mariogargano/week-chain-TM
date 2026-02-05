@@ -11,8 +11,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
-import { createBrowserClient } from "@/lib/supabase/client"
+import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
+import { useMemo } from "react"
 
 export default function VirtualOfficePage() {
   const [user, setUser] = useState<any>(null)
@@ -22,7 +23,7 @@ export default function VirtualOfficePage() {
   const [error, setError] = useState("")
   const [isTeamMember, setIsTeamMember] = useState(false)
   const router = useRouter()
-  const supabase = createBrowserClient()
+  const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
     checkUser()

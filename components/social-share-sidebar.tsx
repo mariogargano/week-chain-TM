@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { createBrowserClient } from "@supabase/ssr"
+import { useState, useEffect, useMemo } from "react"
+import { createClient } from "@/lib/supabase/client"
 import { MessageSquare, Facebook, Twitter, Linkedin, Copy, Check, Share2, X, Send, Sparkles } from "lucide-react"
 import { toast } from "sonner"
 
@@ -26,10 +26,7 @@ export function SocialShareSidebar({ referralCode, referralUrl, userName }: Soci
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  )
+  const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
     loadMessages()

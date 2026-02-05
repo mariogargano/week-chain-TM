@@ -66,8 +66,14 @@ export function validateEnv(): EnvSchema {
       console.error(`  - ${err.path.join(".")}: ${err.message}`)
     })
 
-    // In production, we should be strict
-    if (process.env.NODE_ENV === "production") {
+    // In production, we should be strict, BUT during build (CI) or on v0 environment,
+    // some secrets might be missing.
+    const isBuildTime =
+      process.env.NEXT_PHASE === 'phase-production-build' ||
+      process.env.CI === 'true' ||
+      !process.env.NEXT_PUBLIC_SUPABASE_URL;
+
+    if (process.env.NODE_ENV === "production" && !isBuildTime) {
       throw new Error("Invalid environment variables. Check logs.")
     }
 

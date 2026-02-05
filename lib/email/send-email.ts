@@ -1,8 +1,6 @@
-import { Resend } from "resend"
+import { resend } from "./resend-client"
 import { createClient } from "@/lib/supabase/server"
 import type { EmailTemplateType, SendEmailRequest, SendEmailResponse, TemplateVariables } from "@/types/email"
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 const FROM_EMAIL = "WEEK-CHAIN <soporte@week-chain.com>"
 const REPLY_TO_EMAIL = "soporte@week-chain.com"

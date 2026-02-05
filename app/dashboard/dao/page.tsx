@@ -230,8 +230,8 @@ function DAODashboardContent() {
               })
             )}
           </div>
-          </div>
-        </div>
+        </Card>
+      </div>
       </div>
     </div>
   )

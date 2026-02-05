@@ -1,7 +1,7 @@
 "use client"
 
-import { createBrowserClient } from "@supabase/ssr"
-import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { useEffect, useState, useMemo } from "react"
 import { Navbar } from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -52,10 +52,7 @@ export default function MarketingMessagesPage() {
     platform: "all",
   })
 
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  )
+  const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
     fetchMessages()

@@ -1,6 +1,45 @@
 import { createBrowserClient as createSupabaseBrowserClient } from "@supabase/ssr"
 
 const createMockClient = () => {
+  const mockQueryBuilder: any = {
+    select: () => mockQueryBuilder,
+    eq: () => mockQueryBuilder,
+    neq: () => mockQueryBuilder,
+    gt: () => mockQueryBuilder,
+    lt: () => mockQueryBuilder,
+    gte: () => mockQueryBuilder,
+    lte: () => mockQueryBuilder,
+    like: () => mockQueryBuilder,
+    ilike: () => mockQueryBuilder,
+    is: () => mockQueryBuilder,
+    in: () => mockQueryBuilder,
+    contains: () => mockQueryBuilder,
+    containedBy: () => mockQueryBuilder,
+    rangeGt: () => mockQueryBuilder,
+    rangeGte: () => mockQueryBuilder,
+    rangeLt: () => mockQueryBuilder,
+    rangeLte: () => mockQueryBuilder,
+    rangeAdjacent: () => mockQueryBuilder,
+    overlaps: () => mockQueryBuilder,
+    match: () => mockQueryBuilder,
+    not: () => mockQueryBuilder,
+    or: () => mockQueryBuilder,
+    filter: () => mockQueryBuilder,
+    order: () => mockQueryBuilder,
+    limit: () => mockQueryBuilder,
+    range: () => mockQueryBuilder,
+    abortSignal: () => mockQueryBuilder,
+    single: () => Promise.resolve({ data: null, error: null }),
+    maybeSingle: () => Promise.resolve({ data: null, error: null }),
+    csv: () => mockQueryBuilder,
+    then: (resolve: any) => resolve({ data: null, error: null }),
+    insert: () => mockQueryBuilder,
+    update: () => mockQueryBuilder,
+    upsert: () => mockQueryBuilder,
+    delete: () => mockQueryBuilder,
+    rpc: () => Promise.resolve({ data: null, error: null }),
+  }
+
   return {
     auth: {
       getSession: async () => ({ data: { session: null }, error: null }),
@@ -14,23 +53,8 @@ const createMockClient = () => {
         }
       },
     },
-    from: (table: string) => ({
-      select: () => ({
-        eq: () => ({
-          single: async () => ({ data: null, error: null }),
-          limit: () => ({
-            single: async () => ({ data: null, error: null }),
-          }),
-        }),
-        order: () => ({
-          limit: () => ({ data: [], error: null }),
-        }),
-        limit: async () => ({ data: [], error: null }),
-      }),
-      insert: async () => ({ data: null, error: null }),
-      update: async () => ({ data: null, error: null }),
-      delete: async () => ({ data: null, error: null }),
-    }),
+    from: (table: string) => mockQueryBuilder,
+    rpc: () => Promise.resolve({ data: null, error: null }),
   } as any
 }
 

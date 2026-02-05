@@ -1,7 +1,7 @@
 "use client"
 
-import { createBrowserClient } from "@supabase/ssr"
-import { useEffect, useState, useRef } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { useEffect, useState, useRef, useMemo } from "react"
 import { Navbar } from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import {
@@ -131,6 +131,7 @@ const seasonConfig = {
 }
 
 export default function MemberDashboardPage() {
+  const supabase = useMemo(() => createClient(), [])
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
   const [copied, setCopied] = useState(false)
@@ -162,10 +163,6 @@ export default function MemberDashboardPage() {
   }, [profile?.referral_code, profile?.id])
 
   const fetchProfile = async () => {
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    )
     const {
       data: { user },
     } = await supabase.auth.getUser()
@@ -205,11 +202,6 @@ export default function MemberDashboardPage() {
 
   const fetchStats = async () => {
     if (!profile?.id) return
-
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    )
 
     // Count referrals
     const { count: referralCount } = await supabase

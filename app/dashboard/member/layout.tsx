@@ -2,8 +2,8 @@
 
 import type React from "react"
 
-import { createBrowserClient } from "@supabase/ssr"
-import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { useEffect, useState, useMemo } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { LayoutDashboard, User, CreditCard, Users, Settings, LogOut, Menu, X, Bell, Search } from "lucide-react"
@@ -22,6 +22,7 @@ const navigation = [
 ]
 
 export default function MemberLayout({ children }: { children: React.ReactNode }) {
+  const supabase = useMemo(() => createClient(), [])
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [profile, setProfile] = useState<any>(null)
   const pathname = usePathname()
@@ -32,10 +33,6 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
   }, [])
 
   const fetchProfile = async () => {
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    )
     const {
       data: { user },
     } = await supabase.auth.getUser()
@@ -46,10 +43,6 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
   }
 
   const handleLogout = async () => {
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    )
     await supabase.auth.signOut()
     router.push("/")
   }

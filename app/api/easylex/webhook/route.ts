@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { createServiceRoleClient } from "@/lib/supabase/server"
 import { verifyEasylexSignature, extractEasylexWebhookHeaders } from "@/lib/easylex/webhook-handler"
 import { logEvidenceEvent } from "@/lib/evidence/logger"
 import { logger } from "@/lib/config/logger"
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     const payload = verification.payload!
     logger.info("EasyLex webhook received:", payload.event, payload.data.documentId)
 
-    const supabase = createClient()
+    const supabase = createServiceRoleClient()
 
     // 4. Process webhook event
     switch (payload.event) {
