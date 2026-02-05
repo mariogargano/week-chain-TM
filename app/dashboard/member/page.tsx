@@ -625,17 +625,20 @@ export default function MemberDashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50">
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <div className="glass-card rounded-2xl p-8 text-center">
+            <Loader2 className="h-8 w-8 animate-spin text-sky-500 mx-auto mb-4" />
+            <p className="text-slate-600">Cargando tu dashboard...</p>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50">
       <Navbar />
 
       {profile?.referral_code && (
