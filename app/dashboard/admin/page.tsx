@@ -19,7 +19,6 @@ import { useEffect, useState, useRef } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Session } from "@supabase/supabase-js"
 
 export default function AdminDashboard() {
   const router = useRouter()
@@ -30,7 +29,6 @@ export default function AdminDashboard() {
   const [isRedirecting, setIsRedirecting] = useState(false)
   const [authChecked, setAuthChecked] = useState(false)
   const fetchedRef = useRef(false)
-  const [session, setSession] = useState<Session | null>(null)
 
   const [globalMetrics, setGlobalMetrics] = useState({
     totalSupplyWeeks: 0,
@@ -292,10 +290,10 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-slate-100">
-        <div className="text-center">
-          <Loader2 className="mx-auto h-12 w-12 animate-spin text-blue-600" />
-          <p className="mt-4 text-lg text-slate-600">Cargando dashboard...</p>
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-sky-900 to-slate-900">
+        <div className="glass-card rounded-2xl p-8 text-center">
+          <Loader2 className="mx-auto h-12 w-12 animate-spin text-sky-400" />
+          <p className="mt-4 text-lg text-slate-300">Cargando panel de administración...</p>
         </div>
       </div>
     )
@@ -303,17 +301,17 @@ export default function AdminDashboard() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center p-6 bg-gradient-to-br from-blue-50 to-slate-100">
-        <Card className="max-w-md border-red-200 bg-red-50">
+      <div className="flex min-h-screen items-center justify-center p-6 bg-gradient-to-br from-slate-900 via-sky-900 to-slate-900">
+        <Card className="max-w-md border-red-500/30 bg-red-500/10 backdrop-blur-xl">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-red-900">
+            <CardTitle className="flex items-center gap-2 text-red-400">
               <AlertCircle className="h-5 w-5" />
               Error al cargar el dashboard
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-red-700">{error}</p>
-            <Button onClick={() => window.location.reload()} className="mt-4 w-full bg-red-600 hover:bg-red-700">
+            <p className="text-sm text-red-300">{error}</p>
+            <Button onClick={() => window.location.reload()} className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white">
               Reintentar
             </Button>
           </CardContent>
@@ -323,20 +321,20 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-slate-900">
-      {/* Fixed Header */}
-      <div className="flex-shrink-0 border-b border-white/10 bg-white/5 backdrop-blur-lg">
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-900 via-sky-900/50 to-slate-900">
+      {/* Fixed Header - Liquid Glass Blue */}
+      <div className="flex-shrink-0 border-b border-sky-500/20 glass-dark">
         <div className="flex items-center justify-between p-6">
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-200 to-emerald-200 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-sky-300 via-cyan-300 to-teal-300 bg-clip-text text-transparent">
               Control Global WEEK-CHAIN
             </h1>
-            <p className="text-blue-200 mt-1">Bienvenido, {adminEmail}</p>
+            <p className="text-sky-300/80 mt-1">Bienvenido, {adminEmail}</p>
           </div>
           <div className="flex gap-2">
             <Button
               variant="outline"
-              className="border-blue-400/30 text-blue-200 hover:bg-white/10 bg-white/5 backdrop-blur"
+              className="border-sky-400/30 text-sky-200 hover:bg-sky-500/10 bg-sky-500/5 backdrop-blur"
               onClick={() => fetchDashboardData()}
               disabled={refreshing}
             >
@@ -451,30 +449,30 @@ export default function AdminDashboard() {
                 const Icon = action.icon
                 return (
                   <Link key={action.href} href={action.href}>
-                    <Card className="group cursor-pointer border-2 border-blue-400/30 bg-white/5 backdrop-blur-lg transition-all hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/20 hover:bg-white/10">
+                    <Card className="group cursor-pointer border-2 border-sky-400/30 bg-white/5 backdrop-blur-lg transition-all hover:border-sky-400 hover:shadow-xl hover:shadow-sky-500/20 hover:bg-white/10">
                       <CardContent className="p-6">
                         <div className="flex items-start gap-4">
-                          <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg group-hover:from-blue-400 group-hover:to-indigo-500 transition-all group-hover:scale-110">
+                          <div className="p-3 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-600 shadow-lg group-hover:from-sky-400 group-hover:to-cyan-500 transition-all group-hover:scale-110">
                             <Icon className="h-6 w-6 text-white" />
                           </div>
                           <div className="flex-1">
-                            <h3 className="font-bold text-white group-hover:text-blue-200 transition-colors">
+                            <h3 className="font-bold text-white group-hover:text-sky-200 transition-colors">
                               {action.title}
                             </h3>
-                            <p className="text-sm text-blue-200/70">{action.description}</p>
+                            <p className="text-sm text-sky-200/70">{action.description}</p>
                             <div className="mt-2 flex items-center gap-2">
-                              <span className="text-xs font-medium text-blue-300">{action.stats}</span>
+                              <span className="text-xs font-medium text-sky-300">{action.stats}</span>
                               {action.badge && (
                                 <Badge
                                   variant="secondary"
-                                  className={action.badgeColor || "bg-blue-500/30 text-blue-100 text-xs backdrop-blur"}
+                                  className={action.badgeColor || "bg-sky-500/30 text-sky-100 text-xs backdrop-blur"}
                                 >
                                   {action.badge}
                                 </Badge>
                               )}
                             </div>
                           </div>
-                          <ArrowUpRight className="h-5 w-5 text-blue-400 group-hover:text-blue-200 transition-colors group-hover:translate-x-1 group-hover:-translate-y-1" />
+                          <ArrowUpRight className="h-5 w-5 text-sky-400 group-hover:text-sky-200 transition-colors group-hover:translate-x-1 group-hover:-translate-y-1" />
                         </div>
                       </CardContent>
                     </Card>
@@ -484,17 +482,17 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <Card className="border-2 border-blue-400/30 bg-white/5 backdrop-blur-lg">
+          <Card className="border-2 border-sky-400/30 bg-white/5 backdrop-blur-lg">
             <CardHeader className="border-b border-blue-400/30">
               <CardTitle className="text-lg text-white">Actividad Reciente</CardTitle>
-              <CardDescription className="text-blue-200/70">Últimas acciones en la plataforma</CardDescription>
+              <CardDescription className="text-sky-200/70">Últimas acciones en la plataforma</CardDescription>
             </CardHeader>
             <CardContent className="pt-4">
               {recentActivity.length > 0 ? (
                 <div className="space-y-3">
                   {recentActivity.map((activity, i) => (
                     <Link key={i} href={activity.link}>
-                      <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors cursor-pointer border border-blue-400/20 bg-white/5">
+                      <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors cursor-pointer border border-sky-400/20 bg-white/5">
                         <div
                           className={`h-2 w-2 rounded-full ${
                             activity.status === "success"
@@ -506,15 +504,15 @@ export default function AdminDashboard() {
                         />
                         <div className="flex-1">
                           <p className="text-sm font-medium text-white">{activity.action}</p>
-                          <p className="text-xs text-blue-300">{activity.time}</p>
+                          <p className="text-xs text-sky-300">{activity.time}</p>
                         </div>
-                        <Eye className="h-4 w-4 text-blue-400" />
+                        <Eye className="h-4 w-4 text-sky-400" />
                       </div>
                     </Link>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-blue-300 text-center py-8">No hay actividad reciente</p>
+                <p className="text-sm text-sky-300 text-center py-8">No hay actividad reciente</p>
               )}
             </CardContent>
           </Card>

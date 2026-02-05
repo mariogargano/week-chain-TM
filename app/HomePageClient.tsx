@@ -192,13 +192,13 @@ export function HomePageClient() {
         <div className="flex flex-col bg-white">
           {/* Hero Section */}
           <article aria-label={hero.badge || "Smart Vacational Certificates"}>
-            <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-[#C7CEEA]/10 to-[#B5EAD7]/10">
+            <section className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-cyan-50/50 to-teal-50/30">
               <AnimatedHero />
             </section>
           </article>
 
           {/* DynamicCertificateShowcase con Características integradas */}
-          <section className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 overflow-hidden">
+          <section className="relative bg-gradient-to-br from-slate-900 via-sky-950 to-slate-900 overflow-hidden">
             {/* Background decorations */}
             <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
@@ -209,7 +209,7 @@ export function HomePageClient() {
             {/* Características del Certificado - Integradas */}
             <div className="container mx-auto max-w-6xl relative z-10 px-4 sm:px-6 pb-12 sm:pb-16 md:pb-24">
               <div className="space-y-6">
-                <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-purple-50 via-indigo-50 to-purple-50 rounded-2xl border-2 border-purple-200">
+                <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-sky-50 via-cyan-50 to-sky-50 rounded-2xl border-2 border-sky-200">
                   <div className="flex-shrink-0">
                     <Image
                       src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=029"
@@ -296,7 +296,7 @@ export function HomePageClient() {
           {/* How It Works Section */}
           <section
             aria-labelledby="how-it-works-title"
-            className="relative bg-gradient-to-b from-white to-slate-50 px-4 sm:px-6 py-16 sm:py-20 md:py-24 overflow-hidden"
+            className="relative bg-gradient-to-b from-white via-sky-50/30 to-cyan-50/20 px-4 sm:px-6 py-16 sm:py-20 md:py-24 overflow-hidden"
           >
             {/* Content for How It Works Section */}
             <div className="container mx-auto max-w-6xl">
@@ -318,7 +318,7 @@ export function HomePageClient() {
                     key={step.step}
                     className="relative bg-white p-6 rounded-2xl border-2 border-slate-200 hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
                   >
-                    <div className="absolute -top-4 left-6 bg-gradient-to-br from-blue-500 to-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                    <div className="absolute -top-4 left-6 bg-gradient-to-br from-sky-500 to-cyan-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg shadow-sky-200">
                       {step.step}
                     </div>
                     <div className="mb-4 mt-4">
@@ -373,7 +373,7 @@ export function HomePageClient() {
               <Button
                 onClick={() => setShowBrokerSection(!showBrokerSection)}
                 size="lg"
-                className="w-full bg-gradient-to-r from-slate-900 to-slate-700 hover:from-slate-800 hover:to-slate-600 text-white text-lg font-bold h-16 rounded-2xl transition-all duration-300 hover:scale-[1.02] shadow-lg"
+                className="w-full bg-gradient-to-r from-sky-600 to-cyan-600 hover:from-sky-500 hover:to-cyan-500 text-white text-lg font-bold h-16 rounded-2xl transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-sky-200"
               >
                 <Briefcase className="mr-3 h-6 w-6" />
                 Trabaja con Nosotros

@@ -115,8 +115,8 @@ export default function UserDashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#FFF5F5] via-[#F5F0FF] to-[#F0F5FF]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF9AA2]" />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500" />
       </div>
     )
   }
@@ -124,14 +124,14 @@ export default function UserDashboardPage() {
   const uniqueDestinations = new Set(userWeeks.map((w) => w.property)).size
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-[#FFF5F5] via-[#F5F0FF] to-[#F0F5FF]">
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50">
       <Navbar />
       <main className="flex-1 overflow-y-auto pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center gap-4 mb-2">
-              <div className="h-16 w-16 rounded-full bg-gradient-to-r from-[#FF9AA2] to-[#C7CEEA] flex items-center justify-center text-white text-2xl font-bold">
+              <div className="h-16 w-16 rounded-full bg-gradient-to-r from-sky-500 to-cyan-500 flex items-center justify-center text-white text-2xl font-bold">
                 {userName.charAt(0).toUpperCase()}
               </div>
               <div>
@@ -180,9 +180,9 @@ export default function UserDashboardPage() {
           {/* Quick Actions */}
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             <Link href="/dashboard/user/certificate">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+              <Card className="hover:shadow-md transition-shadow cursor-pointer bg-gradient-to-br from-sky-50 to-blue-50 border-sky-200">
                 <CardContent className="p-4 flex flex-col items-center text-center">
-                  <div className="h-12 w-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center mb-2">
+                  <div className="h-12 w-12 rounded-full bg-gradient-to-r from-sky-500 to-blue-500 flex items-center justify-center mb-2">
                     <CreditCard className="h-6 w-6 text-white" />
                   </div>
                   <span className="text-sm font-medium text-slate-900">Mi Certificado</span>
@@ -193,7 +193,7 @@ export default function UserDashboardPage() {
             <Link href="/properties">
               <Card className="hover:shadow-md transition-shadow cursor-pointer">
                 <CardContent className="p-4 flex flex-col items-center text-center">
-                  <div className="h-12 w-12 rounded-full bg-gradient-to-r from-[#FF9AA2] to-[#C7CEEA] flex items-center justify-center mb-2">
+                  <div className="h-12 w-12 rounded-full bg-gradient-to-r from-sky-500 to-cyan-500 flex items-center justify-center mb-2">
                     <Building2 className="h-6 w-6 text-white" />
                   </div>
                   <span className="text-sm font-medium">Ver Destinos</span>
@@ -204,7 +204,7 @@ export default function UserDashboardPage() {
             <Link href="/dashboard/user/request-reservation">
               <Card className="hover:shadow-md transition-shadow cursor-pointer">
                 <CardContent className="p-4 flex flex-col items-center text-center">
-                  <div className="h-12 w-12 rounded-full bg-gradient-to-r from-[#C7CEEA] to-[#B5EAD7] flex items-center justify-center mb-2">
+                  <div className="h-12 w-12 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 flex items-center justify-center mb-2">
                     <Calendar className="h-6 w-6 text-white" />
                   </div>
                   <span className="text-sm font-medium">Estancias Confirmadas</span>
@@ -216,7 +216,7 @@ export default function UserDashboardPage() {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 shadow-sm">
+            <Card className="bg-gradient-to-br from-sky-50 to-cyan-50 border-sky-200 shadow-sm">
               <CardHeader className="pb-2">
                 <CardDescription>Estancias Confirmadas</CardDescription>
                 <CardTitle className="text-2xl font-bold text-gray-900">{userWeeks.length}</CardTitle>
@@ -318,7 +318,7 @@ export default function UserDashboardPage() {
                       Explora nuestros destinos y obtén tu primer certificado de acceso vacacional
                     </p>
                     <Link href="/properties">
-                      <Button className="bg-gradient-to-r from-[#FF9AA2] to-[#C7CEEA] text-white">
+                      <Button className="bg-gradient-to-r from-sky-500 to-cyan-500 text-white">
                         Explorar Destinos
                       </Button>
                     </Link>
@@ -332,7 +332,7 @@ export default function UserDashboardPage() {
                 <Card className="bg-white/80 backdrop-blur border-0 shadow-lg">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Calendar className="h-5 w-5 text-[#FF9AA2]" />
+                      <Calendar className="h-5 w-5 text-sky-500" />
                       Próximas Estancias
                     </CardTitle>
                   </CardHeader>
@@ -341,7 +341,7 @@ export default function UserDashboardPage() {
                       <div className="space-y-4">
                         {upcomingBookings.map((booking) => (
                           <div key={booking.id} className="flex items-center gap-4 p-3 rounded-lg bg-gray-50">
-                            <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-[#FF9AA2] to-[#C7CEEA] flex items-center justify-center text-white font-bold">
+                            <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-sky-500 to-cyan-500 flex items-center justify-center text-white font-bold">
                               S{booking.weeks?.week_number || "?"}
                             </div>
                             <div className="flex-1">
@@ -407,7 +407,7 @@ export default function UserDashboardPage() {
                       {userWeeks.map((week) => (
                         <div key={week.id} className="flex items-center justify-between p-4 rounded-lg border">
                           <div className="flex items-center gap-3">
-                            <FileText className="h-8 w-8 text-[#FF9AA2]" />
+                            <FileText className="h-8 w-8 text-sky-500" />
                             <div>
                               <p className="font-medium">Confirmación - {week.property}</p>
                               <p className="text-sm text-gray-500">Estancia {week.weekNumber}</p>
