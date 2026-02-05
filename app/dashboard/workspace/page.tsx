@@ -213,10 +213,9 @@ export default function TeamWorkspace() {
 
   if (isAuthorized === false) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
         <Navbar user={true} />
-
-        <div className="flex items-center justify-center min-h-[calc(100vh-80px)] p-6">
+        <div className="flex-1 flex items-center justify-center p-6">
           <Card className="max-w-2xl w-full border-red-200 bg-white">
             <CardHeader className="text-center space-y-4">
               <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
@@ -280,9 +279,9 @@ export default function TeamWorkspace() {
 
   if (isAuthorized === null) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         <Navbar user={true} />
-        <div className="flex items-center justify-center min-h-[calc(100vh-80px)]">
+        <div className="flex-1 flex items-center justify-center">
           <div className="text-center space-y-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" />
             <p className="text-slate-600">Verificando acceso al workspace...</p>
@@ -293,371 +292,372 @@ export default function TeamWorkspace() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <Navbar user={true} />
-
-      <div className="max-w-[1600px] mx-auto p-6 space-y-6">
-        <div className="flex items-center justify-between">
-          <div className="space-y-1">
-            <div className="flex items-center gap-3">
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                Oficina Virtual WEEK-CHAIN
-              </h1>
-              <Badge variant="outline" className="border-green-500 text-green-700 bg-green-50">
-                <CheckCircle className="h-3 w-3 mr-1" />
-                Acceso Autorizado
-              </Badge>
+      <div className="flex-1 overflow-y-auto pt-16">
+        <div className="max-w-[1600px] mx-auto p-6 space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <div className="flex items-center gap-3">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                  Oficina Virtual WEEK-CHAIN
+                </h1>
+                <Badge variant="outline" className="border-green-500 text-green-700 bg-green-50">
+                  <CheckCircle className="h-3 w-3 mr-1" />
+                  Acceso Autorizado
+                </Badge>
+              </div>
+              <p className="text-slate-600">Centro de colaboración y gestión del equipo • {userEmail}</p>
             </div>
-            <p className="text-slate-600">Centro de colaboración y gestión del equipo • {userEmail}</p>
+            <div className="flex items-center gap-3">
+              <Button variant="outline" size="icon">
+                <Bell className="h-5 w-5" />
+              </Button>
+              <Button variant="outline" size="icon">
+                <Search className="h-5 w-5" />
+              </Button>
+              <Button variant="outline" size="icon">
+                <Settings className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Button variant="outline" size="icon">
-              <Bell className="h-5 w-5" />
-            </Button>
-            <Button variant="outline" size="icon">
-              <Search className="h-5 w-5" />
-            </Button>
-            <Button variant="outline" size="icon">
-              <Settings className="h-5 w-5" />
-            </Button>
-          </div>
-        </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="border-blue-200/50 bg-white/90 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">Miembros del Equipo</CardTitle>
-              <Users className="h-5 w-5 text-blue-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-slate-900">{stats.totalMembers}</div>
-              <p className="text-xs text-green-600 mt-1">Todos activos</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-indigo-200/50 bg-white/90 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">Tareas Activas</CardTitle>
-              <CheckCircle className="h-5 w-5 text-indigo-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-slate-900">{stats.activeTasks}</div>
-              <p className="text-xs text-slate-500 mt-1">En progreso</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-purple-200/50 bg-white/90 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">Completadas Hoy</CardTitle>
-              <TrendingUp className="h-5 w-5 text-purple-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-slate-900">{stats.completedToday}</div>
-              <p className="text-xs text-green-600 mt-1">+2 vs ayer</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-pink-200/50 bg-white/90 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">Reuniones Próximas</CardTitle>
-              <Calendar className="h-5 w-5 text-pink-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-slate-900">{stats.upcomingMeetings}</div>
-              <p className="text-xs text-slate-500 mt-1">Esta semana</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Team & Meetings */}
-          <div className="space-y-6">
-            {/* Google Meet Quick Access */}
-            <Card className="border-green-200/50 bg-gradient-to-br from-green-50 to-emerald-50">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-green-900">
-                  <Video className="h-5 w-5" />
-                  Google Meet
-                </CardTitle>
-                <CardDescription className="text-green-700">Iniciar reunión instantánea</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <Button
-                  onClick={createGoogleMeet}
-                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
-                >
-                  <Video className="mr-2 h-4 w-4" />
-                  Nueva Reunión
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full border-green-300 text-green-700 hover:bg-green-50 bg-transparent"
-                >
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  Unirse con Código
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Team Members */}
-            <Card className="border-slate-200 bg-white/90 backdrop-blur-sm">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5 text-blue-600" />
-                  Equipo
-                </CardTitle>
-                <CardDescription>Miembros activos del equipo</CardDescription>
+          {/* Quick Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Card className="border-blue-200/50 bg-white/90 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-slate-600">Miembros del Equipo</CardTitle>
+                <Users className="h-5 w-5 text-blue-600" />
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
-                  {teamMembers.map((member) => (
-                    <div
-                      key={member.id}
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors"
-                    >
-                      <div className="relative">
-                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-semibold">
-                          {member.name.charAt(0)}
-                        </div>
-                        <div
-                          className={`absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white ${getStatusColor(member.status)}`}
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-slate-900 truncate">{member.name}</p>
-                        <p className="text-xs text-slate-500 capitalize">{member.role}</p>
-                      </div>
-                      <Button variant="ghost" size="sm">
-                        <MessageSquare className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
+                <div className="text-3xl font-bold text-slate-900">{stats.totalMembers}</div>
+                <p className="text-xs text-green-600 mt-1">Todos activos</p>
               </CardContent>
             </Card>
 
-            {/* Quick Links */}
-            <Card className="border-slate-200 bg-white/90 backdrop-blur-sm">
-              <CardHeader>
-                <CardTitle className="text-sm font-medium">Accesos Rápidos</CardTitle>
+            <Card className="border-indigo-200/50 bg-white/90 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-slate-600">Tareas Activas</CardTitle>
+                <CheckCircle className="h-5 w-5 text-indigo-600" />
               </CardHeader>
-              <CardContent className="space-y-2">
-                <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
-                  <a href="/dashboard/admin/properties">
-                    <Building2 className="mr-2 h-4 w-4" />
-                    Propiedades
-                  </a>
-                </Button>
-                <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
-                  <a href="/dashboard/admin/users">
-                    <Users className="mr-2 h-4 w-4" />
-                    Usuarios
-                  </a>
-                </Button>
-                <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
-                  <a href="/dashboard/admin/analytics">
-                    <TrendingUp className="mr-2 h-4 w-4" />
-                    Analytics
-                  </a>
-                </Button>
-                <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
-                  <a href="/dashboard/admin/kyc">
-                    <FileText className="mr-2 h-4 w-4" />
-                    KYC
-                  </a>
-                </Button>
+              <CardContent>
+                <div className="text-3xl font-bold text-slate-900">{stats.activeTasks}</div>
+                <p className="text-xs text-slate-500 mt-1">En progreso</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-purple-200/50 bg-white/90 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-slate-600">Completadas Hoy</CardTitle>
+                <TrendingUp className="h-5 w-5 text-purple-600" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-slate-900">{stats.completedToday}</div>
+                <p className="text-xs text-green-600 mt-1">+2 vs ayer</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-pink-200/50 bg-white/90 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-slate-600">Reuniones Próximas</CardTitle>
+                <Calendar className="h-5 w-5 text-pink-600" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-slate-900">{stats.upcomingMeetings}</div>
+                <p className="text-xs text-slate-500 mt-1">Esta semana</p>
               </CardContent>
             </Card>
           </div>
 
-          {/* Right Column - Tasks & Activity */}
-          <div className="lg:col-span-2 space-y-6">
-            <Tabs defaultValue="tasks" className="space-y-4">
-              <TabsList className="bg-white/90 backdrop-blur-sm border border-slate-200">
-                <TabsTrigger value="tasks">Tareas</TabsTrigger>
-                <TabsTrigger value="calendar">Calendario</TabsTrigger>
-                <TabsTrigger value="documents">Documentos</TabsTrigger>
-                <TabsTrigger value="activity">Actividad</TabsTrigger>
-              </TabsList>
-
-              {/* Tasks Tab */}
-              <TabsContent value="tasks" className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-slate-900">Tareas del Equipo</h3>
-                  <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                    <Plus className="mr-2 h-4 w-4" />
-                    Nueva Tarea
+          {/* Main Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left Column - Team & Meetings */}
+            <div className="space-y-6">
+              {/* Google Meet Quick Access */}
+              <Card className="border-green-200/50 bg-gradient-to-br from-green-50 to-emerald-50">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-green-900">
+                    <Video className="h-5 w-5" />
+                    Google Meet
+                  </CardTitle>
+                  <CardDescription className="text-green-700">Iniciar reunión instantánea</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <Button
+                    onClick={createGoogleMeet}
+                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
+                  >
+                    <Video className="mr-2 h-4 w-4" />
+                    Nueva Reunión
                   </Button>
-                </div>
+                  <Button
+                    variant="outline"
+                    className="w-full border-green-300 text-green-700 hover:bg-green-50 bg-transparent"
+                  >
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    Unirse con Código
+                  </Button>
+                </CardContent>
+              </Card>
 
-                <div className="space-y-3">
-                  {tasks.map((task) => (
-                    <Card key={task.id} className="border-slate-200 bg-white/90 hover:shadow-md transition-shadow">
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1 space-y-2">
-                            <div className="flex items-center gap-2">
-                              <h4 className="font-semibold text-slate-900">{task.title}</h4>
-                              {getPriorityBadge(task.priority)}
-                              {getStatusBadge(task.status)}
-                            </div>
-                            <p className="text-sm text-slate-600">{task.description}</p>
-                            <div className="flex items-center gap-4 text-xs text-slate-500">
-                              <span className="flex items-center gap-1">
-                                <Users className="h-3 w-3" />
-                                {task.assignee}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <Calendar className="h-3 w-3" />
-                                {new Date(task.due_date).toLocaleDateString()}
-                              </span>
-                            </div>
+              {/* Team Members */}
+              <Card className="border-slate-200 bg-white/90 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="h-5 w-5 text-blue-600" />
+                    Equipo
+                  </CardTitle>
+                  <CardDescription>Miembros activos del equipo</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {teamMembers.map((member) => (
+                      <div
+                        key={member.id}
+                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors"
+                      >
+                        <div className="relative">
+                          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-semibold">
+                            {member.name.charAt(0)}
                           </div>
-                          <Button variant="ghost" size="sm">
-                            <CheckCircle className="h-4 w-4" />
-                          </Button>
+                          <div
+                            className={`absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white ${getStatusColor(member.status)}`}
+                          />
                         </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-
-              {/* Calendar Tab */}
-              <TabsContent value="calendar" className="space-y-4">
-                <Card className="border-slate-200 bg-white/90">
-                  <CardHeader>
-                    <CardTitle>Calendario del Equipo</CardTitle>
-                    <CardDescription>Reuniones y eventos programados</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3 p-4 border border-slate-200 rounded-lg">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-                          <Calendar className="h-6 w-6 text-blue-600" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-900 truncate">{member.name}</p>
+                          <p className="text-xs text-slate-500 capitalize">{member.role}</p>
                         </div>
-                        <div className="flex-1">
-                          <p className="font-medium text-slate-900">Reunión de Equipo</p>
-                          <p className="text-sm text-slate-600">Hoy, 3:00 PM - 4:00 PM</p>
-                        </div>
-                        <Button size="sm" variant="outline">
-                          <Video className="mr-2 h-4 w-4" />
-                          Unirse
+                        <Button variant="ghost" size="sm">
+                          <MessageSquare className="h-4 w-4" />
                         </Button>
                       </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
 
-                      <div className="flex items-center gap-3 p-4 border border-slate-200 rounded-lg">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100">
-                          <Calendar className="h-6 w-6 text-purple-600" />
-                        </div>
-                        <div className="flex-1">
-                          <p className="font-medium text-slate-900">Revisión de Propiedades</p>
-                          <p className="text-sm text-slate-600">Mañana, 10:00 AM - 11:00 AM</p>
-                        </div>
-                        <Button size="sm" variant="outline">
-                          Ver Detalles
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
+              {/* Quick Links */}
+              <Card className="border-slate-200 bg-white/90 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-sm font-medium">Accesos Rápidos</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
+                    <a href="/dashboard/admin/properties">
+                      <Building2 className="mr-2 h-4 w-4" />
+                      Propiedades
+                    </a>
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
+                    <a href="/dashboard/admin/users">
+                      <Users className="mr-2 h-4 w-4" />
+                      Usuarios
+                    </a>
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
+                    <a href="/dashboard/admin/analytics">
+                      <TrendingUp className="mr-2 h-4 w-4" />
+                      Analytics
+                    </a>
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
+                    <a href="/dashboard/admin/kyc">
+                      <FileText className="mr-2 h-4 w-4" />
+                      KYC
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
 
-              {/* Documents Tab */}
-              <TabsContent value="documents" className="space-y-4">
-                <Card className="border-slate-200 bg-white/90">
-                  <CardHeader>
-                    <CardTitle>Documentos Compartidos</CardTitle>
-                    <CardDescription>Recursos y archivos del equipo</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {[
-                        { name: "Manual de Operaciones", type: "PDF", size: "2.4 MB", updated: "Hace 2 días" },
-                        { name: "Plantilla de Propiedades", type: "XLSX", size: "156 KB", updated: "Hace 1 semana" },
-                        { name: "Guía de KYC", type: "PDF", size: "1.8 MB", updated: "Hace 3 días" },
-                      ].map((doc, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center gap-3 p-3 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
-                        >
-                          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100">
-                            <FileText className="h-5 w-5 text-slate-600" />
+            {/* Right Column - Tasks & Activity */}
+            <div className="lg:col-span-2 space-y-6">
+              <Tabs defaultValue="tasks" className="space-y-4">
+                <TabsList className="bg-white/90 backdrop-blur-sm border border-slate-200">
+                  <TabsTrigger value="tasks">Tareas</TabsTrigger>
+                  <TabsTrigger value="calendar">Calendario</TabsTrigger>
+                  <TabsTrigger value="documents">Documentos</TabsTrigger>
+                  <TabsTrigger value="activity">Actividad</TabsTrigger>
+                </TabsList>
+
+                {/* Tasks Tab */}
+                <TabsContent value="tasks" className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-slate-900">Tareas del Equipo</h3>
+                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                      <Plus className="mr-2 h-4 w-4" />
+                      Nueva Tarea
+                    </Button>
+                  </div>
+
+                  <div className="space-y-3">
+                    {tasks.map((task) => (
+                      <Card key={task.id} className="border-slate-200 bg-white/90 hover:shadow-md transition-shadow">
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1 space-y-2">
+                              <div className="flex items-center gap-2">
+                                <h4 className="font-semibold text-slate-900">{task.title}</h4>
+                                {getPriorityBadge(task.priority)}
+                                {getStatusBadge(task.status)}
+                              </div>
+                              <p className="text-sm text-slate-600">{task.description}</p>
+                              <div className="flex items-center gap-4 text-xs text-slate-500">
+                                <span className="flex items-center gap-1">
+                                  <Users className="h-3 w-3" />
+                                  {task.assignee}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Calendar className="h-3 w-3" />
+                                  {new Date(task.due_date).toLocaleDateString()}
+                                </span>
+                              </div>
+                            </div>
+                            <Button variant="ghost" size="sm">
+                              <CheckCircle className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </TabsContent>
+
+                {/* Calendar Tab */}
+                <TabsContent value="calendar" className="space-y-4">
+                  <Card className="border-slate-200 bg-white/90">
+                    <CardHeader>
+                      <CardTitle>Calendario del Equipo</CardTitle>
+                      <CardDescription>Reuniones y eventos programados</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3 p-4 border border-slate-200 rounded-lg">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
+                            <Calendar className="h-6 w-6 text-blue-600" />
                           </div>
                           <div className="flex-1">
-                            <p className="font-medium text-slate-900">{doc.name}</p>
-                            <p className="text-xs text-slate-500">
-                              {doc.type} • {doc.size} • {doc.updated}
-                            </p>
+                            <p className="font-medium text-slate-900">Reunión de Equipo</p>
+                            <p className="text-sm text-slate-600">Hoy, 3:00 PM - 4:00 PM</p>
                           </div>
-                          <Button variant="ghost" size="sm">
-                            <ExternalLink className="h-4 w-4" />
+                          <Button size="sm" variant="outline">
+                            <Video className="mr-2 h-4 w-4" />
+                            Unirse
                           </Button>
                         </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
 
-              {/* Activity Tab */}
-              <TabsContent value="activity" className="space-y-4">
-                <Card className="border-slate-200 bg-white/90">
-                  <CardHeader>
-                    <CardTitle>Actividad Reciente</CardTitle>
-                    <CardDescription>Últimas acciones del equipo</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {[
-                        {
-                          user: "Admin",
-                          action: "aprobó una nueva propiedad",
-                          time: "Hace 10 minutos",
-                          icon: CheckCircle,
-                          color: "text-green-600",
-                        },
-                        {
-                          user: "Broker",
-                          action: "cerró una venta",
-                          time: "Hace 1 hora",
-                          icon: TrendingUp,
-                          color: "text-blue-600",
-                        },
-                        {
-                          user: "Notaría",
-                          action: "verificó documentos KYC",
-                          time: "Hace 2 horas",
-                          icon: FileText,
-                          color: "text-purple-600",
-                        },
-                        {
-                          user: "Management",
-                          action: "programó mantenimiento",
-                          time: "Hace 3 horas",
-                          icon: Clock,
-                          color: "text-orange-600",
-                        },
-                      ].map((activity, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                          <div className={`mt-0.5 ${activity.color}`}>
-                            <activity.icon className="h-5 w-5" />
+                        <div className="flex items-center gap-3 p-4 border border-slate-200 rounded-lg">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100">
+                            <Calendar className="h-6 w-6 text-purple-600" />
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm text-slate-900">
-                              <span className="font-medium">{activity.user}</span> {activity.action}
-                            </p>
-                            <p className="text-xs text-slate-500">{activity.time}</p>
+                            <p className="font-medium text-slate-900">Revisión de Propiedades</p>
+                            <p className="text-sm text-slate-600">Mañana, 10:00 AM - 11:00 AM</p>
                           </div>
+                          <Button size="sm" variant="outline">
+                            Ver Detalles
+                          </Button>
                         </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                {/* Documents Tab */}
+                <TabsContent value="documents" className="space-y-4">
+                  <Card className="border-slate-200 bg-white/90">
+                    <CardHeader>
+                      <CardTitle>Documentos Compartidos</CardTitle>
+                      <CardDescription>Recursos y archivos del equipo</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {[
+                          { name: "Manual de Operaciones", type: "PDF", size: "2.4 MB", updated: "Hace 2 días" },
+                          { name: "Plantilla de Propiedades", type: "XLSX", size: "156 KB", updated: "Hace 1 semana" },
+                          { name: "Guía de KYC", type: "PDF", size: "1.8 MB", updated: "Hace 3 días" },
+                        ].map((doc, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center gap-3 p-3 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                          >
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100">
+                              <FileText className="h-5 w-5 text-slate-600" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="font-medium text-slate-900">{doc.name}</p>
+                              <p className="text-xs text-slate-500">
+                                {doc.type} • {doc.size} • {doc.updated}
+                              </p>
+                            </div>
+                            <Button variant="ghost" size="sm">
+                              <ExternalLink className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                {/* Activity Tab */}
+                <TabsContent value="activity" className="space-y-4">
+                  <Card className="border-slate-200 bg-white/90">
+                    <CardHeader>
+                      <CardTitle>Actividad Reciente</CardTitle>
+                      <CardDescription>Últimas acciones del equipo</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {[
+                          {
+                            user: "Admin",
+                            action: "aprobó una nueva propiedad",
+                            time: "Hace 10 minutos",
+                            icon: CheckCircle,
+                            color: "text-green-600",
+                          },
+                          {
+                            user: "Broker",
+                            action: "cerró una venta",
+                            time: "Hace 1 hora",
+                            icon: TrendingUp,
+                            color: "text-blue-600",
+                          },
+                          {
+                            user: "Notaría",
+                            action: "verificó documentos KYC",
+                            time: "Hace 2 horas",
+                            icon: FileText,
+                            color: "text-purple-600",
+                          },
+                          {
+                            user: "Management",
+                            action: "programó mantenimiento",
+                            time: "Hace 3 horas",
+                            icon: Clock,
+                            color: "text-orange-600",
+                          },
+                        ].map((activity, index) => (
+                          <div key={index} className="flex items-start gap-3">
+                            <div className={`mt-0.5 ${activity.color}`}>
+                              <activity.icon className="h-5 w-5" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm text-slate-900">
+                                <span className="font-medium">{activity.user}</span> {activity.action}
+                              </p>
+                              <p className="text-xs text-slate-500">{activity.time}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
         </div>
       </div>
