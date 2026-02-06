@@ -180,23 +180,26 @@ function OwnerDashboardContent() {
 
   if (loading) {
     return (
-      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50">
         <Navbar user={true} />
         <div className="flex-1 flex items-center justify-center">
-          <p className="text-slate-600">Cargando dashboard...</p>
+          <div className="glass-card rounded-2xl p-8 text-center">
+            <div className="w-12 h-12 border-4 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-slate-600">Cargando dashboard de propietario...</p>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50">
       <Navbar user={true} />
       <div className="flex-1 overflow-y-auto pt-16">
         <div className="max-w-7xl mx-auto p-6 space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-sky-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
                 Dashboard de Propietario
               </h1>
               <p className="text-slate-600 mt-2">Gestiona tus propiedades tokenizadas y tracking de ventas</p>
@@ -205,14 +208,14 @@ function OwnerDashboardContent() {
               <Button
                 onClick={() => router.push("/dashboard/owner/sales")}
                 variant="outline"
-                className="border-purple-200"
+                className="border-sky-200 text-sky-700 hover:bg-sky-50"
               >
                 <Download className="h-4 w-4 mr-2" />
                 Exportar Ventas
               </Button>
               <Button
                 onClick={() => router.push("/dashboard/owner/submit-property")}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                className="bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Nueva Propiedad
@@ -221,7 +224,7 @@ function OwnerDashboardContent() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card className="border-l-4 border-l-green-500 bg-white/90 backdrop-blur-xl shadow-lg">
+            <Card className="border-l-4 border-l-teal-500 glass-card shadow-lg">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-slate-600">Revenue Total</CardTitle>
               </CardHeader>
@@ -229,11 +232,11 @@ function OwnerDashboardContent() {
                 <div className="text-3xl font-bold text-slate-900">${stats.totalRevenue.toLocaleString()}</div>
                 <div className="mt-1 flex items-center text-xs">
                   {stats.revenueGrowth > 0 ? (
-                    <ArrowUpRight className="mr-1 h-3 w-3 text-green-600" />
+                    <ArrowUpRight className="mr-1 h-3 w-3 text-teal-600" />
                   ) : (
                     <ArrowDownRight className="mr-1 h-3 w-3 text-red-600" />
                   )}
-                  <span className={stats.revenueGrowth > 0 ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
+                  <span className={stats.revenueGrowth > 0 ? "text-teal-600 font-medium" : "text-red-600 font-medium"}>
                     {Math.abs(stats.revenueGrowth).toFixed(1)}%
                   </span>
                   <span className="ml-1 text-slate-500">este mes</span>
@@ -241,7 +244,7 @@ function OwnerDashboardContent() {
               </CardContent>
             </Card>
 
-            <Card className="border-l-4 border-l-blue-500 bg-white/90 backdrop-blur-xl shadow-lg">
+            <Card className="border-l-4 border-l-sky-500 glass-card shadow-lg">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-slate-600">Propiedades Aprobadas</CardTitle>
               </CardHeader>
@@ -253,7 +256,7 @@ function OwnerDashboardContent() {
               </CardContent>
             </Card>
 
-            <Card className="border-l-4 border-l-purple-500 bg-white/90 backdrop-blur-xl shadow-lg">
+            <Card className="border-l-4 border-l-cyan-500 glass-card shadow-lg">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-slate-600">Semanas Vendidas</CardTitle>
               </CardHeader>

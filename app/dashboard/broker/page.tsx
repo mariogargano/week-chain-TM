@@ -259,17 +259,20 @@ function BrokerDashboardContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-slate-400">Cargando dashboard...</p>
+      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-900 via-sky-950/80 to-slate-900">
+        <Navbar user={true} />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="glass-card rounded-2xl p-8 text-center">
+            <div className="w-12 h-12 border-4 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-slate-300">Cargando dashboard de broker...</p>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-900 via-sky-950/80 to-slate-900">
       <Navbar user={true} />
       <div className="flex-1 overflow-y-auto pt-16">
         <div className="max-w-7xl mx-auto p-6 space-y-6">
@@ -316,14 +319,14 @@ function BrokerDashboardContent() {
             </div>
           </div>
 
-          {/* Stats Grid */}
+          {/* Stats Grid - Liquid Glass Blue */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {/* Total Earnings */}
-            <Card className="bg-white/5 backdrop-blur-sm border-white/10">
+            <Card className="glass-blue border-sky-500/20">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <DollarSign className="h-5 w-5 text-emerald-400" />
-                  <span className="text-xs text-emerald-400 flex items-center">
+                  <DollarSign className="h-5 w-5 text-sky-400" />
+                  <span className="text-xs text-sky-400 flex items-center">
                     <ArrowUpRight className="h-3 w-3" />
                     +12%
                   </span>
@@ -334,11 +337,11 @@ function BrokerDashboardContent() {
             </Card>
 
             {/* This Month */}
-            <Card className="bg-white/5 backdrop-blur-sm border-white/10">
+            <Card className="glass-blue border-cyan-500/20">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <Calendar className="h-5 w-5 text-blue-400" />
-                  <span className="text-xs text-blue-400 flex items-center">
+                  <Calendar className="h-5 w-5 text-cyan-400" />
+                  <span className="text-xs text-cyan-400 flex items-center">
                     <ArrowUpRight className="h-3 w-3" />
                     +8%
                   </span>

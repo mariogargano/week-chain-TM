@@ -107,7 +107,7 @@ function DAODashboardContent() {
 
   if (loading) {
     return (
-      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-[#C7CEEA]/20 via-[#FFB7B2]/20 to-[#B5EAD7]/20">
+      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50">
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
           <p className="text-slate-600">Cargando propuestas...</p>
@@ -117,7 +117,7 @@ function DAODashboardContent() {
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-[#C7CEEA]/20 via-[#FFB7B2]/20 to-[#B5EAD7]/20">
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50">
       <Navbar />
       <div className="flex-1 overflow-y-auto pt-16 p-8">
         <div className="max-w-7xl mx-auto space-y-8">
@@ -127,10 +127,10 @@ function DAODashboardContent() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
-            <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
+            <Card className="p-8 glass-card border-sky-100 rounded-2xl">
               <div className="flex items-center gap-4">
-                <div className="p-4 bg-blue-100 rounded-xl">
-                  <Clock className="h-8 w-8 text-blue-600" />
+                <div className="p-4 bg-cyan-100 rounded-xl">
+                  <Clock className="h-8 w-8 text-cyan-600" />
                 </div>
                 <div>
                   <p className="text-sm text-slate-600">Propuestas Activas</p>
@@ -139,10 +139,10 @@ function DAODashboardContent() {
               </div>
             </Card>
 
-            <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
+            <Card className="p-8 glass-card border-sky-100 rounded-2xl">
               <div className="flex items-center gap-4">
-                <div className="p-4 bg-purple-100 rounded-xl">
-                  <Vote className="h-8 w-8 text-purple-600" />
+                <div className="p-4 bg-sky-100 rounded-xl">
+                  <Vote className="h-8 w-8 text-sky-600" />
                 </div>
                 <div>
                   <p className="text-sm text-slate-600">Total Votos</p>
@@ -151,10 +151,10 @@ function DAODashboardContent() {
               </div>
             </Card>
 
-            <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
+            <Card className="p-8 glass-card border-sky-100 rounded-2xl">
               <div className="flex items-center gap-4">
-                <div className="p-4 bg-green-100 rounded-xl">
-                  <CheckCircle className="h-8 w-8 text-green-600" />
+                <div className="p-4 bg-teal-100 rounded-xl">
+                  <CheckCircle className="h-8 w-8 text-teal-600" />
                 </div>
                 <div>
                   <p className="text-sm text-slate-600">Aprobadas</p>
@@ -164,10 +164,10 @@ function DAODashboardContent() {
             </Card>
           </div>
 
-          <Card className="p-8 bg-white/80 backdrop-blur-sm border-slate-200 rounded-2xl">
+          <Card className="p-8 glass-card border-sky-100 rounded-2xl">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-slate-900 text-balance">Propuestas</h2>
-              <Button className="bg-[#FF9AA2] hover:bg-[#FF9AA2]/90 focus-visible:ring-2 focus-visible:ring-[#FF9AA2] focus-visible:ring-offset-2">
+              <Button className="bg-sky-500 hover:bg-sky-600 focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">
                 Nueva Propuesta
               </Button>
             </div>
