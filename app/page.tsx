@@ -1,8 +1,6 @@
 import type { Metadata } from "next"
 import HomePageClient from "./HomePageClient"
 
-export { default as HomePageClient } from "./HomePageClient"
-
 export const metadata: Metadata = {
   title: "WEEK-CHAIN™ | Smart Vacational Certificates en México",
   description:

@@ -26,7 +26,7 @@ import {
 import { format, addDays } from "date-fns"
 import { es } from "date-fns/locale"
 import Link from "next/link"
-import Navbar from "@/components/navbar"
+import { Navbar } from "@/components/navbar"
 
 interface Certificate {
   id: string

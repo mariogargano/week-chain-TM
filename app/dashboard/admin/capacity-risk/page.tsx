@@ -21,17 +21,22 @@ export default function CapacityRiskPage() {
       const supabase = createClient()
 
       const {
-        data: { session },
-      } = await supabase.auth.getSession()
-      if (!session) {
-        router.push("/auth")
+        data: { user },
+      } = await supabase.auth.getUser()
+      if (!user) {
+        router.replace("/auth")
         return
       }
 
-      const { data: adminUser } = await supabase.from("admin_users").select("*").eq("user_id", session.user.id).single()
+      const { data: adminUser } = await supabase
+        .from("admin_users")
+        .select("*")
+        .eq("email", user.email?.toLowerCase())
+        .eq("status", "active")
+        .single()
 
-      if (!adminUser || adminUser.status !== "active") {
-        router.push("/dashboard")
+      if (!adminUser) {
+        router.replace("/dashboard")
         return
       }
 
@@ -62,11 +67,11 @@ export default function CapacityRiskPage() {
   const utilization = capacityStatus?.globalMetrics?.currentUtilization || 0
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-sky-900/50 to-slate-900 p-6 text-white">
       <div className="max-w-7xl mx-auto space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Capacidad & Riesgo</h1>
-          <p className="text-slate-600">Proyecciones de capacidad y control de riesgo operacional</p>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-sky-300 to-cyan-300 bg-clip-text text-transparent">Capacidad & Riesgo</h1>
+          <p className="text-sky-300/70">Proyecciones de capacidad y control de riesgo operacional</p>
         </div>
 
         {/* System Semaphore */}

@@ -30,6 +30,8 @@ export default function AuthPage() {
   // Register state
   const [registerName, setRegisterName] = useState("")
   const [registerPhone, setRegisterPhone] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [registerTermsAccepted, setRegisterTermsAccepted] = useState(false)
   const [referralCode, setReferralCode] = useState("")
   const [referrerName, setReferrerName] = useState<string | null>(null)
 
@@ -151,6 +153,16 @@ export default function AuthPage() {
     setError(null)
 
     try {
+      if (password !== confirmPassword) {
+        setError("Las contrasenas no coinciden")
+        setIsLoading(false)
+        return
+      }
+      if (!registerTermsAccepted) {
+        setError("Debes aceptar los terminos y condiciones para registrarte")
+        setIsLoading(false)
+        return
+      }
       console.log("[v0] Attempting registration...")
       const supabase = createClient()
 
@@ -202,7 +214,7 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center justify-center p-4">
       <div className="text-center mb-8">
         <div className="flex items-center justify-center gap-3 mb-2">
           <Image
@@ -220,11 +232,17 @@ export default function AuthPage() {
         </div>
       </div>
 
-      <Card className="w-full max-w-md shadow-2xl bg-white/95 backdrop-blur">
+      <Card className="w-full max-w-md shadow-2xl bg-white/80 backdrop-blur-xl border-sky-200/50">
         <CardContent className="pt-8 pb-8 px-8">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Bienvenido de nuevo</h2>
-            <p className="text-gray-600">Accede a tus certificados vacacionales</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              {activeTab === "login" ? "Bienvenido de nuevo" : "Crea tu cuenta"}
+            </h2>
+            <p className="text-gray-600">
+              {activeTab === "login"
+                ? "Accede a tus certificados vacacionales"
+                : "Registrate para obtener tu certificado digital"}
+            </p>
           </div>
 
           {error && (
@@ -312,8 +330,8 @@ export default function AuthPage() {
               variant={activeTab === "login" ? "default" : "outline"}
               className={`flex-1 h-11 ${
                 activeTab === "login"
-                  ? "bg-[#ff9aa2] hover:bg-[#ffb7b2] text-white shadow-md"
-                  : "border-2 hover:bg-gray-50"
+                  ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-200"
+                  : "border-2 border-sky-200 hover:bg-sky-50 bg-transparent"
               }`}
             >
               Iniciar Sesión
@@ -323,7 +341,7 @@ export default function AuthPage() {
               onClick={() => setActiveTab("register")}
               variant={activeTab === "register" ? "default" : "outline"}
               className={`flex-1 h-11 ${
-                activeTab === "register" ? "bg-gray-800 hover:bg-gray-900 text-white" : "border-2 hover:bg-gray-50"
+                activeTab === "register" ? "bg-cyan-500 hover:bg-cyan-600 text-white shadow-md shadow-cyan-200" : "border-2 border-cyan-200 hover:bg-cyan-50 bg-transparent"
               }`}
             >
               Registrarse
@@ -356,7 +374,7 @@ export default function AuthPage() {
                   <Label htmlFor="password" className="text-gray-700">
                     Contraseña
                   </Label>
-                  <button type="button" className="text-sm text-pink-600 hover:text-pink-700">
+                  <button type="button" className="text-sm text-sky-600 hover:text-sky-700">
                     ¿Olvidaste tu contraseña?
                   </button>
                 </div>
@@ -374,7 +392,7 @@ export default function AuthPage() {
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-[#ff9aa2] hover:bg-[#ffb7b2] text-base font-semibold shadow-md"
+                className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white text-base font-semibold shadow-md shadow-sky-200"
                 disabled={isLoading}
               >
                 {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
@@ -437,7 +455,7 @@ export default function AuthPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="register-password" className="text-gray-700">
-                  Contraseña
+                  Contrasena (min. 6 caracteres)
                 </Label>
                 <Input
                   id="register-password"
@@ -450,6 +468,26 @@ export default function AuthPage() {
                   minLength={6}
                   className="h-12 border-gray-300"
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirm-password" className="text-gray-700">
+                  Confirmar contrasena
+                </Label>
+                <Input
+                  id="confirm-password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  minLength={6}
+                  className="h-12 border-gray-300"
+                />
+                {confirmPassword && password !== confirmPassword && (
+                  <p className="text-xs text-red-500 mt-1">Las contrasenas no coinciden</p>
+                )}
               </div>
 
               {referralCode && (
@@ -467,12 +505,36 @@ export default function AuthPage() {
                 </div>
               )}
 
+              <div className="flex items-start gap-3 p-3 bg-sky-50 rounded-lg border border-sky-200">
+                <input
+                  type="checkbox"
+                  id="register-terms"
+                  checked={registerTermsAccepted}
+                  onChange={(e) => setRegisterTermsAccepted(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500"
+                />
+                <label htmlFor="register-terms" className="text-xs text-gray-600 leading-relaxed cursor-pointer">
+                  Acepto los{" "}
+                  <button type="button" onClick={() => setShowTermsDialog(true)} className="text-sky-600 underline hover:text-sky-700 font-medium">
+                    Terminos y Condiciones
+                  </button>
+                  ,{" "}
+                  <button type="button" onClick={() => setShowTermsDialog(true)} className="text-sky-600 underline hover:text-sky-700 font-medium">
+                    Politica de Privacidad
+                  </button>{" "}
+                  y el{" "}
+                  <button type="button" onClick={() => setShowTermsDialog(true)} className="text-sky-600 underline hover:text-sky-700 font-medium">
+                    Contrato de Adhesion NOM-029
+                  </button>
+                </label>
+              </div>
+
               <Button
                 type="submit"
-                className="w-full h-12 bg-gray-900 hover:bg-gray-800 text-base font-semibold"
-                disabled={isLoading}
+                className="w-full h-12 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white text-base font-semibold shadow-md shadow-cyan-200 disabled:opacity-50"
+                disabled={isLoading || !registerTermsAccepted || (confirmPassword !== "" && password !== confirmPassword)}
               >
-                {isLoading ? "Creando cuenta..." : "Registrarse"}
+                {isLoading ? "Creando cuenta..." : "Crear cuenta"}
               </Button>
             </form>
           )}
@@ -508,8 +570,8 @@ export default function AuthPage() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
-              <div style={{ padding: "8px", borderRadius: "8px", backgroundColor: "#FEF3C7" }}>
-                <Shield className="h-6 w-6 text-amber-600" />
+              <div style={{ padding: "8px", borderRadius: "8px", backgroundColor: "#E0F2FE" }}>
+                <Shield className="h-6 w-6 text-sky-600" />
               </div>
               <h2 style={{ fontSize: "24px", fontWeight: "bold", color: "#111827" }}>Términos y Condiciones</h2>
             </div>

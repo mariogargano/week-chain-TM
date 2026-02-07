@@ -203,7 +203,7 @@ export function Navbar() {
       label: "WEEK-Wedding",
       href: "/week-wedding",
       icon: <Calendar className="w-5 h-5" />,
-      color: "text-pink-500",
+      color: "text-sky-500",
       description: "Experiencias especiales",
     },
     {
@@ -217,7 +217,7 @@ export function Navbar() {
       label: "WEEK-Booking",
       href: "/week-booking",
       icon: <ShoppingBag className="w-5 h-5" />,
-      color: "text-amber-500",
+      color: "text-cyan-500",
       description: "Sistema de reservas",
     },
     {
@@ -286,8 +286,8 @@ export function Navbar() {
               {/* Mundo-WEEK Dropdown */}
               <DropdownMenu open={ecosystemOpen} onOpenChange={setEcosystemOpen}>
                 <DropdownMenuTrigger asChild>
-                  <button className="group flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#FF9AA2] transition-all rounded-xl hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50">
-                    <Globe className="w-5 h-5 text-purple-600 group-hover:rotate-12 transition-transform" />
+                  <button className="group flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-sky-500 transition-all rounded-xl hover:bg-gradient-to-r hover:from-sky-50 hover:to-cyan-50">
+                    <Globe className="w-5 h-5 text-sky-600 group-hover:rotate-12 transition-transform" />
                     <span className="whitespace-nowrap">Mundo-WEEK</span>
                     <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
                   </button>
@@ -316,7 +316,7 @@ export function Navbar() {
               </DropdownMenu>
 
               <Link href="/auth">
-                <button className="group flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FF9AA2] hover:shadow-lg transition-all rounded-xl hover:scale-105 shadow-md shadow-pink-300/40 border border-pink-300">
+                <button className="group flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-500 hover:shadow-lg transition-all rounded-xl hover:scale-105 shadow-md shadow-sky-300/40 border border-sky-300">
                   <Play className="w-5 h-5 fill-white group-hover:scale-110 transition-transform" />
                   <span>COMENZAR</span>
                 </button>
@@ -445,7 +445,7 @@ export function Navbar() {
                     </button>
 
                     <Link href="/auth" onClick={() => setMobileMenuOpen(false)}>
-                      <Button className="w-full bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#FF9AA2] text-white font-black text-lg py-6 hover:shadow-xl transition-all shadow-lg shadow-pink-300/50 border-2 border-pink-200 rounded-xl hover:scale-105 mt-3">
+                      <Button className="w-full bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-500 text-white font-black text-lg py-6 hover:shadow-xl transition-all shadow-lg shadow-sky-300/50 border-2 border-sky-200 rounded-xl hover:scale-105 mt-3">
                         <Play className="w-6 h-6 fill-white mr-2" />
                         COMENZAR CON EMAIL
                       </Button>

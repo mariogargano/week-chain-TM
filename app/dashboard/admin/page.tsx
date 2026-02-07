@@ -400,8 +400,8 @@ export default function AdminDashboard() {
               className={`border-2 backdrop-blur-lg ${stopSaleFlags.silver ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
             >
               <CardContent className="p-4">
-                <p className="text-sm font-medium text-slate-700">Silver</p>
-                <p className="text-2xl font-bold">{certificatesActive.silver} activos</p>
+                <p className="text-sm font-medium text-white/80">Silver</p>
+                <p className="text-2xl font-bold text-white">{certificatesActive.silver} activos</p>
                 <Badge className={stopSaleFlags.silver ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
                   {stopSaleFlags.silver ? "VENTAS DETENIDAS" : "Abierto"}
                 </Badge>
@@ -411,8 +411,8 @@ export default function AdminDashboard() {
               className={`border-2 backdrop-blur-lg ${stopSaleFlags.gold ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
             >
               <CardContent className="p-4">
-                <p className="text-sm font-medium text-slate-700">Gold</p>
-                <p className="text-2xl font-bold">{certificatesActive.gold} activos</p>
+                <p className="text-sm font-medium text-white/80">Gold</p>
+                <p className="text-2xl font-bold text-white">{certificatesActive.gold} activos</p>
                 <Badge className={stopSaleFlags.gold ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
                   {stopSaleFlags.gold ? "VENTAS DETENIDAS" : "Abierto"}
                 </Badge>
@@ -422,8 +422,8 @@ export default function AdminDashboard() {
               className={`border-2 backdrop-blur-lg ${stopSaleFlags.platinum ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
             >
               <CardContent className="p-4">
-                <p className="text-sm font-medium text-slate-700">Platinum</p>
-                <p className="text-2xl font-bold">{certificatesActive.platinum} activos</p>
+                <p className="text-sm font-medium text-white/80">Platinum</p>
+                <p className="text-2xl font-bold text-white">{certificatesActive.platinum} activos</p>
                 <Badge className={stopSaleFlags.platinum ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
                   {stopSaleFlags.platinum ? "VENTAS DETENIDAS" : "Abierto"}
                 </Badge>
@@ -433,8 +433,8 @@ export default function AdminDashboard() {
               className={`border-2 backdrop-blur-lg ${stopSaleFlags.signature ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
             >
               <CardContent className="p-4">
-                <p className="text-sm font-medium text-slate-700">Signature</p>
-                <p className="text-2xl font-bold">{certificatesActive.signature} activos</p>
+                <p className="text-sm font-medium text-white/80">Signature</p>
+                <p className="text-2xl font-bold text-white">{certificatesActive.signature} activos</p>
                 <Badge className={stopSaleFlags.signature ? "bg-red-600 text-white" : "bg-green-600 text-white"}>
                   {stopSaleFlags.signature ? "VENTAS DETENIDAS" : "Abierto"}
                 </Badge>
@@ -483,7 +483,7 @@ export default function AdminDashboard() {
           </div>
 
           <Card className="border-2 border-sky-400/30 bg-white/5 backdrop-blur-lg">
-            <CardHeader className="border-b border-blue-400/30">
+            <CardHeader className="border-b border-sky-400/30">
               <CardTitle className="text-lg text-white">Actividad Reciente</CardTitle>
               <CardDescription className="text-sky-200/70">Últimas acciones en la plataforma</CardDescription>
             </CardHeader>
