@@ -265,7 +265,7 @@ export function HomePageClient() {
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
-                      <Award className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                      <Award className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
                       <div>
                         <p className="text-sm font-semibold text-white">Sin Cuotas de Mantenimiento</p>
                         <p className="text-xs text-slate-300">Pago único sin cargos recurrentes</p>
@@ -348,7 +348,7 @@ export function HomePageClient() {
                 <Button
                   asChild
                   size="lg"
-                  className="w-full sm:w-auto sm:min-w-[240px] bg-slate-900 hover:bg-slate-800 text-white text-sm md:text-base font-semibold h-12 md:h-14 rounded-xl transition-all duration-300 hover:scale-105"
+                  className="w-full sm:w-auto sm:min-w-[240px] bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white text-sm md:text-base font-semibold h-12 md:h-14 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-sky-200"
                 >
                   <Link href="/auth">
                     {cta.startButton || fallback.cta.startButton}
@@ -359,7 +359,7 @@ export function HomePageClient() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto sm:min-w-[240px] border-2 border-slate-300 text-slate-700 hover:bg-slate-100 text-sm md:text-base font-semibold h-12 md:h-14 rounded-xl transition-all duration-300 bg-transparent"
+                  className="w-full sm:w-auto sm:min-w-[240px] border-2 border-sky-200 text-sky-700 hover:bg-sky-50 text-sm md:text-base font-semibold h-12 md:h-14 rounded-xl transition-all duration-300 bg-transparent"
                 >
                   <Link href="/properties">{cta.viewPropertiesButton || fallback.cta.viewPropertiesButton}</Link>
                 </Button>

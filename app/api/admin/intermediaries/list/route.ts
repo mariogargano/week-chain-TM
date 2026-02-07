@@ -13,10 +13,16 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    // Verify admin role
-    const { data: adminUser } = await supabase.from("admin_users").select("*").eq("user_id", user.id).single()
+    // Verify admin role - check by email (primary) or user_id (fallback)
+    const { data: adminByEmail } = await supabase
+      .from("admin_users")
+      .select("*")
+      .eq("email", user.email?.toLowerCase())
+      .eq("status", "active")
+      .single()
+    const adminUser = adminByEmail || (await supabase.from("admin_users").select("*").eq("user_id", user.id).eq("status", "active").single()).data
 
-    if (!adminUser || adminUser.status !== "active") {
+    if (!adminUser) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 })
     }
 

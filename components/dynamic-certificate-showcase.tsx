@@ -19,187 +19,127 @@ import {
   Users,
   Minus,
   Plus,
+  Home,
+  Star,
 } from "lucide-react"
+import { createClient } from "@/lib/supabase/client"
 
 const PAX_CERTIFICATE_CATALOG = [
-  // 2 PAX - 1 semana (Alta conversión 80%)
-  {
-    id: "2pax-1week",
-    pax: 2,
-    estancias: 1,
-    weeks: 1,
-    price_usd: 6500,
-    beta_cap: 15,
-    target: "Parejas, luna de miel, profesionales",
-  },
-  // 2 PAX - 2 semanas (Media-Alta conversión 60%)
-  {
-    id: "2pax-2week",
-    pax: 2,
-    estancias: 1,
-    weeks: 2,
-    price_usd: 11000,
-    beta_cap: 12,
-    target: "Parejas con más tiempo",
-  },
-
-  // 4 PAX - 1 semana (Alta conversión 75%)
-  {
-    id: "4pax-1week",
-    pax: 4,
-    estancias: 1,
-    weeks: 1,
-    price_usd: 8500,
-    beta_cap: 18,
-    target: "Familia pequeña, 2 niños",
-  },
-  // 4 PAX - 2 semanas (Media-Alta conversión 65%)
-  {
-    id: "4pax-2week",
-    pax: 4,
-    estancias: 1,
-    weeks: 2,
-    price_usd: 15000,
-    beta_cap: 15,
-    target: "Familia pequeña, vacaciones largas",
-  },
-
-  // 6 PAX - 1 semana (Media conversión 60%)
-  {
-    id: "6pax-1week",
-    pax: 6,
-    estancias: 1,
-    weeks: 1,
-    price_usd: 12000,
-    beta_cap: 12,
-    target: "Familia grande, 3-4 niños",
-  },
-  // 6 PAX - 2 semanas (Media conversión 50%)
-  {
-    id: "6pax-2week",
-    pax: 6,
-    estancias: 1,
-    weeks: 2,
-    price_usd: 22000,
-    beta_cap: 10,
-    target: "Familia grande, vacaciones largas",
-  },
-
-  // 8 PAX - 1 semana (Media-Baja conversión 50%)
-  {
-    id: "8pax-1week",
-    pax: 8,
-    estancias: 1,
-    weeks: 1,
-    price_usd: 16000,
-    beta_cap: 8,
-    target: "Grupos, familia extendida",
-  },
-  // 8 PAX - 2 semanas (Media-Baja conversión 40%)
-  {
-    id: "8pax-2week",
-    pax: 8,
-    estancias: 1,
-    weeks: 2,
-    price_usd: 30000,
-    beta_cap: 5,
-    target: "Grupos grandes, eventos",
-  },
-
-  // 10 PAX - 1 semana (Baja conversión 35%)
-  {
-    id: "10pax-1week",
-    pax: 10,
-    estancias: 1,
-    weeks: 1,
-    price_usd: 20000,
-    beta_cap: 5,
-    target: "Grupos muy grandes, eventos",
-  },
-  // 10 PAX - 2 semanas (Baja conversión 25%)
-  {
-    id: "10pax-2week",
-    pax: 10,
-    estancias: 1,
-    weeks: 2,
-    price_usd: 35000,
-    beta_cap: 3,
-    target: "Ultra premium, bodas, reuniones",
-  },
+  { id: "2pax-1week", pax: 2, estancias: 1, weeks: 1, price_usd: 6500, beta_cap: 15, target: "Parejas, luna de miel, profesionales" },
+  { id: "2pax-2week", pax: 2, estancias: 1, weeks: 2, price_usd: 11000, beta_cap: 12, target: "Parejas con mas tiempo" },
+  { id: "4pax-1week", pax: 4, estancias: 1, weeks: 1, price_usd: 8500, beta_cap: 18, target: "Familia pequena, 2 ninos" },
+  { id: "4pax-2week", pax: 4, estancias: 1, weeks: 2, price_usd: 15000, beta_cap: 15, target: "Familia pequena, vacaciones largas" },
+  { id: "6pax-1week", pax: 6, estancias: 1, weeks: 1, price_usd: 12000, beta_cap: 12, target: "Familia grande, 3-4 ninos" },
+  { id: "6pax-2week", pax: 6, estancias: 1, weeks: 2, price_usd: 22000, beta_cap: 10, target: "Familia grande, vacaciones largas" },
+  { id: "8pax-1week", pax: 8, estancias: 1, weeks: 1, price_usd: 16000, beta_cap: 8, target: "Grupos, familia extendida" },
+  { id: "8pax-2week", pax: 8, estancias: 1, weeks: 2, price_usd: 30000, beta_cap: 5, target: "Grupos grandes, eventos" },
+  { id: "10pax-1week", pax: 10, estancias: 1, weeks: 1, price_usd: 20000, beta_cap: 5, target: "Grupos muy grandes, eventos" },
+  { id: "10pax-2week", pax: 10, estancias: 1, weeks: 2, price_usd: 35000, beta_cap: 3, target: "Ultra premium, bodas, reuniones" },
 ]
 
-// Datos de ejemplo para la animación del certificado
-const certificateData = [
+const PAX_OPTIONS = [2, 4, 6, 8, 10]
+
+// Datos de ejemplo para la animacion del certificado
+const certificateDataFallback = [
   {
-    holder: "María García López",
+    holder: "Maria Garcia Lopez",
     destination: "Los Cabos Premium Resort",
-    location: "Baja California Sur, México",
+    location: "Baja California Sur, Mexico",
     week: 23,
     season: "summer" as const,
     country: "MX",
-    flag: "🇲🇽",
+    flag: "",
     image: "/luxury-cabo-san-lucas-resort-ocean-view.jpg",
   },
   {
     holder: "John Smith",
-    destination: "Cancún Beachfront Villa",
-    location: "Quintana Roo, México",
+    destination: "Cancun Beachfront Villa",
+    location: "Quintana Roo, Mexico",
     week: 51,
     season: "winter" as const,
     country: "US",
-    flag: "🇺🇸",
+    flag: "",
     image: "/cancun-luxury-beachfront-resort-caribbean.jpg",
   },
   {
-    holder: "Sophie Müller",
+    holder: "Sophie Muller",
     destination: "Puerto Vallarta Luxury",
-    location: "Jalisco, México",
+    location: "Jalisco, Mexico",
     week: 15,
     season: "spring" as const,
     country: "DE",
-    flag: "🇩🇪",
+    flag: "",
     image: "/puerto-vallarta-luxury-resort-sunset.jpg",
   },
   {
-    holder: "Carlos Rodríguez",
+    holder: "Carlos Rodriguez",
     destination: "Riviera Maya Paradise",
-    location: "Quintana Roo, México",
+    location: "Quintana Roo, Mexico",
     week: 42,
     season: "fall" as const,
     country: "ES",
-    flag: "🇪🇸",
+    flag: "",
     image: "/riviera-maya-luxury-resort-tropical.jpg",
   },
 ]
 
 const seasonConfig = {
-  summer: { icon: Sun, label: "Verano", color: "text-amber-500" },
+  summer: { icon: Sun, label: "Verano", color: "text-sky-500" },
   winter: { icon: Snowflake, label: "Invierno", color: "text-blue-500" },
-  spring: { icon: Flower2, label: "Primavera", color: "text-pink-500" },
-  fall: { icon: Leaf, label: "Otoño", color: "text-orange-500" },
+  spring: { icon: Flower2, label: "Primavera", color: "text-teal-500" },
+  fall: { icon: Leaf, label: "Otono", color: "text-cyan-500" },
+}
+
+interface FeaturedProperty {
+  id: string
+  name: string
+  location: string
+  image_url: string | null
+  total_weeks: number
+  weeks_sold: number
+  status: string
 }
 
 export function DynamicCertificateShowcase() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
-
   const [selectedPax, setSelectedPax] = useState(2)
   const [selectedWeeks, setSelectedWeeks] = useState(1)
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+  const [featuredProperty, setFeaturedProperty] = useState<FeaturedProperty | null>(null)
+  const certificateData = certificateDataFallback; // Declare certificateData variable
 
   useEffect(() => {
     const interval = setInterval(() => {
       setIsAnimating(true)
       setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % certificateData.length)
+        setCurrentIndex((prev) => (prev + 1) % certificateDataFallback.length)
         setIsAnimating(false)
-      }, 300)
-    }, 4000)
-
+      }, 4000)
+    }, 5000)
     return () => clearInterval(interval)
   }, [])
 
-  const data = certificateData[currentIndex]
+  useEffect(() => {
+    async function loadFeaturedProperty() {
+      try {
+        const supabase = createClient()
+        const { data } = await supabase
+          .from("properties")
+          .select("id, name, location, image_url, total_weeks, weeks_sold, status")
+          .in("status", ["active", "presale", "presale_active"])
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .single()
+        if (data) setFeaturedProperty(data)
+      } catch {
+        // fallback silently
+      }
+    }
+    loadFeaturedProperty()
+  }, [])
+
+  const data = certificateDataFallback[currentIndex]
   const SeasonIcon = seasonConfig[data.season].icon
   const certNumber = `WC-${data.week.toString().padStart(2, "0")}-${2025}-${(currentIndex + 1).toString().padStart(4, "0")}`
 
@@ -213,18 +153,18 @@ export function DynamicCertificateShowcase() {
     <section className="relative bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 px-4 py-16 md:py-24 overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="text-center mb-12">
-          <Badge className="mb-4 bg-amber-500/20 text-amber-400 border-amber-500/30">
+          <Badge className="mb-4 bg-sky-500/20 text-sky-400 border-sky-500/30">
             <Shield className="h-3.5 w-3.5 mr-1.5" />
             Certificado Digital NOM-151
           </Badge>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-            Tu Derecho de Uso, <span className="text-amber-400">Certificado</span>
+            Tu Derecho de Uso, <span className="text-sky-400">Certificado</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
             Cada semana vacacional incluye un certificado digital con validez legal, verificable y almacenable en tu
@@ -238,36 +178,30 @@ export function DynamicCertificateShowcase() {
             <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
               <h3 className="text-xl font-bold text-white mb-6 text-center">Calcula tu Certificado Digital</h3>
 
-              {/* PAX Selector */}
+              {/* PAX Selector - Grid buttons */}
               <div className="mb-6">
-                <label className="text-sm text-slate-400 mb-2 block">¿Cuántas personas viajan habitualmente?</label>
+                <label className="text-sm text-slate-400 mb-2 block flex items-center gap-2">
+                  <Users className="h-4 w-4 text-sky-400" />
+                  Selecciona cuantas personas viajan
+                </label>
                 <p className="text-xs text-slate-500 mb-3">
-                  El sistema asigna automáticamente alojamientos compatibles con este número de personas
+                  El sistema asigna automaticamente alojamientos compatibles con este numero de personas
                 </p>
-                <div className="flex items-center justify-center gap-4">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-12 w-12 rounded-full border-slate-600 bg-transparent hover:bg-slate-700"
-                    onClick={() => setSelectedPax(Math.max(2, selectedPax - 2))}
-                    disabled={selectedPax <= 2}
-                  >
-                    <Minus className="h-5 w-5 text-white" />
-                  </Button>
-                  <div className="flex items-center gap-2 px-6 py-3 bg-slate-700/50 rounded-xl min-w-[120px] justify-center">
-                    <Users className="h-5 w-5 text-amber-500" />
-                    <span className="text-2xl font-bold text-white">{selectedPax}</span>
-                    <span className="text-slate-400">pax</span>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-12 w-12 rounded-full border-slate-600 bg-transparent hover:bg-slate-700"
-                    onClick={() => setSelectedPax(Math.min(10, selectedPax + 2))}
-                    disabled={selectedPax >= 10}
-                  >
-                    <Plus className="h-5 w-5 text-white" />
-                  </Button>
+                <div className="grid grid-cols-5 gap-2">
+                  {PAX_OPTIONS.map((pax) => (
+                    <button
+                      key={pax}
+                      onClick={() => setSelectedPax(pax)}
+                      className={`relative flex flex-col items-center py-3 px-2 rounded-xl font-semibold transition-all ${
+                        selectedPax === pax
+                          ? "bg-gradient-to-b from-sky-500 to-cyan-600 text-white shadow-lg shadow-sky-500/40 scale-105 ring-2 ring-sky-400/50"
+                          : "bg-slate-700/50 text-slate-300 hover:bg-slate-700 hover:text-white"
+                      }`}
+                    >
+                      <span className="text-2xl font-bold">{pax}</span>
+                      <span className="text-[10px] uppercase tracking-wider opacity-70">pax</span>
+                    </button>
+                  ))}
                 </div>
               </div>
 
@@ -283,7 +217,7 @@ export function DynamicCertificateShowcase() {
                       onClick={() => setSelectedWeeks(weeks)}
                       className={`py-4 px-6 rounded-xl font-semibold transition-all ${
                         selectedWeeks === weeks
-                          ? "bg-amber-500 text-white shadow-lg shadow-amber-500/30"
+                          ? "bg-sky-500 text-white shadow-lg shadow-sky-500/30"
                           : "bg-slate-700/50 text-slate-300 hover:bg-slate-700"
                       }`}
                     >
@@ -295,9 +229,9 @@ export function DynamicCertificateShowcase() {
 
               {/* Price Display */}
               {selectedProduct && (
-                <div className="bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-xl p-5 border border-amber-500/30">
+                <div className="bg-gradient-to-br from-amber-500/20 to-cyan-500/20 rounded-xl p-5 border border-sky-500/30">
                   <div className="text-center mb-4">
-                    <p className="text-sm text-amber-400 mb-1">Tu Certificado Digital Personalizado</p>
+                    <p className="text-sm text-sky-400 mb-1">Tu Certificado Digital Personalizado</p>
                     <div className="text-4xl font-bold text-white">
                       ${formatPrice(selectedProduct.price_usd)}
                       <span className="text-lg text-slate-400 font-normal"> USD</span>
@@ -316,7 +250,7 @@ export function DynamicCertificateShowcase() {
                   </div>
                   <div className="flex items-center justify-between text-sm text-slate-300 mb-4">
                     <span>Vigencia:</span>
-                    <span className="font-semibold text-amber-400">15 años</span>
+                    <span className="font-semibold text-sky-400">15 años</span>
                   </div>
 
                   <div className="mb-4">
@@ -335,7 +269,7 @@ export function DynamicCertificateShowcase() {
 
                   <Button
                     onClick={() => setShowConfirmDialog(true)}
-                    className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold h-12"
+                    className="w-full bg-sky-500 hover:bg-sky-600 text-white font-semibold h-12"
                   >
                     Activar Certificado Digital
                     <ArrowRight className="h-4 w-4 ml-2" />
@@ -343,6 +277,40 @@ export function DynamicCertificateShowcase() {
                 </div>
               )}
             </div>
+
+            {/* Featured Property Card */}
+            {featuredProperty && (
+              <div className="bg-slate-800/60 backdrop-blur-sm rounded-2xl border border-sky-500/20 overflow-hidden">
+                <div className="relative h-36">
+                  <img
+                    src={featuredProperty.image_url || "/luxury-resort-hero-background.jpg"}
+                    alt={featuredProperty.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent" />
+                  <Badge className="absolute top-3 left-3 bg-emerald-500/90 text-white border-0 text-xs">
+                    <Star className="h-3 w-3 mr-1" />
+                    Destino Destacado
+                  </Badge>
+                </div>
+                <div className="p-4">
+                  <h4 className="text-white font-bold text-sm mb-1">{featuredProperty.name}</h4>
+                  <div className="flex items-center gap-1.5 text-sky-400 text-xs mb-3">
+                    <MapPin className="h-3 w-3" />
+                    {featuredProperty.location}
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                      <Home className="h-3.5 w-3.5" />
+                      <span>{featuredProperty.total_weeks || 52} semanas disponibles</span>
+                    </div>
+                    <Badge className="bg-sky-500/20 text-sky-300 border-sky-500/30 text-xs">
+                      {featuredProperty.status === "presale" || featuredProperty.status === "presale_active" ? "Pre-venta" : "Activa"}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Certificate Card - Second on mobile */}
@@ -405,7 +373,7 @@ export function DynamicCertificateShowcase() {
                     <div className="flex items-center gap-3">
                       <div className="text-right">
                         <p className="text-xs text-slate-500 uppercase tracking-wider">Vigencia</p>
-                        <p className="text-amber-400 font-semibold">15 Años</p>
+                        <p className="text-sky-400 font-semibold">15 Años</p>
                       </div>
                       <div className="h-12 w-12 bg-white rounded-lg p-1.5 flex items-center justify-center">
                         <QrCode className="h-full w-full text-slate-900" />
@@ -416,7 +384,7 @@ export function DynamicCertificateShowcase() {
                   {/* Certificate number */}
                   <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Shield className="h-4 w-4 text-amber-500" />
+                      <Shield className="h-4 w-4 text-sky-500" />
                       <span className="text-xs text-slate-500 font-mono">{certNumber}</span>
                     </div>
                     <img
@@ -432,7 +400,7 @@ export function DynamicCertificateShowcase() {
               </div>
 
               {/* Decorative elements */}
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl" />
+              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-sky-500/20 rounded-full blur-2xl" />
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl" />
             </div>
 
@@ -449,7 +417,7 @@ export function DynamicCertificateShowcase() {
                     }, 300)
                   }}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    i === currentIndex ? "bg-amber-500 w-6" : "bg-white/30 hover:bg-white/50"
+                    i === currentIndex ? "bg-sky-500 w-6" : "bg-white/30 hover:bg-white/50"
                   }`}
                   aria-label={`Ver certificado ${i + 1}`}
                 />
@@ -461,8 +429,8 @@ export function DynamicCertificateShowcase() {
         {/* Features list */}
         <div className="space-y-4 mb-8">
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center">
-              <Shield className="h-6 w-6 text-amber-500" />
+            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-500/20 flex items-center justify-center">
+              <Shield className="h-6 w-6 text-sky-500" />
             </div>
             <div className="text-left">
               <h3 className="text-lg font-semibold text-white mb-1">Certificación NOM-151</h3>
@@ -522,7 +490,7 @@ export function DynamicCertificateShowcase() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-400">Vigencia</span>
-                    <span className="text-amber-400 font-semibold">15 años</span>
+                    <span className="text-sky-400 font-semibold">15 años</span>
                   </div>
                   <div className="pt-3 border-t border-slate-700 flex justify-between">
                     <span className="text-slate-400">Total</span>
@@ -534,26 +502,26 @@ export function DynamicCertificateShowcase() {
                   <h4 className="text-white font-semibold">Tu certificado incluye:</h4>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-slate-300 text-sm">
-                      <Check className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                      <Check className="h-4 w-4 text-sky-500 flex-shrink-0 mt-0.5" />
                       Derecho de solicitud de estancias por 15 años
                     </li>
                     <li className="flex items-start gap-2 text-slate-300 text-sm">
-                      <Check className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                      <Check className="h-4 w-4 text-sky-500 flex-shrink-0 mt-0.5" />
                       Certificación digital NOM-151
                     </li>
                     <li className="flex items-start gap-2 text-slate-300 text-sm">
-                      <Check className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                      <Check className="h-4 w-4 text-sky-500 flex-shrink-0 mt-0.5" />
                       Acceso sujeto a disponibilidad del sistema
                     </li>
                     <li className="flex items-start gap-2 text-slate-300 text-sm">
-                      <Check className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                      <Check className="h-4 w-4 text-sky-500 flex-shrink-0 mt-0.5" />
                       Proceso REQUEST → OFFER → CONFIRM
                     </li>
                   </ul>
                 </div>
 
-                <div className="bg-amber-900/20 border border-amber-700 rounded-lg p-4">
-                  <p className="text-xs text-amber-200 leading-relaxed">
+                <div className="bg-sky-900/20 border border-sky-700 rounded-lg p-4">
+                  <p className="text-xs text-sky-200 leading-relaxed">
                     <strong>Importante:</strong> Este certificado NO garantiza fechas, destinos ni propiedades
                     específicas. Todas las estancias están sujetas a disponibilidad del sistema WEEK-CHAIN mediante el
                     proceso de solicitud, oferta y confirmación. No constituye inversión, propiedad inmobiliaria ni
@@ -565,7 +533,7 @@ export function DynamicCertificateShowcase() {
                   <Button variant="outline" onClick={() => setShowConfirmDialog(false)} className="flex-1">
                     Cancelar
                   </Button>
-                  <Button className="flex-1 bg-amber-500 hover:bg-amber-600">
+                  <Button className="flex-1 bg-sky-500 hover:bg-sky-600">
                     Proceder a Pago
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
@@ -579,7 +547,7 @@ export function DynamicCertificateShowcase() {
         <div className="max-w-4xl mx-auto mt-12">
           <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-white/10 p-6">
             <div className="flex items-start gap-3 mb-4">
-              <Shield className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+              <Shield className="h-5 w-5 text-sky-500 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-white font-semibold mb-2">Información Legal Importante</h4>
                 <ul className="text-xs text-slate-400 space-y-1.5">
