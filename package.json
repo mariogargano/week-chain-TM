@@ -25,7 +25,7 @@
     "test:compliance": "bash ./scripts/test-compliance.sh",
     "test:fraud": "node scripts/test-fraud-detection.js",
     "test:perf": "npm run lh:prod && node -e \"const report = require('./lighthouse-report.json'); const perf = report.categories.performance.score * 100; console.log('Performance Score:', perf); process.exit(perf >= 90 ? 0 : 1);\"",
-    "validate-env": "node --loader ts-node/register -e \"require('./lib/config/index').validateEnv()\""
+    "validate-env": "node scripts/validate-env.js"
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.31.1",

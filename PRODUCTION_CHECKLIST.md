@@ -30,12 +30,10 @@
   - [ ] Webhook configured: `/api/kyc/webhook`
   - [ ] Test verification flow
 
-- [ ] Mifiel configured for NOM-151
-  - [ ] `MIFIEL_API_KEY`
-  - [ ] `MIFIEL_API_SECRET`
-  - [ ] `MIFIEL_WEBHOOK_USER`
-  - [ ] `MIFIEL_WEBHOOK_SECRET`
-  - [ ] Webhook configured: `/api/legal/mifiel-webhook`
+- [ ] EasyLex configured for NOM-151 (Replaces Mifiel/Legalario)
+  - [ ] `EASYLEX_API_KEY`
+  - [ ] `EASYLEX_WEBHOOK_SECRET`
+  - [ ] Webhook configured: `/api/easylex/webhook`
 
 ### Email & Notifications
 - [ ] Resend configured

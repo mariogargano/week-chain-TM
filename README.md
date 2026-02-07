@@ -38,6 +38,10 @@ NEXT_PUBLIC_GOOGLE_CLIENT_ID=
 
 # Email
 RESEND_API_KEY=
+
+# Legal (EasyLex)
+EASYLEX_API_KEY=
+EASYLEX_WEBHOOK_SECRET=
 ```
 
 Ver `SISTEMA_DE_PAGOS.md` para documentación completa.
