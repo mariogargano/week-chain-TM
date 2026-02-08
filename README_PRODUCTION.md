@@ -8,9 +8,9 @@ WEEK-CHAIN utiliza un sistema centralizado de configuración que valida automát
 
 Antes de desplegar a producción, ejecuta:
 
-```bash
+\`\`\`bash
 npm run validate-env
-```
+\`\`\`
 
 Este comando verificará:
 - Variables de entorno críticas
@@ -44,14 +44,14 @@ El sistema usa un logger centralizado que:
 - Soporta niveles: debug, info, warn, error
 - Configurable con `LOG_LEVEL`
 
-```typescript
+\`\`\`typescript
 import { logger } from '@/lib/config/logger'
 
 logger.debug('Mensaje de debug')
 logger.info('Información general')
 logger.warn('Advertencia')
 logger.error('Error crítico')
-```
+\`\`\`
 
 ### Variables de Entorno Requeridas
 
@@ -68,7 +68,7 @@ Ver `PRODUCTION_CHECKLIST.md` para la lista completa.
 
 El sistema imprime un resumen de configuración al iniciar:
 
-```
+\`\`\`
 🔧 WEEK-CHAIN Environment Configuration
 
 Environment: production
@@ -83,7 +83,7 @@ KYC Provider: persona
 Blockchain: mainnet-beta
 
 ✅ Configuration validated successfully
-```
+\`\`\`
 
 ### Troubleshooting
 
@@ -92,4 +92,4 @@ Si ves errores de configuración:
 2. Ejecuta `npm run validate-env` para ver detalles
 3. Consulta `PRODUCTION_CHECKLIST.md`
 4. Verifica los logs de inicio de la aplicación
-```
+\`\`\`

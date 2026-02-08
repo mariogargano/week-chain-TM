@@ -30,7 +30,7 @@ La plataforma WEEK-CHAIN™ tiene una **arquitectura sólida y funcional** con t
 #### ❌ CONTRATOS INTELIGENTES FALTANTES
 
 **Programa Escrow (CRÍTICO):**
-```rust
+\`\`\`rust
 // FALTA IMPLEMENTAR COMPLETAMENTE
 #[program]
 pub mod week_escrow {

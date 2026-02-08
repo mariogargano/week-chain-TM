@@ -13,12 +13,12 @@
 2. Copia el contenido de `scripts/104_FINAL_PRODUCTION_FIX.sql`
 3. Click en **Run**
 4. Verifica que aparezcan los mensajes:
-   ```
+   \`\`\`
    Testimonials table created with 3 records
    Destinations catalog created with 6 records
    Admin configured: true
    ✅ WEEK-CHAIN PRODUCTION FIX COMPLETED SUCCESSFULLY!
-   ```
+   \`\`\`
 
 ---
 
@@ -42,7 +42,7 @@
 ### A. Test de Registro y Términos (Usuario Normal)
 
 #### 3.1 Registro con Email
-```
+\`\`\`
 ✅ Ir a /auth/sign-up
 ✅ Completar formulario
 ✅ DEBE aparecer el diálogo de términos y condiciones
@@ -54,31 +54,31 @@
 ✅ Aceptar términos
 ✅ Verificar email de bienvenida
 ✅ Login exitoso
-```
+\`\`\`
 
 #### 3.2 Registro con Google OAuth
-```
+\`\`\`
 ✅ Ir a /auth/sign-up
 ✅ Click "Registrar con Google"
 ✅ DEBE aparecer el diálogo de términos ANTES de redirigir a Google
 ✅ Aceptar términos
 ✅ Completar OAuth de Google
 ✅ Redirigir a dashboard de usuario
-```
+\`\`\`
 
 ### B. Test de Login (Usuario Existente)
 
-```
+\`\`\`
 ✅ Ir a /auth/login
 ✅ Ingresar credenciales
 ✅ SI no ha aceptado términos: mostrar diálogo
 ✅ SI ya aceptó términos: login directo
 ✅ Redirigir a dashboard correcto según rol
-```
+\`\`\`
 
 ### C. Test de Admin Panel
 
-```
+\`\`\`
 ✅ Login como corporativo@morises.com (Google)
 ✅ Verificar redirección a /dashboard/admin
 ✅ Verificar acceso a:
@@ -89,11 +89,11 @@
    - Email Automation
    - System Diagnostics
    - Todas las demás secciones admin
-```
+\`\`\`
 
 ### D. Test de Homepage
 
-```
+\`\`\`
 ✅ Visitar /
 ✅ Ver Navbar funcionando
 ✅ Ver Hero animado
@@ -101,7 +101,7 @@
 ✅ Ver sección de Destinos (6 destinos mexicanos)
 ✅ Ver sección de Certificados
 ✅ Ver Footer con disclaimers PROFECO
-```
+\`\`\`
 
 ---
 
@@ -109,7 +109,7 @@
 
 ### Verificaciones Críticas:
 
-```sql
+\`\`\`sql
 -- 1. Verificar que testimonials existe
 SELECT COUNT(*) FROM public.testimonials;
 -- Debe retornar: 3
@@ -129,7 +129,7 @@ SELECT COUNT(*) FROM public.profiles;
 -- 5. Verificar términos aceptados
 SELECT COUNT(*) FROM public.legal_acceptances;
 -- Debe incrementar con cada registro nuevo
-```
+\`\`\`
 
 ---
 
@@ -148,9 +148,9 @@ SELECT COUNT(*) FROM public.legal_acceptances;
 
 ### Problema 3: "No aparecen los términos y condiciones"
 **Verificar**:
-```sql
+\`\`\`sql
 SELECT * FROM public.terms_and_conditions;
-```
+\`\`\`
 Si está vacía, el componente mostrará términos por defecto del código.
 
 ### Problema 4: "Error: relation does not exist"
@@ -161,7 +161,7 @@ Si está vacía, el componente mostrará términos por defecto del código.
 ## FLUJO COMPLETO DE USUARIO (LO QUE NECESITAS)
 
 ### 1. REGISTRO
-```
+\`\`\`
 Usuario → /auth/sign-up
 ↓
 Completa formulario
@@ -183,10 +183,10 @@ Se guarda en legal_acceptances con:
 Se crea cuenta
 ↓
 Redirige a dashboard
-```
+\`\`\`
 
 ### 2. SELECCIÓN DE CERTIFICADO
-```
+\`\`\`
 Usuario autenticado → /certificates
 ↓
 Ve catálogo de certificados
@@ -204,10 +204,10 @@ Sistema genera voucher automático con:
   - PDF descargable
 ↓
 Envío de email con voucher
-```
+\`\`\`
 
 ### 3. FACTURACIÓN EN DASHBOARD
-```
+\`\`\`
 Usuario → /dashboard/my-certificates
 ↓
 Ve su certificado con voucher
@@ -225,7 +225,7 @@ Submit solicitud
 Se guarda en invoice_requests
 ↓
 Admin procesa y envía factura
-```
+\`\`\`
 
 ---
 
@@ -266,7 +266,7 @@ Si algo falla durante el test run:
 
 ## CHECKLIST FINAL PRE-LAUNCH
 
-```
+\`\`\`
 ☐ Script SQL ejecutado exitosamente
 ☐ Admin puede acceder a /dashboard/admin
 ☐ Homepage se ve correctamente con todos los componentes
@@ -277,7 +277,7 @@ Si algo falla durante el test run:
 ☐ Equipo informado del proceso
 ☐ Backup de base de datos realizado
 ☐ Variables de entorno verificadas
-```
+\`\`\`
 
 ---
 

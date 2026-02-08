@@ -75,14 +75,14 @@ El sistema de management de WEEK-CHAIN es **excepcionalmente completo y profesio
 **Funcionalidad:** Gestión de NFTs bajo management
 
 **GET:**
-```typescript
+\`\`\`typescript
 // Obtiene todos los NFTs con management_enabled = true
 // Incluye: weeks, properties, owner info
 // Ordenado por fecha de creación
-```
+\`\`\`
 
 **POST:**
-```typescript
+\`\`\`typescript
 // Activa management para un NFT
 {
   week_id: UUID,
@@ -90,30 +90,30 @@ El sistema de management de WEEK-CHAIN es **excepcionalmente completo y profesio
   auto_accept_bookings: true,
   pricing_strategy: "dynamic" // fixed, dynamic, seasonal
 }
-```
+\`\`\`
 
 #### **B. `/api/management/reservations`**
 **Funcionalidad:** Gestión de reservas
 
 **GET:**
-```typescript
+\`\`\`typescript
 // Obtiene reservas de propiedades bajo management
 // Filtros: status (confirmed, pending, cancelled)
 // Incluye: weeks, properties, nft_management info
-```
+\`\`\`
 
 #### **C. `/api/management/services`**
 **Funcionalidad:** Gestión de servicios
 
 **GET:**
-```typescript
+\`\`\`typescript
 // Lista servicios programados
 // Filtros: nft_management_id
 // Tipos: cleaning, maintenance, concierge, inspection
-```
+\`\`\`
 
 **POST:**
-```typescript
+\`\`\`typescript
 // Crea nuevo servicio
 {
   nft_management_id: UUID,
@@ -123,7 +123,7 @@ El sistema de management de WEEK-CHAIN es **excepcionalmente completo y profesio
   cost_usdc: number,
   notes: string
 }
-```
+\`\`\`
 
 ---
 
@@ -226,10 +226,10 @@ El sistema de management de WEEK-CHAIN es **excepcionalmente completo y profesio
 - 🟢 **Baja Temporada:** 50% (Resto del año)
 
 **Ejemplo de Intercambio:**
-```
+\`\`\`
 1 Semana Alta (100%) = 2 Semanas Baja (50% c/u)
 1 Semana Alta (100%) = 1 Semana Media (75%) + Crédito 25%
-```
+\`\`\`
 
 **Características:**
 - ⚡ Matching automático
@@ -242,7 +242,7 @@ El sistema de management de WEEK-CHAIN es **excepcionalmente completo y profesio
 ### 8. **SISTEMA DE ROLES Y PERMISOS**
 
 **Rol: MANAGEMENT**
-```typescript
+\`\`\`typescript
 {
   canManageUsers: false,
   canManageProperties: true,    // ✅
@@ -251,12 +251,12 @@ El sistema de management de WEEK-CHAIN es **excepcionalmente completo y profesio
   canManageSystem: false,
   canApproveDocuments: false
 }
-```
+\`\`\`
 
 **Wallet de Simonetta:**
-```
+\`\`\`
 EZ2xgEBYyJNegSAjyf29VUNYG1Y3Hqj7JmPsRg4HS6Hp
-```
+\`\`\`
 
 **Protección de Rutas:**
 - ✅ `/dashboard/management` - Solo management y admin
@@ -305,48 +305,48 @@ EZ2xgEBYyJNegSAjyf29VUNYG1Y3Hqj7JmPsRg4HS6Hp
 ## 📊 FLUJO COMPLETO DE MANAGEMENT
 
 ### **1. Activación de Gestión**
-```
+\`\`\`
 Usuario → Dashboard → Propiedad → "Activar Management" → 
 POST /api/management/nfts → 
 Registro en nft_management → 
 Dashboard actualizado
-```
+\`\`\`
 
 ### **2. Gestión de Reservas**
-```
+\`\`\`
 Reserva creada → 
 Aparece en /dashboard/management → 
 Management agrega notas → 
 Toggle renta OTA → 
 Listado en Airbnb/Booking.com
-```
+\`\`\`
 
 ### **3. Programación de Servicios**
-```
+\`\`\`
 Dashboard → Tab "Servicios" → 
 "Programar Servicio" → 
 POST /api/management/services → 
 Servicio en calendario → 
 Notificación a proveedor
-```
+\`\`\`
 
 ### **4. Comunicación con Propietarios**
-```
+\`\`\`
 Evento (reserva/mantenimiento) → 
 Sistema crea comunicación → 
 Email/notificación al propietario → 
 Propietario responde → 
 Tracking en management_communications
-```
+\`\`\`
 
 ### **5. Cálculo de Ingresos**
-```
+\`\`\`
 Fin de mes → 
 calculate_management_revenue() → 
 Total revenue calculado → 
 Comisión 15% deducida → 
 Pago a propietario procesado
-```
+\`\`\`
 
 ---
 

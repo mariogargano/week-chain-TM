@@ -18,10 +18,10 @@
 - Inserts 6 demo destinations (Mexican locations)
 
 **Verification:**
-```sql
+\`\`\`sql
 SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'testimonials');
 SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'public_destinations_catalog');
-```
+\`\`\`
 
 ---
 
@@ -82,12 +82,12 @@ SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'publi
 - Returns 403 error if consent not found
 
 **Verification:**
-```bash
+\`\`\`bash
 # Try to call API without consent (should fail with 403)
 curl -X POST https://week-chain.com/api/reservations/request \
   -H "Content-Type: application/json" \
   -d '{"certificateId":"xxx","destinationId":"yyy"}'
-```
+\`\`\`
 
 ---
 
@@ -105,23 +105,23 @@ curl -X POST https://week-chain.com/api/reservations/request \
 ## EXECUTION INSTRUCTIONS
 
 ### 1. Run SQL Script (REQUIRED)
-```sql
+\`\`\`sql
 -- Execute in Supabase SQL Editor
 -- File: scripts/999_CRITICAL_GO_LIVE_FIX.sql
 -- This creates missing tables and consent system
-```
+\`\`\`
 
 ### 2. Deploy Code Changes
 All code changes are included in this CodeProject. Deploy to production.
 
 ### 3. Verify Tables Created
-```sql
+\`\`\`sql
 -- Run in Supabase SQL Editor
 SELECT 
   (SELECT COUNT(*) FROM public.testimonials) as testimonials_count,
   (SELECT COUNT(*) FROM public.public_destinations_catalog) as destinations_count,
   (SELECT COUNT(*) FROM public.user_consents) as consents_count;
-```
+\`\`\`
 
 ### 4. Test Critical Flows
 - [ ] Homepage loads without errors

@@ -59,9 +59,9 @@ Prepara la siguiente información:
 **Pasos:**
 
 1. **Accede al Dashboard Admin**
-   ```
+   \`\`\`
    https://tu-dominio.com/dashboard/admin
-   ```
+   \`\`\`
 
 2. **Click en "Agregar Nueva Propiedad"**
    - O navega directamente a `/dashboard/admin/properties/new`
@@ -145,9 +145,9 @@ El sistema usa la siguiente distribución automática:
 ## 🔍 Verificación Post-Creación
 
 ### 1. Verifica en el Dashboard Admin
-```
+\`\`\`
 /dashboard/admin/properties
-```
+\`\`\`
 
 Deberías ver:
 - ✅ Tu nueva propiedad listada
@@ -156,9 +156,9 @@ Deberías ver:
 - ✅ Progreso de presale en 0%
 
 ### 2. Verifica en el Marketplace
-```
+\`\`\`
 /properties
-```
+\`\`\`
 
 La propiedad debería aparecer:
 - ✅ En el listado público
@@ -167,9 +167,9 @@ La propiedad debería aparecer:
 - ✅ Clickeable para ver detalles
 
 ### 3. Verifica las Semanas
-```
+\`\`\`
 /properties/[id-de-tu-propiedad]
-```
+\`\`\`
 
 Deberías ver:
 - ✅ Calendario con 52 semanas

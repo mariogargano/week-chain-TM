@@ -2,7 +2,6 @@
 
 import { createBrowserClient } from "@supabase/ssr"
 import { useEffect, useState } from "react"
-import { Navbar } from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -10,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Plus, Pencil, Trash2, Save, X, MessageSquare, Eye, EyeOff, BarChart3, Loader2, ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
 import Link from "next/link"
+import Navbar from "@/components/navbar" // Import Navbar component
 
 interface MarketingMessage {
   id: string

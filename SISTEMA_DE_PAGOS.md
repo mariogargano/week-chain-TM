@@ -31,9 +31,9 @@ El **Escrow Contable** es un sistema de retención contable (NO blockchain) dond
 
 ### Flujo del Escrow:
 
-```
+\`\`\`
 Cliente Paga → Conekta → Cuenta Bancaria WEEK-CHAIN → Registro Contable "En Escrow"
-```
+\`\`\`
 
 ### Liberación de Fondos:
 
@@ -83,7 +83,7 @@ Tabla `escrow_contable`:
 
 ## Variables de Entorno Requeridas
 
-```bash
+\`\`\`bash
 # Conekta (Único procesador de pagos)
 CONEKTA_SECRET_KEY=key_xxx
 
@@ -98,7 +98,7 @@ GOOGLE_CLIENT_SECRET=xxx
 
 # Resend (Emails)
 RESEND_API_KEY=xxx
-```
+\`\`\`
 
 ---
 

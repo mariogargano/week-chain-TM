@@ -31,7 +31,7 @@
 **✅ PASÓ**
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // middleware.ts - Líneas 40-75
 if (roleRequiresTwoFactor(userData.role)) {
   const { data: twoFactorData } = await supabase
@@ -54,7 +54,7 @@ if (roleRequiresTwoFactor(userData.role)) {
     return NextResponse.redirect(verifyUrl)
   }
 }
-```
+\`\`\`
 
 **Comportamiento Verificado:**
 - ✅ Middleware verifica rol del usuario
@@ -83,7 +83,7 @@ if (roleRequiresTwoFactor(userData.role)) {
 **✅ PASÓ**
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // middleware.ts - Líneas 8-22
 const hits = new Map<string, { n: number; t: number }>()
 
@@ -102,7 +102,7 @@ hits.set(ip, rec)
 if (rec.n > 120) {
   return new NextResponse("Too Many Requests", { status: 429 })
 }
-```
+\`\`\`
 
 **Comportamiento Verificado:**
 - ✅ Límite: 120 requests por minuto por IP
@@ -115,12 +115,12 @@ if (rec.n > 120) {
 - ✅ `lib/middleware/rate-limit.ts` - Sistema avanzado con configuraciones por endpoint
 
 **Configuraciones Específicas:**
-```typescript
+\`\`\`typescript
 auth: { limit: 10, window: 60_000 },      // 10 req/min para auth
 payments: { limit: 30, window: 60_000 },  // 30 req/min para pagos
 api: { limit: 120, window: 60_000 },      // 120 req/min general
 webhooks: { limit: 1000, window: 60_000 } // 1000 req/min webhooks
-```
+\`\`\`
 
 **Observaciones:**
 - Sistema en memoria (Map) - Para producción considerar Redis/Upstash
@@ -133,7 +133,7 @@ webhooks: { limit: 1000, window: 60_000 } // 1000 req/min webhooks
 **✅ PASÓ**
 
 **Evidencia de Código:**
-```sql
+\`\`\`sql
 -- scripts/023_comprehensive_row_level_security.sql
 -- scripts/029_enhanced_rls_policies.sql
 
@@ -154,7 +154,7 @@ ALTER TABLE nft_mints ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "nft_mints_self" ON nft_mints
 FOR SELECT USING (auth.uid() = owner_id);
-```
+\`\`\`
 
 **Tablas Protegidas (50+ tablas):**
 - ✅ `bookings` - Solo usuario ve sus reservas
@@ -173,17 +173,17 @@ FOR SELECT USING (auth.uid() = owner_id);
 - ✅ `cancellation_requests` - Solo usuario ve sus cancelaciones
 
 **Funciones Helper SQL:**
-```sql
+\`\`\`sql
 CREATE FUNCTION is_admin() RETURNS BOOLEAN
 CREATE FUNCTION is_owner(resource_id UUID) RETURNS BOOLEAN
 CREATE FUNCTION has_role(required_role TEXT) RETURNS BOOLEAN
-```
+\`\`\`
 
 **Verificación Automática:**
-```sql
+\`\`\`sql
 SELECT * FROM verify_rls_enabled();
 SELECT * FROM tables_without_rls();
-```
+\`\`\`
 
 **Observaciones:**
 - Sistema completo de RLS implementado
@@ -200,22 +200,22 @@ SELECT * FROM tables_without_rls();
 **Evidencia:**
 
 **Variables de Entorno (Server-Side Only):**
-```typescript
+\`\`\`typescript
 // Nunca expuestas al cliente
 STRIPE_SECRET_KEY
 MIFIEL_API_KEY
 SUPABASE_SERVICE_ROLE_KEY
 RESEND_API_KEY
 POSTGRES_PASSWORD
-```
+\`\`\`
 
 **Variables Públicas (Prefijo NEXT_PUBLIC_):**
-```typescript
+\`\`\`typescript
 // Seguras para exponer al cliente
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-```
+\`\`\`
 
 **Verificación en Código:**
 - ✅ Todas las API keys sensibles se usan solo en Server Actions o Route Handlers
@@ -224,12 +224,12 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 - ✅ Headers CSP previenen inyección de scripts
 
 **Content Security Policy:**
-```typescript
+\`\`\`typescript
 Content-Security-Policy: 
   default-src 'self'; 
   script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; 
   connect-src 'self' https://*.supabase.co https://api.stripe.com;
-```
+\`\`\`
 
 **Observaciones:**
 - Sistema de rotación de claves documentado en `docs/KEY_ROTATION_GUIDE.md`
@@ -250,7 +250,7 @@ Content-Security-Policy:
 - ✅ Sistema de logging robusto para debugging
 
 **APIs Críticas que Requieren Retry:**
-```typescript
+\`\`\`typescript
 // Recomendado implementar:
 /api/payments/stripe/*
 /api/payments/conekta/*
@@ -258,10 +258,10 @@ Content-Security-Policy:
 /api/mifiel/certify
 /api/nft/mint
 /api/legal/certify-contract
-```
+\`\`\`
 
 **Recomendación de Implementación:**
-```typescript
+\`\`\`typescript
 // lib/utils/retry.ts
 async function withRetry<T>(
   fn: () => Promise<T>,
@@ -277,7 +277,7 @@ async function withRetry<T>(
   }
   throw new Error('Max retries exceeded')
 }
-```
+\`\`\`
 
 **Puntuación:** 70/100 (Funcional pero mejorable)
 
@@ -290,7 +290,7 @@ async function withRetry<T>(
 **✅ PASÓ**
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // lib/webhooks/logger.ts
 export class WebhookLogger {
   async logEvent(source: string, eventId: string, payload: any) {
@@ -314,7 +314,7 @@ export class WebhookLogger {
     return { ok: true, dedup: false }
   }
 }
-```
+\`\`\`
 
 **Webhooks Implementados:**
 - ✅ `/api/webhooks/stripe` - Pagos Stripe
@@ -323,7 +323,7 @@ export class WebhookLogger {
 - ✅ `/api/legal/mifiel-webhook` - Documentos legales
 
 **Tabla de Deduplicación:**
-```sql
+\`\`\`sql
 CREATE TABLE webhook_events (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   source TEXT NOT NULL,
@@ -334,7 +334,7 @@ CREATE TABLE webhook_events (
 
 CREATE INDEX idx_webhook_source ON webhook_events(source);
 CREATE INDEX idx_webhook_event_id ON webhook_events(event_id);
-```
+\`\`\`
 
 **Comportamiento Verificado:**
 - ✅ Webhook duplicado retorna `{ ok: true, dedup: true }`
@@ -357,7 +357,7 @@ CREATE INDEX idx_webhook_event_id ON webhook_events(event_id);
 **✅ PASÓ**
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // app/api/legal/download-package/route.ts
 export async function GET(req: NextRequest) {
   const bookingId = req.nextUrl.searchParams.get("booking_id")
@@ -408,7 +408,7 @@ export async function GET(req: NextRequest) {
     }
   })
 }
-```
+\`\`\`
 
 **Documentos Incluidos:**
 1. ✅ `1_contrato_compraventa.pdf` - Contrato legal firmado
@@ -426,10 +426,10 @@ export async function GET(req: NextRequest) {
 - ✅ Tracking de IP y User-Agent
 
 **Componente UI:**
-```typescript
+\`\`\`typescript
 // components/download-legal-package-button.tsx
 <DownloadLegalPackageButton bookingId={bookingId} />
-```
+\`\`\`
 
 **Observaciones:**
 - Sistema completo y funcional
@@ -443,7 +443,7 @@ export async function GET(req: NextRequest) {
 **✅ PASÓ**
 
 **Evidencia de Código:**
-```sql
+\`\`\`sql
 -- scripts/022_improved_120h_refund_system.sql
 
 -- Función para verificar elegibilidad
@@ -480,7 +480,7 @@ CREATE TRIGGER trg_auto_approve_120h
   BEFORE INSERT ON cancellation_requests
   FOR EACH ROW 
   EXECUTE FUNCTION auto_approve_120h();
-```
+\`\`\`
 
 **Comportamiento Verificado:**
 - ✅ Trigger se ejecuta automáticamente al insertar `cancellation_request`
@@ -491,7 +491,7 @@ CREATE TRIGGER trg_auto_approve_120h
 - ✅ Notas automáticas explican la decisión
 
 **Función de Consulta:**
-```sql
+\`\`\`sql
 -- Obtener detalles de elegibilidad
 SELECT * FROM get_refund_eligibility('booking-uuid', 'booking');
 
@@ -500,10 +500,10 @@ SELECT * FROM get_refund_eligibility('booking-uuid', 'booking');
 -- hours_remaining: NUMERIC
 -- deadline: TIMESTAMPTZ
 -- reason: TEXT
-```
+\`\`\`
 
 **API Endpoint:**
-```typescript
+\`\`\`typescript
 // app/api/legal/check-refund-eligibility/route.ts
 GET /api/legal/check-refund-eligibility?booking_id=xxx
 
@@ -514,14 +514,14 @@ Response:
   "deadline": "2025-02-03T14:30:00Z",
   "reason": "Elegible para reembolso automático según NOM-029-SE-2021"
 }
-```
+\`\`\`
 
 **Componente UI:**
-```typescript
+\`\`\`typescript
 // components/refund-eligibility-badge.tsx
 <RefundEligibilityBadge bookingId={bookingId} />
 // Muestra badge verde/rojo con tooltip de horas restantes
-```
+\`\`\`
 
 **Cumplimiento Legal:**
 - ✅ NOM-029-SE-2021 (Periodo de reflexión 5 días)
@@ -529,10 +529,10 @@ Response:
 - ✅ Código de Comercio Mexicano (Art. 80-89)
 
 **Vista de Monitoreo:**
-```sql
+\`\`\`sql
 SELECT * FROM refund_requests_summary;
 -- Vista con cálculos en tiempo real de horas restantes
-```
+\`\`\`
 
 ---
 
@@ -543,7 +543,7 @@ SELECT * FROM refund_requests_summary;
 **✅ PASÓ**
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // lib/i18n/config.ts
 export const locales = ["es", "en", "pt", "fr", "it"] as const
 export const defaultLocale: Locale = "es"
@@ -572,7 +572,7 @@ export function useTranslations() {
   
   return { locale, setLocale, t: translations[locale] }
 }
-```
+\`\`\`
 
 **Comportamiento Verificado:**
 - ✅ Primera visita: detecta `navigator.language`
@@ -589,11 +589,11 @@ export function useTranslations() {
 - 🇮🇹 Italiano (it) - **Parcial 20%**
 
 **Componente Selector:**
-```typescript
+\`\`\`typescript
 // components/language-selector.tsx
 <LanguageSelector />
 // Dropdown con banderas y nombres de idiomas
-```
+\`\`\`
 
 **Observaciones:**
 - Sistema funcional pero traducciones incompletas
@@ -607,7 +607,7 @@ export function useTranslations() {
 **✅ PASÓ**
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // lib/i18n/format.ts
 
 // Formateo de fechas
@@ -643,10 +643,10 @@ export const fmtRelativeTime = (d: Date, locale: Locale) => {
   const days = Math.round(diff / (1000 * 60 * 60 * 24))
   return rtf.format(days, 'day')
 }
-```
+\`\`\`
 
 **Ejemplos de Uso:**
-```typescript
+\`\`\`typescript
 // Español
 fmtDate(new Date(), 'es')      // "29 de enero de 2025"
 fmtCurrency(1500, 'es', 'MXN') // "$1,500.00 MXN"
@@ -658,10 +658,10 @@ fmtDate(new Date(), 'en')      // "January 29, 2025"
 fmtCurrency(1500, 'en', 'USD') // "$1,500.00"
 fmtNumber(1234567, 'en')       // "1,234,567"
 fmtPercent(0.15, 'en')         // "15.00%"
-```
+\`\`\`
 
 **Integración en Componentes:**
-```typescript
+\`\`\`typescript
 import { useI18n } from '@/lib/i18n/use-locale'
 
 function MyComponent() {
@@ -674,7 +674,7 @@ function MyComponent() {
     </div>
   )
 }
-```
+\`\`\`
 
 **Observaciones:**
 - Sistema completo y funcional
@@ -705,7 +705,7 @@ function MyComponent() {
 - ❌ Cancelación aprobada - Solo español
 
 **Estructura de Traducciones:**
-```typescript
+\`\`\`typescript
 // lib/i18n/translations.ts
 export const translations = {
   es: {
@@ -723,7 +723,7 @@ export const translations = {
     emails: { /* 20% completo */ }
   }
 }
-```
+\`\`\`
 
 **Puntuación:** 60/100 (Funcional en español, incompleto en otros idiomas)
 
@@ -742,7 +742,7 @@ export const translations = {
 **✅ PASÓ**
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // app/layout.tsx - Líneas 28-34
 <a
   href="#main-content"
@@ -754,7 +754,7 @@ export const translations = {
 <main id="main-content" className="min-h-[calc(100vh-4rem)] pt-20">
   {children}
 </main>
-```
+\`\`\`
 
 **Comportamiento Verificado:**
 - ✅ Enlace invisible por defecto (`sr-only`)
@@ -795,13 +795,13 @@ export const translations = {
 | Footer | `#0f172a` | `#e2e8f0` | 12.3:1 | ✅ | ✅ |
 
 **Badges y Etiquetas:**
-```typescript
+\`\`\`typescript
 // Verificación de contraste en badges
 <Badge className="bg-purple-100 text-purple-900"> // 8.2:1 ✅
 <Badge className="bg-green-100 text-green-900">   // 9.1:1 ✅
 <Badge className="bg-yellow-100 text-yellow-900"> // 9.1:1 ✅
 <Badge className="bg-red-100 text-red-900">       // 8.7:1 ✅
-```
+\`\`\`
 
 **Observaciones:**
 - ✅ Todos los textos principales cumplen WCAG AA (4.5:1 mínimo)
@@ -821,7 +821,7 @@ export const translations = {
 **✅ PASÓ**
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // components/responsive-table.tsx
 export function ResponsiveTable({ data, columns }) {
   return (
@@ -864,7 +864,7 @@ export function ResponsiveTable({ data, columns }) {
     </>
   )
 }
-```
+\`\`\`
 
 **Páginas con Tablas Responsive:**
 - ✅ `/dashboard/admin/users` - Lista de usuarios
@@ -882,13 +882,13 @@ export function ResponsiveTable({ data, columns }) {
 2. `<SimpleResponsiveTable>` - Tabla con scroll horizontal en móvil
 
 **Breakpoints:**
-```css
+\`\`\`css
 /* Mobile: < 768px - Cards */
 .block.md\:hidden { display: block; }
 
 /* Desktop: ≥ 768px - Tabla */
 .hidden.md\:block { display: block; }
-```
+\`\`\`
 
 **Documentación:**
 - ✅ `docs/ACCESSIBILITY_RESPONSIVE_GUIDE.md` - Guía completa

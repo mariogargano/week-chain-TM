@@ -56,11 +56,11 @@ Any attempt to mint an NFT without these requirements will fail with a descripti
 
 ## Environment Variables Required
 
-```env
+\`\`\`env
 LEGALARIO_WEBHOOK_SECRET=your_webhook_secret_here
 LEGALARIO_API_KEY=your_api_key_here
 LEGALARIO_API_URL=https://api.legalario.com
-```
+\`\`\`
 
 ## Monitoring
 
@@ -73,12 +73,12 @@ Check webhook logs in the admin dashboard:
 ## Testing
 
 ### Valid Webhook Test
-```bash
+\`\`\`bash
 curl -X POST https://your-domain.com/api/legalario/webhook \
   -H "x-legalario-signature: COMPUTED_HMAC_SHA256" \
   -H "Content-Type: application/json" \
   -d '{"contract_id":"123","status":"signed"}'
-```
+\`\`\`
 
 ### Expected Responses
 - **200**: Webhook processed successfully

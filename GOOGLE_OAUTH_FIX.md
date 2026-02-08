@@ -31,31 +31,31 @@ El error "Este contenido está bloqueado" ocurre porque tu aplicación de Google
 ### En Google Cloud Console:
 
 **Authorized JavaScript origins:**
-```
+\`\`\`
 http://localhost:3000
 https://week-chain.com
 https://preview-week-chain-tm-kzmixjw0ukn6nqfz0fw5.vusercontent.net
-```
+\`\`\`
 
 **Authorized redirect URIs:**
-```
+\`\`\`
 https://crntumktmfpgkyzfoewj.supabase.co/auth/v1/callback
 http://localhost:3000/auth/callback
 https://week-chain.com/auth/callback
 https://preview-week-chain-tm-kzmixjw0ukn6nqfz0fw5.vusercontent.net/auth/callback
-```
+\`\`\`
 
 ### En Supabase Dashboard:
 
 1. Ve a **Authentication** → **URL Configuration**
 2. **Site URL:** `https://week-chain.com` (o tu dominio de producción)
 3. **Redirect URLs:** Agrega:
-   ```
+   \`\`\`
    http://localhost:3000/**
    https://week-chain.com/**
    https://preview-week-chain-tm-kzmixjw0ukn6nqfz0fw5.vusercontent.net/**
    https://*-tu-equipo.vercel.app/**
-   ```
+   \`\`\`
 
 ## Verificar que Google OAuth está Habilitado en Supabase
 
@@ -69,11 +69,11 @@ https://preview-week-chain-tm-kzmixjw0ukn6nqfz0fw5.vusercontent.net/auth/callbac
 ## Variables de Entorno
 
 Verifica que tengas estas variables en tu proyecto:
-```
+\`\`\`
 GOOGLE_CLIENT_ID=tu-client-id
 GOOGLE_CLIENT_SECRET=tu-client-secret
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=tu-client-id
-```
+\`\`\`
 
 ## Testing
 

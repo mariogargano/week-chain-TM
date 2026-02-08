@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Navbar } from "@/components/navbar"
 import { createClient } from "@/lib/supabase/client"
 import { useEffect, useState } from "react"
 import {
@@ -17,6 +16,7 @@ import {
   TrendingUp,
   AlertCircle,
 } from "lucide-react"
+import Navbar from "@/components/Navbar" // Declare the Navbar variable
 
 export default function RealTimeMonitorPage() {
   const [roleStats, setRoleStats] = useState<Record<string, any>>({})

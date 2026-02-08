@@ -6,39 +6,39 @@ Para habilitar la integración de EasyLex en WEEK-CHAIN, debes agregar las sigui
 
 ### Credenciales de Sandbox
 
-```
+\`\`\`
 EASYLEX_API_KEY=bd70840c-65ce-4466-a629-80771870c3a8
 EASYLEX_API_SECRET=77194297-19b7-4ef1-b402-0b87ca4f3490
 EASYLEX_ENVIRONMENT=sandbox
 EASYLEX_API_URL=https://sandboxapi.easylex.com
 EASYLEX_WIDGET_URL=https://sandboxwg.easylex.com
-```
+\`\`\`
 
 ### Credenciales de Producción
 
 Cuando estés listo para producción, reemplaza con las credenciales de producción:
 
-```
+\`\`\`
 EASYLEX_API_KEY=<tu-llave-publica-produccion>
 EASYLEX_API_SECRET=<tu-llave-privada-produccion>
 EASYLEX_ENVIRONMENT=production
 EASYLEX_API_URL=https://api.easylex.com
 EASYLEX_WIDGET_URL=https://widget.easylex.com
-```
+\`\`\`
 
 ## Webhook Configuration
 
 EasyLex enviará notificaciones de firma completada a:
 
-```
+\`\`\`
 https://tu-dominio.com/api/easylex/webhook
-```
+\`\`\`
 
 Debes configurar esta URL en tu panel de EasyLex y agregar el webhook secret:
 
-```
+\`\`\`
 EASYLEX_WEBHOOK_SECRET=<tu-webhook-secret>
-```
+\`\`\`
 
 ## Pasos de Configuración
 
@@ -90,6 +90,6 @@ Para probar la integración en sandbox:
 - Documentación oficial: https://docs.easylex.com
 - API Reference: https://docs.easylex.com/api
 - Soporte: soporte@easylex.com
-```
+\`\`\`
 
-```ts file="" isHidden
+\`\`\`ts file="" isHidden

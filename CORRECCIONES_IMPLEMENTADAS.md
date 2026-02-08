@@ -45,7 +45,7 @@ El sistema de validación de entorno ya estaba correctamente implementado con:
 
 ### Configuración Requerida para Producción Real
 
-```bash
+\`\`\`bash
 # Stripe (Producción)
 STRIPE_SECRET_KEY=sk_live_...
 STRIPE_PUBLISHABLE_KEY=pk_live_...
@@ -56,7 +56,7 @@ CONEKTA_SECRET_KEY=key_...
 
 # Solana (Mainnet)
 NEXT_PUBLIC_SOLANA_CLUSTER=mainnet-beta
-```
+\`\`\`
 
 ---
 
@@ -77,7 +77,7 @@ El sistema de logging ya estaba correctamente configurado:
 
 Todos los `console.log("[v0] ...")` ahora usan el logger:
 
-```typescript
+\`\`\`typescript
 import { logger } from "@/lib/config/logger"
 
 // En desarrollo: se muestra
@@ -86,7 +86,7 @@ logger.debug("Debug message")
 logger.info("Info message")
 logger.warn("Warning message")
 logger.error("Error message") // Siempre se muestra
-```
+\`\`\`
 
 ### Archivos con Debug Logs
 
@@ -163,7 +163,7 @@ Se encontraron 70+ archivos con `console.log("[v0] ...")`. Estos ya están usand
 
 ### Variables de Entorno Requeridas
 
-```bash
+\`\`\`bash
 # Copiar a Vercel Environment Variables
 
 # Stripe Webhooks
@@ -173,7 +173,7 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 STRIPE_SECRET_KEY=sk_live_...
 STRIPE_PUBLISHABLE_KEY=pk_live_...
 CONEKTA_SECRET_KEY=key_...
-```
+\`\`\`
 
 ---
 
@@ -181,7 +181,7 @@ CONEKTA_SECRET_KEY=key_...
 
 ### Stripe CLI (Local)
 
-```bash
+\`\`\`bash
 # Instalar Stripe CLI
 brew install stripe/stripe-cli/stripe
 
@@ -195,11 +195,11 @@ stripe listen --forward-to localhost:3000/api/webhooks/stripe
 stripe trigger payment_intent.succeeded
 stripe trigger payment_intent.payment_failed
 stripe trigger charge.refunded
-```
+\`\`\`
 
 ### Conekta Testing
 
-```bash
+\`\`\`bash
 # Usar Postman o curl para simular webhooks
 curl -X POST https://localhost:3000/api/webhooks/conekta \
   -H "Content-Type: application/json" \
@@ -217,7 +217,7 @@ curl -X POST https://localhost:3000/api/webhooks/conekta \
       }
     }
   }'
-```
+\`\`\`
 
 ---
 

@@ -8,8 +8,8 @@ import { DollarSign, Calendar, Search, ArrowLeft, ExternalLink, TrendingUp } fro
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { RoleGuard } from "@/components/role-guard"
-import { Navbar } from "@/components/navbar"
 import { useRouter } from "next/navigation"
+import Navbar from "@/components/navbar" // Import Navbar component
 
 export default function AdminTransactionsPage() {
   return (

@@ -2,7 +2,7 @@
 
 ## Ejemplo 1: Emisión de Certificado con Firma Electrónica
 
-```typescript
+\`\`\`typescript
 import { easylexClient } from "@/lib/easylex/client"
 import { ContractGenerator } from "@/lib/pdf/contract-generator"
 
@@ -60,11 +60,11 @@ async function issueCertificateWithSignature(
     widgetUrl: easylexClient.getWidgetUrl(document.documentId, userId),
   }
 }
-```
+\`\`\`
 
 ## Ejemplo 2: Reservación con Consentimiento Firmado
 
-```typescript
+\`\`\`typescript
 async function createReservationWithConsent(
   userId: string,
   reservationData: any
@@ -102,11 +102,11 @@ async function createReservationWithConsent(
 
   return document
 }
-```
+\`\`\`
 
 ## Ejemplo 3: Verificar Estado de Firma
 
-```typescript
+\`\`\`typescript
 async function checkSignatureStatus(documentId: string) {
   const status = await easylexClient.getDocumentStatus(documentId)
 
@@ -127,11 +127,11 @@ async function checkSignatureStatus(documentId: string) {
 
   return status
 }
-```
+\`\`\`
 
 ## Ejemplo 4: Usar Widget en Componente React
 
-```tsx
+\`\`\`tsx
 import { EasylexSignatureWidget } from "@/components/easylex-signature-widget"
 
 function CertificateSigningPage() {
@@ -156,7 +156,7 @@ function CertificateSigningPage() {
     </div>
   )
 }
-```
+\`\`\`
 
 ## Flujo Completo de Webhook
 
@@ -185,14 +185,14 @@ Para probar la integración:
 
 ## Variables de Entorno Requeridas
 
-```
+\`\`\`
 EASYLEX_API_KEY=bd70840c-65ce-4466-a629-80771870c3a8
 EASYLEX_API_SECRET=77194297-19b7-4ef1-b402-0b87ca4f3490
 EASYLEX_ENVIRONMENT=sandbox
 EASYLEX_API_URL=https://sandboxapi.easylex.com
 EASYLEX_WIDGET_URL=https://sandboxwg.easylex.com
 EASYLEX_WEBHOOK_SECRET=<tu-webhook-secret>
-```
+\`\`\`
 
 ## Mejores Prácticas
 

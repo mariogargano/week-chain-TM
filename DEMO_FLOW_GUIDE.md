@@ -5,9 +5,9 @@
 
 ## 📋 Resumen del Flujo Completo
 
-```
+\`\`\`
 Usuario → Selecciona Semana → Elige Pago → Procesa Pago → Crea Voucher → Escrow → Admin Confirma → Mintea NFT → Usuario Recibe NFT
-```
+\`\`\`
 
 ---
 
@@ -71,7 +71,7 @@ Usuario → Selecciona Semana → Elige Pago → Procesa Pago → Crea Voucher �
 
 **API**: `/api/payments/conekta/create-order`
 
-```typescript
+\`\`\`typescript
 // Request
 {
   amount: 1000, // USD
@@ -90,7 +90,7 @@ Usuario → Selecciona Semana → Elige Pago → Procesa Pago → Crea Voucher �
   payment_status: "paid",
   message: "Demo payment completed successfully"
 }
-```
+\`\`\`
 
 **Flujo en Demo:**
 1. ✅ Crea orden en Conekta (simulada)
@@ -99,12 +99,12 @@ Usuario → Selecciona Semana → Elige Pago → Procesa Pago → Crea Voucher �
 4. ✅ Continúa a creación de voucher
 
 **Estado en DB**: 
-```sql
+\`\`\`sql
 -- Tabla: fiat_payments (solo si no es demo)
 status: 'succeeded'
 processor: 'conekta'
 payment_method: 'card'
-```
+\`\`\`
 
 ---
 
@@ -113,7 +113,7 @@ payment_method: 'card'
 **API**: `/api/payments/oxxo/create-partial`
 
 **Caso 1: Monto < $10,000 MXN**
-```typescript
+\`\`\`typescript
 // Request
 {
   amount: 500, // USD = $8,750 MXN
@@ -129,10 +129,10 @@ payment_method: 'card'
   },
   message: "Paga en cualquier Oxxo"
 }
-```
+\`\`\`
 
 **Caso 2: Monto > $10,000 MXN (PAGOS PARCIALES)**
-```typescript
+\`\`\`typescript
 // Request
 {
   amount: 1500, // USD = $26,250 MXN
@@ -165,7 +165,7 @@ payment_method: 'card'
     }
   ]
 }
-```
+\`\`\`
 
 **Componente**: `OxxoPartialPaymentsDialog`
 - Muestra todas las referencias
@@ -174,7 +174,7 @@ payment_method: 'card'
 - Auto-confirma cuando todos están pagados
 
 **Estado en DB**:
-```sql
+\`\`\`sql
 -- Tabla: purchase_vouchers
 status: 'pending'
 metadata: {
@@ -182,7 +182,7 @@ metadata: {
   total_payments: 3,
   payments_completed: 0
 }
-```
+\`\`\`
 
 ---
 
@@ -190,7 +190,7 @@ metadata: {
 
 **API**: `/api/escrow/deposit`
 
-```typescript
+\`\`\`typescript
 // Request
 {
   user_wallet: "wallet_address",
@@ -210,7 +210,7 @@ metadata: {
     escrow_address: "ESCROW_PDA_xxx"
   }
 }
-```
+\`\`\`
 
 **Flujo:**
 1. ✅ Usuario conecta wallet (Phantom/Solflare)
@@ -227,7 +227,7 @@ metadata: {
 
 **Trigger**: Automático después de pago exitoso
 
-```typescript
+\`\`\`typescript
 // Request
 {
   user_wallet: "wallet_address",
@@ -255,10 +255,10 @@ metadata: {
     status: "confirmed"
   }
 }
-```
+\`\`\`
 
 **Estado en DB**:
-```sql
+\`\`\`sql
 -- Tabla: purchase_vouchers
 INSERT INTO purchase_vouchers (
   voucher_code,
@@ -285,7 +285,7 @@ INSERT INTO reservations (
   status: 'confirmed',
   nft_issued: false
 )
-```
+\`\`\`
 
 ---
 
@@ -297,7 +297,7 @@ INSERT INTO reservations (
 
 **Componente**: `lib/solana/escrow.ts`
 
-```typescript
+\`\`\`typescript
 // PDA (Program Derived Address)
 const [escrowPDA] = getEscrowPDA(booking_id)
 
@@ -311,7 +311,7 @@ const [escrowPDA] = getEscrowPDA(booking_id)
   week_id: "uuid",
   created_at: timestamp
 }
-```
+\`\`\`
 
 **Estados del Escrow:**
 - `Pending` (0): Fondos depositados, esperando confirmación
@@ -328,7 +328,7 @@ const [escrowPDA] = getEscrowPDA(booking_id)
 
 **Trigger**: Manual por admin o automático en demo
 
-```typescript
+\`\`\`typescript
 // Request
 {
   escrow_id: "escrow_id",
@@ -346,7 +346,7 @@ const [escrowPDA] = getEscrowPDA(booking_id)
   },
   message: "Escrow confirmed and NFT minting initiated"
 }
-```
+\`\`\`
 
 **Acciones automáticas:**
 1. ✅ Actualiza `escrow_deposits.status = 'confirmed'`
@@ -367,7 +367,7 @@ const [escrowPDA] = getEscrowPDA(booking_id)
 
 **Trigger**: Automático desde `/api/escrow/confirm`
 
-```typescript
+\`\`\`typescript
 // Request
 {
   booking_id: "BOOK_xxx",
@@ -399,10 +399,10 @@ const [escrowPDA] = getEscrowPDA(booking_id)
   transaction_hash: "TX1234567890",
   metadata_uri: "https://arweave.net/NFT_BOOK_xxx.json"
 }
-```
+\`\`\`
 
 **Estado en DB**:
-```sql
+\`\`\`sql
 -- Tabla: nft_provisional
 INSERT INTO nft_provisional (
   semana_id,
@@ -425,7 +425,7 @@ SET status = 'sold',
     nft_minted = true,
     nft_token_id = 'NFT_BOOK_xxx'
 WHERE id = week_id
-```
+\`\`\`
 
 ---
 
@@ -436,7 +436,7 @@ WHERE id = week_id
 **URL**: `/dashboard/my-weeks`
 
 **Vista**:
-```
+\`\`\`
 ┌─────────────────────────────────────┐
 │ 🏖️ Property Name - Week 23         │
 │                                     │
@@ -449,7 +449,7 @@ WHERE id = week_id
 │                                     │
 │ [View NFT] [Add to Wallet]         │
 └─────────────────────────────────────┘
-```
+\`\`\`
 
 **Acciones disponibles:**
 1. **View NFT**: Ver metadata y atributos
@@ -516,19 +516,19 @@ WHERE id = week_id
 - ✅ NFT: Mintea inmediatamente
 
 ### Indicadores Visuales
-```
+\`\`\`
 ┌────────────────────────────────┐
 │ 🧪 MODO DEMO                   │
 │ Los pagos están en modo prueba │
 └────────────────────────────────┘
-```
+\`\`\`
 
 ### Logs de Debug
-```typescript
+\`\`\`typescript
 console.log("[WEEK-CHAIN] [DEBUG] Payment processed in demo mode")
 console.log("[WEEK-CHAIN] [INFO] Voucher created:", voucher_id)
 console.log("[WEEK-CHAIN] [INFO] NFT minted:", mint_address)
-```
+\`\`\`
 
 ---
 
@@ -537,40 +537,40 @@ console.log("[WEEK-CHAIN] [INFO] NFT minted:", mint_address)
 ### Checklist:
 
 1. **Configurar Stripe Production**
-   ```bash
+   \`\`\`bash
    STRIPE_SECRET_KEY=sk_live_xxx
    STRIPE_PUBLISHABLE_KEY=pk_live_xxx
    STRIPE_WEBHOOK_SECRET=whsec_xxx
-   ```
+   \`\`\`
 
 2. **Configurar Conekta Production**
-   ```bash
+   \`\`\`bash
    CONEKTA_SECRET_KEY=key_xxx (no test)
-   ```
+   \`\`\`
 
 3. **Desplegar Smart Contracts a Mainnet**
-   ```bash
+   \`\`\`bash
    # Solana mainnet-beta
    solana config set --url mainnet-beta
    anchor deploy
-   ```
+   \`\`\`
 
 4. **Ejecutar Scripts SQL**
-   ```bash
+   \`\`\`bash
    # En Supabase SQL Editor
    - 025_full_property_purchase_system.sql
    - 027_terms_acceptance_system.sql
    - 028_oxxo_partial_payments.sql
-   ```
+   \`\`\`
 
 5. **Configurar Webhooks**
    - Stripe: `https://tu-dominio.com/api/payments/fiat/webhook`
    - Conekta: `https://tu-dominio.com/api/payments/conekta/webhook`
 
 6. **Verificar**
-   ```bash
+   \`\`\`bash
    npm run validate-env
-   ```
+   \`\`\`
 
 ---
 
@@ -590,7 +590,7 @@ console.log("[WEEK-CHAIN] [INFO] NFT minted:", mint_address)
 
 ## ✅ Resumen del Flujo Demo
 
-```
+\`\`\`
 1. Usuario selecciona semana → ReservationFlow abre
 2. Elige método de pago → PaymentMethodSelector
 3. Procesa pago (simulado) → API Conekta/Stripe/Escrow
@@ -599,7 +599,7 @@ console.log("[WEEK-CHAIN] [INFO] NFT minted:", mint_address)
 6. Admin confirma (auto en demo) → /api/escrow/confirm
 7. Mintea NFT automático → /api/nft/mint
 8. Usuario ve NFT → /dashboard/my-weeks
-```
+\`\`\`
 
 **Tiempo total en demo**: ~10 segundos
 **Tiempo en producción**: 1-3 días (dependiendo del método de pago)

@@ -5,7 +5,7 @@
 ### 1. Lógica de Negocio Correcta
 
 **Flujo de Usuario:**
-```
+\`\`\`
 REGISTRO
     ↓
 KYC PENDIENTE → Solo acceso a Perfil y Configuración
@@ -23,7 +23,7 @@ ACCESO COMPLETO:
     - WEEK-Agent (referidos activo)
     - Configuración
     - Perfil
-```
+\`\`\`
 
 ### 2. Dashboards Fijos (Sin Scroll en Página)
 
@@ -80,7 +80,7 @@ ACCESO COMPLETO:
 - `referral_tree` - Sistema de referidos
 
 **Queries Optimizadas:**
-```typescript
+\`\`\`typescript
 // Check KYC status
 const { data: kycData } = await supabase
   .from("kyc_users")
@@ -94,7 +94,7 @@ const { data: certificates } = await supabase
   .select("id, status")
   .eq("user_id", session.user.id)
   .in("status", ["confirmed", "active"])
-```
+\`\`\`
 
 ### 6. Responsive Design
 

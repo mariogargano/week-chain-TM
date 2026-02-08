@@ -15,18 +15,18 @@ Los usuarios tienen **120 horas (5 días)** desde la compra para solicitar un re
 #### `can_refund_120h(b_id UUID)`
 Verifica si un booking/voucher está dentro del periodo de 120 horas.
 
-```sql
+\`\`\`sql
 SELECT can_refund_120h('uuid-del-booking');
 -- Retorna: true o false
-```
+\`\`\`
 
 #### `get_refund_eligibility(p_id UUID, p_type TEXT)`
 Obtiene detalles completos de elegibilidad incluyendo horas restantes.
 
-```sql
+\`\`\`sql
 SELECT * FROM get_refund_eligibility('uuid-del-voucher', 'voucher');
 -- Retorna: eligible, hours_remaining, deadline, reason
-```
+\`\`\`
 
 ### 2. Trigger Automático
 
@@ -38,12 +38,12 @@ El trigger `trg_auto_approve_120h` se ejecuta automáticamente cuando se inserta
 ### 3. API Endpoints
 
 #### Verificar Elegibilidad
-```
+\`\`\`
 GET /api/legal/check-refund-eligibility?id={id}&type={type}
-```
+\`\`\`
 
 **Respuesta:**
-```json
+\`\`\`json
 {
   "eligible": true,
   "hours_remaining": 87,
@@ -52,31 +52,31 @@ GET /api/legal/check-refund-eligibility?id={id}&type={type}
   "can_auto_approve": true,
   "message": "Tienes 87 horas restantes para cancelar con reembolso automático"
 }
-```
+\`\`\`
 
 #### Solicitar Cancelación
-```
+\`\`\`
 POST /api/legal/request-cancellation
-```
+\`\`\`
 
 **Body:**
-```json
+\`\`\`json
 {
   "escrow_tx": "uuid-del-voucher",
   "reason": "Cambio de planes"
 }
-```
+\`\`\`
 
 ### 4. Componente UI
 
-```tsx
+\`\`\`tsx
 import { RefundEligibilityBadge } from "@/components/refund-eligibility-badge"
 
 <RefundEligibilityBadge 
   id={voucherId} 
   type="voucher" 
 />
-```
+\`\`\`
 
 ## Flujo de Usuario
 
@@ -99,11 +99,11 @@ import { RefundEligibilityBadge } from "@/components/refund-eligibility-badge"
 
 ## Vista de Monitoreo
 
-```sql
+\`\`\`sql
 SELECT * FROM refund_requests_summary
 WHERE status = 'pending'
 ORDER BY hours_remaining ASC;
-```
+\`\`\`
 
 Esta vista muestra:
 - Todas las solicitudes de reembolso
@@ -116,17 +116,17 @@ Esta vista muestra:
 ### Para Desarrolladores
 
 1. **Siempre verificar elegibilidad antes de mostrar botón de cancelación**
-   ```tsx
+   \`\`\`tsx
    const { eligible } = await checkRefundEligibility(voucherId)
    if (eligible) {
      // Mostrar botón "Cancelar con reembolso automático"
    }
-   ```
+   \`\`\`
 
 2. **Mostrar countdown en UI**
-   ```tsx
+   \`\`\`tsx
    <RefundEligibilityBadge id={voucherId} />
-   ```
+   \`\`\`
 
 3. **Registrar en audit log**
    Todas las solicitudes se registran automáticamente en `compliance_audit_log`

@@ -25,7 +25,7 @@
 **Objetivo:** Verificar que admin sin 2FA sea redirigido a /auth/setup-2fa
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // middleware.ts - Líneas 68-82
 if (await roleRequiresTwoFactor(userData.role)) {
   const { data: twoFactorData } = await supabase
@@ -44,7 +44,7 @@ if (await roleRequiresTwoFactor(userData.role)) {
     return NextResponse.redirect(setupUrl)
   }
 }
-```
+\`\`\`
 
 **Resultado:**
 - ✅ Lógica de redirección implementada correctamente
@@ -64,7 +64,7 @@ if (await roleRequiresTwoFactor(userData.role)) {
 **Objetivo:** Confirmar 3 reintentos con timestamps en APIs críticas
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // lib/utils/retry.ts
 export async function retryWithBackoff<T>(
   fn: () => Promise<T>, 
@@ -89,7 +89,7 @@ export async function retryWithBackoff<T>(
     }
   }
 }
-```
+\`\`\`
 
 **APIs con Retry Implementado:**
 - ✅ `/api/payments/conekta/create-order` (2 usos)
@@ -105,11 +105,11 @@ export async function retryWithBackoff<T>(
 - **Jitter:** 30% aleatorio para prevenir thundering herd
 
 **Ejemplo de Log Esperado:**
-```
+\`\`\`
 [v0] Retry attempt 1/3 after 1247ms
 [v0] Retry attempt 2/3 after 2583ms
 [v0] Retry attempt 3/3 after 5129ms
-```
+\`\`\`
 
 **Conclusión:** ✅ **IMPLEMENTADO** - Sistema robusto con 23 usos en el código
 
@@ -120,7 +120,7 @@ export async function retryWithBackoff<T>(
 **Objetivo:** Re-enviar mismo event_id → respuesta {ok:true, dedup:true}
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // app/api/mifiel/callback/route.ts - Líneas 24-32
 const eventId = fileId || payload.id || crypto.randomUUID()
 
@@ -134,7 +134,7 @@ const { data: duplicate } = await supabase
 if (duplicate) {
   return NextResponse.json({ ok: true, dedup: true })
 }
-```
+\`\`\`
 
 **Flujo de Deduplicación:**
 1. Extrae `event_id` del payload (fileId, payload.id, o genera UUID)
@@ -143,7 +143,7 @@ if (duplicate) {
 4. Si es nuevo → procesa y registra en `webhook_events`
 
 **Tabla de Auditoría:**
-```sql
+\`\`\`sql
 CREATE TABLE webhook_events (
   id UUID PRIMARY KEY,
   source TEXT NOT NULL,
@@ -154,7 +154,7 @@ CREATE TABLE webhook_events (
   status TEXT,
   UNIQUE(source, event_id)  -- Constraint de unicidad
 );
-```
+\`\`\`
 
 **Conclusión:** ✅ **IMPLEMENTADO** - Deduplicación con constraint DB + check en código
 
@@ -165,7 +165,7 @@ CREATE TABLE webhook_events (
 **Objetivo:** Descargar con booking_id → listar archivos y SHA-256
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // app/api/legal/download-package/route.ts
 // Archivos incluidos en el ZIP:
 1. 1_contrato_compraventa.pdf
@@ -175,7 +175,7 @@ CREATE TABLE webhook_events (
 5. 5_comprobante_pago.pdf
 6. 6_terminos_y_condiciones.txt
 7. README.txt (información legal)
-```
+\`\`\`
 
 **Autenticación:**
 - ✅ Requiere usuario autenticado (`supabase.auth.getUser()`)
@@ -183,7 +183,7 @@ CREATE TABLE webhook_events (
 - ✅ Admins pueden descargar cualquier booking
 
 **Auditoría:**
-```typescript
+\`\`\`typescript
 await supabase.from("audit_log").insert({
   user_id: user.id,
   action: "download_legal_package",
@@ -195,14 +195,14 @@ await supabase.from("audit_log").insert({
     user_agent: req.headers.get("user-agent"),
   },
 })
-```
+\`\`\`
 
 **Formato de Respuesta:**
-```
+\`\`\`
 Content-Type: application/zip
 Content-Disposition: attachment; filename="WEEKCHAIN-Legal-{bookingId}-{timestamp}.zip"
 Compression: DEFLATE (level 9)
-```
+\`\`\`
 
 **SHA-256 del ZIP:**
 ⚠️ **NO VERIFICABLE** - Requiere descarga real con booking_id válido en producción
@@ -216,7 +216,7 @@ Compression: DEFLATE (level 9)
 **Objetivo:** Navegador en EN → /terms y /privacy en inglés
 
 **Evidencia de Código:**
-```typescript
+\`\`\`typescript
 // lib/i18n/translations.ts
 export const translations = {
   es: { /* traducciones completas */ },
@@ -225,7 +225,7 @@ export const translations = {
   fr: { /* traducciones completas */ },
   it: { /* traducciones completas */ },
 }
-```
+\`\`\`
 
 **Problema Identificado:**
 - ✅ Traducciones EN existen en `lib/i18n/translations.ts`
@@ -237,14 +237,14 @@ export const translations = {
 ![Privacy Page - Español](https://xurtccytrzafbfk3.public.blob.vercel-storage.com/agent-assets/4f27cdb095f7dd6e222f3de4d3ab447292ce70872a4440cd1a8e85c6ccb6b50a.jpeg)
 
 **Código Actual:**
-```tsx
+\`\`\`tsx
 // app/terms/page.tsx - Línea 85
 <h3 className="text-xl font-semibold">1. Objeto del Contrato</h3>
 // ❌ Hardcoded en español, no usa t() de i18n
-```
+\`\`\`
 
 **Solución Requerida:**
-```tsx
+\`\`\`tsx
 // Debería ser:
 import { useI18n } from "@/lib/i18n/use-translations"
 
@@ -255,7 +255,7 @@ export default function TermsPage() {
     <h3>{t.legal.terms.section1.title}</h3>
   )
 }
-```
+\`\`\`
 
 **Conclusión:** ❌ **NO IMPLEMENTADO** - Requiere refactorización de páginas legales
 
@@ -269,7 +269,7 @@ export default function TermsPage() {
 ⚠️ **NO VERIFICABLE** - No tengo acceso a ejecutar Lighthouse en producción desde esta interfaz
 
 **Evidencia de Código (Accesibilidad):**
-```tsx
+\`\`\`tsx
 // app/layout.tsx - Skip to main content
 <a
   href="#main-content"
@@ -277,7 +277,7 @@ export default function TermsPage() {
 >
   Saltar al contenido principal
 </a>
-```
+\`\`\`
 
 **Implementaciones de Accesibilidad:**
 - ✅ Skip to main content link
@@ -289,9 +289,9 @@ export default function TermsPage() {
 
 **Recomendación:**
 Ejecutar Lighthouse manualmente en:
-```bash
+\`\`\`bash
 lighthouse https://v0-weekchainmvp.vercel.app/ --view
-```
+\`\`\`
 
 **Conclusión:** ⚠️ **REQUIERE VERIFICACIÓN MANUAL**
 
@@ -304,24 +304,24 @@ lighthouse https://v0-weekchainmvp.vercel.app/ --view
 **Evidencias:**
 
 **1. Skip to Main Content:**
-```tsx
+\`\`\`tsx
 // app/layout.tsx
 <a href="#main-content" className="sr-only focus:not-sr-only...">
   Saltar al contenido principal
 </a>
-```
+\`\`\`
 ✅ **IMPLEMENTADO**
 
 **2. Semantic HTML:**
-```tsx
+\`\`\`tsx
 <main id="main-content">
   <header>
     <nav aria-label="Main navigation">
-```
+\`\`\`
 ✅ **IMPLEMENTADO**
 
 **3. Responsive Tables:**
-```tsx
+\`\`\`tsx
 // components/responsive-table.tsx
 <div className="block md:hidden">
   {/* Cards en móvil */}
@@ -329,23 +329,23 @@ lighthouse https://v0-weekchainmvp.vercel.app/ --view
 <div className="hidden md:block">
   {/* Tabla en desktop */}
 </div>
-```
+\`\`\`
 ✅ **IMPLEMENTADO**
 
 **4. ARIA Labels:**
-```tsx
+\`\`\`tsx
 <button aria-label="Close dialog">
 <input aria-describedby="error-message">
-```
+\`\`\`
 ✅ **IMPLEMENTADO**
 
 **5. Contraste de Colores:**
-```css
+\`\`\`css
 /* globals.css - Design tokens */
 --foreground: 222.2 84% 4.9%;
 --background: 0 0% 100%;
 /* Ratio: 21:1 (AAA) */
-```
+\`\`\`
 ✅ **IMPLEMENTADO**
 
 **Conclusión:** ✅ **IMPLEMENTADO** - Cumple WCAG 2.1 AA
@@ -368,10 +368,10 @@ lighthouse https://v0-weekchainmvp.vercel.app/ --view
 
 ### Porcentaje de Cumplimiento
 
-```
+\`\`\`
 Pruebas Pasadas: 5/7 = 71.4%
 Pruebas Fallidas: 2/7 = 28.6%
-```
+\`\`\`
 
 **Desglose:**
 - ✅ **Implementado y Funcional:** 5 pruebas (71.4%)
@@ -393,7 +393,7 @@ Pruebas Fallidas: 2/7 = 28.6%
 
 **Solución:**
 1. Crear traducciones en `lib/i18n/translations.ts`:
-```typescript
+\`\`\`typescript
 legal: {
   terms: {
     title: "Terms and Conditions",
@@ -405,13 +405,13 @@ legal: {
     // ...
   }
 }
-```
+\`\`\`
 
 2. Refactorizar páginas para usar `useI18n()`:
-```tsx
+\`\`\`tsx
 const { t } = useI18n()
 <h1>{t.legal.terms.title}</h1>
-```
+\`\`\`
 
 **Tiempo Estimado:** 4-6 horas
 
@@ -449,7 +449,7 @@ const { t } = useI18n()
 - ✅ Aplicado en todas las APIs críticas (Stripe, Conekta, Mifiel)
 
 **Ejemplo de Uso:**
-```typescript
+\`\`\`typescript
 await retryWithBackoff(
   () => stripe.paymentIntents.create(params),
   {
@@ -460,7 +460,7 @@ await retryWithBackoff(
     }
   }
 )
-```
+\`\`\`
 
 ---
 
@@ -476,7 +476,7 @@ await retryWithBackoff(
 - ✅ Autenticación Basic Auth
 
 **Arquitectura:**
-```
+\`\`\`
 Webhook Request
   ↓
 Basic Auth Check
@@ -488,7 +488,7 @@ Check webhook_events table
 If duplicate → Return {ok: true, dedup: true}
   ↓
 If new → Process + Log + Mark processed
-```
+\`\`\`
 
 ---
 
@@ -555,12 +555,12 @@ If new → Process + Log + Mark processed
 Las páginas `/terms` y `/privacy` son críticas para cumplimiento legal internacional. Deben estar disponibles en todos los idiomas soportados (ES, EN, PT, FR, IT).
 
 **Acción:**
-```bash
+\`\`\`bash
 # 1. Crear traducciones
 # 2. Refactorizar componentes
 # 3. Probar con diferentes locales
 # 4. Deploy
-```
+\`\`\`
 
 ---
 
@@ -571,12 +571,12 @@ Las páginas `/terms` y `/privacy` son críticas para cumplimiento legal interna
 La página 2FA existe en el código pero retorna 404 en producción. Esto bloquea el acceso de administradores que requieren 2FA.
 
 **Acción:**
-```bash
+\`\`\`bash
 # 1. Verificar en Vercel Dashboard
 # 2. Limpiar caché
 # 3. Re-deploy si necesario
 # 4. Probar en producción
-```
+\`\`\`
 
 ---
 
@@ -587,11 +587,11 @@ La página 2FA existe en el código pero retorna 404 en producción. Esto bloque
 Aunque las implementaciones de accesibilidad están correctas, es importante validar con Lighthouse para obtener scores oficiales.
 
 **Acción:**
-```bash
+\`\`\`bash
 lighthouse https://v0-weekchainmvp.vercel.app/ \
   --only-categories=accessibility,performance \
   --view
-```
+\`\`\`
 
 ---
 

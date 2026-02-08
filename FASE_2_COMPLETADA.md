@@ -20,7 +20,7 @@ Se han implementado exitosamente las 4 correcciones de la Fase 2 de la auditorí
 - Integración con tabla `terms_acceptance` en Supabase
 
 ### Uso
-```typescript
+\`\`\`typescript
 import { getCurrentTermsVersion, needsReAcceptance } from '@/lib/legal/terms-versions'
 
 // Verificar si usuario necesita aceptar términos
@@ -28,7 +28,7 @@ const needsAcceptance = needsReAcceptance(userAcceptedVersion)
 
 // Obtener versión actual
 const currentVersion = getCurrentTermsVersion()
-```
+\`\`\`
 
 ---
 
@@ -88,7 +88,7 @@ const currentVersion = getCurrentTermsVersion()
    - `Permissions-Policy`: Expandido para incluir camera
 
 2. **Rutas Protegidas Expandidas**
-   ```typescript
+   \`\`\`typescript
    matcher: [
      "/api/:path*",
      "/dashboard/:path*",
@@ -97,7 +97,7 @@ const currentVersion = getCurrentTermsVersion()
      "/management/:path*",
      "/notaria/:path*",
    ]
-   ```
+   \`\`\`
 
 3. **Rate Limiting**
    - Mantiene 120 requests/minuto por IP
@@ -138,7 +138,7 @@ const currentVersion = getCurrentTermsVersion()
 ## Testing Recomendado
 
 ### 1. Sistema de Términos
-```bash
+\`\`\`bash
 # Verificar versión actual
 curl https://your-domain.com/api/legal/check-terms
 
@@ -146,23 +146,23 @@ curl https://your-domain.com/api/legal/check-terms
 curl -X POST https://your-domain.com/api/legal/accept-terms \
   -H "Content-Type: application/json" \
   -d '{"terms_version": "1.1.0"}'
-```
+\`\`\`
 
 ### 2. Generación de PDFs
-```bash
+\`\`\`bash
 # Descargar contrato
 curl https://your-domain.com/api/legal/download?user_id={userId}&series={series} \
   -o contrato.pdf
-```
+\`\`\`
 
 ### 3. Middleware
-```bash
+\`\`\`bash
 # Verificar rate limiting
 for i in {1..130}; do
   curl https://your-domain.com/api/properties
 done
 # Debería retornar 429 después de 120 requests
-```
+\`\`\`
 
 ---
 

@@ -47,15 +47,15 @@ WEEK-CHAIN uses Google OAuth 2.0 for "Sign in with Google" functionality. This a
 3. Application type: "Web application"
 4. Name: "WEEK-CHAIN Web Client"
 5. Authorized JavaScript origins:
-   ```
+   \`\`\`
    http://localhost:3000
    https://your-production-domain.com
-   ```
+   \`\`\`
 6. Authorized redirect URIs:
-   ```
+   \`\`\`
    http://localhost:3000/api/auth/google/callback
    https://your-production-domain.com/api/auth/google/callback
-   ```
+   \`\`\`
 7. Click "Create"
 8. **IMPORTANT**: Copy your Client ID and Client Secret
 
@@ -63,10 +63,10 @@ WEEK-CHAIN uses Google OAuth 2.0 for "Sign in with Google" functionality. This a
 
 Add these to your Vercel project or `.env.local`:
 
-```bash
+\`\`\`bash
 GOOGLE_CLIENT_ID=your-client-id-here.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=your-client-secret-here
-```
+\`\`\`
 
 ### 6. Test the Integration
 

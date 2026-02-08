@@ -373,7 +373,7 @@ La plataforma WeekChain está completamente desarrollada, legalmente protegida y
 
 Ejecutar en orden secuencial en Supabase:
 
-```bash
+\`\`\`bash
 # Scripts críticos para funcionalidad completa
 018_purchase_voucher_system.sql
 019_demo_environment_setup.sql
@@ -385,7 +385,7 @@ Ejecutar en orden secuencial en Supabase:
 025_legal_compliance_module.sql
 026_mifiel_nom151_integration.sql
 027_defi_loans_system.sql
-```
+\`\`\`
 
 **Cómo ejecutar:**
 1. Ir a Supabase Dashboard
@@ -398,12 +398,12 @@ Ejecutar en orden secuencial en Supabase:
 **Prioridad: ALTA**
 
 Agregar en Vercel Environment Variables:
-```
+\`\`\`
 MIFIEL_APP_ID=tu_app_id
 MIFIEL_SECRET_KEY=tu_secret_key
 MIFIEL_WEBHOOK_USER=tu_webhook_user
 MIFIEL_WEBHOOK_SECRET=tu_webhook_secret
-```
+\`\`\`
 
 **Cómo obtener:**
 1. Crear cuenta en Mifiel.com

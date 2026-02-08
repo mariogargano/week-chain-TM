@@ -80,7 +80,7 @@
 
 ### 🔄 Dependencias Críticas
 
-```
+\`\`\`
 Blockchain (30 días)
     ↓
 Testing (19 días)
@@ -96,7 +96,7 @@ Staging (6 días)
 Production Launch (2 días)
     ↓
 Post-Launch (7+ días)
-```
+\`\`\`
 
 ---
 

@@ -13,10 +13,10 @@ Both implementations handle the unified checkout system with Card, OXXO, and Sol
 ### Setup
 
 1. **Environment Variables**
-   ```bash
+   \`\`\`bash
    STRIPE_SECRET_KEY=sk_test_xxx
    STRIPE_WEBHOOK_SECRET=whsec_xxx
-   ```
+   \`\`\`
 
 2. **Stripe Dashboard Configuration**
    - Go to: https://dashboard.stripe.com/webhooks
@@ -28,9 +28,9 @@ Both implementations handle the unified checkout system with Card, OXXO, and Sol
      - `charge.refunded`
 
 3. **Local Testing**
-   ```bash
+   \`\`\`bash
    stripe listen --forward-to localhost:3000/api/webhooks/stripe
-   ```
+   \`\`\`
 
 ### Features
 
@@ -53,23 +53,23 @@ Use the FastAPI implementation if:
 ### Setup
 
 1. **Install Dependencies**
-   ```bash
+   \`\`\`bash
    pip install fastapi stripe supabase-py python-dotenv uvicorn
-   ```
+   \`\`\`
 
 2. **Environment Variables**
    Create `.env` file:
-   ```bash
+   \`\`\`bash
    STRIPE_SECRET_KEY=sk_test_xxx
    STRIPE_WEBHOOK_SECRET=whsec_xxx
    SUPABASE_URL=https://xxx.supabase.co
    SUPABASE_SERVICE_ROLE_KEY=xxx
-   ```
+   \`\`\`
 
 3. **Run the Server**
-   ```bash
+   \`\`\`bash
    uvicorn stripe_webhook_fastapi:app --reload --port 8000
-   ```
+   \`\`\`
 
 4. **Configure Stripe**
    - URL: `https://your-domain.com/api/webhooks/stripe`
@@ -85,31 +85,31 @@ Use the FastAPI implementation if:
 ## Webhook Flow
 
 ### 1. Payment Intent Created
-```
+\`\`\`
 User → Unified Checkout → /api/payments/unified/create-intent
                        → Stripe Payment Intent created
                        → fiat_payments record created (status: pending)
-```
+\`\`\`
 
 ### 2. Payment Succeeded
-```
+\`\`\`
 Stripe → Webhook → payment_intent.succeeded
                 → Update fiat_payments (status: completed)
                 → Create voucher
                 → Link voucher to payment
-```
+\`\`\`
 
 ### 3. Payment Failed
-```
+\`\`\`
 Stripe → Webhook → payment_intent.payment_failed
                 → Update fiat_payments (status: failed)
                 → Log error message
-```
+\`\`\`
 
 ## Database Schema
 
 ### fiat_payments Table
-```sql
+\`\`\`sql
 - id (uuid)
 - user_wallet (text)
 - user_email (text)
@@ -124,10 +124,10 @@ Stripe → Webhook → payment_intent.payment_failed
 - property_id (uuid)
 - week_id (uuid)
 - metadata (jsonb)
-```
+\`\`\`
 
 ### vouchers Table
-```sql
+\`\`\`sql
 - id (uuid)
 - user_id (text)
 - week_id (uuid)
@@ -136,31 +136,31 @@ Stripe → Webhook → payment_intent.payment_failed
 - amount_paid (numeric)
 - payment_method (text)
 - status (text)
-```
+\`\`\`
 
 ## Testing
 
 ### Test Card Numbers
-```
+\`\`\`
 Success: 4242 4242 4242 4242
 Decline: 4000 0000 0000 0002
 3D Secure: 4000 0025 0000 3155
-```
+\`\`\`
 
 ### Test OXXO
-```
+\`\`\`
 Amount: Any amount in MXN
 Status: Simulated in test mode
-```
+\`\`\`
 
 ### Verify Webhook
-```bash
+\`\`\`bash
 # Check webhook logs
 curl https://your-domain.com/api/admin/webhooks
 
 # Test webhook locally
 stripe trigger payment_intent.succeeded
-```
+\`\`\`
 
 ## Monitoring
 
@@ -170,12 +170,12 @@ stripe trigger payment_intent.succeeded
 - Retry failed events
 
 ### Application Logs
-```typescript
+\`\`\`typescript
 // Check webhook_events table
 SELECT * FROM webhook_events 
 WHERE source = 'stripe' 
 ORDER BY created_at DESC;
-```
+\`\`\`
 
 ## Troubleshooting
 

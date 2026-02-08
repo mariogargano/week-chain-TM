@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Wallet, Users, Clock, CheckCircle, XCircle, ArrowLeft } from "lucide-react"
 import { useEffect, useState } from "react"
-import { Navbar } from "@/components/navbar"
 import { useRouter } from "next/navigation"
+import Navbar from "@/components/Navbar" // Declare the Navbar variable
 
 export default function EscrowPage() {
   const router = useRouter()
@@ -120,9 +120,11 @@ export default function EscrowPage() {
             </Card>
 
             <Card className="border-blue-200/50 bg-white/90 backdrop-blur-xl shadow-lg">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-slate-600">Total Usuarios</CardTitle>
-                <Users className="h-5 w-5 text-blue-600" />
+              <CardHeader>
+                <CardTitle className="text-slate-900">Total Usuarios</CardTitle>
+                <CardDescription className="text-slate-600">
+                  Con depósitos
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold text-slate-900">{deposits?.length || 0}</div>

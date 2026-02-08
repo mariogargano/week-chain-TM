@@ -29,7 +29,7 @@ La plataforma WEEK-CHAIN está **completamente funcional y lista para producció
 ### ✅ FORTALEZAS PRINCIPALES
 
 #### 1. **Sistema de Integraciones Robusto**
-```typescript
+\`\`\`typescript
 // Supabase: 64 tablas operativas
 - admin_wallets, properties, weeks, reservations
 - escrow_deposits, nft_provisional, vouchers
@@ -42,7 +42,7 @@ La plataforma WEEK-CHAIN está **completamente funcional y lista para producció
 - STRIPE_PUBLISHABLE_KEY ✅  
 - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ✅
 - STRIPE_MCP_KEY ✅
-```
+\`\`\`
 
 #### 2. **Sistema de Pagos Múltiple**
 - ✅ USDC (Crypto)
@@ -51,7 +51,7 @@ La plataforma WEEK-CHAIN está **completamente funcional y lista para producció
 - ✅ Demo Mode funcional
 
 #### 3. **Arquitectura Completa**
-```
+\`\`\`
 app/
 ├── auth/          ✅ Login, Register, Verify Email
 ├── dashboard/     ✅ User, Admin, Broker, Management, Notaria
@@ -60,7 +60,7 @@ app/
 ├── services/      ✅ Servicios vacacionales
 ├── va-fi/         ✅ Préstamos con NFT colateral
 └── workspace/     ✅ Oficina virtual del equipo
-```
+\`\`\`
 
 ---
 
@@ -70,7 +70,7 @@ app/
 
 **Ubicación**: 15 TODOs encontrados
 
-```typescript
+\`\`\`typescript
 // components/token-balance-card.tsx:15
 // TODO: Fetch actual token balances from Solana
 ❌ PROBLEMA: Balance de tokens hardcodeado
@@ -90,13 +90,13 @@ app/
 // TODO: Implement WalletConnect integration
 ❌ PROBLEMA: WalletConnect comentado
 ✅ SOLUCIÓN: Ya implementado en wallet-provider.tsx, remover TODO
-```
+\`\`\`
 
 ### 2. **Debug Logs en Producción (Prioridad: ALTA)**
 
 **Ubicación**: 50+ console.log con logger.debug()
 
-```typescript
+\`\`\`typescript
 // Ejemplos encontrados:
 lib/wallet/wallet-provider.tsx:64
 lib/wallet/wallet-provider.tsx:96
@@ -107,10 +107,10 @@ app/api/payments/conekta/create-order/route.ts:20
 
 ❌ PROBLEMA: Logs de debug activos en producción
 ✅ SOLUCIÓN: Sistema de logging ya configurado correctamente
-```
+\`\`\`
 
 **Estado Actual del Sistema de Logging:**
-```typescript
+\`\`\`typescript
 // lib/config/logger.ts
 const debugEnabled = process.env.NEXT_PUBLIC_DEBUG === "true"
 
@@ -118,7 +118,7 @@ config: {
   enabled: !isProduction || debugEnabled,
   level: (process.env.LOG_LEVEL as LogLevel) || "debug",
 }
-```
+\`\`\`
 
 ✅ **CORRECTO**: Los logs solo se activan con `NEXT_PUBLIC_DEBUG=true`  
 ✅ **ACCIÓN**: Verificar que `NEXT_PUBLIC_DEBUG` no esté en producción
@@ -127,7 +127,7 @@ config: {
 
 **Rutas Principales Verificadas:**
 
-```typescript
+\`\`\`typescript
 ✅ FUNCIONANDO:
 - / (Home)
 - /properties (Listado)
@@ -154,13 +154,13 @@ config: {
 ⚠️ REVISAR:
 - /kyc (Verificación de identidad)
 - /onboarding (Tutorial inicial)
-```
+\`\`\`
 
 ### 4. **Wallet Connect/Disconnect (Prioridad: ALTA)**
 
 **Análisis del Sistema:**
 
-```typescript
+\`\`\`typescript
 // lib/wallet/wallet-provider.tsx
 ✅ IMPLEMENTADO CORRECTAMENTE:
 - connectWallet() - Conecta Phantom/Solflare
@@ -175,13 +175,13 @@ provider.on("connect", handleConnect)
 provider.on("disconnect", handleDisconnect)
 
 ✅ SOLUCIÓN: Agregar try-catch en event handlers
-```
+\`\`\`
 
 ### 5. **Bloqueo de Pago sin Wallet (Prioridad: ALTA)**
 
 **Análisis del Flujo:**
 
-```typescript
+\`\`\`typescript
 // components/reservation-flow.tsx
 ✅ IMPLEMENTADO CORRECTAMENTE:
 
@@ -201,13 +201,13 @@ if (selectedProcessor === "stripe" || selectedProcessor === "conekta") {
 }
 
 ✅ CORRECTO: Sistema funciona como esperado
-```
+\`\`\`
 
 ### 6. **Términos y Condiciones (Prioridad: MEDIA)**
 
 **Análisis del Sistema:**
 
-```typescript
+\`\`\`typescript
 // Sistema Completo Implementado:
 ✅ components/terms-acceptance-dialog.tsx
 ✅ lib/hooks/use-terms-acceptance.ts
@@ -225,7 +225,7 @@ if (selectedProcessor === "stripe" || selectedProcessor === "conekta") {
 // Si se actualizan los términos, usuarios antiguos no son notificados
 
 ✅ SOLUCIÓN: Implementar sistema de versiones de términos
-```
+\`\`\`
 
 ---
 
@@ -234,7 +234,7 @@ if (selectedProcessor === "stripe" || selectedProcessor === "conekta") {
 ### FASE 1: CORRECCIONES CRÍTICAS (1-2 días)
 
 #### 1.1 Arreglar Wallet Provider Error Handling
-```typescript
+\`\`\`typescript
 // lib/wallet/wallet-provider.tsx
 // ANTES:
 provider.on("connect", handleConnect)
@@ -247,10 +247,10 @@ provider.on("connect", async (publicKey) => {
     logger.error("Error in connect handler:", error)
   }
 })
-```
+\`\`\`
 
 #### 1.2 Verificar Variables de Entorno en Producción
-```bash
+\`\`\`bash
 # Verificar que NO estén en producción:
 NEXT_PUBLIC_DEBUG=false  # ✅ Debe ser false o no existir
 LOG_LEVEL=error          # ✅ Solo errores en producción
@@ -258,10 +258,10 @@ LOG_LEVEL=error          # ✅ Solo errores en producción
 # Verificar que SÍ estén en producción:
 STRIPE_SECRET_KEY=sk_live_xxx  # ✅ Clave de producción
 CONEKTA_SECRET_KEY=key_xxx     # ✅ Clave de producción (no test)
-```
+\`\`\`
 
 #### 1.3 Implementar Sistema de Versiones de Términos
-```typescript
+\`\`\`typescript
 // Nueva tabla en Supabase:
 CREATE TABLE terms_versions (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -274,7 +274,7 @@ CREATE TABLE terms_versions (
 // Nueva columna en user_profiles:
 ALTER TABLE user_profiles 
 ADD COLUMN accepted_terms_version TEXT;
-```
+\`\`\`
 
 ### FASE 2: MEJORAS DE CÓDIGO (3-5 días)
 

@@ -259,7 +259,7 @@ WEEK-CHAIN cuenta con un sistema completo de roles y dashboards que permite a di
 
 Ejecutar en orden para fix completo:
 
-```sql
+\`\`\`sql
 -- 1. Agregar user_id a admin_users
 ALTER TABLE admin_users ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES auth.users(id);
 
@@ -270,7 +270,7 @@ WHERE email = 'corporativo@morises.com';
 
 -- 3. Crear tabla testimonials (ver script 200_EXECUTE_THIS_FIRST.sql)
 -- 4. Crear tabla public_destinations_catalog (ver script 200_EXECUTE_THIS_FIRST.sql)
-```
+\`\`\`
 
 ## Resumen de Estado Actual
 

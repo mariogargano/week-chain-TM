@@ -25,7 +25,7 @@ He revisado exhaustivamente los tres componentes críticos solicitados:
 ### Funcionalidades Implementadas
 
 #### Conexión (Connect)
-```typescript
+\`\`\`typescript
 // Características:
 ✅ Detección automática de Phantom Wallet
 ✅ Prompt de instalación si no está disponible
@@ -33,25 +33,25 @@ He revisado exhaustivamente los tres componentes críticos solicitados:
 ✅ Almacenamiento en localStorage
 ✅ Obtención de balance automática
 ✅ Manejo de errores robusto
-```
+\`\`\`
 
 #### Desconexión (Disconnect)
-```typescript
+\`\`\`typescript
 // Características:
 ✅ Limpieza completa de estado
 ✅ Remoción de localStorage
 ✅ Desconexión del provider
 ✅ Reset de balance
 ✅ Manejo de errores en cleanup
-```
+\`\`\`
 
 #### Event Listeners
-```typescript
+\`\`\`typescript
 // Eventos manejados:
 ✅ "connect" - Actualiza estado cuando wallet se conecta
 ✅ "disconnect" - Limpia estado cuando wallet se desconecta
 ✅ "accountChanged" - Actualiza cuando usuario cambia de cuenta
-```
+\`\`\`
 
 ### Componentes UI
 
@@ -70,7 +70,7 @@ He revisado exhaustivamente los tres componentes críticos solicitados:
 ### Recomendaciones de Mejora
 
 1. **Agregar Timeout en Connect**
-```typescript
+\`\`\`typescript
 // Actual: Sin timeout
 // Recomendado: Timeout de 30 segundos
 const connectWithTimeout = async () => {
@@ -79,10 +79,10 @@ const connectWithTimeout = async () => {
   )
   return Promise.race([provider.connect(), timeout])
 }
-```
+\`\`\`
 
 2. **Agregar Retry Logic**
-```typescript
+\`\`\`typescript
 // Para conexiones fallidas
 const connectWithRetry = async (maxRetries = 3) => {
   for (let i = 0; i < maxRetries; i++) {
@@ -94,10 +94,10 @@ const connectWithRetry = async (maxRetries = 3) => {
     }
   }
 }
-```
+\`\`\`
 
 3. **Agregar Analytics**
-```typescript
+\`\`\`typescript
 // Trackear eventos de wallet
 import { trackEvent } from '@/lib/analytics/events'
 
@@ -106,7 +106,7 @@ trackEvent('wallet_connected', { provider: 'phantom' })
 
 // En disconnect:
 trackEvent('wallet_disconnected', { duration: connectionDuration })
-```
+\`\`\`
 
 ---
 
@@ -119,7 +119,7 @@ trackEvent('wallet_disconnected', { duration: connectionDuration })
 ### Validación Implementada
 
 #### Para Pagos USDC (Crypto)
-```typescript
+\`\`\`typescript
 // Línea 107 en reservation-flow.tsx
 if (paymentMethod === "usdc_crypto") {
   if (!walletConnected || !walletAddress) {
@@ -127,21 +127,21 @@ if (paymentMethod === "usdc_crypto") {
     return
   }
 }
-```
+\`\`\`
 
 **Estado:** ✅ CORRECTO - Bloquea pagos USDC sin wallet
 
 #### Para Pagos Fiat (Tarjeta, OXXO, SPEI)
-```typescript
+\`\`\`typescript
 // No requiere wallet conectado
 // Usa email y datos de usuario de Supabase Auth
-```
+\`\`\`
 
 **Estado:** ✅ CORRECTO - Fiat no requiere wallet blockchain
 
 ### Flujo de Validación Completo
 
-```
+\`\`\`
 1. Usuario selecciona semanas
    ↓
 2. Usuario elige método de pago
@@ -153,14 +153,14 @@ if (paymentMethod === "usdc_crypto") {
 4. Sistema valida KYC (si no es demo)
    ↓
 5. Procesa pago
-```
+\`\`\`
 
 ### Validaciones Adicionales
 
 **En APIs de Pago:**
 
 1. **Stripe/Conekta** (`app/api/payments/fiat/create-intent/route.ts`)
-```typescript
+\`\`\`typescript
 // Línea 55-57
 if (!isDemoMode && user) {
   const { data: kycData } = await supabase
@@ -176,26 +176,26 @@ if (!isDemoMode && user) {
     )
   }
 }
-```
+\`\`\`
 
 **Estado:** ✅ CORRECTO - Valida KYC antes de procesar
 
 2. **Creación de Voucher** (`app/api/vouchers/create/route.ts`)
-```typescript
+\`\`\`typescript
 // Línea 8-10
 const { data: { user } } = await supabase.auth.getUser()
 
 if (!user) {
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 }
-```
+\`\`\`
 
 **Estado:** ✅ CORRECTO - Requiere autenticación
 
 ### Recomendaciones de Mejora
 
 1. **Agregar Validación Visual Más Clara**
-```typescript
+\`\`\`typescript
 // En payment-method-selector.tsx
 const PaymentMethodCard = ({ method, disabled }) => {
   const needsWallet = method.id === 'usdc'
@@ -210,10 +210,10 @@ const PaymentMethodCard = ({ method, disabled }) => {
     </Card>
   )
 }
-```
+\`\`\`
 
 2. **Agregar Modal de Confirmación**
-```typescript
+\`\`\`typescript
 // Antes de proceder con pago USDC
 if (paymentMethod === 'usdc_crypto') {
   const confirmed = await showConfirmDialog({
@@ -224,10 +224,10 @@ if (paymentMethod === 'usdc_crypto') {
   
   if (!confirmed) return
 }
-```
+\`\`\`
 
 3. **Agregar Estado de Carga Durante Conexión**
-```typescript
+\`\`\`typescript
 // En reservation-flow.tsx
 const [isConnectingWallet, setIsConnectingWallet] = useState(false)
 
@@ -242,7 +242,7 @@ const handleConnectWallet = async () => {
     setIsConnectingWallet(false)
   }
 }
-```
+\`\`\`
 
 ---
 
@@ -259,7 +259,7 @@ const handleConnectWallet = async () => {
 ### Funcionalidades Implementadas
 
 #### 1. Modal de Aceptación
-```typescript
+\`\`\`typescript
 // Características:
 ✅ ScrollArea obligatorio (debe scrollear para ver todo)
 ✅ Checkbox de aceptación
@@ -267,41 +267,41 @@ const handleConnectWallet = async () => {
 ✅ Certificación NOM-151 explicada
 ✅ Diseño profesional con iconos
 ✅ Bloquea UI hasta aceptación
-```
+\`\`\`
 
 #### 2. Hook de Estado (`useTermsAcceptance`)
-```typescript
+\`\`\`typescript
 // Funcionalidades:
 ✅ Chequea localStorage primero (rápido)
 ✅ Fallback a Supabase para persistencia
 ✅ Manejo de errores graceful
 ✅ Retorna: hasAccepted, acceptTerms(), checkTermsAcceptance()
 ✅ Funciona sin tabla en DB (modo fallback)
-```
+\`\`\`
 
 #### 3. API de Aceptación
-```typescript
+\`\`\`typescript
 // Características NOM-151:
 ✅ Genera hash SHA-256 de aceptación
 ✅ Captura IP, user-agent, timestamp
 ✅ Crea clickwrap signature
 ✅ Guarda en compliance_audit_log
 ✅ Fallback graceful si DB falla
-```
+\`\`\`
 
 #### 4. Contenido Legal
-```typescript
+\`\`\`typescript
 // Secciones incluidas:
 ✅ Términos y Condiciones (derechos de 15 años)
 ✅ Aviso de Privacidad (LFPDPPP compliant)
 ✅ Certificación NOM-151 (hash SHA-256)
 ✅ Periodo de reflexión 5 días (NOM-029)
 ✅ Derechos ARCO
-```
+\`\`\`
 
 ### Flujo de Aceptación
 
-```
+\`\`\`
 1. Usuario intenta acción protegida (login, compra)
    ↓
 2. Sistema chequea localStorage
@@ -320,13 +320,13 @@ const handleConnectWallet = async () => {
    - Crea audit log
    ↓
 6. Usuario puede continuar
-```
+\`\`\`
 
 ### Integración en Login
 
 **Archivo:** `app/auth/login/page.tsx`
 
-```typescript
+\`\`\`typescript
 // Líneas 16-17
 const { hasAccepted, acceptTerms } = useTermsAcceptance()
 const [showTermsDialog, setShowTermsDialog] = useState(false)
@@ -336,14 +336,14 @@ if (!hasAccepted) {
   setShowTermsDialog(true)
   return
 }
-```
+\`\`\`
 
 **Estado:** ✅ CORRECTO - Bloquea login hasta aceptación
 
 ### Cumplimiento Legal
 
 #### NOM-151-SCFI-2016 (Documentos Digitales)
-```typescript
+\`\`\`typescript
 // API: /api/legal/accept-terms/route.ts
 const documentContent = `TERMS_${terms_version}_${userId}_${timestamp}`
 const nom151Hash = crypto
@@ -361,36 +361,36 @@ const nom151Hash = crypto
     method: "clickwrap"
   }
 }
-```
+\`\`\`
 
 **Estado:** ✅ COMPLIANT - Hash SHA-256 verificable
 
 #### NOM-029-SE-2021 (Certificados Digitales)
-```typescript
+\`\`\`typescript
 // En términos:
 - Periodo de reflexión: 5 días hábiles
 - Información clara de derechos
 - Procedimiento de cancelación
 - Transparencia en costos
-```
+\`\`\`
 
 **Estado:** ✅ COMPLIANT - Información completa
 
 #### LFPDPPP (Protección de Datos)
-```typescript
+\`\`\`typescript
 // En términos:
 - Aviso de privacidad completo
 - Derechos ARCO explicados
 - Consentimiento explícito
 - Medidas de seguridad
-```
+\`\`\`
 
 **Estado:** ✅ COMPLIANT - Cumple con ley
 
 ### Recomendaciones de Mejora
 
 1. **Agregar Versioning de Términos**
-```typescript
+\`\`\`typescript
 // Trackear cambios en términos
 interface TermsVersion {
   version: string
@@ -402,10 +402,10 @@ interface TermsVersion {
 const needsReAcceptance = (lastAcceptedVersion: string) => {
   return lastAcceptedVersion !== CURRENT_TERMS_VERSION
 }
-```
+\`\`\`
 
 2. **Agregar Descarga de Términos Aceptados**
-```typescript
+\`\`\`typescript
 // Permitir al usuario descargar PDF de términos aceptados
 const downloadAcceptedTerms = async () => {
   const response = await fetch('/api/legal/download-terms', {
@@ -416,10 +416,10 @@ const downloadAcceptedTerms = async () => {
   const blob = await response.blob()
   downloadFile(blob, 'terminos-aceptados.pdf')
 }
-```
+\`\`\`
 
 3. **Agregar Notificación de Cambios**
-```typescript
+\`\`\`typescript
 // Email cuando términos cambien
 const notifyTermsChange = async (userId: string) => {
   await sendEmail({
@@ -432,10 +432,10 @@ const notifyTermsChange = async (userId: string) => {
     }
   })
 }
-```
+\`\`\`
 
 4. **Agregar Audit Trail Completo**
-```typescript
+\`\`\`typescript
 // Registrar todas las interacciones
 const auditTermsInteraction = async (action: string) => {
   await supabase.from('terms_audit_trail').insert({
@@ -449,7 +449,7 @@ const auditTermsInteraction = async (action: string) => {
     }
   })
 }
-```
+\`\`\`
 
 ---
 
@@ -457,7 +457,7 @@ const auditTermsInteraction = async (action: string) => {
 
 ### Diagrama de Flujo
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────────────┐
 │                    INICIO: Usuario en Home                   │
 └────────────────────────┬────────────────────────────────────┘
@@ -556,7 +556,7 @@ const auditTermsInteraction = async (action: string) => {
 │              FIN: NFT en Dashboard                           │
 │              /dashboard/my-weeks                             │
 └─────────────────────────────────────────────────────────────┘
-```
+\`\`\`
 
 ---
 

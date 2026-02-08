@@ -29,7 +29,7 @@
 ### 3. Smart Contracts Necesarios
 
 #### Property NFT Contract
-```rust
+\`\`\`rust
 // Estructura básica Solana
 pub struct PropertyWeek {
     pub property_id: Pubkey,

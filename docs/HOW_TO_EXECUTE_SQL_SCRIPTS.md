@@ -24,13 +24,13 @@ Has creado scripts SQL en los archivos del proyecto pero **NO se ejecutan autom�
 
 El script mostrará al final una tabla con las 3 propiedades insertadas:
 
-```
+\`\`\`
 | id | name | location | city | country | price | status | location_group | total_weeks |
 |----|------|----------|------|---------|-------|--------|----------------|-------------|
 | ... | Bosphorus Yalı Villa | Bósforo | Estambul | Turquía | 14900 | available | MEDITERRANEAN | 52 |
 | ... | UXAN | Riviera Maya | Tulum | México | 12500 | available | RIVIERA MAYA | 52 |
 | ... | Vila Ksamil | Ksamil | Ksamil | Albania | 11800 | available | BALKAN RIVIERA | 52 |
-```
+\`\`\`
 
 ### Paso 4: Verificar en la Aplicación
 

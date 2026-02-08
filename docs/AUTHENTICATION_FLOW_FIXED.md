@@ -48,7 +48,7 @@
 ## Verificación de Corrección
 
 ### 1. Verificar Modal de Términos
-```
+\`\`\`
 1. Ir a /auth/login
 2. Clic en "Iniciar con Google"
 3. DEBE mostrar modal con:
@@ -56,31 +56,31 @@
    - Secciones: Términos, Privacidad, Certificación NOM-151
    - Checkbox para aceptar
    - Botón "Aceptar y Continuar"
-```
+\`\`\`
 
 ### 2. Verificar Login con Google
-```
+\`\`\`
 1. Completar login con Google
 2. DEBE redirigir a dashboard SIN desconexiones
 3. Sesión DEBE persistir al recargar página
 4. corporativo@morises.com DEBE ir a /dashboard/admin
 5. Otros usuarios DEBEN ir a /dashboard
-```
+\`\`\`
 
 ### 3. Verificar Tablas
-```sql
+\`\`\`sql
 -- Ejecutar en Supabase SQL Editor
 SELECT COUNT(*) FROM testimonials; -- Debe retornar 3
 SELECT COUNT(*) FROM public_destinations_catalog; -- Debe retornar 6
-```
+\`\`\`
 
 ## Configuración Requerida
 
 ### Variables de Entorno
-```
+\`\`\`
 NEXT_PUBLIC_SUPABASE_URL=tu_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_key
-```
+\`\`\`
 
 ### Google OAuth en Supabase
 1. Ir a Authentication > Providers > Google

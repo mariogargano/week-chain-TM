@@ -33,11 +33,11 @@ Sistema completo de automatización de emails para WEEK-CHAIN con templates PROF
 ## Test Flow - Admin
 
 ### Step 1: Setup Database
-```bash
+\`\`\`bash
 # Run SQL scripts in Supabase SQL Editor
 1. scripts/090_email_automation_system.sql
 2. scripts/092_seed_default_email_templates.sql
-```
+\`\`\`
 
 ### Step 2: Verify Templates Created
 1. Navigate to `/dashboard/admin/email-templates`
@@ -70,7 +70,7 @@ Sistema completo de automatización de emails para WEEK-CHAIN con templates PROF
 ## Test Flow - User (Automated)
 
 ### Trigger 1: User Registration (Welcome Email)
-```typescript
+\`\`\`typescript
 // In registration flow
 await sendAutomatedEmail(
   'welcome',
@@ -81,10 +81,10 @@ await sendAutomatedEmail(
     unsubscribe_url: `${siteUrl}/unsubscribe/${user.id}`,
   }
 )
-```
+\`\`\`
 
 ### Trigger 2: Certificate Purchase
-```typescript
+\`\`\`typescript
 // After successful payment
 await sendAutomatedEmail(
   'certificate_purchased',
@@ -98,10 +98,10 @@ await sendAutomatedEmail(
     unsubscribe_url: `${siteUrl}/unsubscribe/${user.id}`,
   }
 )
-```
+\`\`\`
 
 ### Trigger 3: Reservation Request
-```typescript
+\`\`\`typescript
 // When user submits booking request
 await sendAutomatedEmail(
   'reservation_request_submitted',
@@ -116,10 +116,10 @@ await sendAutomatedEmail(
     unsubscribe_url: `${siteUrl}/unsubscribe/${user.id}`,
   }
 )
-```
+\`\`\`
 
 ### Trigger 4: Offer Available
-```typescript
+\`\`\`typescript
 // When property becomes available
 await sendAutomatedEmail(
   'reservation_offer_available',
@@ -136,10 +136,10 @@ await sendAutomatedEmail(
     unsubscribe_url: `${siteUrl}/unsubscribe/${user.id}`,
   }
 )
-```
+\`\`\`
 
 ### Trigger 5: Reservation Confirmed
-```typescript
+\`\`\`typescript
 // After user accepts offer
 await sendAutomatedEmail(
   'reservation_confirmed',
@@ -157,7 +157,7 @@ await sendAutomatedEmail(
     unsubscribe_url: `${siteUrl}/unsubscribe/${user.id}`,
   }
 )
-```
+\`\`\`
 
 ## Metrics & Analytics
 
@@ -185,10 +185,10 @@ All email templates include:
 
 ## Environment Variables Required
 
-```env
+\`\`\`env
 RESEND_API_KEY=re_xxxxx
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
-```
+\`\`\`
 
 ## Future Enhancements
 

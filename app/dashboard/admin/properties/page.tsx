@@ -22,12 +22,12 @@ import {
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { RoleGuard } from "@/components/role-guard"
-import { Navbar } from "@/components/navbar"
 import { useRouter } from "next/navigation"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import Navbar from "@/components/navbar" // Import Navbar component
 
 export default function AdminPropertiesPage() {
   return (

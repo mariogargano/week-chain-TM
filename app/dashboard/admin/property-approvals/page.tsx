@@ -4,12 +4,12 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { Navbar } from "@/components/navbar"
 import { RoleGuard } from "@/components/role-guard"
 import { createClient } from "@/lib/supabase/client"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Building2, Search, Eye, CheckCircle, XCircle, Clock } from "lucide-react"
+import Navbar from "@/components/navbar" // Declaring Navbar variable
 
 export default function AdminPropertyApprovalsPage() {
   return (

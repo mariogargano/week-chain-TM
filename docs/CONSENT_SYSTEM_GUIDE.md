@@ -9,17 +9,17 @@ Este sistema implementa las reglas PROFECO y NOM-151-SCFI-2016 para garantizar c
 ## 🔒 REGLAS CRÍTICAS DE CLICK-WRAP
 
 ### 1. **Checkbox SIEMPRE desmarcado por defecto**
-```tsx
+\`\`\`tsx
 // ✅ CORRECTO
 <Checkbox checked={false} onCheckedChange={...} />
 
 // ❌ INCORRECTO
 <Checkbox checked={true} ... />
 <Checkbox defaultChecked={true} ... />
-```
+\`\`\`
 
 ### 2. **Botón principal DESHABILITADO hasta aceptación**
-```tsx
+\`\`\`tsx
 // ✅ CORRECTO
 <Button disabled={!hasAccepted} onClick={handleSubmit}>
   Continuar
@@ -27,15 +27,15 @@ Este sistema implementa las reglas PROFECO y NOM-151-SCFI-2016 para garantizar c
 
 // ❌ INCORRECTO
 <Button onClick={handleSubmit}>Continuar</Button>
-```
+\`\`\`
 
 ### 3. **Texto EXACTO del checkbox**
-```
+\`\`\`
 "He leído y acepto los Términos y Condiciones, Aviso de Privacidad, y entiendo que:
 • Este es un certificado digital de uso
 • NO representa propiedad o inversión
 • Disponibilidad sujeta a solicitud y confirmación"
-```
+\`\`\`
 
 ---
 
@@ -63,7 +63,7 @@ Este sistema implementa las reglas PROFECO y NOM-151-SCFI-2016 para garantizar c
 
 ## 🗄️ TABLA: `user_consents`
 
-```sql
+\`\`\`sql
 CREATE TABLE user_consents (
   id UUID PRIMARY KEY,
   user_id UUID NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE user_consents (
   consent_hash TEXT, -- SHA-256 para NOM-151
   metadata JSONB
 );
-```
+\`\`\`
 
 ### Tipos de Consentimiento:
 - `terms_acceptance` - Aceptación inicial de términos
@@ -91,7 +91,7 @@ CREATE TABLE user_consents (
 
 ### Server-Side Validation
 
-```typescript
+\`\`\`typescript
 // En cada endpoint crítico
 import { enforceConsent } from "@/lib/consent/enforcement"
 
@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
   
   // Continuar con la acción...
 }
-```
+\`\`\`
 
 ---
 
@@ -118,16 +118,16 @@ export async function POST(request: NextRequest) {
 
 ### Ver Historial de Consentimientos
 
-```typescript
+\`\`\`typescript
 import { getUserConsents } from "@/lib/consent/enforcement"
 
 const consents = await getUserConsents(userId)
 // Returns: [{ type, accepted_at, ip_address, consent_hash, ... }]
-```
+\`\`\`
 
 ### Exportar Logs de Auditoría
 
-```sql
+\`\`\`sql
 SELECT 
   u.email,
   uc.consent_type,
@@ -138,24 +138,24 @@ FROM user_consents uc
 JOIN auth.users u ON u.id = uc.user_id
 WHERE uc.accepted_at >= NOW() - INTERVAL '30 days'
 ORDER BY uc.accepted_at DESC;
-```
+\`\`\`
 
 ---
 
 ## ⚠️ EDGE CASES
 
 ### 1. **Términos Actualizados → Forzar Re-aceptación**
-```typescript
+\`\`\`typescript
 // Check if user has latest version
 const hasLatestConsent = await checkConsent(userId, "terms_acceptance")
 if (!hasLatestConsent) {
   // Force re-acceptance modal
   showTermsModal()
 }
-```
+\`\`\`
 
 ### 2. **Usuario Regresa Después de Actualización**
-```typescript
+\`\`\`typescript
 // On login, check if terms updated
 const userLastAcceptance = await getLastConsent(userId)
 const currentVersion = await getCurrentTermsVersion()
@@ -163,16 +163,16 @@ const currentVersion = await getCurrentTermsVersion()
 if (userLastAcceptance.version !== currentVersion) {
   redirectTo("/accept-updated-terms")
 }
-```
+\`\`\`
 
 ### 3. **API Calls Bypass UI**
-```typescript
+\`\`\`typescript
 // TODAS las rutas API validan server-side
 // No es posible hacer bypass desde curl/Postman
 if (!await hasValidConsent(userId, action)) {
   throw new Error("CONSENT_REQUIRED")
 }
-```
+\`\`\`
 
 ---
 

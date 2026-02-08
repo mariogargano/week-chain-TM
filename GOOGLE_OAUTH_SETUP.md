@@ -9,10 +9,10 @@
 5. Configura la pantalla de consentimiento OAuth si aún no lo has hecho
 6. Selecciona **Web application** como tipo de aplicación
 7. Agrega las siguientes **Authorized redirect URIs**:
-   ```
+   \`\`\`
    https://crntumktmfpgkyzfoewj.supabase.co/auth/v1/callback
    http://localhost:3000/auth/callback
-   ```
+   \`\`\`
 8. Guarda el **Client ID** y **Client Secret**
 
 ## Paso 2: Configurar Supabase
@@ -35,12 +35,12 @@ En Google Cloud Console, agrega estos dominios autorizados:
 ## Paso 4: Variables de Entorno
 
 Asegúrate de tener estas variables en tu proyecto:
-```
+\`\`\`
 NEXT_PUBLIC_SUPABASE_URL=https://crntumktmfpgkyzfoewj.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_anon_key
 GOOGLE_CLIENT_ID=tu_client_id
 GOOGLE_CLIENT_SECRET=tu_client_secret
-```
+\`\`\`
 
 ## Verificación
 

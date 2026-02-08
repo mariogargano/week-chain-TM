@@ -27,14 +27,14 @@ This guide helps diagnose and fix admin dashboard access issues in WEEK-CHAIN™
 **Solution:**
 1. Verify wallet address is correct
 2. Check if wallet is in `admin_wallets` table:
-   ```sql
+   \`\`\`sql
    SELECT * FROM admin_wallets WHERE wallet_address = 'YOUR_WALLET_ADDRESS';
-   ```
+   \`\`\`
 3. If not found, add it:
-   ```sql
+   \`\`\`sql
    INSERT INTO admin_wallets (wallet_address, role, name)
    VALUES ('YOUR_WALLET_ADDRESS', 'admin', 'Admin Name');
-   ```
+   \`\`\`
 
 ### 3. Role Not Found in Database
 
@@ -68,7 +68,7 @@ This page will check:
 
 ### admin_wallets
 Primary table for admin role verification:
-```sql
+\`\`\`sql
 CREATE TABLE admin_wallets (
   id SERIAL PRIMARY KEY,
   wallet_address TEXT UNIQUE NOT NULL,
@@ -77,11 +77,11 @@ CREATE TABLE admin_wallets (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-```
+\`\`\`
 
 ### users
 Secondary table for user data:
-```sql
+\`\`\`sql
 CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   wallet_address TEXT UNIQUE,
@@ -91,11 +91,11 @@ CREATE TABLE users (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-```
+\`\`\`
 
 ### profiles
 Tertiary table for user profiles:
-```sql
+\`\`\`sql
 CREATE TABLE profiles (
   id UUID PRIMARY KEY REFERENCES users(id),
   username TEXT,
@@ -104,7 +104,7 @@ CREATE TABLE profiles (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-```
+\`\`\`
 
 ## Role Verification Flow
 
@@ -117,7 +117,7 @@ CREATE TABLE profiles (
 
 To manually verify a user's role:
 
-```sql
+\`\`\`sql
 -- Check all tables for a wallet
 SELECT 
   'admin_wallets' as source,
@@ -147,13 +147,13 @@ SELECT
 FROM profiles p
 JOIN users u ON u.id = p.id
 WHERE u.wallet_address = 'YOUR_WALLET_ADDRESS';
-```
+\`\`\`
 
 ## Adding a New Admin
 
 To add a new admin user:
 
-```sql
+\`\`\`sql
 -- Add to admin_wallets (primary)
 INSERT INTO admin_wallets (wallet_address, role, name)
 VALUES ('NEW_WALLET_ADDRESS', 'admin', 'Admin Name');
@@ -169,7 +169,7 @@ SELECT id, 'admin_username', 'Admin Name', 'admin'
 FROM users
 WHERE wallet_address = 'NEW_WALLET_ADDRESS'
 ON CONFLICT (id) DO UPDATE SET role = 'admin';
-```
+\`\`\`
 
 ## Support
 
