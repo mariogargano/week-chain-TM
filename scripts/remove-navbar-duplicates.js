@@ -1,8 +1,8 @@
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
-import { join, relative } from 'path';
+import { join, relative, resolve } from 'path';
 
-const ROOT = '/app';
-const SKIP_FILE = '/app/_root-layout-client.tsx';
+const ROOT = resolve('app');
+const SKIP_FILE = resolve('app/_root-layout-client.tsx');
 
 function getAllTsxFiles(dir) {
   const results = [];
@@ -44,7 +44,7 @@ for (const filePath of files) {
 
   if (content !== original) {
     writeFileSync(filePath, content, 'utf-8');
-    console.log(`Fixed: ${relative('/app', filePath)}`);
+    console.log(`Fixed: ${relative(ROOT, filePath)}`);
     totalFixed++;
   }
 }

@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Wallet, Users, Clock, CheckCircle, XCircle, ArrowLeft } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import Navbar from "@/components/Navbar" // Declare the Navbar variable
+
 
 export default function EscrowPage() {
   const router = useRouter()
@@ -63,9 +63,7 @@ export default function EscrowPage() {
   const pendingCount = deposits?.filter((d) => d.status === "pending").length || 0
 
   return (
-    <>
-      <Navbar user={true} />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
+  <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex items-center gap-4">
             <Button

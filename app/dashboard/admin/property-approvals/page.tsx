@@ -9,7 +9,7 @@ import { createClient } from "@/lib/supabase/client"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Building2, Search, Eye, CheckCircle, XCircle, Clock } from "lucide-react"
-import Navbar from "@/components/navbar" // Declaring Navbar variable
+
 
 export default function AdminPropertyApprovalsPage() {
   return (
@@ -59,9 +59,7 @@ function AdminPropertyApprovalsContent() {
   )
 
   return (
-    <>
-      <Navbar user={true} />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
+  <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
         <div className="max-w-7xl mx-auto space-y-8">
           <div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 bg-clip-text text-transparent">

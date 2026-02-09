@@ -27,7 +27,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import Navbar from "@/components/navbar" // Import Navbar component
+
 
 export default function AdminPropertiesPage() {
   return (
@@ -198,9 +198,7 @@ function AdminPropertiesContent() {
   }
 
   return (
-    <>
-      <Navbar user={true} />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 p-6">
+  <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 p-6">
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Header */}
           <div className="flex items-center gap-4">
