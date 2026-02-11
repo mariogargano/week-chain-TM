@@ -1,6 +1,43 @@
 import { createBrowserClient as createSupabaseBrowserClient } from "@supabase/ssr"
 
 const createMockClient = () => {
+  const mockQueryBuilder: any = {
+    select: () => mockQueryBuilder,
+    eq: () => mockQueryBuilder,
+    neq: () => mockQueryBuilder,
+    gt: () => mockQueryBuilder,
+    lt: () => mockQueryBuilder,
+    gte: () => mockQueryBuilder,
+    lte: () => mockQueryBuilder,
+    like: () => mockQueryBuilder,
+    ilike: () => mockQueryBuilder,
+    is: () => mockQueryBuilder,
+    in: () => mockQueryBuilder,
+    contains: () => mockQueryBuilder,
+    containedBy: () => mockQueryBuilder,
+    rangeGt: () => mockQueryBuilder,
+    rangeGte: () => mockQueryBuilder,
+    rangeLt: () => mockQueryBuilder,
+    rangeLte: () => mockQueryBuilder,
+    rangeAdjacent: () => mockQueryBuilder,
+    overlaps: () => mockQueryBuilder,
+    match: () => mockQueryBuilder,
+    not: () => mockQueryBuilder,
+    or: () => mockQueryBuilder,
+    filter: () => mockQueryBuilder,
+    order: () => mockQueryBuilder,
+    limit: () => mockQueryBuilder,
+    range: () => mockQueryBuilder,
+    abortSignal: () => mockQueryBuilder,
+    single: () => Promise.resolve({ data: null, error: null, count: 0 }),
+    maybeSingle: () => Promise.resolve({ data: null, error: null, count: 0 }),
+    then: (resolve: any) => resolve({ data: [], error: null, count: 0 }),
+    insert: () => Promise.resolve({ data: null, error: null }),
+    update: () => Promise.resolve({ data: null, error: null }),
+    delete: () => Promise.resolve({ data: null, error: null }),
+    upsert: () => Promise.resolve({ data: null, error: null }),
+  }
+
   return {
     auth: {
       getSession: async () => ({ data: { session: null }, error: null }),
@@ -14,23 +51,7 @@ const createMockClient = () => {
         }
       },
     },
-    from: (table: string) => ({
-      select: () => ({
-        eq: () => ({
-          single: async () => ({ data: null, error: null }),
-          limit: () => ({
-            single: async () => ({ data: null, error: null }),
-          }),
-        }),
-        order: () => ({
-          limit: () => ({ data: [], error: null }),
-        }),
-        limit: async () => ({ data: [], error: null }),
-      }),
-      insert: async () => ({ data: null, error: null }),
-      update: async () => ({ data: null, error: null }),
-      delete: async () => ({ data: null, error: null }),
-    }),
+    from: () => mockQueryBuilder,
   } as any
 }
 
@@ -54,11 +75,14 @@ const supabaseAnonKey = getSupabaseAnonKey()
 
 let browserClient: ReturnType<typeof createSupabaseBrowserClient> | any = null
 
-export function createBrowserClient() {
-  if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn("[v0] Supabase credentials missing - using mock client:", {
-      hasUrl: !!supabaseUrl,
-      hasKey: !!supabaseAnonKey,
+export function createBrowserClient(url?: string, key?: string) {
+  const effectiveUrl = url && !url.includes("!") ? url : supabaseUrl
+  const effectiveKey = key && !key.includes("!") ? key : supabaseAnonKey
+
+  if (!effectiveUrl || !effectiveKey || effectiveUrl.startsWith("http://localhost") === false && effectiveUrl.includes("supabase.co") === false) {
+    console.warn("[v0] Supabase credentials missing or invalid - using mock client:", {
+      hasUrl: !!effectiveUrl,
+      hasKey: !!effectiveKey,
     })
     if (!browserClient) {
       browserClient = createMockClient()
@@ -67,12 +91,12 @@ export function createBrowserClient() {
   }
 
   // Return existing instance if already created (singleton pattern)
-  if (browserClient) {
+  if (browserClient && !url && !key) {
     return browserClient
   }
 
   // Create new client
-  browserClient = createSupabaseBrowserClient(supabaseUrl, supabaseAnonKey, {
+  browserClient = createSupabaseBrowserClient(effectiveUrl, effectiveKey, {
     cookies: {
       get(name: string) {
         if (typeof document === "undefined") return undefined

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { createBrowserClient } from "@supabase/ssr"
+import { createBrowserClient } from "@/lib/supabase/client"
 import { MessageSquare, Facebook, Twitter, Linkedin, Copy, Check, Share2, X, Send, Sparkles } from "lucide-react"
 import { toast } from "sonner"
 

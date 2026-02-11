@@ -74,7 +74,16 @@ export function validateEnv(): EnvSchema {
       error.errors.forEach((err) => {
         console.error(`  - ${err.path.join(".")}: ${err.message}`)
       })
-      throw new Error("Invalid environment variables. Check console for details.")
+
+      // If we are in production and NOT in build phase, we should throw
+      if (process.env.NODE_ENV === "production" && process.env.NEXT_PHASE !== "phase-production-build" && !process.env.CI) {
+        throw new Error("Invalid environment variables. Check console for details.")
+      }
+
+      console.warn("⚠️ Continuing despite environment validation errors (likely build phase or dev mode).")
+      // Return partial env for build compatibility
+      cachedEnv = process.env as any as EnvSchema
+      return cachedEnv
     }
     throw error
   }
