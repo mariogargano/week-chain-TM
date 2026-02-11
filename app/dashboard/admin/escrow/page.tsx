@@ -206,6 +206,6 @@ export default function EscrowPage() {
           </Card>
         </div>
       </div>
-    </>
+    </div>
   )
 }

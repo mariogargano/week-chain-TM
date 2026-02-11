@@ -310,6 +310,6 @@ function AdminKYCContent() {
           )}
         </div>
       </div>
-    </>
+    </div>
   )
 }
