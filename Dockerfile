@@ -19,6 +19,10 @@ COPY . .
 # Set environment variable for Next.js to output standalone
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Set placeholder environment variables for build time
+# These will be overridden at runtime with actual values
+ENV RESEND_API_KEY="build-time-placeholder"
+
 # Build the application
 RUN npm run build
 
