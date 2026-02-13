@@ -49,40 +49,59 @@ export async function GET(request: NextRequest) {
 
     const supabase = await createClient()
 
-    const { data: existingProfile } = await supabase
-      .from("profiles")
-      .select("id, email, role")
-      .eq("email", userInfo.email.toLowerCase())
-      .maybeSingle()
+    // Check if user exists in auth.users
+    const { data: existingUser } = await supabase.auth.admin.getUserByEmail(userInfo.email)
 
-    console.log("[v0] Existing profile:", existingProfile)
+    console.log("[v0] Existing auth user:", existingUser?.user ? "found" : "not found")
 
-    const googlePassword = `google_oauth_${userInfo.id}`
-    console.log("[v0] Attempting sign in...")
+    // If user exists, sign them in via OAuth (idempotent)
+    if (existingUser?.user) {
+      console.log("[v0] User exists, completing OAuth sign-in...")
 
-    const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-      email: userInfo.email,
-      password: googlePassword,
-    })
+      // Use signInWithIdToken or update session
+      const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
+        access_token: tokens.access_token,
+        refresh_token: tokens.refresh_token || "",
+      })
 
-    console.log("[v0] Sign in result:", signInData?.user?.email, "Error:", signInError?.message)
+      if (sessionData?.user) {
+        // Log Google OAuth login
+        try {
+          await supabase.from("audit_logs").insert({
+            user_id: sessionData.user.id,
+            action: "google_oauth_complete",
+            severity: "info",
+            details: {
+              email: userInfo.email,
+              name: userInfo.name,
+              timestamp: new Date().toISOString(),
+            },
+          })
+        } catch (auditError) {
+          console.error("[v0] Audit log error:", auditError)
+        }
 
-    if (signInData?.user) {
-      console.log("[v0] Sign in successful, getting dashboard URL...")
-      const dashboardUrl = await getDashboardUrlServer(userInfo.email)
-      console.log("[v0] Redirecting to:", dashboardUrl)
+        console.log("[v0] OAuth sign-in successful, getting dashboard URL...")
+        const dashboardUrl = await getDashboardUrlServer(userInfo.email)
+        console.log("[v0] Redirecting to:", dashboardUrl)
 
-      const response = NextResponse.redirect(new URL(dashboardUrl, request.url))
-      response.cookies.delete("google_oauth_state")
-      response.cookies.delete("google_oauth_referral")
-      return response
+        const response = NextResponse.redirect(new URL(dashboardUrl, request.url))
+        response.cookies.delete("google_oauth_state")
+        response.cookies.delete("google_oauth_referral")
+        return response
+      }
+
+      if (sessionError) {
+        console.error("[v0] Session creation error:", sessionError)
+      }
     }
 
-    console.log("[v0] Creating new account...")
+    // Create new user via Google OAuth
+    console.log("[v0] Creating new account via Google OAuth...")
 
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
       email: userInfo.email,
-      password: googlePassword,
+      password: crypto.randomUUID(), // Random password, user will use OAuth
       options: {
         data: {
           full_name: userInfo.name,
@@ -99,17 +118,6 @@ export async function GET(request: NextRequest) {
 
     if (signUpError) {
       console.log("[v0] Sign up failed:", signUpError.message)
-
-      if (signUpError.message.includes("already registered")) {
-        console.log("[v0] User already exists, redirecting to login with message")
-        return NextResponse.redirect(
-          new URL(
-            "/auth?error=email_exists&message=Este email ya está registrado. Usa tu contraseña original.",
-            request.url,
-          ),
-        )
-      }
-
       return NextResponse.redirect(
         new URL(`/auth?error=signup_failed&message=${encodeURIComponent(signUpError.message)}`, request.url),
       )
@@ -118,36 +126,42 @@ export async function GET(request: NextRequest) {
     if (signUpData?.user) {
       console.log("[v0] New user created:", signUpData.user.id)
 
+      // Profile will be auto-created by trigger, but ensure avatar is set
       try {
-        const { createClient: createAdminClient } = await import("@supabase/supabase-js")
-        const supabaseAdmin = createAdminClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.SUPABASE_SERVICE_ROLE_KEY!,
-          { auth: { autoRefreshToken: false, persistSession: false } },
-        )
-
-        await supabaseAdmin.auth.admin.updateUserById(signUpData.user.id, {
-          email_confirm: true,
-        })
-        console.log("[v0] Email confirmed via admin API")
-      } catch (adminError) {
-        console.log("[v0] Admin email confirm failed:", adminError)
+        await supabase.from("profiles").update({
+          avatar_url: userInfo.picture,
+          full_name: userInfo.name,
+        }).eq("id", signUpData.user.id)
+      } catch (updateError) {
+        console.error("[v0] Profile update error:", updateError)
       }
 
-      // Create profile
-      const { error: profileError } = await supabase.from("profiles").upsert(
-        {
-          id: signUpData.user.id,
-          email: userInfo.email.toLowerCase(),
-          display_name: userInfo.name,
-          avatar_url: userInfo.picture,
-          role: "user",
-        },
-        { onConflict: "id" },
-      )
+      // Log profile creation audit event
+      try {
+        await supabase.from("audit_logs").insert({
+          user_id: signUpData.user.id,
+          action: "profile_created",
+          severity: "info",
+          details: {
+            email: userInfo.email,
+            provider: "google",
+            referral_code: referralCode || null,
+            timestamp: new Date().toISOString(),
+          },
+        })
 
-      if (profileError) {
-        console.log("[v0] Profile creation error:", profileError.message)
+        await supabase.from("audit_logs").insert({
+          user_id: signUpData.user.id,
+          action: "google_oauth_complete",
+          severity: "info",
+          details: {
+            email: userInfo.email,
+            name: userInfo.name,
+            timestamp: new Date().toISOString(),
+          },
+        })
+      } catch (auditError) {
+        console.error("[v0] Audit log error:", auditError)
       }
 
       // Apply referral code if exists
@@ -159,37 +173,21 @@ export async function GET(request: NextRequest) {
             p_new_user_id: signUpData.user.id,
           })
         } catch (refError) {
-          console.log("[v0] Referral error:", refError)
+          console.log("[v0] Referral error (non-critical):", refError)
         }
       }
 
-      console.log("[v0] Signing in new user...")
-      const { data: newSignIn, error: newSignInError } = await supabase.auth.signInWithPassword({
-        email: userInfo.email,
-        password: googlePassword,
-      })
+      const dashboardUrl = await getDashboardUrlServer(userInfo.email)
+      console.log("[v0] New user redirecting to:", dashboardUrl)
 
-      console.log("[v0] New sign in result:", newSignIn?.user?.email, "Error:", newSignInError?.message)
-
-      if (newSignIn?.user) {
-        const dashboardUrl = await getDashboardUrlServer(userInfo.email)
-        console.log("[v0] New user redirecting to:", dashboardUrl)
-
-        const response = NextResponse.redirect(new URL(dashboardUrl, request.url))
-        response.cookies.delete("google_oauth_state")
-        response.cookies.delete("google_oauth_referral")
-        return response
-      }
-
-      if (newSignInError?.message.includes("Email not confirmed")) {
-        console.log("[v0] Email confirmation still required - this shouldn't happen")
-        return NextResponse.redirect(new URL("/auth?message=Revisa tu email para confirmar tu cuenta", request.url))
-      }
+      const response = NextResponse.redirect(new URL(dashboardUrl, request.url))
+      response.cookies.delete("google_oauth_state")
+      response.cookies.delete("google_oauth_referral")
+      return response
     }
 
-    console.log("[v0] Fallback redirect to dashboard")
-    const dashboardUrl = await getDashboardUrlServer(userInfo.email)
-    const response = NextResponse.redirect(new URL(dashboardUrl, request.url))
+    console.log("[v0] Unexpected: no user after signup, fallback redirect")
+    const response = NextResponse.redirect(new URL("/auth", request.url))
     response.cookies.delete("google_oauth_state")
     response.cookies.delete("google_oauth_referral")
     return response

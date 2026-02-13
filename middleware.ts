@@ -96,6 +96,115 @@ export async function middleware(request: NextRequest) {
         loginUrl.searchParams.set("next", request.nextUrl.pathname)
         return NextResponse.redirect(loginUrl)
       }
+
+      // RBAC: Check role-based access
+      const pathname = request.nextUrl.pathname
+
+      // Get user's profile with role
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role, status")
+        .eq("id", user.id)
+        .maybeSingle()
+
+      if (!profile) {
+        console.log("[v0] No profile found for user:", user.id)
+        // Redirect to auth if profile doesn't exist
+        return NextResponse.redirect(new URL("/auth?error=no_profile", request.url))
+      }
+
+      // Define role-based route permissions
+      const roleRouteMap: Record<string, string[]> = {
+        // Admin routes
+        "/dashboard/admin": ["admin_super", "admin_ops", "admin_finance", "admin_compliance"],
+        "/admin": ["admin_super", "admin_ops", "admin_finance", "admin_compliance"],
+
+        // Holder/Member routes
+        "/dashboard/holder": ["holder"],
+        "/dashboard/member": ["holder"], // Legacy member route
+        "/dashboard/user": ["holder"], // Legacy user route
+
+        // Management routes
+        "/dashboard/management": ["management"],
+        "/management": ["management"],
+
+        // Booking coordinator routes
+        "/dashboard/booking": ["booking"],
+
+        // Agent routes
+        "/dashboard/agent": ["agent"],
+        "/dashboard/broker": ["agent"], // Legacy broker route
+
+        // Service provider routes
+        "/dashboard/service-provider": ["service_provider_company"],
+
+        // Insurance routes
+        "/dashboard/insurance": ["insurance"],
+
+        // Vendor routes
+        "/dashboard/vendor": ["vendor"],
+
+        // Review moderation routes
+        "/dashboard/review-moderation": ["review_moderation"],
+
+        // Track/Logistics routes
+        "/dashboard/track": ["booking", "vendor", "admin_ops"],
+
+        // Foundation routes
+        "/dashboard/foundation": ["foundation", "admin_super"],
+
+        // VA-FI routes
+        "/dashboard/vafi": ["vafi", "admin_finance"],
+        "/dashboard/dao": ["holder", "admin_super"],
+
+        // Agency B2B routes
+        "/dashboard/agency": ["agency_b2b"],
+
+        // Support routes
+        "/dashboard/support": ["support_l2", "admin_ops"],
+      }
+
+      // Check if current route requires specific role
+      let isAuthorized = true
+      let requiredRoles: string[] = []
+
+      for (const [routePrefix, allowedRoles] of Object.entries(roleRouteMap)) {
+        if (pathname.startsWith(routePrefix)) {
+          requiredRoles = allowedRoles
+          isAuthorized = allowedRoles.includes(profile.role)
+          break
+        }
+      }
+
+      if (!isAuthorized && requiredRoles.length > 0) {
+        console.log("[v0] RBAC: Access denied for role:", profile.role, "to route:", pathname)
+
+        // Redirect to user's appropriate dashboard
+        const userDashboardMap: Record<string, string> = {
+          admin_super: "/dashboard/admin",
+          admin_ops: "/dashboard/admin",
+          admin_finance: "/dashboard/admin",
+          admin_compliance: "/dashboard/admin",
+          holder: "/dashboard/holder",
+          management: "/dashboard/management",
+          booking: "/dashboard/booking",
+          agent: "/dashboard/agent",
+          service_provider_company: "/dashboard/service-provider",
+          insurance: "/dashboard/insurance",
+          vendor: "/dashboard/vendor",
+          review_moderation: "/dashboard/review-moderation",
+          foundation: "/dashboard/foundation",
+          vafi: "/dashboard/vafi",
+          agency_b2b: "/dashboard/agency",
+          support_l2: "/dashboard/support",
+        }
+
+        const redirectPath = userDashboardMap[profile.role] || "/dashboard/holder"
+        console.log("[v0] RBAC: Redirecting to:", redirectPath)
+        return NextResponse.redirect(new URL(redirectPath, request.url))
+      }
+
+      console.log("[v0] RBAC: Access granted for role:", profile.role, "to route:", pathname)
     }
   }
 

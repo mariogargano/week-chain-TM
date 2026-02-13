@@ -5,6 +5,10 @@ export type AuditAction =
   | "logout"
   | "login_failed"
   | "password_reset"
+  | "magic_link_sent"
+  | "magic_link_used"
+  | "google_oauth_complete"
+  | "profile_created"
   | "2fa_enabled"
   | "2fa_disabled"
   | "role_change"
@@ -141,6 +145,29 @@ export const auditHelpers = {
     logAudit({
       action: success ? "login" : "login_failed",
       severity: success ? "info" : "warning",
+    }),
+
+  logMagicLink: (email: string, sent = true) =>
+    logAudit({
+      action: sent ? "magic_link_sent" : "magic_link_used",
+      severity: "info",
+      metadata: { email },
+    }),
+
+  logGoogleOAuth: (email: string, name?: string) =>
+    logAudit({
+      action: "google_oauth_complete",
+      severity: "info",
+      metadata: { email, name },
+    }),
+
+  logProfileCreated: (userId: string, provider: string) =>
+    logAudit({
+      action: "profile_created",
+      severity: "info",
+      resourceType: "profile",
+      resourceId: userId,
+      metadata: { provider },
     }),
 
   logPropertyAction: (action: "property_create" | "property_update" | "property_approve", propertyId: string) =>
