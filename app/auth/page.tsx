@@ -18,10 +18,12 @@ export default function AuthPage() {
   const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<"login" | "register">("login")
+  const [activeTab, setActiveTab] = useState<"login" | "register" | "magic">("login")
   const [hasAccepted, setHasAccepted] = useState(false)
   const [showTermsDialog, setShowTermsDialog] = useState(false)
   const [pendingAction, setPendingAction] = useState<"google" | null>(null)
+  const [magicLinkSent, setMagicLinkSent] = useState(false)
+  const [magicLinkEmail, setMagicLinkEmail] = useState("")
 
   // Login state
   const [email, setEmail] = useState("")
@@ -213,6 +215,45 @@ export default function AuthPage() {
     }
   }
 
+  const handleMagicLink = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      console.log("[v0] Sending magic link to:", magicLinkEmail)
+      const supabase = createClient()
+
+      const { data, error } = await supabase.auth.signInWithOtp({
+        email: magicLinkEmail,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      })
+
+      if (error) {
+        console.error("[v0] Magic link error:", error)
+        throw error
+      }
+
+      console.log("[v0] Magic link sent successfully")
+      setMagicLinkSent(true)
+      toast.success("¡Revisa tu email! Te hemos enviado un enlace mágico para iniciar sesión.")
+    } catch (error: any) {
+      console.error("[v0] Magic link failed:", error)
+      if (error.message?.includes("rate")) {
+        setError("Demasiados intentos. Por favor espera un momento antes de intentar nuevamente.")
+      } else if (error.message?.includes("invalid")) {
+        setError("Email inválido. Por favor verifica tu dirección de correo.")
+      } else {
+        setError(error.message || "Error al enviar el enlace mágico")
+      }
+      toast.error("Error al enviar el enlace mágico")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center justify-center p-4">
       <div className="text-center mb-8">
@@ -326,27 +367,108 @@ export default function AuthPage() {
           <div className="flex gap-2 mb-6">
             <Button
               type="button"
-              onClick={() => setActiveTab("login")}
+              onClick={() => {
+                setActiveTab("login")
+                setMagicLinkSent(false)
+              }}
               variant={activeTab === "login" ? "default" : "outline"}
-              className={`flex-1 h-11 ${
+              className={`flex-1 h-11 text-sm ${
                 activeTab === "login"
                   ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-200"
                   : "border-2 border-sky-200 hover:bg-sky-50 bg-transparent"
               }`}
             >
-              Iniciar Sesión
+              Contraseña
             </Button>
             <Button
               type="button"
-              onClick={() => setActiveTab("register")}
+              onClick={() => {
+                setActiveTab("magic")
+                setMagicLinkSent(false)
+              }}
+              variant={activeTab === "magic" ? "default" : "outline"}
+              className={`flex-1 h-11 text-sm ${
+                activeTab === "magic"
+                  ? "bg-purple-500 hover:bg-purple-600 text-white shadow-md shadow-purple-200"
+                  : "border-2 border-purple-200 hover:bg-purple-50 bg-transparent"
+              }`}
+            >
+              Enlace Mágico
+            </Button>
+            <Button
+              type="button"
+              onClick={() => {
+                setActiveTab("register")
+                setMagicLinkSent(false)
+              }}
               variant={activeTab === "register" ? "default" : "outline"}
-              className={`flex-1 h-11 ${
+              className={`flex-1 h-11 text-sm ${
                 activeTab === "register" ? "bg-cyan-500 hover:bg-cyan-600 text-white shadow-md shadow-cyan-200" : "border-2 border-cyan-200 hover:bg-cyan-50 bg-transparent"
               }`}
             >
-              Registrarse
+              Registro
             </Button>
           </div>
+
+          {activeTab === "magic" && !magicLinkSent && (
+            <form onSubmit={handleMagicLink} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="magic-email" className="text-gray-700">
+                  Correo electrónico
+                </Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Input
+                    id="magic-email"
+                    type="email"
+                    placeholder="tu@email.com"
+                    value={magicLinkEmail}
+                    onChange={(e) => setMagicLinkEmail(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    className="pl-10 h-12 border-gray-300"
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  Te enviaremos un enlace seguro para iniciar sesión sin contraseña
+                </p>
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full h-12 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white text-base font-semibold shadow-md shadow-purple-200"
+                disabled={isLoading}
+              >
+                {isLoading ? "Enviando..." : "Enviar Enlace Mágico"}
+              </Button>
+            </form>
+          )}
+
+          {activeTab === "magic" && magicLinkSent && (
+            <div className="text-center space-y-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                <Mail className="h-8 w-8 text-green-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">¡Revisa tu email!</h3>
+              <p className="text-gray-600">
+                Hemos enviado un enlace mágico a <strong>{magicLinkEmail}</strong>
+              </p>
+              <p className="text-sm text-gray-500">
+                Haz clic en el enlace del email para iniciar sesión automáticamente.
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setMagicLinkSent(false)
+                  setMagicLinkEmail("")
+                }}
+                className="mt-4"
+              >
+                Enviar a otro email
+              </Button>
+            </div>
+          )}
 
           {activeTab === "login" && (
             <form onSubmit={handleLogin} className="space-y-4">
