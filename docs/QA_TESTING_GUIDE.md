@@ -13,7 +13,7 @@
 
 ### Lighthouse Performance & Accessibility
 
-```bash
+\`\`\`bash
 # Producción - JSON output
 npm run lh:prod
 
@@ -31,11 +31,11 @@ npm run test:perf
 
 # Ejecutar todos los tests
 npm run test:all
-```
+\`\`\`
 
 ### Security Testing
 
-```bash
+\`\`\`bash
 # Verificar vulnerabilidades
 npm run security:check
 
@@ -50,11 +50,11 @@ npm run keys:rotate
 
 # Backup de claves
 npm run keys:backup
-```
+\`\`\`
 
 ### Pre-Deployment
 
-```bash
+\`\`\`bash
 # Validar variables de entorno
 npm run validate-env
 
@@ -63,7 +63,7 @@ npm run precommit
 
 # Pre-deploy checks (lint + build + env)
 npm run predeploy
-```
+\`\`\`
 
 ---
 
@@ -80,13 +80,13 @@ npm run predeploy
 
 ### Cómo Interpretar Resultados
 
-```bash
+\`\`\`bash
 # Ejecutar audit
 npm run lh:prod:html
 
 # Abrir reporte
 open lighthouse-report.html
-```
+\`\`\`
 
 **Métricas Clave:**
 - **FCP** (First Contentful Paint): < 1.8s
@@ -101,16 +101,16 @@ open lighthouse-report.html
 
 ### 1. Verificar Secretos NO Expuestos
 
-```bash
+\`\`\`bash
 # Buscar claves hardcodeadas
 grep -r "STRIPE_SECRET_KEY\|MIFIEL_API_KEY\|SUPABASE_SERVICE_ROLE_KEY" app/
 
 # Resultado esperado: 0 matches en archivos client-side
-```
+\`\`\`
 
 ### 2. Rate Limiting
 
-```bash
+\`\`\`bash
 # Test manual: hacer 121 requests en 1 minuto
 for i in {1..121}; do
   curl -X POST https://v0-weekchainmvp.vercel.app/api/auth/login \
@@ -119,28 +119,28 @@ for i in {1..121}; do
 done
 
 # Request #121 debe retornar 429 Too Many Requests
-```
+\`\`\`
 
 ### 3. RLS (Row Level Security)
 
-```sql
+\`\`\`sql
 -- Conectar a Supabase como usuario normal (no service_role)
 -- Intentar acceder a datos de otro usuario
 SELECT * FROM bookings WHERE user_id != auth.uid();
 
 -- Resultado esperado: 0 rows (RLS bloqueando acceso)
-```
+\`\`\`
 
 ### 4. 2FA Enforcement
 
-```bash
+\`\`\`bash
 # 1. Crear admin sin 2FA
 # 2. Navegar a /dashboard/admin
 # 3. Debe redirigir a /auth/setup-2fa
 # 4. Completar setup
 # 5. Verificar cookie 2fa_verified presente
 # 6. Acceso a /dashboard/admin permitido
-```
+\`\`\`
 
 ---
 
@@ -283,27 +283,27 @@ SELECT * FROM bookings WHERE user_id != auth.uid();
 **Causa:** Next.js intentando generar página estáticamente
 
 **Solución:**
-```tsx
+\`\`\`tsx
 // app/auth/setup-2fa/page.tsx
 export const dynamic = "force-dynamic"
-```
+\`\`\`
 
 ### Issue: Rate Limiting No Funciona
 
 **Causa:** IP no detectada correctamente
 
 **Solución:**
-```typescript
+\`\`\`typescript
 // middleware.ts
 const ip = req.ip || req.headers.get('x-forwarded-for') || 'unknown'
-```
+\`\`\`
 
 ### Issue: Webhook Duplicados
 
 **Causa:** Falta verificación de event_id
 
 **Solución:**
-```typescript
+\`\`\`typescript
 // Verificar si event_id ya existe en webhook_events
 const existing = await supabase
   .from('webhook_events')
@@ -314,20 +314,20 @@ const existing = await supabase
 if (existing.data) {
   return NextResponse.json({ ok: true, dedup: true })
 }
-```
+\`\`\`
 
 ### Issue: i18n No Cambia Idioma
 
 **Causa:** Cookie de locale no se está seteando
 
 **Solución:**
-```typescript
+\`\`\`typescript
 // Verificar que el middleware setea la cookie
 response.cookies.set('locale', detectedLocale, { 
   maxAge: 31536000,
   path: '/' 
 })
-```
+\`\`\`
 
 ---
 

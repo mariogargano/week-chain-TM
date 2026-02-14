@@ -39,11 +39,11 @@
 **Problema**: El sistema está usando un cliente mock de Supabase en producción, lo que causa que todas las operaciones de base de datos fallen silenciosamente.
 
 **Evidencia**:
-```
+\`\`\`
 [v0] Supabase credentials not found. Returning mock client.
 Error in generate referral API: supabase.rpc is not a function
 [WEEK-CHAIN] [ERROR] Error verifying wallet role: @supabase/ssr: Your project's URL and API key are required
-```
+\`\`\`
 
 **Archivos Afectados**:
 - `lib/supabase/server.ts` - Retorna mock client
@@ -51,7 +51,7 @@ Error in generate referral API: supabase.rpc is not a function
 - Todos los endpoints que usan Supabase
 
 **Solución**:
-```typescript
+\`\`\`typescript
 // lib/supabase/server.ts
 export function createServerClient() {
   const supabaseUrl = process.env.SUPABASE_URL
@@ -70,7 +70,7 @@ export function createServerClient() {
     },
   })
 }
-```
+\`\`\`
 
 **Impacto**: 
 - ❌ Autenticación no funciona
@@ -87,9 +87,9 @@ export function createServerClient() {
 **Problema**: El endpoint `/api/referral/generate` falla porque el mock client no tiene el método `.rpc()`.
 
 **Evidencia**:
-```
+\`\`\`
 Error in generate referral API: supabase.rpc is not a function
-```
+\`\`\`
 
 **Archivos Afectados**:
 - `app/api/referral/generate/route.ts`
@@ -110,10 +110,10 @@ Error in generate referral API: supabase.rpc is not a function
 **Problema**: La página `/faq` falla durante el build porque intenta acceder a traducciones undefined.
 
 **Evidencia**:
-```
+\`\`\`
 Error occurred prerendering page "/faq"
 TypeError: Cannot read properties of undefined (reading 'categories')
-```
+\`\`\`
 
 **Archivo Afectado**: `app/faq/page.tsx`
 
@@ -136,7 +136,7 @@ TypeError: Cannot read properties of undefined (reading 'categories')
 **Impacto**: BAJO - No afecta funcionalidad pero reduce calidad del código
 
 **Solución Recomendada**:
-```typescript
+\`\`\`typescript
 // ❌ Antes
 const [user, setUser] = useState<any>(null)
 
@@ -154,7 +154,7 @@ catch (error) {
     console.error(error.message)
   }
 }
-```
+\`\`\`
 
 **Tiempo de Corrección**: 2-3 horas
 
@@ -174,13 +174,13 @@ catch (error) {
 **Solución**: Ya existe sistema de logging centralizado en `lib/config/logger.ts`
 
 **Recomendación**:
-```typescript
+\`\`\`typescript
 // ❌ Evitar
 console.log("[v0] User data:", userData)
 
 // ✅ Usar
 logger.debug("User data loaded", { userId: userData.id })
-```
+\`\`\`
 
 **Estado**: Sistema de logging existe, solo falta migrar todos los console.log
 
@@ -193,7 +193,7 @@ logger.debug("User data loaded", { userId: userData.id })
 **Problema**: Múltiples TODOs indican funcionalidad incompleta.
 
 **TODOs Críticos**:
-```typescript
+\`\`\`typescript
 // components/token-balance-card.tsx
 // TODO: Fetch actual token balances from Solana
 
@@ -202,7 +202,7 @@ logger.debug("User data loaded", { userId: userData.id })
 
 // app/api/legal/request-cancellation/route.ts
 // TODO: Process actual refund via Stripe/blockchain
-```
+\`\`\`
 
 **Impacto**: MEDIO - Algunas funcionalidades no están completamente implementadas
 

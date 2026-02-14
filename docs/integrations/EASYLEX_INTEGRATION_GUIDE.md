@@ -6,7 +6,7 @@ EasyLex is a PSC (Prestador de Servicios de Certificación) platform for electro
 
 ## Architecture
 
-```
+\`\`\`
 ┌─────────────────┐
 │  WEEK-CHAIN App │
 └────────┬────────┘
@@ -38,26 +38,26 @@ EasyLex is a PSC (Prestador de Servicios de Certificación) platform for electro
 │ evidence_events │
 │   + SHA-256     │
 └─────────────────┘
-```
+\`\`\`
 
 ## Environment Variables
 
 Add to your `.env.local`:
 
-```bash
+\`\`\`bash
 # EasyLex Configuration
 EASYLEX_API_URL=https://sandboxapi.easylex.com
 EASYLEX_WIDGET_URL=https://sandboxwg.easylex.com
 EASYLEX_API_KEY=your_api_key_here
 EASYLEX_WEBHOOK_SECRET=your_webhook_secret_here
 EASYLEX_ENVIRONMENT=sandbox  # or 'production'
-```
+\`\`\`
 
 ## Usage Examples
 
 ### 1. Create Signature Request
 
-```typescript
+\`\`\`typescript
 import { easylexClient } from "@/lib/easylex/client"
 
 const response = await easylexClient.createDocument({
@@ -80,11 +80,11 @@ const response = await easylexClient.createDocument({
 })
 
 console.log("Sign URL:", response.signUrl)
-```
+\`\`\`
 
 ### 2. Embed Widget in UI
 
-```tsx
+\`\`\`tsx
 import { EasylexSignatureWidget } from "@/components/easylex-signature-widget"
 
 export default function SignaturePage() {
@@ -103,7 +103,7 @@ export default function SignaturePage() {
     />
   )
 }
-```
+\`\`\`
 
 ### 3. Handle Webhooks
 
@@ -111,12 +111,12 @@ Webhooks are automatically processed by `/app/api/easylex/webhook/route.ts`.
 
 ### 4. Get Evidence Package
 
-```typescript
+\`\`\`typescript
 const evidenceBlob = await easylexClient.getEvidencePackage("cert-123")
 
 // Save to storage
 const evidenceUrl = await uploadToVercelBlob(evidenceBlob)
-```
+\`\`\`
 
 ## Integration Points
 

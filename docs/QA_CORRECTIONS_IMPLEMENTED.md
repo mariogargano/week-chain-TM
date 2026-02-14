@@ -38,7 +38,7 @@
 - Función `retryIfRetryable()` para retry condicional
 
 **Características:**
-```typescript
+\`\`\`typescript
 // Configuración por defecto
 maxRetries: 3
 baseDelay: 1000ms (1 segundo)
@@ -49,7 +49,7 @@ jitter: ±30% del delay
 Intento 1: ~1000ms
 Intento 2: ~2000ms
 Intento 3: ~4000ms
-```
+\`\`\`
 
 #### APIs Actualizadas:
 
@@ -99,7 +99,7 @@ Intento 3: ~4000ms
 **Estado:** ✅ **YA IMPLEMENTADO**
 
 **Verificación:**
-```tsx
+\`\`\`tsx
 // app/layout.tsx líneas 28-35
 <a
   href="#main-content"
@@ -107,7 +107,7 @@ Intento 3: ~4000ms
 >
   Saltar al contenido principal
 </a>
-```
+\`\`\`
 
 **Características:**
 - Clase `sr-only` para ocultar visualmente
@@ -131,7 +131,7 @@ Intento 3: ~4000ms
 **Estado:** ✅ **TRADUCCIONES COMPLETAS**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // lib/i18n/translations.ts
 export const translations = {
   es: { ... }, // ✅ Completo
@@ -140,7 +140,7 @@ export const translations = {
   fr: { ... }, // ✅ Completo
   it: { ... }, // ✅ Completo
 }
-```
+\`\`\`
 
 **Secciones Traducidas:**
 - ✅ Navegación (nav)
@@ -179,7 +179,7 @@ export const translations = {
 **Estado:** ✅ **PÁGINA EXISTE Y ESTÁ COMPLETA**
 
 **Verificación:**
-```bash
+\`\`\`bash
 # Archivos verificados
 ✅ app/auth/setup-2fa/page.tsx - Existe y completo
 ✅ app/auth/verify-2fa/page.tsx - Existe y completo
@@ -187,7 +187,7 @@ export const translations = {
 ✅ app/api/auth/2fa/enable/route.ts - API funcional
 ✅ app/api/auth/2fa/verify/route.ts - API funcional
 ✅ lib/auth/two-factor.ts - Lógica implementada
-```
+\`\`\`
 
 **Funcionalidades Implementadas:**
 - ✅ Generación de QR code con otpauth://

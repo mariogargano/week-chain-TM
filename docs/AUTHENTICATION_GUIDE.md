@@ -18,9 +18,9 @@ WEEK-CHAIN usa **Supabase Auth** con dos métodos principales:
 ## Acceso al Admin Dashboard
 
 ### Email Admin
-```
+\`\`\`
 corporativo@morises.com
-```
+\`\`\`
 
 ### Método de Login
 1. Ve a `/auth/login` o `/auth`
@@ -56,7 +56,7 @@ corporativo@morises.com
 
 ### Para Admin (corporativo@morises.com)
 
-```
+\`\`\`
 1. Usuario hace click en "Iniciar con Google"
    ↓
 2. Redirige a Google OAuth
@@ -75,11 +75,11 @@ corporativo@morises.com
 8. Admin Dashboard auto-crea entrada si falta
    ↓
 9. ✓ Acceso completo al dashboard admin
-```
+\`\`\`
 
 ### Para Usuarios Regulares
 
-```
+\`\`\`
 1. Usuario se registra con email + password
    ↓
 2. Supabase crea entrada en auth.users
@@ -91,7 +91,7 @@ corporativo@morises.com
 5. Confirma email (si requerido)
    ↓
 6. Login y acceso a /dashboard/user
-```
+\`\`\`
 
 ---
 
@@ -116,7 +116,7 @@ corporativo@morises.com
 
 ### Trigger Automático
 
-```sql
+\`\`\`sql
 CREATE OR REPLACE FUNCTION public.handle_new_user_profile()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -135,7 +135,7 @@ BEGIN
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
-```
+\`\`\`
 
 ---
 
@@ -144,9 +144,9 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 ### Problema: No puedo acceder al admin dashboard
 
 **Solución 1**: Verificar que el script SQL se ejecutó
-```sql
+\`\`\`sql
 SELECT * FROM admin_users WHERE email = 'corporativo@morises.com';
-```
+\`\`\`
 
 Debe mostrar:
 - `email`: corporativo@morises.com
@@ -155,7 +155,7 @@ Debe mostrar:
 - `user_id`: UUID o NULL (se actualizará al login)
 
 **Solución 2**: Login con Google y verificar
-```sql
+\`\`\`sql
 SELECT 
   au.email,
   au.role,
@@ -165,7 +165,7 @@ SELECT
 FROM admin_users au
 LEFT JOIN auth.users u ON au.user_id = u.id
 WHERE au.email = 'corporativo@morises.com';
-```
+\`\`\`
 
 **Solución 3**: Verificar middleware
 - El middleware debe permitir paso si `user.email === 'corporativo@morises.com'`
@@ -221,17 +221,17 @@ WHERE au.email = 'corporativo@morises.com';
 
 ### 1. Test de Google OAuth Admin
 
-```bash
+\`\`\`bash
 # 1. Ir a /auth/login
 # 2. Click "Iniciar con Google"
 # 3. Seleccionar corporativo@morises.com
 # 4. Debe redirigir a /dashboard/admin
 # 5. Dashboard debe cargar sin errores
-```
+\`\`\`
 
 ### 2. Test de Registro de Usuario
 
-```bash
+\`\`\`bash
 # 1. Ir a /auth/sign-up
 # 2. Ver dialog de términos
 # 3. Scrollear y esperar 10 seg
@@ -239,11 +239,11 @@ WHERE au.email = 'corporativo@morises.com';
 # 5. Completar registro
 # 6. Verificar email
 # 7. Login y acceso a /dashboard/user
-```
+\`\`\`
 
 ### 3. Test de Base de Datos
 
-```sql
+\`\`\`sql
 -- Verificar admin configurado
 SELECT * FROM admin_users WHERE email = 'corporativo@morises.com';
 
@@ -254,7 +254,7 @@ SELECT COUNT(*) FROM auth.users;
 
 -- Verificar términos aceptados
 SELECT * FROM legal_acceptances ORDER BY accepted_at DESC LIMIT 5;
-```
+\`\`\`
 
 ---
 

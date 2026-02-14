@@ -22,7 +22,7 @@ Los pagos se reciben en la cuenta bancaria de WEEK-CHAIN y se mantienen **contab
 
 ## Variables de Entorno
 
-```bash
+\`\`\`bash
 # Conekta (Pagos)
 CONEKTA_SECRET_KEY=
 
@@ -38,6 +38,6 @@ NEXT_PUBLIC_GOOGLE_CLIENT_ID=
 
 # Email
 RESEND_API_KEY=
-```
+\`\`\`
 
 Ver `SISTEMA_DE_PAGOS.md` para documentación completa.

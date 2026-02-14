@@ -2,7 +2,6 @@
 
 import { createBrowserClient } from "@supabase/ssr"
 import { useEffect, useState } from "react"
-import { Navbar } from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -10,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Plus, Pencil, Trash2, Save, X, MessageSquare, Eye, EyeOff, BarChart3, Loader2, ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
 import Link from "next/link"
+
 
 interface MarketingMessage {
   id: string
@@ -176,9 +176,7 @@ export default function MarketingMessagesPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Navbar />
-
-      <main className="container mx-auto px-4 py-8 pt-24">
+      <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="flex items-center gap-4 mb-8">

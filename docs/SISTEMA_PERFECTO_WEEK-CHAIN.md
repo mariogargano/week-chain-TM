@@ -70,7 +70,7 @@
 
 ### 4. Flujo de Usuario Completo
 
-```
+\`\`\`
 1. REGISTRO (3 min)
    └─ /auth/sign-up
    └─ Email + Password + Nombre Completo
@@ -116,19 +116,19 @@
    └─ Gestión de properties por país
    └─ KYC y verificaciones de identidad
    └─ Auditoría completa con logs
-```
+\`\`\`
 
 ### 5. Integraciones Activas
 
 #### ✅ Supabase (100% Operacional)
-```typescript
+\`\`\`typescript
 // Connection verified
 - Auth completo con session management
 - 94 tablas funcionando correctamente
 - RLS configurado en tablas críticas
 - Real-time subscriptions disponibles
 - Middleware actualiza sessions automáticamente
-```
+\`\`\`
 
 **Tablas Críticas**:
 - `users`: 0 usuarios actualmente (lista de producción)
@@ -143,11 +143,11 @@
 - `legalario_contracts`: Firmas NOM-151
 
 #### ✅ EasyLex (PSC - NOM-151)
-```typescript
+\`\`\`typescript
 // Keys configuradas y listas
 Public Key: bd70840c-65ce-4466-a629-80771870c3a8
 Private Key: 77194297-19b7-4ef1-b402-0b87ca4f3490
-```
+\`\`\`
 
 **Funcionalidad**:
 - Firma de contratos digitales
@@ -156,11 +156,11 @@ Private Key: 77194297-19b7-4ef1-b402-0b87ca4f3490
 - API integrada en `/api/easylex/*`
 
 #### ⚠️ Conekta (Payments)
-```typescript
+\`\`\`typescript
 // Keys configuradas pero sin testing
 Secret Key: [Configurada en env vars]
 Public Key: [Configurada en env vars]
-```
+\`\`\`
 
 **Métodos Soportados**:
 - OXXO (efectivo)
@@ -268,7 +268,7 @@ Public Key: [Configurada en env vars]
 ### 7. Compliance Legal (100% Conforme)
 
 #### ✅ NOM-029 (PROFECO)
-```typescript
+\`\`\`typescript
 IMPLEMENTACIÓN COMPLETA:
 ✓ NO menciona "tiempo compartido"
 ✓ Usa "Certificados Digitales de Uso Vacacional"
@@ -278,7 +278,7 @@ IMPLEMENTACIÓN COMPLETA:
 ✓ Timestamp de aceptación
 ✓ Version tracking (1.0, 1.1, etc.)
 ✓ Almacenado en tabla `legal_acceptances`
-```
+\`\`\`
 
 **Texto Legal Aprobado**:
 - "Sistema de acceso vacacional gestionado"
@@ -287,7 +287,7 @@ IMPLEMENTACIÓN COMPLETA:
 - **NUNCA usa**: "tiempo compartido", "propiedad compartida", "compra de semanas"
 
 #### ✅ NOM-151 (PSC)
-```typescript
+\`\`\`typescript
 IMPLEMENTACIÓN COMPLETA:
 ✓ Firma electrónica con EasyLex
 ✓ Timestamp con hash SHA-256
@@ -295,7 +295,7 @@ IMPLEMENTACIÓN COMPLETA:
 ✓ Evidencia legal completa (IP, timestamp, documento)
 ✓ Validación gubernamental
 ✓ Almacenado en tabla `legalario_contracts`
-```
+\`\`\`
 
 **Flujo de Firma**:
 1. Usuario completa checkout
@@ -307,7 +307,7 @@ IMPLEMENTACIÓN COMPLETA:
 7. Usuario recibe contrato firmado
 
 #### ✅ GDPR (Europa)
-```typescript
+\`\`\`typescript
 IMPLEMENTACIÓN COMPLETA:
 ✓ Consentimiento explícito en registro
 ✓ Derecho al olvido (implementable vía admin)
@@ -315,12 +315,12 @@ IMPLEMENTACIÓN COMPLETA:
 ✓ Privacy policy completa
 ✓ Cookie consent (implementado)
 ✓ Data minimization (solo datos necesarios)
-```
+\`\`\`
 
 ### 8. Sistema de Comisiones (Actualizado a 4% Flat)
 
 #### ❌ ANTES (Sistema Multinivel - ELIMINADO)
-```
+\`\`\`
 Entry Level:
 - 4% sobre ventas nivel 1
 - 1% sobre ventas nivel 2  
@@ -335,24 +335,24 @@ Elite Level (48+ semanas vendidas):
 - 6% sobre ventas nivel 1
 - 1% sobre ventas nivel 2
 - 0.5% sobre ventas nivel 3
-```
+\`\`\`
 
 #### ✅ AHORA (Sistema Flat - IMPLEMENTADO)
-```typescript
+\`\`\`typescript
 TODOS LOS BROKERS:
 - 4% sobre ventas directas (referidos nivel 1 únicamente)
 - Sin subniveles
 - Sin uplines
 - Pago directo al broker
 - Sistema transparente y simple
-```
+\`\`\`
 
 **Ejemplo de Cálculo**:
-```
+\`\`\`
 Venta: $6,500 (2 PAX/1 semana)
 Comisión Broker: $260 (4% flat)
 Pago: Directo al broker sin intermediarios
-```
+\`\`\`
 
 **Archivos Actualizados**:
 - ✅ `/broker-programa/page.tsx` - Eliminadas referencias a 6%
@@ -363,7 +363,7 @@ Pago: Directo al broker sin intermediarios
 
 ### 9. Arquitectura Técnica
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────────┐
 │                      WEEK-CHAIN                          │
 │              Plataforma de Certificados                  │
@@ -388,7 +388,7 @@ Pago: Directo al broker sin intermediarios
                                        │   Resend       │
                                        │   (Email)      │
                                        └────────────────┘
-```
+\`\`\`
 
 **Stack Detallado**:
 
@@ -427,7 +427,7 @@ Pago: Directo al broker sin intermediarios
 
 ### 10. URLs y Navegación
 
-```
+\`\`\`
 🌐 Producción: https://week-chain.vercel.app
 
 📱 Páginas Principales:
@@ -458,11 +458,11 @@ Pago: Directo al broker sin intermediarios
 ├─ /dashboard/admin/team               # KYC, brokers, equipo
 ├─ /dashboard/admin/audit-logs         # Compliance y logs
 └─ ... (42 módulos adicionales)
-```
+\`\`\`
 
 ### 11. Credenciales de Testing
 
-```bash
+\`\`\`bash
 # 🔴 ADMIN (Super Admin)
 Email: corporativo@morises.com
 Password: [Tu password actual]
@@ -480,7 +480,7 @@ Email: broker@week-chain.com
 Password: Broker123!
 Dashboard: /dashboard/broker
 Features: Comisiones 4%, ventas, exportar CSV
-```
+\`\`\`
 
 **Notas Importantes**:
 - Admin se auto-crea para `corporativo@morises.com` al primer login
@@ -539,7 +539,7 @@ Features: Comisiones 4%, ventas, exportar CSV
 ### 13. Demo Script para UXAN (20 minutos)
 
 #### **Minuto 0-2: Apertura e Introducción**
-```
+\`\`\`
 "Buenos días. Gracias por recibirme hoy. 
 
 WEEK-CHAIN es la primera plataforma de certificados vacacionales 
@@ -548,17 +548,17 @@ digitales que cumple 100% con NOM-029, NOM-151 y GDPR.
 Hoy les voy a mostrar cómo UXAN ya está integrado en nuestra 
 plataforma con sus 4 villas y puede empezar a generar ingresos 
 adicionales inmediatamente."
-```
+\`\`\`
 
 **Acción**: Abrir home page `week-chain.vercel.app`
 
 ---
 
 #### **Minuto 2-5: UXAN ya está en la Plataforma**
-```
+\`\`\`
 "Como pueden ver, sus 4 villas ya están integradas con 
 información real extraída directamente de uxantulum.com"
-```
+\`\`\`
 
 **Acciones**:
 1. Click en "Destinos Participantes" (navbar)
@@ -576,10 +576,10 @@ información real extraída directamente de uxantulum.com"
 ---
 
 #### **Minuto 5-10: Sistema de Certificados**
-```
+\`\`\`
 "Así funciona la compra de un certificado digital para 
 acceder a sus propiedades"
-```
+\`\`\`
 
 **Acciones**:
 1. Scroll a sección certificado en home
@@ -601,10 +601,10 @@ acceder a sus propiedades"
 ---
 
 #### **Minuto 10-13: Admin Dashboard**
-```
+\`\`\`
 "Como administrador, tengo control completo del sistema 
 incluyendo gestión de capacidad a 15 años"
-```
+\`\`\`
 
 **Acciones**:
 1. Login como `corporativo@morises.com`
@@ -624,10 +624,10 @@ incluyendo gestión de capacidad a 15 años"
 ---
 
 #### **Minuto 13-16: Flow Interactivo**
-```
+\`\`\`
 "Les muestro cómo funciona todo el proceso desde 
 el registro hasta la confirmación de semana"
-```
+\`\`\`
 
 **Acciones**:
 1. Navegar a `/proceso-completo`
@@ -647,9 +647,9 @@ el registro hasta la confirmación de semana"
 ---
 
 #### **Minuto 16-18: Propuesta de Negocio**
-```
+\`\`\`
 "Tenemos 3 modelos para integrar UXAN completamente"
-```
+\`\`\`
 
 **Modelo 1: Partnership** (Recomendado)
 - 70% revenue para UXAN
@@ -670,7 +670,7 @@ el registro hasta la confirmación de semana"
 - Maximiza revenue year-round
 
 **ROI Estimado para UXAN**:
-```
+\`\`\`
 Escenario Conservador:
 - 50 certificados vendidos año 1
 - Precio promedio: $12,000
@@ -678,14 +678,14 @@ Escenario Conservador:
 - Split 70/30: $420,000 para UXAN
 - Costo tech: $0 (incluido)
 - Profit adicional: +35% vs renta tradicional
-```
+\`\`\`
 
 ---
 
 #### **Minuto 18-20: Cierre y Siguientes Pasos**
-```
+\`\`\`
 "¿Qué sigue?"
-```
+\`\`\`
 
 **Plan de Implementación - 3 Fases**:
 
@@ -756,7 +756,7 @@ autorizado por el gobierno para NOM-151. Firmas 100% legales."
 - [ ] FAQ extendido
 
 #### 📧 Email de Seguimiento (Template)
-```
+\`\`\`
 Asunto: Seguimiento reunión WEEK-CHAIN x UXAN
 
 Hola [Nombre],
@@ -777,7 +777,7 @@ revenue adicional esta misma semana.
 Saludos,
 [Tu nombre]
 WEEK-CHAIN Team
-```
+\`\`\`
 
 ---
 

@@ -27,7 +27,7 @@
 | Página /auth/setup-2fa existe | ✅ PASÓ | Screenshot capturado - página 404 | ⚠️ **CRÍTICO**: Página no existe en producción |
 
 **Evidencia de código:**
-```typescript
+\`\`\`typescript
 // middleware.ts líneas 68-82
 if (await roleRequiresTwoFactor(userData.role)) {
   const { data: twoFactorData } = await supabase
@@ -45,7 +45,7 @@ if (await roleRequiresTwoFactor(userData.role)) {
     return NextResponse.redirect(setupUrl)
   }
 }
-```
+\`\`\`
 
 **Resultado:** ❌ **NO PASÓ** - Lógica implementada pero página 404  
 **Causa:** Archivo `app/auth/setup-2fa/page.tsx` no desplegado en producción  
@@ -62,7 +62,7 @@ if (await roleRequiresTwoFactor(userData.role)) {
 | Limpieza de ventanas | ✅ PASÓ | Líneas 13-16 | Reset automático después de 60s |
 
 **Evidencia de código:**
-```typescript
+\`\`\`typescript
 // middleware.ts líneas 7-24
 const hits = new Map<string, { n: number; t: number }>()
 
@@ -82,7 +82,7 @@ export async function middleware(request: NextRequest) {
   if (rec.n > 120) {
     return new NextResponse("Too Many Requests", { status: 429 })
   }
-```
+\`\`\`
 
 **Resultado:** ✅ **PASÓ**  
 **Nota:** Implementación básica funcional. Para producción real considerar Redis/Upstash para rate limiting distribuido.
@@ -99,7 +99,7 @@ export async function middleware(request: NextRequest) {
 | Verificación ownership en API | ✅ PASÓ | `app/api/legal/download-package/route.ts` líneas 35-40 | Verifica `user_wallet` antes de permitir descarga |
 
 **Evidencia de código:**
-```sql
+\`\`\`sql
 -- scripts/029_enhanced_rls_policies.sql
 ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE legal_contracts ENABLE ROW LEVEL SECURITY;
@@ -110,7 +110,7 @@ CREATE POLICY "bookings_self" ON bookings
 
 CREATE POLICY "legal_self" ON legal_contracts
   FOR SELECT USING (auth.uid() = user_id);
-```
+\`\`\`
 
 **Resultado:** ✅ **PASÓ**  
 **Nota:** RLS implementado correctamente. Usuarios solo pueden ver sus propios datos.
@@ -126,12 +126,12 @@ CREATE POLICY "legal_self" ON legal_contracts
 | SUPABASE_SERVICE_ROLE_KEY no en cliente | ✅ PASÓ | No encontrado en archivos cliente | Solo en API routes con `createClient()` |
 
 **Evidencia de grep:**
-```bash
+\`\`\`bash
 # Búsqueda en archivos cliente
 grep -r "STRIPE_SECRET_KEY\|MIFIEL_API_KEY\|SUPABASE_SERVICE_ROLE_KEY" app/**/*.tsx
 # Resultado: 1 match en server component (seguro)
 app/properties/[id]/page.tsx:184:const isDemoMode = process.env.NODE_ENV === "development" || !process.env.STRIPE_SECRET_KEY?.startsWith("sk_live_")
-```
+\`\`\`
 
 **Resultado:** ✅ **PASÓ**  
 **Nota:** Secretos correctamente protegidos. Solo accesibles en server-side.
@@ -156,7 +156,7 @@ app/properties/[id]/page.tsx:184:const isDemoMode = process.env.NODE_ENV === "de
 - `app/api/mifiel/certify/route.ts`
 
 **Código sugerido:**
-```typescript
+\`\`\`typescript
 async function retryWithBackoff<T>(
   fn: () => Promise<T>,
   maxRetries = 3,
@@ -172,7 +172,7 @@ async function retryWithBackoff<T>(
   }
   throw new Error('Max retries exceeded')
 }
-```
+\`\`\`
 
 ---
 
@@ -185,7 +185,7 @@ async function retryWithBackoff<T>(
 | Registro en webhook_events | ✅ PASÓ | Líneas 38-47 usando `WebhookLogger` | Todos los eventos registrados |
 
 **Evidencia de código:**
-```typescript
+\`\`\`typescript
 // app/api/mifiel/callback/route.ts líneas 26-36
 const { data: duplicate } = await supabase
   .from("webhook_events")
@@ -197,7 +197,7 @@ const { data: duplicate } = await supabase
 if (duplicate) {
   return NextResponse.json({ ok: true, dedup: true })
 }
-```
+\`\`\`
 
 **Resultado:** ✅ **PASÓ**  
 **Nota:** Idempotencia correctamente implementada. Webhooks duplicados no causan problemas.
@@ -221,7 +221,7 @@ if (duplicate) {
 | Auditoría de descarga | ✅ PASÓ | Líneas 177-186 | Registro en `audit_log` |
 
 **Estructura del ZIP:**
-```
+\`\`\`
 WEEKCHAIN-Legal-{booking_id}-{timestamp}.zip
 ├── 1_contrato_compraventa.pdf
 ├── 2_certificado_nom151.pdf
@@ -230,7 +230,7 @@ WEEKCHAIN-Legal-{booking_id}-{timestamp}.zip
 ├── 5_comprobante_pago.pdf
 ├── 6_terminos_y_condiciones.txt
 └── README.txt
-```
+\`\`\`
 
 **SHA-256 del ZIP:** No se puede calcular sin datos reales (requiere booking_id válido)
 
@@ -250,7 +250,7 @@ WEEKCHAIN-Legal-{booking_id}-{timestamp}.zip
 | Función `get_refund_eligibility()` | ✅ PASÓ | Líneas 96-139 | Retorna horas restantes y deadline |
 
 **Evidencia de código:**
-```sql
+\`\`\`sql
 -- scripts/022_improved_120h_refund_system.sql
 CREATE OR REPLACE FUNCTION can_refund_120h(b_id UUID)
 RETURNS BOOLEAN 
@@ -273,7 +273,7 @@ BEGIN
   RETURN hours_elapsed <= 120;
 END;
 $$;
-```
+\`\`\`
 
 **Resultado:** ✅ **PASÓ**  
 **Nota:** Sistema completo de cancelación 120h implementado según NOM-029-SE-2021.
@@ -311,7 +311,7 @@ $$;
 | `fmtRelativeTime()` implementado | ✅ PASÓ | Líneas 20-35 | "hace 2 horas", "2 hours ago" |
 
 **Ejemplos de formato:**
-```typescript
+\`\`\`typescript
 // Español (es)
 fmtDate(new Date(), 'es') // "29 de enero de 2025"
 fmtCurrency(1500, 'es', 'MXN') // "$1,500.00"
@@ -319,7 +319,7 @@ fmtCurrency(1500, 'es', 'MXN') // "$1,500.00"
 // Inglés (en)
 fmtDate(new Date(), 'en') // "January 29, 2025"
 fmtCurrency(1500, 'en', 'USD') // "$1,500.00"
-```
+\`\`\`
 
 **Resultado:** ✅ **PASÓ**  
 **Nota:** Formateo correcto según locale. Usa APIs nativas de Intl.
@@ -354,14 +354,14 @@ fmtCurrency(1500, 'en', 'USD') // "$1,500.00"
 **Resultado:** ❌ **NO PASÓ**  
 **Causa:** Enlace "skip to main content" no implementado en `app/layout.tsx`  
 **Fix:** Agregar al inicio del layout:
-```tsx
+\`\`\`tsx
 <a
   href="#main-content"
   className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-3 focus:py-2 focus:bg-white focus:text-slate-900 focus:rounded-lg focus:shadow-lg"
 >
   Saltar al contenido principal
 </a>
-```
+\`\`\`
 
 ---
 
@@ -390,7 +390,7 @@ fmtCurrency(1500, 'en', 'USD') // "$1,500.00"
 | Implementación en páginas admin | ❓ NO VERIFICADO | No se puede acceder sin login admin | Requiere prueba con usuario admin |
 
 **Evidencia de código:**
-```tsx
+\`\`\`tsx
 // components/responsive-table.tsx
 <>
   {/* Desktop Table View */}
@@ -407,7 +407,7 @@ fmtCurrency(1500, 'en', 'USD') // "$1,500.00"
     ))}
   </div>
 </>
-```
+\`\`\`
 
 **Resultado:** ✅ **PASÓ** (código verificado)  
 **Nota:** Componente implementado correctamente. Requiere verificación visual en móvil.
@@ -426,9 +426,9 @@ fmtCurrency(1500, 'en', 'USD') // "$1,500.00"
 **Resultado:** ❓ **NO VERIFICADO**  
 **Causa:** No se puede ejecutar Lighthouse desde este entorno  
 **Recomendación:** Ejecutar manualmente:
-```bash
+\`\`\`bash
 lighthouse https://v0-weekchainmvp.vercel.app/ --view
-```
+\`\`\`
 
 ---
 
@@ -462,7 +462,7 @@ lighthouse https://v0-weekchainmvp.vercel.app/ --view
 
 ## 🎯 PORCENTAJE DE CUMPLIMIENTO
 
-```
+\`\`\`
 Total de pruebas: 17
 Pruebas PASÓ: 10
 Pruebas PARCIAL: 2 (contadas como 0.5)
@@ -470,7 +470,7 @@ Pruebas NO PASÓ: 3
 Pruebas NO VERIFICADO: 2 (no contadas)
 
 Cumplimiento = (10 + 2*0.5) / 15 = 11 / 15 = 73.3%
-```
+\`\`\`
 
 **CUMPLIMIENTO TOTAL: 73.3%**
 

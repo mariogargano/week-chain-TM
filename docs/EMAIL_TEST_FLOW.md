@@ -8,10 +8,10 @@ Este documento describe el test flow completo del sistema de email automation de
 
 Ejecuta el script SQL para crear las tablas:
 
-```bash
+\`\`\`bash
 # Desde el dashboard de Supabase o pgAdmin
 psql -h [HOST] -U [USER] -d [DATABASE] -f scripts/092_email_automation_tables.sql
-```
+\`\`\`
 
 Verifica que se crearon las tablas:
 - `email_templates` (5 templates seeded)
@@ -23,10 +23,10 @@ Verifica que se crearon las tablas:
 
 Asegúrate de tener en `.env.local`:
 
-```env
+\`\`\`env
 RESEND_API_KEY=re_xxxxx
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
-```
+\`\`\`
 
 ## 📧 ADMIN FLOW TEST
 
@@ -131,9 +131,9 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 
 2. **Verificar en Base de Datos**
    
-   ```sql
+   \`\`\`sql
    SELECT * FROM email_logs ORDER BY sent_at DESC LIMIT 10;
-   ```
+   \`\`\`
    
    **Verificar:**
    - ✅ 5 filas insertadas
@@ -146,10 +146,10 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 
 1. **Refresh Analytics View**
    
-   ```sql
+   \`\`\`sql
    SELECT refresh_email_analytics();
    SELECT * FROM email_analytics;
-   ```
+   \`\`\`
    
    **Verificar:**
    - ✅ Vista actualizada con datos
@@ -197,21 +197,21 @@ Este test simula el flujo ROC completo desde la perspectiva del usuario.
 1. **Simular Compra**
    - Como admin, crea certificado para el usuario:
    
-   ```sql
+   \`\`\`sql
    INSERT INTO certificate_products_v2 (user_id, tier, pax, status)
    VALUES ('[USER_ID]', 'gold', 4, 'active');
-   ```
+   \`\`\`
 
 2. **Trigger Email CERTIFICATE_PURCHASED**
    - Ejecuta desde admin test:
    
-   ```bash
+   \`\`\`bash
    POST /api/email/test
    {
      "recipient_email": "test-user@example.com",
      "template_type": "CERTIFICATE_PURCHASED"
    }
-   ```
+   \`\`\`
    
    **Verificar Email:**
    - ✅ Subject: "✅ Certificado SVC WC-2025-001234 Adquirido"
@@ -233,7 +233,7 @@ Este test simula el flujo ROC completo desde la perspectiva del usuario.
 2. **Sistema Envía Confirmación de Solicitud**
    
    **Trigger:**
-   ```typescript
+   \`\`\`typescript
    await sendAutomatedEmail(
      'RESERVATION_REQUEST_SUBMITTED',
      'test-user@example.com',
@@ -246,7 +246,7 @@ Este test simula el flujo ROC completo desde la perspectiva del usuario.
        guests_count: 4
      }
    )
-   ```
+   \`\`\`
    
    **Verificar Email:**
    - ✅ Subject: "📝 Solicitud BK-2025-5678 Recibida"
@@ -262,7 +262,7 @@ Este test simula el flujo ROC completo desde la perspectiva del usuario.
 
 1. **Trigger Offer Email**
    
-   ```typescript
+   \`\`\`typescript
    await sendAutomatedEmail(
      'RESERVATION_OFFER_AVAILABLE',
      'test-user@example.com',
@@ -283,7 +283,7 @@ Este test simula el flujo ROC completo desde la perspectiva del usuario.
        offer_accept_url: 'https://week-chain.com/booking/accept/ABC123'
      }
    )
-   ```
+   \`\`\`
    
    **Verificar Email:**
    - ✅ Subject: "🎁 Oferta Disponible para BK-2025-5678 - Expira en 48h"
@@ -303,7 +303,7 @@ Este test simula el flujo ROC completo desde la perspectiva del usuario.
 
 2. **Sistema Envía Confirmación Final**
    
-   ```typescript
+   \`\`\`typescript
    await sendAutomatedEmail(
      'RESERVATION_CONFIRMED',
      'test-user@example.com',
@@ -321,7 +321,7 @@ Este test simula el flujo ROC completo desde la perspectiva del usuario.
        site_url: 'https://week-chain.com'
      }
    )
-   ```
+   \`\`\`
    
    **Verificar Email:**
    - ✅ Subject: "✅ Confirmación BK-2025-5678 - Villa Paradise Cancún"
@@ -338,7 +338,7 @@ Este test simula el flujo ROC completo desde la perspectiva del usuario.
 
 ### Database Integrity
 
-```sql
+\`\`\`sql
 -- Verificar todos los logs
 SELECT 
   template_type,
@@ -346,7 +346,7 @@ SELECT
   COUNT(CASE WHEN failed = false THEN 1 END) as successful
 FROM email_logs
 GROUP BY template_type;
-```
+\`\`\`
 
 **Resultado esperado:**
 - WELCOME: 1 sent, 1 successful
@@ -357,10 +357,10 @@ GROUP BY template_type;
 
 ### Analytics Refresh
 
-```sql
+\`\`\`sql
 SELECT refresh_email_analytics();
 SELECT * FROM email_analytics;
-```
+\`\`\`
 
 **Verificar:**
 - ✅ 5 filas (una por template usado)
@@ -372,10 +372,10 @@ SELECT * FROM email_analytics;
 
 1. **Simular Unsubscribe**
    
-   ```sql
+   \`\`\`sql
    INSERT INTO email_unsubscribes (email, reason)
    VALUES ('test-user@example.com', 'No longer interested');
-   ```
+   \`\`\`
 
 2. **Intentar Enviar Email**
    - Desde test page, intenta enviar a `test-user@example.com`

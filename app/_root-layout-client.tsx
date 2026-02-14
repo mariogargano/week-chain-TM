@@ -13,6 +13,7 @@ import { GoogleAnalytics } from "@/components/analytics/google-analytics"
 import { MicrosoftClarity } from "@/components/analytics/microsoft-clarity"
 import { BetaBanner } from "@/components/beta-banner"
 import { PasswordProtectionOverlay } from "@/components/password-protection-overlay"
+import { usePathname } from "next/navigation"
 
 interface RootLayoutClientProps {
   children: React.ReactNode
@@ -21,6 +22,10 @@ interface RootLayoutClientProps {
 
 export function RootLayoutClient({ children, interVariable }: RootLayoutClientProps) {
   const locale = useLocale()
+  const pathname = usePathname()
+
+  // Dashboard routes have their own layout (sidebar + header), so hide the global Navbar/Footer
+  const isDashboardRoute = pathname.startsWith("/dashboard")
 
   return (
     <html lang={locale} className={interVariable}>
@@ -42,14 +47,14 @@ export function RootLayoutClient({ children, interVariable }: RootLayoutClientPr
         </a>
         <PostHogProvider>
           <LanguageProvider>
-            <BetaBanner />
+            {!isDashboardRoute && <BetaBanner />}
             <ScrollToTop />
-            <Navbar />
-            <main id="main-content" className="min-h-[calc(100vh-4rem)] pt-16 sm:pt-20">
+            {!isDashboardRoute && <Navbar />}
+            <main id="main-content" className={isDashboardRoute ? "" : "min-h-[calc(100vh-4rem)] pt-16 sm:pt-20"}>
               {children}
             </main>
-            <SiteFooter />
-            <SupportChatbot />
+            {!isDashboardRoute && <SiteFooter />}
+            {!isDashboardRoute && <SupportChatbot />}
           </LanguageProvider>
         </PostHogProvider>
       </body>

@@ -15,7 +15,7 @@ Esta guía te llevará paso a paso para configurar tu ambiente de desarrollo de 
 
 ### En macOS/Linux:
 
-```bash
+\`\`\`bash
 # Instalar Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
@@ -27,18 +27,18 @@ source $HOME/.cargo/env
 # Verificar instalación
 rustc --version
 cargo --version
-```
+\`\`\`
 
 ### En Windows (WSL2):
 
-```bash
+\`\`\`bash
 # Primero instala WSL2 desde PowerShell como administrador:
 # wsl --install
 
 # Luego dentro de WSL2, ejecuta:
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
-```
+\`\`\`
 
 **✅ Checkpoint:** Deberías ver algo como `rustc 1.75.0` cuando ejecutes `rustc --version`
 
@@ -46,7 +46,7 @@ source $HOME/.cargo/env
 
 ## Paso 2: Instalar Solana CLI (10 minutos)
 
-```bash
+\`\`\`bash
 # Instalar Solana CLI
 sh -c "$(curl -sSfL https://release.solana.com/v1.18.0/install)"
 
@@ -58,7 +58,7 @@ source ~/.bashrc  # o source ~/.zshrc si usas zsh
 
 # Verificar instalación
 solana --version
-```
+\`\`\`
 
 **✅ Checkpoint:** Deberías ver `solana-cli 1.18.0`
 
@@ -66,7 +66,7 @@ solana --version
 
 ## Paso 3: Configurar Wallet de Desarrollo (5 minutos)
 
-```bash
+\`\`\`bash
 # Crear directorio de configuración si no existe
 mkdir -p ~/.config/solana
 
@@ -84,21 +84,21 @@ solana config set --url devnet
 
 # Verificar configuración
 solana config get
-```
+\`\`\`
 
 **✅ Checkpoint:** Deberías ver:
-```
+\`\`\`
 Config File: /Users/tu-usuario/.config/solana/cli/config.yml
 RPC URL: https://api.devnet.solana.com
 WebSocket URL: wss://api.devnet.solana.com/
 Keypair Path: /Users/tu-usuario/.config/solana/devnet.json
-```
+\`\`\`
 
 ---
 
 ## Paso 4: Obtener SOL de Prueba (2 minutos)
 
-```bash
+\`\`\`bash
 # Solicitar 2 SOL de prueba (necesarios para deployar)
 solana airdrop 2
 
@@ -107,7 +107,7 @@ solana balance
 
 # Si el airdrop falla, intenta de nuevo o usa el faucet web:
 # https://faucet.solana.com/
-```
+\`\`\`
 
 **✅ Checkpoint:** Deberías ver `2 SOL` en tu balance
 
@@ -115,7 +115,7 @@ solana balance
 
 ## Paso 5: Instalar Anchor Framework (10 minutos)
 
-```bash
+\`\`\`bash
 # Instalar AVM (Anchor Version Manager)
 cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
 
@@ -127,7 +127,7 @@ avm use latest
 
 # Verificar instalación
 anchor --version
-```
+\`\`\`
 
 **✅ Checkpoint:** Deberías ver `anchor-cli 0.29.0` o superior
 
@@ -135,7 +135,7 @@ anchor --version
 
 ## Paso 6: Preparar el Proyecto WEEK-CHAIN (5 minutos)
 
-```bash
+\`\`\`bash
 # Navega a tu proyecto (ajusta la ruta según donde lo tengas)
 cd /ruta/a/tu/proyecto/week-chain-mvp
 
@@ -144,7 +144,7 @@ npm install
 
 # Verificar que Anchor reconoce el proyecto
 anchor build
-```
+\`\`\`
 
 **✅ Checkpoint:** El build debería completarse sin errores y crear una carpeta `target/`
 
@@ -152,7 +152,7 @@ anchor build
 
 ## Paso 7: Deploy del Token WEEK a Devnet (5 minutos)
 
-```bash
+\`\`\`bash
 # Asegúrate de estar en la raíz del proyecto
 cd /ruta/a/tu/proyecto/week-chain-mvp
 
@@ -161,13 +161,13 @@ anchor deploy
 
 # IMPORTANTE: Copia el Program ID que aparece
 # Se verá algo así: Program Id: 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU
-```
+\`\`\`
 
 **✅ Checkpoint:** Deberías ver un mensaje como:
-```
+\`\`\`
 Deploying workspace: https://explorer.solana.com/address/[PROGRAM_ID]?cluster=devnet
 Deploy success
-```
+\`\`\`
 
 ---
 
@@ -196,9 +196,9 @@ Tu ambiente de desarrollo de Solana está configurado. Ahora puedes:
 
 ### Error: "command not found: solana"
 **Solución:** Agrega Solana al PATH en tu `~/.bashrc` o `~/.zshrc`:
-```bash
+\`\`\`bash
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
-```
+\`\`\`
 
 ### Error: "Airdrop failed"
 **Solución:** El faucet de devnet a veces está saturado. Intenta:
@@ -207,15 +207,15 @@ export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 ### Error: "Insufficient funds for deploy"
 **Solución:** Necesitas más SOL:
-```bash
+\`\`\`bash
 solana airdrop 2
-```
+\`\`\`
 
 ### Error al compilar Rust
 **Solución:** Actualiza Rust:
-```bash
+\`\`\`bash
 rustup update
-```
+\`\`\`
 
 ---
 

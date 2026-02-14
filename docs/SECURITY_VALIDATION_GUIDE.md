@@ -36,7 +36,7 @@
 
 ### Funciones Helper
 
-```sql
+\`\`\`sql
 -- Verificar si es admin
 SELECT is_admin();
 
@@ -45,7 +45,7 @@ SELECT is_owner('user-uuid-here');
 
 -- Verificar rol específico
 SELECT has_role('notaria');
-```
+\`\`\`
 
 ---
 
@@ -64,7 +64,7 @@ SELECT has_role('notaria');
 
 ### Uso en Endpoints
 
-```typescript
+\`\`\`typescript
 import { rateLimitMiddleware, RATE_LIMIT_CONFIGS } from "@/lib/middleware/rate-limit"
 
 export async function POST(req: NextRequest) {
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
 
   // Continuar con la lógica...
 }
-```
+\`\`\`
 
 ### Headers de Rate Limit
 
@@ -90,17 +90,17 @@ Todos los responses incluyen:
 ### Schemas Disponibles
 
 #### Autenticación
-```typescript
+\`\`\`typescript
 import { LoginSchema, RegisterSchema } from "@/lib/validation/schemas"
 
 const result = LoginSchema.safeParse(data)
 if (!result.success) {
   return NextResponse.json({ error: result.error }, { status: 400 })
 }
-```
+\`\`\`
 
 #### Bookings
-```typescript
+\`\`\`typescript
 import { CreateBookingSchema, CancelBookingSchema } from "@/lib/validation/schemas"
 
 const validation = validateRequest(CreateBookingSchema, await req.json())
@@ -110,25 +110,25 @@ if (!validation.success) {
     { status: 400 }
   )
 }
-```
+\`\`\`
 
 #### Pagos
-```typescript
+\`\`\`typescript
 import { CreatePaymentSchema } from "@/lib/validation/schemas"
 
 const { data, error } = CreatePaymentSchema.safeParse(body)
-```
+\`\`\`
 
 #### Reembolsos
-```typescript
+\`\`\`typescript
 import { RefundRequestSchema } from "@/lib/validation/schemas"
 
 const validation = validateRequest(RefundRequestSchema, data)
-```
+\`\`\`
 
 ### Validación Personalizada
 
-```typescript
+\`\`\`typescript
 import { z } from "zod"
 
 const CustomSchema = z.object({
@@ -137,7 +137,7 @@ const CustomSchema = z.object({
     { message: "Validación personalizada falló" }
   )
 })
-```
+\`\`\`
 
 ---
 
@@ -145,7 +145,7 @@ const CustomSchema = z.object({
 
 ### 1. Siempre Validar Input
 
-```typescript
+\`\`\`typescript
 // ❌ MAL
 const { booking_id } = await req.json()
 const booking = await supabase.from("bookings").select().eq("id", booking_id)
@@ -156,30 +156,30 @@ if (!validation.success) {
   return NextResponse.json({ error: "Invalid input" }, { status: 400 })
 }
 const { booking_id } = validation.data
-```
+\`\`\`
 
 ### 2. Usar RLS en Todas las Tablas Sensibles
 
-```sql
+\`\`\`sql
 -- Siempre habilitar RLS
 ALTER TABLE my_table ENABLE ROW LEVEL SECURITY;
 
 -- Crear políticas específicas
 CREATE POLICY "users_own_data" ON my_table
 FOR SELECT USING (auth.uid() = user_id);
-```
+\`\`\`
 
 ### 3. Aplicar Rate Limiting
 
-```typescript
+\`\`\`typescript
 // En todos los endpoints públicos
 const rateLimitResponse = rateLimitMiddleware(req)
 if (rateLimitResponse) return rateLimitResponse
-```
+\`\`\`
 
 ### 4. Auditar Accesos Críticos
 
-```typescript
+\`\`\`typescript
 // Registrar acciones importantes
 await supabase.rpc("log_security_event", {
   p_action: "refund_requested",
@@ -187,20 +187,20 @@ await supabase.rpc("log_security_event", {
   p_resource_id: booking_id,
   p_success: true,
 })
-```
+\`\`\`
 
 ### 5. Verificar Autenticación
 
-```typescript
+\`\`\`typescript
 const { data: { user } } = await supabase.auth.getUser()
 if (!user) {
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 }
-```
+\`\`\`
 
 ### 6. Verificar Autorización
 
-```typescript
+\`\`\`typescript
 // Verificar que el usuario tiene permiso
 const { data: booking } = await supabase
   .from("bookings")
@@ -212,7 +212,7 @@ const { data: booking } = await supabase
 if (!booking) {
   return NextResponse.json({ error: "Forbidden" }, { status: 403 })
 }
-```
+\`\`\`
 
 ---
 
@@ -220,7 +220,7 @@ if (!booking) {
 
 ### Consultar Log de Auditoría
 
-```sql
+\`\`\`sql
 -- Ver eventos recientes
 SELECT * FROM security_audit_log
 ORDER BY created_at DESC
@@ -236,7 +236,7 @@ SELECT action, COUNT(*) as count
 FROM security_audit_log
 WHERE user_id = 'user-uuid'
 GROUP BY action;
-```
+\`\`\`
 
 ### Alertas Recomendadas
 

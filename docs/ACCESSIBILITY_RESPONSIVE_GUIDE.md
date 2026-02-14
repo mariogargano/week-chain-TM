@@ -12,14 +12,14 @@ Asegurar que WEEK-CHAIN™ sea accesible para todos los usuarios y funcione perf
 
 Implementado en `app/layout.tsx`:
 
-```tsx
+\`\`\`tsx
 <a
   href="#main-content"
   className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50"
 >
   Saltar al contenido principal
 </a>
-```
+\`\`\`
 
 **Beneficios:**
 - Usuarios de teclado pueden saltar la navegación
@@ -29,7 +29,7 @@ Implementado en `app/layout.tsx`:
 ### Etiquetas ARIA
 
 **Siempre usar:**
-```tsx
+\`\`\`tsx
 <button aria-label="Cerrar modal">
   <X className="h-4 w-4" />
 </button>
@@ -41,7 +41,7 @@ Implementado en `app/layout.tsx`:
 <section aria-labelledby="titulo-seccion">
   <h2 id="titulo-seccion">Título</h2>
 </section>
-```
+\`\`\`
 
 ### Contraste de Colores
 
@@ -58,7 +58,7 @@ Implementado en `app/layout.tsx`:
 ### Navegación por Teclado
 
 **Todos los elementos interactivos deben ser accesibles:**
-```tsx
+\`\`\`tsx
 // ✅ Correcto
 <button onClick={handleClick}>Acción</button>
 
@@ -69,21 +69,21 @@ Implementado en `app/layout.tsx`:
 <div role="button" tabIndex={0} onClick={handleClick} onKeyDown={handleKeyDown}>
   Acción
 </div>
-```
+\`\`\`
 
 ### Screen Readers
 
 **Texto oculto visualmente pero accesible:**
-```tsx
+\`\`\`tsx
 <span className="sr-only">Información para screen readers</span>
-```
+\`\`\`
 
 **Estados dinámicos:**
-```tsx
+\`\`\`tsx
 <div aria-live="polite" aria-atomic="true">
   {statusMessage}
 </div>
-```
+\`\`\`
 
 ---
 
@@ -91,13 +91,13 @@ Implementado en `app/layout.tsx`:
 
 ### Breakpoints de Tailwind
 
-```
+\`\`\`
 sm: 640px   // Móvil grande
 md: 768px   // Tablet
 lg: 1024px  // Desktop pequeño
 xl: 1280px  // Desktop
 2xl: 1536px // Desktop grande
-```
+\`\`\`
 
 ### Tablas Responsive
 
@@ -105,7 +105,7 @@ xl: 1280px  // Desktop
 
 Para tablas nuevas o refactorizaciones completas:
 
-```tsx
+\`\`\`tsx
 import { ResponsiveTable } from "@/components/responsive-table"
 
 const columns = [
@@ -132,7 +132,7 @@ const columns = [
   keyExtractor={(user) => user.id}
   emptyMessage="No hay usuarios"
 />
-```
+\`\`\`
 
 **Características:**
 - Tabla en desktop (md+)
@@ -145,7 +145,7 @@ const columns = [
 
 Para tablas existentes que solo necesitan scroll horizontal:
 
-```tsx
+\`\`\`tsx
 import { SimpleResponsiveTable } from "@/components/simple-responsive-table"
 
 <SimpleResponsiveTable>
@@ -153,13 +153,13 @@ import { SimpleResponsiveTable } from "@/components/simple-responsive-table"
     {/* ... tabla existente ... */}
   </table>
 </SimpleResponsiveTable>
-```
+\`\`\`
 
 #### Opción 3: Patrón Manual
 
 Para casos especiales con diseño custom:
 
-```tsx
+\`\`\`tsx
 {/* Desktop */}
 <div className="hidden md:block overflow-x-auto">
   <table className="w-full">
@@ -177,11 +177,11 @@ Para casos especiales con diseño custom:
     </Card>
   ))}
 </div>
-```
+\`\`\`
 
 ### Imágenes Responsive
 
-```tsx
+\`\`\`tsx
 // Next.js Image con responsive
 <Image
   src="/property.jpg"
@@ -194,11 +194,11 @@ Para casos especiales con diseño custom:
 
 // Background responsive
 <div className="bg-cover bg-center h-48 md:h-64 lg:h-96" style={{ backgroundImage: 'url(...)' }} />
-```
+\`\`\`
 
 ### Tipografía Responsive
 
-```tsx
+\`\`\`tsx
 <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold">
   Título Responsive
 </h1>
@@ -206,27 +206,27 @@ Para casos especiales con diseño custom:
 <p className="text-sm md:text-base lg:text-lg">
   Párrafo responsive
 </p>
-```
+\`\`\`
 
 ### Espaciado Responsive
 
-```tsx
+\`\`\`tsx
 <div className="p-4 md:p-6 lg:p-8">
   <div className="space-y-4 md:space-y-6 lg:space-y-8">
     {/* Contenido */}
   </div>
 </div>
-```
+\`\`\`
 
 ### Grid Responsive
 
-```tsx
+\`\`\`tsx
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
   {items.map((item) => (
     <Card key={item.id}>{/* ... */}</Card>
   ))}
 </div>
-```
+\`\`\`
 
 ---
 

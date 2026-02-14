@@ -5,48 +5,48 @@
 ### Requisitos Previos
 
 1. **Instalar Rust**
-```bash
+\`\`\`bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
-```
+\`\`\`
 
 2. **Instalar Solana CLI**
-```bash
+\`\`\`bash
 sh -c "$(curl -sSfL https://release.solana.com/v1.18.0/install)"
-```
+\`\`\`
 
 3. **Instalar Anchor CLI**
-```bash
+\`\`\`bash
 cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
 avm install latest
 avm use latest
-```
+\`\`\`
 
 ### Configuración Inicial
 
 1. **Configurar Solana para Devnet**
-```bash
+\`\`\`bash
 solana config set --url devnet
-```
+\`\`\`
 
 2. **Crear Wallet de Desarrollo**
-```bash
+\`\`\`bash
 solana-keygen new --outfile ~/.config/solana/id.json
-```
+\`\`\`
 
 3. **Obtener SOL de Devnet (Airdrop)**
-```bash
+\`\`\`bash
 solana airdrop 2
-```
+\`\`\`
 
 4. **Verificar Balance**
-```bash
+\`\`\`bash
 solana balance
-```
+\`\`\`
 
 ### Estructura del Proyecto
 
-```
+\`\`\`
 week-chain-mvp/
 ├── Anchor.toml                 # Configuración de Anchor
 ├── programs/
@@ -60,19 +60,19 @@ week-chain-mvp/
 │       └── week-token.ts      # Cliente TypeScript
 └── docs/
     └── SOLANA_SETUP.md        # Esta guía
-```
+\`\`\`
 
 ### Compilar y Desplegar
 
 1. **Compilar el Programa**
-```bash
+\`\`\`bash
 anchor build
-```
+\`\`\`
 
 2. **Obtener el Program ID**
-```bash
+\`\`\`bash
 anchor keys list
-```
+\`\`\`
 
 3. **Actualizar Program ID en el código**
 - Copiar el Program ID generado
@@ -81,14 +81,14 @@ anchor keys list
 - Actualizar en `lib/solana/config.ts`
 
 4. **Desplegar a Devnet**
-```bash
+\`\`\`bash
 anchor deploy
-```
+\`\`\`
 
 5. **Inicializar el Token WEEK**
-```bash
+\`\`\`bash
 anchor run initialize-token
-```
+\`\`\`
 
 ### Configuración del Token WEEK
 
@@ -108,7 +108,7 @@ Una vez completada la Fase 1, procederemos con:
 
 ### Comandos Útiles
 
-```bash
+\`\`\`bash
 # Ver logs del programa
 solana logs <PROGRAM_ID>
 
@@ -120,14 +120,14 @@ spl-token accounts
 
 # Transferir tokens WEEK
 spl-token transfer <TOKEN_ADDRESS> <AMOUNT> <RECIPIENT>
-```
+\`\`\`
 
 ### Troubleshooting
 
 **Error: Insufficient funds**
-```bash
+\`\`\`bash
 solana airdrop 2
-```
+\`\`\`
 
 **Error: Program deployment failed**
 - Verificar que tienes suficiente SOL

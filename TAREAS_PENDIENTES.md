@@ -19,7 +19,7 @@
 10. `scripts/027_defi_loans_system.sql`
 
 **Pasos:**
-```bash
+\`\`\`bash
 1. Ir a Supabase Dashboard → SQL Editor
 2. Abrir cada script
 3. Copiar contenido completo
@@ -27,7 +27,7 @@
 5. Click "Run"
 6. Verificar "Success" sin errores
 7. Repetir para cada script
-```
+\`\`\`
 
 **Verificación:**
 - Todas las tablas creadas
@@ -42,12 +42,12 @@
 **Prioridad:** 🔴 CRÍTICA
 
 **Variables a agregar en Vercel:**
-```env
+\`\`\`env
 MIFIEL_APP_ID=tu_app_id_aqui
 MIFIEL_SECRET_KEY=tu_secret_key_aqui
 MIFIEL_WEBHOOK_USER=tu_webhook_user_aqui
 MIFIEL_WEBHOOK_SECRET=tu_webhook_secret_aqui
-```
+\`\`\`
 
 **Pasos:**
 1. Crear cuenta en https://mifiel.com
@@ -58,9 +58,9 @@ MIFIEL_WEBHOOK_SECRET=tu_webhook_secret_aqui
 6. Redeploy la aplicación
 
 **Webhook URL:**
-```
+\`\`\`
 https://tu-dominio.vercel.app/api/mifiel/callback
-```
+\`\`\`
 
 ---
 
@@ -211,10 +211,10 @@ https://tu-dominio.vercel.app/api/mifiel/callback
 **Herramientas a configurar:**
 
 #### Sentry (Errores)
-```bash
+\`\`\`bash
 npm install @sentry/nextjs
 npx @sentry/wizard -i nextjs
-```
+\`\`\`
 
 **Configurar:**
 - Error tracking
@@ -222,10 +222,10 @@ npx @sentry/wizard -i nextjs
 - Alertas por email/Slack
 
 #### Vercel Analytics
-```bash
+\`\`\`bash
 # Ya incluido en Vercel
 # Solo activar en dashboard
-```
+\`\`\`
 
 **Métricas a monitorear:**
 - Page views

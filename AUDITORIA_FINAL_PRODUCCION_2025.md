@@ -44,14 +44,14 @@
 **Problema Original**: Página `/auth/setup-2fa` retornaba 404 en producción
 
 **Solución Implementada**:
-```typescript
+\`\`\`typescript
 // app/auth/setup-2fa/page.tsx
 export const dynamic = "force-dynamic"
 
 export default function Setup2FAPage() {
   // ... implementación completa con QR, verificación, backup codes
 }
-```
+\`\`\`
 
 **Evidencia**:
 - ✅ Archivo existe: `app/auth/setup-2fa/page.tsx`
@@ -74,7 +74,7 @@ export default function Setup2FAPage() {
 ### 2. ✅ Retry con Backoff - PASÓ
 
 **Implementación**:
-```typescript
+\`\`\`typescript
 // lib/utils/retry.ts
 export async function retryWithBackoff<T>(
   fn: () => Promise<T>,
@@ -94,7 +94,7 @@ export async function retryWithBackoff<T>(
     }
   }
 }
-```
+\`\`\`
 
 **APIs con Retry Implementado** (16 total):
 1. ✅ `app/api/payments/conekta/create-order/route.ts` (2 usos)
@@ -110,7 +110,7 @@ export async function retryWithBackoff<T>(
 - ✅ Manejo de errores retryables vs no-retryables
 
 **Ejemplo de Uso**:
-```typescript
+\`\`\`typescript
 const session = await retryWithBackoff(
   async () => await stripe.checkout.sessions.create(sessionData),
   {
@@ -121,14 +121,14 @@ const session = await retryWithBackoff(
     }
   }
 )
-```
+\`\`\`
 
 ---
 
 ### 3. ✅ Webhook Idempotencia - PASÓ
 
 **Implementación**:
-```typescript
+\`\`\`typescript
 // app/api/mifiel/callback/route.ts
 const { data: duplicate } = await supabase
   .from("webhook_events")
@@ -140,7 +140,7 @@ const { data: duplicate } = await supabase
 if (duplicate) {
   return NextResponse.json({ ok: true, dedup: true })
 }
-```
+\`\`\`
 
 **Características**:
 - ✅ Tabla `webhook_events` con constraint único en `(source, event_id)`
@@ -161,7 +161,7 @@ if (duplicate) {
 ### 4. ✅ ZIP Legal + SHA-256 - PASÓ
 
 **Implementación**:
-```typescript
+\`\`\`typescript
 // app/api/legal/download-package/route.ts
 import { createHash } from "crypto"
 
@@ -187,7 +187,7 @@ return new Response(content, {
     "X-Checksum-SHA256": zipChecksum
   }
 })
-```
+\`\`\`
 
 **Archivos en ZIP** (7 total):
 1. ✅ `1_contrato_compraventa.pdf` + SHA-256
@@ -199,7 +199,7 @@ return new Response(content, {
 7. ✅ `README.txt` + SHA-256
 
 **Manifest.json**:
-```json
+\`\`\`json
 {
   "version": "1.0",
   "generatedAt": "2025-01-29T...",
@@ -212,7 +212,7 @@ return new Response(content, {
     }
   ]
 }
-```
+\`\`\`
 
 **Headers HTTP**:
 - ✅ `Content-Type: application/zip`
@@ -224,7 +224,7 @@ return new Response(content, {
 ### 5. ✅ i18n Páginas Legales - PASÓ
 
 **Implementación**:
-```typescript
+\`\`\`typescript
 // app/terms/page.tsx
 "use client"
 import { useI18n } from "@/lib/i18n/use-locale"
@@ -241,7 +241,7 @@ export default function TermsPage() {
     </div>
   )
 }
-```
+\`\`\`
 
 **Traducciones Completas** (5 idiomas):
 - ✅ Español (ES) - 100%
@@ -269,7 +269,7 @@ export default function TermsPage() {
 ### 6. ✅ Accesibilidad WCAG AA - PASÓ
 
 **Implementación**:
-```typescript
+\`\`\`typescript
 // app/layout.tsx
 <a
   href="#main-content"
@@ -281,7 +281,7 @@ export default function TermsPage() {
 <main id="main-content">
   {children}
 </main>
-```
+\`\`\`
 
 **Características Implementadas**:
 - ✅ Skip-to-content link (sr-only, visible on focus)
@@ -294,7 +294,7 @@ export default function TermsPage() {
 - ✅ Focus indicators visibles
 
 **Tablas Responsive**:
-```typescript
+\`\`\`typescript
 // components/responsive-table.tsx
 <div className="block md:hidden">
   {/* Cards en móvil */}
@@ -302,7 +302,7 @@ export default function TermsPage() {
 <div className="hidden md:block">
   {/* Tabla en desktop */}
 </div>
-```
+\`\`\`
 
 **Screenshot**: Homepage con diseño accesible y responsive (ver captura #1)
 
@@ -311,7 +311,7 @@ export default function TermsPage() {
 ### 7. ✅ Scripts Lighthouse - PASÓ
 
 **Implementación**:
-```json
+\`\`\`json
 // package.json
 {
   "scripts": {
@@ -322,7 +322,7 @@ export default function TermsPage() {
     "test:all": "npm run test:a11y && npm run test:perf"
   }
 }
-```
+\`\`\`
 
 **Scripts Disponibles**:
 1. ✅ `npm run lh:prod` - Lighthouse producción (JSON)

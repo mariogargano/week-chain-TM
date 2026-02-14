@@ -41,14 +41,14 @@ WEEK-CHAIN has implemented a **robust foundation** for NOM-151 and NOM-029 compl
 **Total Implementations Found:** 45+ files with SHA-256 usage
 
 **Key Functions:**
-```typescript
+\`\`\`typescript
 // lib/utils/crypto.ts
 export function sha256(str: string): string
 export function sha256Buffer(buffer: Buffer): string
 export function sha256Base64(base64Str: string): string
 export function generateNOM151Folio(): string
 export function verifyDocumentHash(document, expectedHash): boolean
-```
+\`\`\`
 
 **NOM-151 Folio Generation:**
 - Format: `MX-YYYY-MM-DD-NNNNNN`
@@ -67,7 +67,7 @@ export function verifyDocumentHash(document, expectedHash): boolean
 **Database Tables Found:**
 
 #### `legal_acceptances` table:
-```sql
+\`\`\`sql
 CREATE TABLE legal_acceptances (
   id UUID PRIMARY KEY,
   user_id UUID REFERENCES auth.users,
@@ -79,13 +79,13 @@ CREATE TABLE legal_acceptances (
   country TEXT,
   language TEXT
 );
-```
+\`\`\`
 - ✅ RLS enabled
 - ✅ Users can INSERT + SELECT own
 - ✅ Admins can SELECT all
 
 #### `terms_acceptance` table:
-```sql
+\`\`\`sql
 CREATE TABLE terms_acceptance (
   id UUID PRIMARY KEY,
   user_id UUID REFERENCES auth.users,
@@ -97,17 +97,17 @@ CREATE TABLE terms_acceptance (
   clickwrap_signature JSONB,  -- ✅ Full metadata
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
-```
+\`\`\`
 - ✅ RLS enabled (append-only)
 - ✅ Service role has full access
 - ✅ Stores SHA-256 hash
 - ✅ Stores clickwrap metadata
 
 #### `user_consents` table:
-```sql
+\`\`\`sql
 -- Referenced in code but NOT FOUND in database schema
 -- ⚠️ MISSING TABLE - Implementation incomplete
-```
+\`\`\`
 
 **API Implementation:**
 - ✅ `app/api/legal/accept-terms/route.ts` - Records consent with SHA-256
@@ -164,7 +164,7 @@ CREATE TABLE terms_acceptance (
 **Endpoints Checked:**
 
 #### ✅ `app/api/certificates/activate/route.ts`
-```typescript
+\`\`\`typescript
 const consentValidation = await validateConsent(user.id, "activation")
 
 if (!consentValidation.valid) {
@@ -173,14 +173,14 @@ if (!consentValidation.valid) {
     message: "Debes aceptar los términos de activación antes de continuar",
   }, { status: 403 })
 }
-```
+\`\`\`
 - ✅ SERVER-SIDE validation
 - ✅ Blocks execution if consent missing
 - ✅ Returns 403 Forbidden
 - ✅ Cannot be bypassed via API
 
 #### ✅ `app/api/reservations/request/route.ts`
-```typescript
+\`\`\`typescript
 const consentValidation = await validateConsent(user.id, "reservation")
 
 if (!consentValidation.valid) {
@@ -189,16 +189,16 @@ if (!consentValidation.valid) {
     message: "Debes aceptar los términos de solicitud antes de continuar",
   }, { status: 403 })
 }
-```
+\`\`\`
 - ✅ SERVER-SIDE validation
 - ✅ Blocks execution if consent missing
 - ✅ Returns 403 Forbidden
 
 #### ⚠️ `app/api/offers/accept/route.ts`
-```typescript
+\`\`\`typescript
 // Consent validation referenced but implementation not fully visible in scan
 // Needs verification
-```
+\`\`\`
 
 **Enforcement Library:**
 - File: `lib/consent/validator.ts`
@@ -252,20 +252,20 @@ if (!consentValidation.valid) {
 ### Click-Wrap Implementation:
 
 ✅ **Checkbox Unchecked by Default:**
-```typescript
+\`\`\`typescript
 const [accepted, setAccepted] = useState(false) // ✅ Default false
-```
+\`\`\`
 
 ✅ **CTA Disabled Until Accepted:**
-```typescript
+\`\`\`typescript
 <Button 
   onClick={handleAccept} 
   disabled={!accepted || !hasRead || isSubmitting}  // ✅ Requires explicit acceptance
 >
-```
+\`\`\`
 
 ✅ **Scroll Tracking (No Scroll-Accept):**
-```typescript
+\`\`\`typescript
 const [scrolledToBottom, setScrolledToBottom] = useState(false)
 const [hasRead, setHasRead] = useState(false)
 
@@ -276,19 +276,19 @@ const handleScroll = (e) => {
     setHasRead(true)  // ✅ User must scroll to bottom
   }
 }
-```
+\`\`\`
 - ✅ User MUST scroll to bottom
 - ✅ Visual indicator shows "read entire content" requirement
 - ✅ Checkbox remains disabled until scrolled
 
 ✅ **Explicit Acceptance Required:**
-```html
+\`\`\`html
 <label>
   He leído y acepto explícitamente los términos indicados arriba. 
   Entiendo que esta aceptación será registrada con fecha, hora e IP 
   para efectos legales.
 </label>
-```
+\`\`\`
 
 ### Assessment: ✅ **PERFECT NOM-029 COMPLIANCE**
 
@@ -440,7 +440,7 @@ const handleScroll = (e) => {
 
 **Script:** `scripts/3001_NOM151_EVIDENCE_SYSTEM.sql`
 
-```sql
+\`\`\`sql
 -- 1. Create evidence_events table
 CREATE TABLE evidence_events (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -572,7 +572,7 @@ BEGIN
   RETURN v_evidence_id;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
-```
+\`\`\`
 
 **Execute:** Run in Supabase SQL Editor
 
@@ -582,7 +582,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 **File 1:** `lib/evidence/recorder.ts`
 
-```typescript
+\`\`\`typescript
 import { createClient } from "@/lib/supabase/server"
 import { canonicalizePayload } from "./canonicalize"
 import { sha256 } from "@/lib/utils/crypto"
@@ -660,11 +660,11 @@ function generateNOM151Folio(): string {
   const random = Math.floor(Math.random() * 1000000).toString().padStart(6, "0")
   return `MX-${dateStr}-${random}`
 }
-```
+\`\`\`
 
 **File 2:** `lib/evidence/canonicalize.ts`
 
-```typescript
+\`\`\`typescript
 /**
  * Canonicalize JSON payload for consistent hashing
  * Sorts keys alphabetically, removes whitespace
@@ -696,11 +696,11 @@ function sortKeysRecursive(obj: any): any {
   
   return sorted
 }
-```
+\`\`\`
 
 **File 3:** `lib/psc/psc-client.ts` (Provider-agnostic stub)
 
-```typescript
+\`\`\`typescript
 /**
  * PSC (Prestador de Servicios de Certificación) Client
  * Provider-agnostic interface for timestamp sealing
@@ -779,7 +779,7 @@ export async function verifyPSCSeal(transactionId: string, provider: string): Pr
   // TODO: Implement seal verification
   return false
 }
-```
+\`\`\`
 
 ---
 
@@ -787,7 +787,7 @@ export async function verifyPSCSeal(transactionId: string, provider: string): Pr
 
 **Update Certificate Issuance:**
 
-```typescript
+\`\`\`typescript
 // app/api/certificates/issue/route.ts
 import { recordEvidenceEvent } from "@/lib/evidence/recorder"
 
@@ -806,11 +806,11 @@ await recordEvidenceEvent({
   ipAddress: request.headers.get("x-forwarded-for") || "unknown",
   userAgent: request.headers.get("user-agent") || "unknown",
 })
-```
+\`\`\`
 
 **Update Reservation Confirmation:**
 
-```typescript
+\`\`\`typescript
 // app/api/reservations/respond-to-offer/route.ts
 import { recordEvidenceEvent } from "@/lib/evidence/recorder"
 
@@ -829,7 +829,7 @@ await recordEvidenceEvent({
   ipAddress: request.headers.get("x-forwarded-for") || "unknown",
   userAgent: request.headers.get("user-agent") || "unknown",
 })
-```
+\`\`\`
 
 **Similar updates for:**
 - Offer acceptance
@@ -844,7 +844,7 @@ await recordEvidenceEvent({
 #### Manual Test Checklist:
 
 **Test 1: Terms Acceptance Evidence**
-```sql
+\`\`\`sql
 -- 1. User accepts terms on signup
 -- 2. Verify evidence recorded:
 
@@ -856,10 +856,10 @@ ORDER BY created_at DESC
 LIMIT 1;
 
 -- Expected result: 1 row with SHA-256 hash and NOM-151 folio
-```
+\`\`\`
 
 **Test 2: Certificate Issuance Evidence**
-```sql
+\`\`\`sql
 -- 1. Purchase certificate via Stripe
 -- 2. Verify evidence recorded:
 
@@ -872,20 +872,20 @@ ORDER BY created_at DESC
 LIMIT 1;
 
 -- Expected result: 1 row with certificate ID and hash
-```
+\`\`\`
 
 **Test 3: Consent Enforcement**
-```bash
+\`\`\`bash
 # 1. Try to activate certificate WITHOUT accepting terms:
 curl -X POST https://week-chain.com/api/certificates/activate \
   -H "Authorization: Bearer [TOKEN]" \
   -d '{"certificateCode":"TEST123"}'
 
 # Expected result: 403 Forbidden with CONSENT_REQUIRED error
-```
+\`\`\`
 
 **Test 4: Hash Verification**
-```typescript
+\`\`\`typescript
 // Verify canonical hash matches stored hash
 const stored = await supabase
   .from("evidence_events")
@@ -897,10 +897,10 @@ const canonical = canonicalizePayload(stored.event_data)
 const computedHash = sha256(canonical)
 
 console.log("Match:", computedHash === stored.sha256_hash) // Should be true
-```
+\`\`\`
 
 **Test 5: Audit Trail Completeness**
-```sql
+\`\`\`sql
 -- Verify all critical events have evidence:
 SELECT 
   event_type, COUNT(*) as total_events
@@ -909,7 +909,7 @@ GROUP BY event_type
 ORDER BY event_type;
 
 -- Expected: Non-zero counts for all critical event types
-```
+\`\`\`
 
 ---
 

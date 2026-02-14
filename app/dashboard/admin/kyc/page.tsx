@@ -8,8 +8,8 @@ import { FileText, Calendar, Search, ArrowLeft, CheckCircle, XCircle, Clock, Mai
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { RoleGuard } from "@/components/role-guard"
-import { Navbar } from "@/components/navbar"
 import { useRouter } from "next/navigation"
+
 
 export default function AdminKYCPage() {
   return (
@@ -100,9 +100,7 @@ function AdminKYCContent() {
   }
 
   return (
-    <>
-      <Navbar user={true} />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
+  <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex items-center gap-4">
             <Button
@@ -312,6 +310,6 @@ function AdminKYCContent() {
           )}
         </div>
       </div>
-    </>
+    </div>
   )
 }

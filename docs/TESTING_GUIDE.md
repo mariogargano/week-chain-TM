@@ -11,7 +11,7 @@ Before testing, ensure you have:
 
 ## Environment Setup
 
-```bash
+\`\`\`bash
 # Copy environment template
 cp .env.example .env.local
 
@@ -23,21 +23,21 @@ cp .env.example .env.local
 
 # Validate environment
 npm run validate-env
-```
+\`\`\`
 
 ## Test 1: Environment Validation
 
-```bash
+\`\`\`bash
 # Should pass with all required env vars
 npm run validate-env
 
 # Expected output:
 # ✅ Environment variables validated successfully
-```
+\`\`\`
 
 ## Test 2: Health Check
 
-```bash
+\`\`\`bash
 curl -X GET http://localhost:3000/api/health
 
 # Expected response:
@@ -53,11 +53,11 @@ curl -X GET http://localhost:3000/api/health
     "solana": "configured"
   }
 }
-```
+\`\`\`
 
 ## Test 3: Legalario Webhook - Invalid Signature
 
-```bash
+\`\`\`bash
 # This should fail with 401
 curl -X POST http://localhost:3000/api/legalario/webhook \
   -H "Content-Type: application/json" \
@@ -79,13 +79,13 @@ curl -X POST http://localhost:3000/api/legalario/webhook \
   "error": "Invalid signature",
   "details": "Signature verification failed"
 }
-```
+\`\`\`
 
 ## Test 4: Legalario Webhook - Valid Signature
 
 To generate a valid HMAC signature:
 
-```bash
+\`\`\`bash
 # Generate signature using openssl
 TIMESTAMP=$(date +%s)
 PAYLOAD='{"event":"contract.certified","data":{"contract_id":"550e8400-e29b-41d4-a716-446655440000","folio":"MX-2025-001","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","certified_at":"2025-01-15T10:00:00Z","status":"certified"}}'
@@ -96,20 +96,20 @@ curl -X POST http://localhost:3000/api/legalario/webhook \
   -H "x-legalario-signature: ${SIGNATURE}" \
   -H "x-legalario-timestamp: ${TIMESTAMP}" \
   -d "${PAYLOAD}"
-```
+\`\`\`
 
 Expected response:
-```json
+\`\`\`json
 {
   "success": true,
   "message": "Contract certification processed",
   "contract_id": "550e8400-e29b-41d4-a716-446655440000"
 }
-```
+\`\`\`
 
 ## Test 5: Rate Limiting
 
-```bash
+\`\`\`bash
 # Send 11 requests within 1 minute (should get rate limited)
 for i in {1..11}; do
   echo "Request $i"
@@ -129,11 +129,11 @@ done
 # X-RateLimit-Limit: 10
 # X-RateLimit-Remaining: 0
 # X-RateLimit-Reset: 2025-01-15T10:01:00.000Z
-```
+\`\`\`
 
 ## Test 6: Database Guard - Mint Without Certification
 
-```bash
+\`\`\`bash
 # This should fail with trigger exception
 curl -X POST http://localhost:3000/api/nft/mint \
   -H "Content-Type: application/json" \
@@ -146,13 +146,13 @@ curl -X POST http://localhost:3000/api/nft/mint \
 {
   "error": "Contract not certified under NOM-151"
 }
-```
+\`\`\`
 
 ## Test 7: Complete Flow - Certification to Mint
 
 ### Step 1: Create a test contract in database
 
-```sql
+\`\`\`sql
 -- Run in Supabase SQL editor
 INSERT INTO legal_contracts (
   id, 
@@ -171,11 +171,11 @@ INSERT INTO legal_contracts (
   'pending',
   'draft'
 );
-```
+\`\`\`
 
 ### Step 2: Simulate Legalario certification webhook
 
-```bash
+\`\`\`bash
 TIMESTAMP=$(date +%s)
 CONTRACT_ID="550e8400-e29b-41d4-a716-446655440000"
 PAYLOAD="{\"event\":\"contract.certified\",\"data\":{\"contract_id\":\"${CONTRACT_ID}\",\"folio\":\"MX-2025-001\",\"sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"certified_at\":\"2025-01-15T10:00:00Z\",\"status\":\"certified\"}}"
@@ -186,11 +186,11 @@ curl -X POST http://localhost:3000/api/legalario/webhook \
   -H "x-legalario-signature: ${SIGNATURE}" \
   -H "x-legalario-timestamp: ${TIMESTAMP}" \
   -d "${PAYLOAD}"
-```
+\`\`\`
 
 ### Step 3: Verify contract is certified
 
-```sql
+\`\`\`sql
 SELECT * FROM legal_contracts 
 WHERE id = '550e8400-e29b-41d4-a716-446655440000';
 
@@ -199,11 +199,11 @@ WHERE id = '550e8400-e29b-41d4-a716-446655440000';
 -- folio: 'MX-2025-001'
 -- sha256_hash: 'e3b0c44...'
 -- certified_at: '2025-01-15T10:00:00Z'
-```
+\`\`\`
 
 ### Step 4: Mint NFT
 
-```bash
+\`\`\`bash
 curl -X POST http://localhost:3000/api/nft/mint \
   -H "Content-Type: application/json" \
   -d '{
@@ -220,21 +220,21 @@ curl -X POST http://localhost:3000/api/nft/mint \
   "explorer_url": "https://explorer.solana.com/address/9XYZ...?cluster=devnet",
   "contract_id": "550e8400-e29b-41d4-a716-446655440000"
 }
-```
+\`\`\`
 
 ### Step 5: Verify NFT on Solana Explorer
 
-```bash
+\`\`\`bash
 # Open the explorer_url from previous response
 # Verify:
 # - Mint address exists
 # - Metadata URI is accessible
 # - NOM-151 data is in metadata
-```
+\`\`\`
 
 ### Step 6: Check Evidence Package
 
-```bash
+\`\`\`bash
 # Query Supabase Storage
 curl "https://<project-ref>.supabase.co/storage/v1/object/public/legal-documents/evidence/${CONTRACT_ID}/evidence-package-*.zip"
 
@@ -244,13 +244,13 @@ curl "https://<project-ref>.supabase.co/storage/v1/object/public/legal-documents
 # - metadata.json
 # - transaction_receipt.txt
 # - README.txt
-```
+\`\`\`
 
 ## Test 8: IP Allowlist (Production Only)
 
 In production, webhook should only accept requests from Legalario IPs:
 
-```bash
+\`\`\`bash
 # From unauthorized IP (should fail in production)
 curl -X POST https://your-domain.com/api/legalario/webhook \
   -H "Content-Type: application/json" \
@@ -260,11 +260,11 @@ curl -X POST https://your-domain.com/api/legalario/webhook \
 {
   "error": "Forbidden"
 }
-```
+\`\`\`
 
 ## Test 9: Verify Webhook Logs
 
-```sql
+\`\`\`sql
 -- Check webhook_logs table
 SELECT * FROM webhook_logs 
 WHERE source = 'legalario' 
@@ -277,11 +277,11 @@ LIMIT 10;
 -- - Signatures
 -- - Verification results
 -- - Processing time
-```
+\`\`\`
 
 ## Test 10: Database Trigger Test
 
-```sql
+\`\`\`sql
 -- Attempt to insert NFT mint without certified contract
 -- This should fail with exception
 INSERT INTO nft_mints (
@@ -300,7 +300,7 @@ INSERT INTO nft_mints (
 
 -- Expected error:
 -- ERROR: NOM-151 certification required before minting
-```
+\`\`\`
 
 ## Performance Benchmarks
 
@@ -375,7 +375,7 @@ Key metrics to monitor:
 
 Query for monitoring:
 
-```sql
+\`\`\`sql
 -- Webhook success rate (last 24 hours)
 SELECT 
   COUNT(*) FILTER (WHERE response_status = 200) as success_count,

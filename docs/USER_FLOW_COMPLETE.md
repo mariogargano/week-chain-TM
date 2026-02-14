@@ -105,7 +105,7 @@ Sistema completo de certificados digitales vacacionales con compliance legal tot
 **Página:** `/dashboard/my-certificates`
 
 **Vista:**
-```
+\`\`\`
 ┌─────────────────────────────────────────┐
 │ Mis Certificados                        │
 ├─────────────────────────────────────────┤
@@ -122,7 +122,7 @@ Sistema completo de certificados digitales vacacionales con compliance legal tot
 │ [🔲 Ver QR Code]                       │
 │                                         │
 └─────────────────────────────────────────┘
-```
+\`\`\`
 
 **Funciones:**
 - ✅ Ver todos los certificados
@@ -137,7 +137,7 @@ Sistema completo de certificados digitales vacacionales con compliance legal tot
 **Modal:** `InvoiceRequestDialog`
 
 **Campos requeridos:**
-```typescript
+\`\`\`typescript
 {
   billing_name: string         // Razón social o nombre
   billing_rfc: string          // RFC (12-13 caracteres)
@@ -152,7 +152,7 @@ Sistema completo de certificados digitales vacacionales con compliance legal tot
   billing_fiscal_regime: string // Régimen fiscal SAT
   billing_cfdi_use: string      // Uso de CFDI
 }
-```
+\`\`\`
 
 **Validaciones:**
 - RFC formato válido
@@ -194,7 +194,7 @@ Sistema completo de certificados digitales vacacionales con compliance legal tot
 
 ## Tabla: certificate_purchases (Completa)
 
-```sql
+\`\`\`sql
 certificate_purchases
 ├── id (UUID)
 ├── user_id (FK auth.users)
@@ -249,7 +249,7 @@ certificate_purchases
     ├── status (pending/active/expired)
     ├── activated_at
     └── expires_at (15 años)
-```
+\`\`\`
 
 ---
 
@@ -297,7 +297,7 @@ Lista certificados del usuario
 4. Verificar storage de Supabase activo
 
 ### Flujo de Prueba:
-```
+\`\`\`
 1. Registrar usuario: test@morises.com
 2. Aceptar términos y privacidad ✅
 3. Seleccionar certificado Premium
@@ -309,10 +309,10 @@ Lista certificados del usuario
 9. Llenar datos fiscales
 10. Verificar factura recibida por email
 11. Descargar ambos PDFs
-```
+\`\`\`
 
 ### Admin Verification:
-```
+\`\`\`
 Login: corporativo@morises.com (Google)
 Dashboard Admin:
 - Ver purchase en certificate_purchases
@@ -320,7 +320,7 @@ Dashboard Admin:
 - Confirmar nom151_compliance_hash
 - Ver voucher_url y invoice_url
 - Audit trail visible
-```
+\`\`\`
 
 ---
 

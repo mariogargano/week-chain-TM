@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Wallet, Users, Clock, CheckCircle, XCircle, ArrowLeft } from "lucide-react"
 import { useEffect, useState } from "react"
-import { Navbar } from "@/components/navbar"
 import { useRouter } from "next/navigation"
+
 
 export default function EscrowPage() {
   const router = useRouter()
@@ -63,9 +63,7 @@ export default function EscrowPage() {
   const pendingCount = deposits?.filter((d) => d.status === "pending").length || 0
 
   return (
-    <>
-      <Navbar user={true} />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
+  <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex items-center gap-4">
             <Button
@@ -120,9 +118,11 @@ export default function EscrowPage() {
             </Card>
 
             <Card className="border-blue-200/50 bg-white/90 backdrop-blur-xl shadow-lg">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-slate-600">Total Usuarios</CardTitle>
-                <Users className="h-5 w-5 text-blue-600" />
+              <CardHeader>
+                <CardTitle className="text-slate-900">Total Usuarios</CardTitle>
+                <CardDescription className="text-slate-600">
+                  Con depósitos
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold text-slate-900">{deposits?.length || 0}</div>
@@ -206,6 +206,6 @@ export default function EscrowPage() {
           </Card>
         </div>
       </div>
-    </>
+    </div>
   )
 }

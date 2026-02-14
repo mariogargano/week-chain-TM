@@ -10,11 +10,11 @@ Esta guía es tu checklist definitivo para el test run de mañana con tu equipo.
 
 ### Paso 1: Ejecutar Script SQL
 
-```bash
+\`\`\`bash
 # En Supabase Dashboard → SQL Editor:
 # Copiar y pegar: scripts/105_FINAL_PRODUCTION_READY.sql
 # Ejecutar
-```
+\`\`\`
 
 **Esto corrige TODOS los problemas críticos:**
 - ✅ Crea tablas `testimonials` y `public_destinations_catalog` 
@@ -25,11 +25,11 @@ Esta guía es tu checklist definitivo para el test run de mañana con tu equipo.
 ### Paso 2: Verificar en Logs
 
 Deberías ver:
-```
+\`\`\`
 ✅ Todas las tablas críticas existen
 ✅ Admin corporativo@morises.com configurado como super_admin
 ✅ PLATAFORMA LISTA PARA GO-LIVE
-```
+\`\`\`
 
 ---
 
@@ -55,7 +55,7 @@ Deberías ver:
 1. **Ir a:** `/auth/sign-up`
 
 2. **Verificar flow completo:**
-   ```
+   \`\`\`
    Paso 1: Formulario de registro
    ├─ Email
    ├─ Contraseña
@@ -71,13 +71,13 @@ Deberías ver:
    ├─ Se guarda en `legal_acceptances`
    ├─ Se guarda en `terms_acceptance`
    └─ Redirección a dashboard
-   ```
+   \`\`\`
 
 3. **Verificar en Base de Datos:**
-   ```sql
+   \`\`\`sql
    SELECT * FROM legal_acceptances WHERE user_id = '[USER_ID]';
    SELECT * FROM terms_acceptance WHERE user_id = '[USER_ID]';
-   ```
+   \`\`\`
 
 ---
 
@@ -102,7 +102,7 @@ Deberías ver:
 **Como:** `corporativo@morises.com`
 
 1. **Verificar acceso a todas las secciones:**
-   ```
+   \`\`\`
    /dashboard/admin
    ├─ ✅ Overview (stats, gráficas)
    ├─ ✅ Users (gestión de usuarios)
@@ -114,7 +114,7 @@ Deberías ver:
    ├─ ✅ Email Automation (plantillas y logs)
    ├─ ✅ Analytics (métricas de plataforma)
    └─ ✅ Settings (configuración general)
-   ```
+   \`\`\`
 
 2. **Test funcionalidad crítica:**
    - Aprobar un testimonio
@@ -129,7 +129,7 @@ Deberías ver:
 **Como:** Usuario regular (registrado con email/password)
 
 1. **Verificar acceso a:**
-   ```
+   \`\`\`
    /dashboard/user
    ├─ ✅ My Profile (perfil personal)
    ├─ ✅ My Certificates (certificados adquiridos)
@@ -137,7 +137,7 @@ Deberías ver:
    ├─ ✅ My Vouchers (vouchers de compra)
    ├─ ✅ Request Invoice (solicitar factura)
    └─ ✅ Security (configuración de seguridad)
-   ```
+   \`\`\`
 
 2. **NO debe ver:**
    - ❌ Opciones de admin
@@ -151,14 +151,14 @@ Deberías ver:
 **Como:** Usuario con `role = 'broker'`
 
 1. **Verificar acceso a:**
-   ```
+   \`\`\`
    /dashboard/broker
    ├─ ✅ Commissions (comisiones ganadas)
    ├─ ✅ Referrals (referidos y árbol)
    ├─ ✅ Marketing Materials (materiales de marketing)
    ├─ ✅ Calculator (calculadora de comisiones)
    └─ ✅ Broker Card (tarjeta digital)
-   ```
+   \`\`\`
 
 ---
 
@@ -167,14 +167,14 @@ Deberías ver:
 **Como:** Usuario con `role = 'owner'`
 
 1. **Verificar acceso a:**
-   ```
+   \`\`\`
    /dashboard/owner
    ├─ ✅ Submit Property (enviar propiedad)
    ├─ ✅ My Submissions (mis envíos)
    ├─ ✅ Sales (ventas de mis propiedades)
    ├─ ✅ Notifications (notificaciones)
    └─ ✅ Profile (perfil de propietario)
-   ```
+   \`\`\`
 
 ---
 
@@ -183,12 +183,12 @@ Deberías ver:
 **Como:** Usuario con `role = 'notary'`
 
 1. **Verificar acceso a:**
-   ```
+   \`\`\`
    /dashboard/notaria
    ├─ ✅ Property Reviews (revisar propiedades)
    ├─ ✅ Pending Signatures (firmas pendientes)
    └─ ✅ Completed Contracts (contratos completados)
-   ```
+   \`\`\`
 
 ---
 
@@ -240,20 +240,20 @@ Deberías ver:
 ### Problema 1: No veo testimonios ni destinos en homepage
 
 **Solución:**
-```sql
+\`\`\`sql
 -- Verificar que existen
 SELECT COUNT(*) FROM testimonials WHERE is_approved = true;
 SELECT COUNT(*) FROM public_destinations_catalog WHERE is_active = true;
 
 -- Si retorna 0, ejecutar script 105
-```
+\`\`\`
 
 ---
 
 ### Problema 2: corporativo@morises.com no puede acceder a admin
 
 **Solución:**
-```sql
+\`\`\`sql
 -- Verificar configuración
 SELECT * FROM admin_users WHERE email = 'corporativo@morises.com';
 
@@ -263,7 +263,7 @@ SELECT * FROM admin_users WHERE email = 'corporativo@morises.com';
 UPDATE admin_users 
 SET user_id = (SELECT id FROM auth.users WHERE email = 'corporativo@morises.com')
 WHERE email = 'corporativo@morises.com';
-```
+\`\`\`
 
 ---
 
@@ -285,13 +285,13 @@ WHERE email = 'corporativo@morises.com';
 4. Checkbox "Acepto" debe estar marcado
 
 **Si no funciona:**
-```bash
+\`\`\`bash
 # Verificar que el componente existe
 ls -la components/terms-acceptance-dialog.tsx
 
 # Verificar que se está importando en sign-up
 grep -r "TermsAcceptanceDialog" app/auth/sign-up/page.tsx
-```
+\`\`\`
 
 ---
 

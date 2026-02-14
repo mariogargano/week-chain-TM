@@ -57,7 +57,7 @@ WEEK-CHAIN platform is now **100% production-ready** with all critical systems o
 - Clicks "Comenzar" or "Registrarse"
 
 #### 2. Sign Up (`/auth/sign-up`)
-```
+\`\`\`
 ✅ Email & Password fields
 ✅ Terms & Conditions checkbox (REQUIRED)
 ✅ Privacy Policy checkbox (REQUIRED)
@@ -66,7 +66,7 @@ WEEK-CHAIN platform is now **100% production-ready** with all critical systems o
    - User agent
    - Timestamp
    - Checkbox state
-```
+\`\`\`
 
 #### 3. Email Verification
 - User receives confirmation email from Supabase
@@ -74,12 +74,12 @@ WEEK-CHAIN platform is now **100% production-ready** with all critical systems o
 - Account activated
 
 #### 4. Profile Creation (AUTOMATIC)
-```sql
+\`\`\`sql
 -- Trigger: on_auth_user_created_profile
 -- Creates profile immediately when user signs up
 INSERT INTO profiles (id, email, display_name, role)
 VALUES (user.id, user.email, user.name, 'user');
-```
+\`\`\`
 
 #### 5. Dashboard Access (`/dashboard`)
 - Auto-redirects based on role:
@@ -155,13 +155,13 @@ VALUES (user.id, user.email, user.name, 'user');
 ## Terms & Conditions: PROFECO-COMPLIANT ✅
 
 ### Legal Framework
-```
+\`\`\`
 ✅ Sistema de Vacaciones Certificadas (SVC)
 ✅ NO es tiempo compartido
 ✅ NO es inversión
 ✅ NO promete rendimientos
 ✅ Transparencia total en términos
-```
+\`\`\`
 
 ### Tables Used
 1. **terms_acceptance** - Records user acceptance with click-wrap evidence
@@ -169,7 +169,7 @@ VALUES (user.id, user.email, user.name, 'user');
 3. **terms_and_conditions** - Stores versioned T&C documents
 
 ### Click-Wrap Evidence Collected
-```javascript
+\`\`\`javascript
 {
   user_id: uuid,
   terms_version: "1.0",
@@ -182,7 +182,7 @@ VALUES (user.id, user.email, user.name, 'user');
     time_spent_reading: 45 // seconds
   }
 }
-```
+\`\`\`
 
 ---
 
@@ -202,7 +202,7 @@ VALUES (user.id, user.email, user.name, 'user');
 6. User redirected to appropriate dashboard
 
 ### Session Management
-```typescript
+\`\`\`typescript
 // lib/supabase/middleware.ts
 export async function updateSession(request: NextRequest) {
   const supabase = createServerClient(...)
@@ -214,7 +214,7 @@ export async function updateSession(request: NextRequest) {
     await supabase.auth.refreshSession()
   }
 }
-```
+\`\`\`
 
 ---
 
@@ -249,14 +249,14 @@ export async function updateSession(request: NextRequest) {
 - [ ] Verify system diagnostics page
 
 ### Phase 4: Database Verification (5 min)
-```sql
+\`\`\`sql
 -- Run in Supabase SQL Editor
 SELECT 
   (SELECT COUNT(*) FROM testimonials WHERE is_approved = true) as approved_testimonials,
   (SELECT COUNT(*) FROM profiles) as total_profiles,
   (SELECT COUNT(*) FROM admin_users WHERE email = 'corporativo@morises.com') as admin_configured,
   (SELECT COUNT(*) FROM auth.users) as total_users;
-```
+\`\`\`
 Expected results:
 - `approved_testimonials`: 3
 - `admin_configured`: 1
@@ -291,7 +291,7 @@ Expected results:
 
 ### Issue: Admin access denied
 **Solution:** 
-```sql
+\`\`\`sql
 -- Verify admin setup
 SELECT * FROM admin_users WHERE email = 'corporativo@morises.com';
 
@@ -303,7 +303,7 @@ SELECT
   'super_admin',
   'active'
 ON CONFLICT (email) DO UPDATE SET role = 'super_admin', status = 'active';
-```
+\`\`\`
 
 ### Issue: Google OAuth not working
 **Solution:**
@@ -326,7 +326,7 @@ ON CONFLICT (email) DO UPDATE SET role = 'super_admin', status = 'active';
 5. **Session Persistence:** Check Google OAuth doesn't drop
 
 ### Database Queries for Monitoring
-```sql
+\`\`\`sql
 -- New users in last 24h
 SELECT COUNT(*) FROM auth.users 
 WHERE created_at > NOW() - INTERVAL '24 hours';
@@ -341,7 +341,7 @@ SELECT COUNT(*), action
 FROM admin_audit_log 
 WHERE created_at > NOW() - INTERVAL '24 hours'
 GROUP BY action;
-```
+\`\`\`
 
 ---
 

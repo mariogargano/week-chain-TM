@@ -58,10 +58,10 @@ Stefano puede acceder al workspace del equipo en `/dashboard/workspace` usando s
 
 Para agregar a Stefano al sistema, ejecutar el script SQL:
 
-```bash
+\`\`\`bash
 # Ejecutar desde la consola de Supabase o desde v0
 scripts/030_add_stefano_cionini.sql
-```
+\`\`\`
 
 Este script:
 1. Agrega a Stefano a la tabla `admin_wallets`

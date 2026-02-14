@@ -90,16 +90,16 @@
 ## Deployment Steps
 
 1. **Pre-deployment**
-   ```bash
+   \`\`\`bash
    npm run build
    npm run validate-env
    npm run test
-   ```
+   \`\`\`
 
 2. **Deploy to Vercel**
-   ```bash
+   \`\`\`bash
    vercel --prod
-   ```
+   \`\`\`
 
 3. **Post-deployment verification**
    - [ ] Check environment status at `/api/health`
@@ -127,6 +127,6 @@ If critical issues are detected:
 - Legal Compliance: [Contact]
 - Payment Support: [Contact]
 - Emergency Hotline: [Number]
-```
+\`\`\`
 
-```json file="" isHidden
+\`\`\`json file="" isHidden

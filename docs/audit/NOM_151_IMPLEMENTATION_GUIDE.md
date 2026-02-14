@@ -13,7 +13,7 @@ This guide documents the complete NOM-151 compliant evidence system implementati
 **Purpose:** Immutable audit trail with SHA-256 hashing for legal compliance
 
 **Schema:**
-```sql
+\`\`\`sql
 evidence_events (
   id UUID PRIMARY KEY,
   event_type TEXT,           -- Type of event (certificate_activated, etc.)
@@ -29,7 +29,7 @@ evidence_events (
   user_agent TEXT,           -- Browser/client user agent
   created_at TIMESTAMP
 )
-```
+\`\`\`
 
 ### 2. Canonicalization Library
 
@@ -68,7 +68,7 @@ evidence_events (
 ### Critical API Endpoints
 
 **1. Certificate Activation**
-```typescript
+\`\`\`typescript
 // app/api/certificates/activate/route.ts
 import { logCertificateActivation } from '@/lib/legal/evidence-helpers'
 
@@ -88,10 +88,10 @@ export async function POST(request: Request) {
     userAgent,
   })
 }
-```
+\`\`\`
 
 **2. Reservation Request**
-```typescript
+\`\`\`typescript
 // app/api/reservations/request/route.ts
 import { logReservationRequest } from '@/lib/legal/evidence-helpers'
 
@@ -110,10 +110,10 @@ export async function POST(request: Request) {
     userAgent: request.headers.get('user-agent'),
   })
 }
-```
+\`\`\`
 
 **3. Offer Acceptance**
-```typescript
+\`\`\`typescript
 // app/api/offers/accept/route.ts
 import { logOfferAcceptance } from '@/lib/legal/evidence-helpers'
 
@@ -129,20 +129,20 @@ export async function POST(request: Request) {
     userAgent: request.headers.get('user-agent'),
   })
 }
-```
+\`\`\`
 
 ## Testing & Verification
 
 ### 1. Execute SQL Script
 
-```bash
+\`\`\`bash
 # In Supabase SQL Editor
 psql -f scripts/4000_EVIDENCE_EVENTS_SYSTEM.sql
-```
+\`\`\`
 
 ### 2. Test Canonicalization
 
-```typescript
+\`\`\`typescript
 import { canonicalizeEvent, verifyEventIntegrity } from '@/lib/legal/canonicalizeEvent'
 
 // Create test event
@@ -165,11 +165,11 @@ console.log('Hash:', hash)
 // Verify integrity
 const isValid = verifyEventIntegrity(canonical, hash)
 console.log('Valid:', isValid) // Should be true
-```
+\`\`\`
 
 ### 3. Query Evidence Events
 
-```sql
+\`\`\`sql
 -- View all evidence events
 SELECT * FROM evidence_events ORDER BY occurred_at DESC LIMIT 100;
 
@@ -183,7 +183,7 @@ SELECT * FROM evidence_events WHERE user_id = 'USER_ID';
 SELECT id, event_type, occurred_at 
 FROM evidence_events 
 WHERE hash_sha256 != encode(digest(payload_canonical::text, 'sha256'), 'hex');
-```
+\`\`\`
 
 ## Compliance Checklist
 

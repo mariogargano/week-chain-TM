@@ -26,10 +26,10 @@ El sistema ahora tiene autenticación de administrador completamente funcional p
 
 ### Paso 1: Ejecutar Script SQL (OPCIONAL)
 Si quieres ver el registro en `admin_users`:
-```sql
+\`\`\`sql
 -- Ejecutar en Supabase SQL Editor
 \i scripts/CREATE_ADMIN_USER.sql
-```
+\`\`\`
 
 ### Paso 2: Login Normal
 1. Ve a `/auth`

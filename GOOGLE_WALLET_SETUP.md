@@ -4,11 +4,11 @@
 
 Add these to your Vercel project environment variables:
 
-```bash
+\`\`\`bash
 GOOGLE_WALLET_ISSUER_ID=your_issuer_id_here
 GOOGLE_WALLET_SERVICE_ACCOUNT_EMAIL=your-service-account@project-id.iam.gserviceaccount.com
 GOOGLE_WALLET_SERVICE_ACCOUNT_KEY=-----BEGIN PRIVATE KEY-----\nYour_Private_Key_Here\n-----END PRIVATE KEY-----
-```
+\`\`\`
 
 ## Setup Steps
 
@@ -54,7 +54,7 @@ GOOGLE_WALLET_SERVICE_ACCOUNT_KEY=-----BEGIN PRIVATE KEY-----\nYour_Private_Key_
 
 From the JSON key file you downloaded:
 
-```json
+\`\`\`json
 {
   "type": "service_account",
   "project_id": "your-project-id",
@@ -63,7 +63,7 @@ From the JSON key file you downloaded:
   "client_email": "week-chain-wallet@your-project-id.iam.gserviceaccount.com",
   ...
 }
-```
+\`\`\`
 
 Set in Vercel:
 - `GOOGLE_WALLET_ISSUER_ID` = Your Issuer ID from step 4

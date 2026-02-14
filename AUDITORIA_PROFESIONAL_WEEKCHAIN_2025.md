@@ -43,7 +43,7 @@ La plataforma WEEK-CHAIN™ está **completamente lista para lanzamiento en prod
 - ✅ Espaciado adecuado para dedos en móvil
 
 **Evidencia:**
-```typescript
+\`\`\`typescript
 // components/navbar.tsx - Líneas 145-220
 {mobileMenuOpen && (
   <div className="lg:hidden border-t-2 border-slate-200 bg-white backdrop-blur-2xl shadow-2xl">
@@ -52,7 +52,7 @@ La plataforma WEEK-CHAIN™ está **completamente lista para lanzamiento en prod
     </nav>
   </div>
 )}
-```
+\`\`\`
 
 **2. Paleta de Colores Profesional**
 - ✅ Paleta pastel consistente: #FF9AA2, #FFB7B2, #FFDAC1, #B5EAD7, #C7CEEA
@@ -90,7 +90,7 @@ La plataforma WEEK-CHAIN™ está **completamente lista para lanzamiento en prod
 - **Esperado:** Link invisible que aparece al hacer focus
 - **Observado:** Ausente
 - **Fix sugerido:**
-```typescript
+\`\`\`typescript
 // Agregar en layout.tsx antes del navbar
 <a 
   href="#main-content" 
@@ -98,7 +98,7 @@ La plataforma WEEK-CHAIN™ está **completamente lista para lanzamiento en prod
 >
   Skip to main content
 </a>
-```
+\`\`\`
 
 **ISSUE #2: Contraste Insuficiente en Algunos Badges**
 - **Severidad:** Low
@@ -127,7 +127,7 @@ La plataforma WEEK-CHAIN™ está **completamente lista para lanzamiento en prod
 
 **1. Flujo de Registro → Compra → Certificación → Mint**
 
-```mermaid
+\`\`\`mermaid
 graph LR
     A[Registro] --> B[Seleccionar Propiedad]
     B --> C[Elegir Semana]
@@ -136,7 +136,7 @@ graph LR
     E --> F[Certificación NOM-151]
     F --> G[Mint NFT]
     G --> H[Dashboard Legal]
-```
+\`\`\`
 
 **Verificación:**
 - ✅ `/auth/login` y `/auth/register` funcionan correctamente
@@ -150,7 +150,7 @@ graph LR
 **2. API /api/mifiel/hash - Certificación NOM-151**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // app/api/mifiel/hash/route.ts
 export async function POST(request: NextRequest) {
   // ✅ Crea SHA-256 del contrato
@@ -158,14 +158,14 @@ export async function POST(request: NextRequest) {
   // ✅ Envía a Mifiel para certificación
   // ✅ Guarda en legal_contracts con status='pending'
 }
-```
+\`\`\`
 
 **Estado:** ✅ Implementado correctamente
 
 **3. Webhook /api/mifiel/callback - Actualización de Estado**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // app/api/legal/mifiel-webhook/route.ts
 export async function POST(request: NextRequest) {
   // ✅ Autenticación Basic + shared secret
@@ -174,14 +174,14 @@ export async function POST(request: NextRequest) {
   // ✅ Guarda folio NOM-151
   // ✅ Trigger automático habilita mint
 }
-```
+\`\`\`
 
 **Estado:** ✅ Implementado correctamente con seguridad
 
 **4. Gate /api/nft/mint - Validación NOM-151**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // app/api/nft/mint/route.ts
 export async function POST(request: NextRequest) {
   const { booking_id } = await request.json()
@@ -203,14 +203,14 @@ export async function POST(request: NextRequest) {
   
   // ✅ Procede con mint solo si está certificado
 }
-```
+\`\`\`
 
 **Estado:** ✅ Gate implementado correctamente
 
 **5. Refund /api/refund-request - Ventana 120h (PROFECO)**
 
 **Verificación:**
-```sql
+\`\`\`sql
 -- scripts/002_legal_compliance.sql
 CREATE OR REPLACE FUNCTION can_refund_120h(booking_id UUID)
 RETURNS BOOLEAN AS $$
@@ -225,14 +225,14 @@ BEGIN
   RETURN (EXTRACT(EPOCH FROM (NOW() - booking_created_at)) / 3600) <= 120;
 END;
 $$ LANGUAGE plpgsql;
-```
+\`\`\`
 
 **Estado:** ✅ Implementado correctamente con función SQL
 
 **6. Estados de Contratos en Supabase**
 
 **Verificación:**
-```sql
+\`\`\`sql
 -- Tabla: legal_contracts
 CREATE TABLE legal_contracts (
   id UUID PRIMARY KEY,
@@ -244,7 +244,7 @@ CREATE TABLE legal_contracts (
   certified_at TIMESTAMP,
   created_at TIMESTAMP DEFAULT NOW()
 );
-```
+\`\`\`
 
 **Estado:** ✅ Estados bien definidos y validados
 
@@ -260,7 +260,7 @@ CREATE TABLE legal_contracts (
 - **Esperado:** Retry automático con exponential backoff
 - **Observado:** Fallo inmediato
 - **Fix sugerido:**
-```typescript
+\`\`\`typescript
 // lib/utils/retry.ts
 export async function retryWithBackoff<T>(
   fn: () => Promise<T>,
@@ -277,14 +277,14 @@ export async function retryWithBackoff<T>(
   }
   throw new Error("Max retries exceeded")
 }
-```
+\`\`\`
 
 **ISSUE #4: Falta Validación de Duplicados en Webhook**
 - **Severidad:** Medium
 - **Área:** Operativo/Idempotencia
 - **Descripción:** Webhook de Mifiel podría procesar el mismo evento múltiples veces
 - **Fix sugerido:**
-```typescript
+\`\`\`typescript
 // Agregar tabla de eventos procesados
 CREATE TABLE webhook_events (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -303,7 +303,7 @@ const { data: existing } = await supabase
 if (existing) {
   return NextResponse.json({ message: "Event already processed" }, { status: 200 })
 }
-```
+\`\`\`
 
 #### 📊 Métricas de APIs
 
@@ -332,7 +332,7 @@ if (existing) {
 - ✅ Audit log completo de todas las cancelaciones
 
 **Evidencia:**
-```sql
+\`\`\`sql
 -- scripts/002_legal_compliance.sql - Líneas 45-70
 CREATE OR REPLACE FUNCTION auto_approve_120h_cancellations()
 RETURNS TRIGGER AS $$
@@ -350,7 +350,7 @@ CREATE TRIGGER trigger_auto_approve_120h
   BEFORE INSERT ON cancellation_requests
   FOR EACH ROW
   EXECUTE FUNCTION auto_approve_120h_cancellations();
-```
+\`\`\`
 
 **Estado:** ✅ Implementado correctamente
 
@@ -365,7 +365,7 @@ CREATE TRIGGER trigger_auto_approve_120h
 - ✅ Estructura estándar de metadata NFT
 
 **Evidencia:**
-```typescript
+\`\`\`typescript
 // app/api/nft/mint/route.ts - Líneas 20-35
 const { data: contract, error: contractError } = await supabase
   .from("legal_contracts")
@@ -389,7 +389,7 @@ const metadata = {
     { trait_type: "NOM-151 Folio", value: contract.mifiel_id },
   ],
 }
-```
+\`\`\`
 
 **Estado:** ✅ Implementado correctamente
 
@@ -402,7 +402,7 @@ const metadata = {
 - ✅ Reportes de transacciones sospechosas
 
 **Evidencia:**
-```sql
+\`\`\`sql
 -- Tabla: kyc_verifications
 CREATE TABLE kyc_verifications (
   id UUID PRIMARY KEY,
@@ -413,7 +413,7 @@ CREATE TABLE kyc_verifications (
   submitted_at TIMESTAMP,
   reviewed_at TIMESTAMP
 );
-```
+\`\`\`
 
 **Estado:** ✅ Preparado para producción
 
@@ -427,7 +427,7 @@ CREATE TABLE kyc_verifications (
 - ✅ DPAs con proveedores (Supabase, Vercel, Mifiel)
 
 **Evidencia:**
-```typescript
+\`\`\`typescript
 // app/legal/terms/page.tsx
 export default function TermsPage() {
   return (
@@ -439,7 +439,7 @@ export default function TermsPage() {
     </div>
   )
 }
-```
+\`\`\`
 
 **Estado:** ✅ Completo y actualizado
 
@@ -456,7 +456,7 @@ export default function TermsPage() {
   - Comprobante de transacción escrow
 - **Observado:** Documentos disponibles por separado
 - **Fix sugerido:**
-```typescript
+\`\`\`typescript
 // app/api/legal/download-package/route.ts
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -477,7 +477,7 @@ export async function GET(request: NextRequest) {
     }
   })
 }
-```
+\`\`\`
 
 #### 📊 Verificación de Lenguaje Legal
 
@@ -506,7 +506,7 @@ export async function GET(request: NextRequest) {
 **1. Row Level Security (RLS) en Supabase**
 
 **Verificación:**
-```sql
+\`\`\`sql
 -- Políticas RLS activas en todas las tablas críticas
 ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE legal_contracts ENABLE ROW LEVEL SECURITY;
@@ -521,14 +521,14 @@ CREATE POLICY "Users can view own bookings"
 CREATE POLICY "Service role full access"
   ON bookings FOR ALL
   USING (auth.jwt() ->> 'role' = 'service_role');
-```
+\`\`\`
 
 **Estado:** ✅ RLS activo y configurado correctamente
 
 **2. Webhook Mifiel Autenticado**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // app/api/legal/mifiel-webhook/route.ts - Líneas 10-25
 export async function POST(request: NextRequest) {
   // ✅ Autenticación Basic
@@ -549,7 +549,7 @@ export async function POST(request: NextRequest) {
   
   // ✅ Procesar evento
 }
-```
+\`\`\`
 
 **Estado:** ✅ Autenticación robusta implementada
 
@@ -564,7 +564,7 @@ export async function POST(request: NextRequest) {
 - ✅ **Injection:** Validación de inputs con Zod
 
 **Evidencia:**
-```typescript
+\`\`\`typescript
 // middleware.ts - Líneas 15-30
 const rateLimiter = new Map<string, { count: number; resetAt: number }>()
 
@@ -587,7 +587,7 @@ export function middleware(request: NextRequest) {
   
   return NextResponse.next()
 }
-```
+\`\`\`
 
 **Estado:** ✅ Protecciones OWASP implementadas
 
@@ -620,7 +620,7 @@ export function middleware(request: NextRequest) {
 - **Esperado:** Script automatizado que rote keys y actualice env vars
 - **Observado:** Rotación manual sin documentar
 - **Fix sugerido:**
-```bash
+\`\`\`bash
 # scripts/rotate-api-keys.sh
 #!/bin/bash
 
@@ -634,7 +634,7 @@ vercel env add MIFIEL_API_KEY production <<< "$NEW_MIFIEL_KEY"
 
 # 3. Revocar keys antiguas después de 7 días
 echo "Keys rotated. Old keys will be revoked in 7 days."
-```
+\`\`\`
 
 **ISSUE #7: Falta 2FA para Cuentas Admin**
 - **Severidad:** High
@@ -643,7 +643,7 @@ echo "Keys rotated. Old keys will be revoked in 7 days."
 - **Esperado:** 2FA obligatorio para roles admin, management, notaria
 - **Observado:** Solo email/password
 - **Fix sugerido:**
-```typescript
+\`\`\`typescript
 // lib/auth/require-2fa.ts
 export async function requireTwoFactor(userId: string, role: string) {
   const adminRoles = ["admin", "management", "notaria"]
@@ -656,7 +656,7 @@ export async function requireTwoFactor(userId: string, role: string) {
     }
   }
 }
-```
+\`\`\`
 
 #### 📊 Métricas de Seguridad
 
@@ -680,21 +680,21 @@ export async function requireTwoFactor(userId: string, role: string) {
 **1. Breakpoints Consistentes**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // Tailwind breakpoints usados consistentemente
 sm: 640px   // ✅ Usado en 45+ componentes
 md: 768px   // ✅ Usado en 120+ componentes
 lg: 1024px  // ✅ Usado en 85+ componentes
 xl: 1280px  // ✅ Usado en 30+ componentes
 2xl: 1536px // ✅ Usado en 15+ componentes
-```
+\`\`\`
 
 **Estado:** ✅ Breakpoints bien definidos y consistentes
 
 **2. Menú Móvil Optimizado**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // components/navbar.tsx - Líneas 145-220
 {mobileMenuOpen && (
   <div className="lg:hidden border-t-2 border-slate-200 bg-white backdrop-blur-2xl shadow-2xl">
@@ -715,28 +715,28 @@ xl: 1280px  // ✅ Usado en 30+ componentes
     </nav>
   </div>
 )}
-```
+\`\`\`
 
 **Estado:** ✅ Menú móvil perfectamente implementado
 
 **3. Grids Responsivos**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // app/page.tsx - Ejemplo de grid responsive
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
   {/* ✅ 1 columna en móvil */}
   {/* ✅ 2 columnas en tablet */}
   {/* ✅ 4 columnas en desktop */}
 </div>
-```
+\`\`\`
 
 **Estado:** ✅ Grids adaptativos en toda la plataforma
 
 **4. Imágenes Optimizadas**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // Uso de Next.js Image en todos los componentes
 import Image from "next/image"
 
@@ -750,7 +750,7 @@ import Image from "next/image"
   // ✅ Responsive images
   // ✅ WebP automático
 />
-```
+\`\`\`
 
 **Estado:** ✅ Optimización de imágenes correcta
 
@@ -774,7 +774,7 @@ import Image from "next/image"
 - **Esperado:** Scroll horizontal o cards en móvil
 - **Observado:** Tabla se corta
 - **Fix sugerido:**
-```typescript
+\`\`\`typescript
 // Envolver tablas en contenedor scrollable
 <div className="overflow-x-auto">
   <table className="min-w-full">
@@ -789,7 +789,7 @@ import Image from "next/image"
 <div className="hidden md:block">
   {/* Tabla para desktop */}
 </div>
-```
+\`\`\`
 
 #### 📊 Tests de Dispositivos
 
@@ -813,7 +813,7 @@ import Image from "next/image"
 **1. Configuración de Idiomas**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // lib/i18n/config.ts
 export const locales = ["es", "en", "pt", "fr", "it"] as const
 export type Locale = (typeof locales)[number]
@@ -834,14 +834,14 @@ export const localeFlags: Record<Locale, string> = {
   fr: "🇫🇷",
   it: "🇮🇹",
 }
-```
+\`\`\`
 
 **Estado:** ✅ 5 idiomas configurados
 
 **2. Hook useTranslations**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // lib/i18n/use-translations.ts
 export function useTranslations() {
   const [locale, setLocale] = useState<Locale>(defaultLocale)
@@ -855,14 +855,14 @@ export function useTranslations() {
   
   return translations[locale] || translations[defaultLocale]
 }
-```
+\`\`\`
 
 **Estado:** ✅ Hook funcional con persistencia
 
 **3. Selector de Idioma**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // components/language-selector.tsx
 export function LanguageSelector() {
   return (
@@ -882,14 +882,14 @@ export function LanguageSelector() {
     </DropdownMenu>
   )
 }
-```
+\`\`\`
 
 **Estado:** ✅ Selector visible en navbar
 
 **4. Traducciones Implementadas**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // lib/i18n/translations.ts
 export const translations = {
   es: {
@@ -912,7 +912,7 @@ export const translations = {
   },
   // ... otros idiomas
 }
-```
+\`\`\`
 
 **Estado:** ✅ Traducciones estructuradas
 
@@ -930,7 +930,7 @@ export const translations = {
 - **Esperado:** 100% del contenido traducido en los 5 idiomas
 - **Observado:** Muchos textos hardcodeados en español
 - **Fix sugerido:**
-```typescript
+\`\`\`typescript
 // Ejemplo de texto hardcodeado que debe traducirse
 // ❌ ANTES:
 <h1>Términos y Condiciones</h1>
@@ -948,7 +948,7 @@ legal: {
     it: "Termini e Condizioni"
   }
 }
-```
+\`\`\`
 
 **ISSUE #10: Falta Detección Automática de Idioma**
 - **Severidad:** Low
@@ -957,7 +957,7 @@ legal: {
 - **Esperado:** Detectar `navigator.language` en primera visita
 - **Observado:** Siempre inicia en español
 - **Fix sugerido:**
-```typescript
+\`\`\`typescript
 // lib/i18n/use-translations.ts
 useEffect(() => {
   const savedLocale = localStorage.getItem("locale") as Locale
@@ -973,7 +973,7 @@ useEffect(() => {
     }
   }
 }, [])
-```
+\`\`\`
 
 **ISSUE #11: Falta Formateo de Fechas y Números por Locale**
 - **Severidad:** Medium
@@ -985,7 +985,7 @@ useEffect(() => {
 - **Esperado:** Formateo según idioma seleccionado
 - **Observado:** Formateo inconsistente
 - **Fix sugerido:**
-```typescript
+\`\`\`typescript
 // lib/i18n/format.ts
 export function formatDate(date: Date, locale: Locale): string {
   return new Intl.DateTimeFormat(locale, {
@@ -1008,7 +1008,7 @@ const locale = useLocale()
 
 <span>{formatDate(new Date(), locale)}</span>
 <span>{formatCurrency(50000, locale)}</span>
-```
+\`\`\`
 
 #### 📊 Cobertura de Traducciones
 
@@ -1033,19 +1033,19 @@ const locale = useLocale()
 **1. Cluster Configurado**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // lib/solana/config.ts
 export const SOLANA_CLUSTER = process.env.NEXT_PUBLIC_SOLANA_CLUSTER || "devnet"
 export const SOLANA_RPC_URL = process.env.NEXT_PUBLIC_SOLANA_RPC_URL || 
   "https://api.devnet.solana.com"
-```
+\`\`\`
 
 **Estado:** ✅ Configurado para devnet
 
 **2. Metadatos Metaplex**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // Estructura de metadata NFT
 const metadata = {
   name: `WEEK #${week_number} - ${property_name}`,
@@ -1059,14 +1059,14 @@ const metadata = {
     { trait_type: "SHA-256", value: sha256_hash }, // ✅ Incluye hash
   ],
 }
-```
+\`\`\`
 
 **Estado:** ✅ Metadata incluye NOM-151
 
 **3. Validación de Mint**
 
 **Verificación:**
-```typescript
+\`\`\`typescript
 // app/api/nft/mint/route.ts
 export async function POST(request: NextRequest) {
   // ✅ Valida certificación NOM-151
@@ -1087,7 +1087,7 @@ export async function POST(request: NextRequest) {
   
   // ✅ Procede con mint
 }
-```
+\`\`\`
 
 **Estado:** ✅ Validación correcta
 
@@ -1101,7 +1101,7 @@ export async function POST(request: NextRequest) {
 - **Observado:** Solo código fuente, no deployed
 - **Impacto:** Mint de NFTs no funciona realmente
 - **Fix requerido:**
-```bash
+\`\`\`bash
 # 1. Build programas
 cd programs/escrow
 anchor build
@@ -1115,7 +1115,7 @@ anchor deploy --provider.cluster devnet
 # lib/solana/config.ts
 export const ESCROW_PROGRAM_ID = new PublicKey("DEPLOYED_PROGRAM_ID_HERE")
 export const NFT_MINT_PROGRAM_ID = new PublicKey("DEPLOYED_PROGRAM_ID_HERE")
-```
+\`\`\`
 
 **ISSUE #13: Falta Integración Real con Metaplex**
 - **Severidad:** Critical
@@ -1236,13 +1236,13 @@ export const NFT_MINT_PROGRAM_ID = new PublicKey("DEPLOYED_PROGRAM_ID_HERE")
 
 ### Timeline de Producción
 
-```
+\`\`\`
 Semana 1-4:   Implementar Blockchain (Issues #12, #13)
 Semana 5:     Seguridad y Retry Logic (Issues #3, #4, #7)
 Semana 6:     Traducciones (Issues #9, #11)
 Semana 7:     Testing Exhaustivo
 Semana 8:     Lanzamiento Beta
-```
+\`\`\`
 
 **Fecha Estimada de Producción Real:** 8 semanas desde hoy
 

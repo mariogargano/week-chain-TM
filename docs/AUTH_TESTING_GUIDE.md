@@ -17,7 +17,7 @@ WEEK-CHAIN utiliza **Supabase Auth** con soporte para:
 
 Verifica que tengas estas variables en tu proyecto de Vercel:
 
-```env
+\`\`\`env
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
@@ -31,7 +31,7 @@ NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
 # Redirect URLs
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000/dashboard
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
-```
+\`\`\`
 
 ### 2. Ejecutar Scripts SQL
 
@@ -60,18 +60,18 @@ Ejecuta estos scripts en **Supabase Dashboard → SQL Editor** en este orden:
 Abre Supabase Dashboard y verifica:
 
 **auth.users:**
-```sql
+\`\`\`sql
 SELECT id, email, email_confirmed_at, created_at
 FROM auth.users
 WHERE email = 'juan.test@example.com';
-```
+\`\`\`
 
 **profiles:**
-```sql
+\`\`\`sql
 SELECT id, username, display_name, email, role
 FROM public.profiles
 WHERE email = 'juan.test@example.com';
-```
+\`\`\`
 
 ✅ **Resultado Esperado:**
 - Usuario existe en auth.users
@@ -109,7 +109,7 @@ WHERE email = 'juan.test@example.com';
 
 #### 2.3 Verificaciones Backend
 
-```sql
+\`\`\`sql
 -- Verificar usuario OAuth
 SELECT 
   id, 
@@ -123,7 +123,7 @@ WHERE email = 'tu-email-google@gmail.com';
 SELECT id, username, display_name, email, role, avatar_url
 FROM public.profiles
 WHERE email = 'tu-email-google@gmail.com';
-```
+\`\`\`
 
 ✅ **Resultado Esperado:**
 - Usuario con provider='google' en auth.users
@@ -141,16 +141,16 @@ WHERE email = 'tu-email-google@gmail.com';
 
 Ejecuta `094_setup_admin_access.sql` después de cambiar el email a tu correo:
 
-```sql
+\`\`\`sql
 -- 1. Obtener tu user ID
 SELECT id, email FROM auth.users WHERE email = 'TU_EMAIL_AQUI@example.com';
 
 -- 2. Ejecutar el script con tu email
-```
+\`\`\`
 
 **Opción B: Manual via SQL**
 
-```sql
+\`\`\`sql
 -- Reemplaza 'tu-email@example.com' con tu email real
 DO $$
 DECLARE
@@ -186,7 +186,7 @@ BEGIN
       status = 'active';
   END IF;
 END $$;
-```
+\`\`\`
 
 #### 3.2 Test Admin Access
 
@@ -196,7 +196,7 @@ END $$;
 
 #### 3.3 Verificar Logs de Auditoria
 
-```sql
+\`\`\`sql
 SELECT 
   actor_email,
   action,
@@ -207,7 +207,7 @@ FROM admin_audit_log
 WHERE actor_email = 'tu-email@example.com'
 ORDER BY created_at DESC
 LIMIT 10;
-```
+\`\`\`
 
 ✅ **Resultado Esperado:**
 - Log con action='ADMIN_ACCESS_GRANTED'
@@ -231,9 +231,9 @@ LIMIT 10;
 
 1. Intenta hacer login 6 veces con password incorrecta
 2. En el 6to intento deberías ver:
-   ```
+   \`\`\`
    "Too many signup attempts. Please try again in X minutes."
-   ```
+   \`\`\`
 
 #### 4.3 Test Password Strength
 
@@ -249,7 +249,7 @@ LIMIT 10;
 
 ### 1. Verificar Tablas de Email
 
-```sql
+\`\`\`sql
 -- Verificar templates
 SELECT template_type, name, subject, active
 FROM email_templates
@@ -265,11 +265,11 @@ SELECT
 FROM email_logs
 ORDER BY sent_at DESC
 LIMIT 10;
-```
+\`\`\`
 
 ### 2. Test Welcome Email
 
-```sql
+\`\`\`sql
 -- Simular envío manual
 INSERT INTO email_logs (
   template_type,
@@ -284,7 +284,7 @@ INSERT INTO email_logs (
   'sent',
   NOW()
 );
-```
+\`\`\`
 
 ---
 
@@ -295,7 +295,7 @@ INSERT INTO email_logs (
 **Síntoma:** Usuario existe en auth.users pero no en profiles
 
 **Solución:**
-```sql
+\`\`\`sql
 -- Verificar trigger existe
 SELECT tgname FROM pg_trigger WHERE tgname = 'on_auth_user_created';
 
@@ -314,7 +314,7 @@ SELECT
 FROM auth.users au
 LEFT JOIN public.profiles p ON p.id = au.id
 WHERE p.id IS NULL;
-```
+\`\`\`
 
 ### Problema 2: Google OAuth No Funciona
 
@@ -324,15 +324,15 @@ WHERE p.id IS NULL;
 
 **Solución:**
 1. Verifica variables de entorno:
-   ```bash
+   \`\`\`bash
    echo $GOOGLE_CLIENT_ID
    echo $GOOGLE_CLIENT_SECRET
-   ```
+   \`\`\`
 2. Verifica Authorized Redirect URIs en Google Console
 3. Checa logs del API:
-   ```
+   \`\`\`
    /api/auth/google → debe mostrar logs en consola
-   ```
+   \`\`\`
 
 ### Problema 3: No Puedo Acceder a Admin Panel
 
@@ -341,7 +341,7 @@ WHERE p.id IS NULL;
 - "Access Denied"
 
 **Diagnóstico:**
-```sql
+\`\`\`sql
 -- 1. Verificar tu rol
 SELECT id, email, role FROM profiles WHERE email = 'tu-email@example.com';
 
@@ -355,7 +355,7 @@ SELECT action, metadata
 FROM admin_audit_log 
 WHERE actor_email = 'tu-email@example.com'
 ORDER BY created_at DESC LIMIT 5;
-```
+\`\`\`
 
 **Solución:**
 - Ejecuta `094_setup_admin_access.sql` con tu email

@@ -46,12 +46,12 @@ El error "Este contenido está bloqueado" ocurre porque Google OAuth no está co
 ### 3. Variables de Entorno
 
 Asegúrate de que estas variables estén configuradas (ya las tienes):
-```
+\`\`\`
 NEXT_PUBLIC_SUPABASE_URL=https://crntumktmfpgkyzfoewj.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_anon_key
 GOOGLE_CLIENT_ID=tu_client_id
 GOOGLE_CLIENT_SECRET=tu_client_secret
-```
+\`\`\`
 
 ### 4. Testing
 

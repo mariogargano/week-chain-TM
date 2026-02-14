@@ -16,12 +16,12 @@
 
 ### 🔗 Capa de Registro Blockchain
 
-```
+\`\`\`
 CERTIFICADO SVC → SUPABASE DATABASE → SOLANA BLOCKCHAIN
          ↓               ↓                    ↓
     Emisión        Almacenamiento      Registro Hash
     Digital        Relacional          Inmutable
-```
+\`\`\`
 
 **Propósito del Registro Solana:**
 - ✅ Trazabilidad inmutable de emisión
@@ -37,7 +37,7 @@ CERTIFICADO SVC → SUPABASE DATABASE → SOLANA BLOCKCHAIN
 
 ### 📊 Información Registrada en Solana
 
-```typescript
+\`\`\`typescript
 interface SolanaRegistro {
   certificate_id: string        // ID del certificado SVC
   user_id: string               // ID del titular
@@ -46,7 +46,7 @@ interface SolanaRegistro {
   validity_period: string       // "15 years"
   transaction_signature: string // Firma de la transacción Solana
 }
-```
+\`\`\`
 
 ### 🎯 Beneficios para WEEK-CHAIN
 

@@ -36,38 +36,38 @@ La rotación regular de claves de API es una práctica de seguridad crítica que
 ### Preparación (1 día antes)
 
 1. **Notificar al equipo**
-   ```bash
+   \`\`\`bash
    # Enviar notificación en Slack/Discord
    "🔐 Rotación de claves programada para mañana a las 10:00 AM UTC"
-   ```
+   \`\`\`
 
 2. **Crear backup**
-   ```bash
+   \`\`\`bash
    ./scripts/backup-keys.sh production
-   ```
+   \`\`\`
 
 3. **Verificar estado actual**
-   ```bash
+   \`\`\`bash
    ./scripts/verify-keys.sh production
-   ```
+   \`\`\`
 
 ### Ejecución (Día de rotación)
 
 #### Opción 1: Script Automatizado (Recomendado)
 
-```bash
+\`\`\`bash
 # Rotar todas las claves
 ./scripts/rotate-keys.sh production
 
 # O rotar servicio específico
 ./scripts/rotate-keys.sh production --service stripe
-```
+\`\`\`
 
 #### Opción 2: Manual
 
 ##### 1. Stripe
 
-```bash
+\`\`\`bash
 # 1. Generar nueva clave en Stripe Dashboard
 # https://dashboard.stripe.com/apikeys
 
@@ -80,11 +80,11 @@ curl https://api.stripe.com/v1/balance \
   -u sk_live_NEW_KEY:
 
 # 4. Revocar clave antigua en Stripe Dashboard
-```
+\`\`\`
 
 ##### 2. Mifiel
 
-```bash
+\`\`\`bash
 # 1. Generar nueva clave en Mifiel Dashboard
 # https://app.mifiel.com/api-keys
 
@@ -97,11 +97,11 @@ curl -X POST https://weekchain.com/api/mifiel/callback \
   -H "Authorization: Basic $(echo -n 'NEW_KEY:NEW_SECRET' | base64)"
 
 # 4. Revocar clave antigua
-```
+\`\`\`
 
 ##### 3. Supabase
 
-```bash
+\`\`\`bash
 # 1. Generar nueva Service Role Key
 # https://supabase.com/dashboard/project/YOUR_PROJECT/settings/api
 
@@ -114,11 +114,11 @@ curl https://YOUR_PROJECT.supabase.co/rest/v1/users \
   -H "Authorization: Bearer NEW_SERVICE_ROLE_KEY"
 
 # 4. Revocar clave antigua (no disponible en Supabase, se sobrescribe)
-```
+\`\`\`
 
 ##### 4. Conekta
 
-```bash
+\`\`\`bash
 # 1. Generar nueva clave en Conekta Dashboard
 # https://admin.conekta.com/settings/keys
 
@@ -130,11 +130,11 @@ curl https://api.conekta.io/customers \
   -u NEW_PRIVATE_KEY:
 
 # 4. Revocar clave antigua
-```
+\`\`\`
 
 ##### 5. Resend
 
-```bash
+\`\`\`bash
 # 1. Generar nueva clave en Resend Dashboard
 # https://resend.com/api-keys
 
@@ -148,11 +148,11 @@ curl https://api.resend.com/emails \
   -d '{"from":"test@weekchain.com","to":"test@example.com","subject":"Test","html":"Test"}'
 
 # 4. Revocar clave antigua
-```
+\`\`\`
 
 ### Verificación Post-Rotación
 
-```bash
+\`\`\`bash
 # 1. Verificar todas las claves
 ./scripts/verify-keys.sh production
 
@@ -166,13 +166,13 @@ vercel logs --follow
 # - Crear un pago de prueba
 # - Firmar un documento de prueba
 # - Enviar un email de prueba
-```
+\`\`\`
 
 ### Revocación de Claves Antiguas (7 días después)
 
 ⚠️ **IMPORTANTE:** Espera 7 días antes de revocar las claves antiguas para asegurar que no haya problemas.
 
-```bash
+\`\`\`bash
 # Registrar revocación
 echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ") - Claves antiguas revocadas" >> logs/key-rotation.log
 
@@ -181,7 +181,7 @@ echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ") - Claves antiguas revocadas" >> logs/key-
 # - Mifiel: Dashboard > API Keys > Delete
 # - Conekta: Dashboard > Settings > Keys > Delete
 # - Resend: Dashboard > API Keys > Delete
-```
+\`\`\`
 
 ---
 
@@ -200,7 +200,7 @@ echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ") - Claves antiguas revocadas" >> logs/key-
 
 Si una clave se ve comprometida, ejecuta inmediatamente:
 
-```bash
+\`\`\`bash
 # 1. Revocar clave comprometida INMEDIATAMENTE
 # (en el dashboard del servicio)
 
@@ -210,7 +210,7 @@ Si una clave se ve comprometida, ejecuta inmediatamente:
 # 3. Notificar al equipo
 # 4. Investigar el incidente
 # 5. Actualizar documentación de seguridad
-```
+\`\`\`
 
 ---
 

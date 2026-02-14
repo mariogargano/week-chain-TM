@@ -13,7 +13,7 @@ WEEK-CHAIN™ soporta 5 idiomas:
 
 ### Archivos Principales
 
-```
+\`\`\`
 lib/i18n/
 ├── config.ts           # Configuración de locales
 ├── translations.ts     # Traducciones por idioma
@@ -21,13 +21,13 @@ lib/i18n/
 ├── use-locale.ts       # Hook avanzado con formateo
 ├── locale.ts           # Funciones de detección y cambio
 └── format.ts           # Funciones de formateo
-```
+\`\`\`
 
 ## Uso Básico
 
 ### 1. Usar Traducciones en Componentes
 
-```typescript
+\`\`\`typescript
 import { useTranslations } from "@/lib/i18n/use-translations"
 
 export function MyComponent() {
@@ -40,11 +40,11 @@ export function MyComponent() {
     </div>
   )
 }
-```
+\`\`\`
 
 ### 2. Usar Hook Avanzado con Formateo
 
-```typescript
+\`\`\`typescript
 import { useI18n } from "@/lib/i18n/use-locale"
 
 export function MyComponent() {
@@ -64,58 +64,58 @@ export function MyComponent() {
     </div>
   )
 }
-```
+\`\`\`
 
 ## Funciones de Formateo
 
 ### fmtDate(date, locale)
 Formatea fechas según el locale:
-```typescript
+\`\`\`typescript
 fmtDate(new Date(), "es") // "29 de enero de 2025"
 fmtDate(new Date(), "en") // "January 29, 2025"
-```
+\`\`\`
 
 ### fmtCurrency(number, locale, currency)
 Formatea moneda:
-```typescript
+\`\`\`typescript
 fmtCurrency(50000, "es", "USD") // "$50,000.00"
 fmtCurrency(50000, "en", "USD") // "$50,000.00"
 fmtCurrency(50000, "es", "MXN") // "$50,000.00 MXN"
-```
+\`\`\`
 
 ### fmtNumber(number, locale)
 Formatea números:
-```typescript
+\`\`\`typescript
 fmtNumber(1234567, "es") // "1.234.567"
 fmtNumber(1234567, "en") // "1,234,567"
-```
+\`\`\`
 
 ### fmtPercent(number, locale)
 Formatea porcentajes:
-```typescript
+\`\`\`typescript
 fmtPercent(0.15, "es") // "15,00%"
 fmtPercent(0.15, "en") // "15.00%"
-```
+\`\`\`
 
 ### fmtDateTime(date, locale)
 Formatea fecha y hora:
-```typescript
+\`\`\`typescript
 fmtDateTime(new Date(), "es") // "29 de enero de 2025, 14:30"
 fmtDateTime(new Date(), "en") // "January 29, 2025, 2:30 PM"
-```
+\`\`\`
 
 ### fmtRelativeTime(date, locale)
 Formatea tiempo relativo:
-```typescript
+\`\`\`typescript
 fmtRelativeTime(yesterday, "es") // "hace 1 día"
 fmtRelativeTime(yesterday, "en") // "1 day ago"
-```
+\`\`\`
 
 ## Agregar Nuevas Traducciones
 
 ### 1. Editar `lib/i18n/translations.ts`
 
-```typescript
+\`\`\`typescript
 export const translations = {
   es: {
     // ... existing translations
@@ -133,24 +133,24 @@ export const translations = {
   },
   // ... otros idiomas
 }
-```
+\`\`\`
 
 ### 2. Usar en Componentes
 
-```typescript
+\`\`\`typescript
 const t = useTranslations()
 return <h1>{t.myNewSection.title}</h1>
-```
+\`\`\`
 
 ## Selector de Idioma
 
 El componente `LanguageSelector` ya está integrado en el navbar:
 
-```typescript
+\`\`\`typescript
 import { LanguageSelector } from "@/components/language-selector"
 
 <LanguageSelector />
-```
+\`\`\`
 
 ## Detección Automática
 
@@ -162,7 +162,7 @@ El sistema detecta automáticamente el idioma del navegador:
 
 ## Cambiar Idioma Programáticamente
 
-```typescript
+\`\`\`typescript
 import { setLocale } from "@/lib/i18n/locale"
 
 // Cambiar a inglés
@@ -170,7 +170,7 @@ setLocale("en")
 
 // Cambiar a portugués
 setLocale("pt")
-```
+\`\`\`
 
 ## Mejores Prácticas
 
@@ -185,10 +185,10 @@ Para testear diferentes idiomas:
 
 1. Cambiar idioma en el selector del navbar
 2. O usar localStorage:
-   ```javascript
+   \`\`\`javascript
    localStorage.setItem("locale", "en")
    window.location.reload()
-   ```
+   \`\`\`
 
 ## Roadmap
 

@@ -69,7 +69,7 @@ La plataforma WEEK-CHAIN ha alcanzado un nivel de madurez excepcional después d
 ## 🏗️ ARQUITECTURA DEL SISTEMA
 
 ### **Stack Tecnológico**
-```
+\`\`\`
 Frontend:
 ├── Next.js 15.5.4 (App Router)
 ├── React 19.1.0
@@ -89,7 +89,7 @@ Integraciones:
 ├── Supabase Auth
 ├── Resend (Emails)
 └── Solana (NFTs)
-```
+\`\`\`
 
 ### **Base de Datos: 64 Tablas Operativas** ✅
 
@@ -160,7 +160,7 @@ Integraciones:
 
 ### **Flujo de Pago Completo** ✅
 
-```
+\`\`\`
 Usuario → Selecciona Semana → Elige Método de Pago
     ↓
 Pago Procesado → Voucher Generado → Escrow Deposit
@@ -168,7 +168,7 @@ Pago Procesado → Voucher Generado → Escrow Deposit
 Admin Confirma → Reservación Creada → NFT Minted
     ↓
 Usuario Recibe NFT → Dashboard Actualizado
-```
+\`\`\`
 
 **Tiempo estimado:** 2-5 minutos (USDC/Tarjeta) | 1-3 días (OXXO)
 
@@ -239,23 +239,23 @@ Usuario Recibe NFT → Dashboard Actualizado
 **TODOs Críticos Identificados:**
 
 1. **`components/token-balance-card.tsx:15`**
-   ```typescript
+   \`\`\`typescript
    // TODO: Fetch actual token balances from Solana
-   ```
+   \`\`\`
    **Impacto:** Medio  
    **Solución:** Implementar consulta real a Solana para balances WEEK
 
 2. **`app/api/weeks/ota-listing/route.ts:33`**
-   ```typescript
+   \`\`\`typescript
    // TODO: Integrate with actual OTA APIs (Airbnb, Booking.com, VRBO)
-   ```
+   \`\`\`
    **Impacto:** Bajo (Feature futura)  
    **Solución:** Integración con APIs de OTAs en v2.0
 
 3. **`app/api/legal/request-cancellation/route.ts:97`**
-   ```typescript
+   \`\`\`typescript
    // TODO: Process actual refund via Stripe/blockchain
-   ```
+   \`\`\`
    **Impacto:** Alto  
    **Solución:** Implementar lógica de reembolso real
 
@@ -270,13 +270,13 @@ Usuario Recibe NFT → Dashboard Actualizado
 ### **Logging System** ✅
 
 **Sistema Centralizado:**
-```typescript
+\`\`\`typescript
 // lib/config/logger.ts
 - debug() - Solo en desarrollo
 - info() - Información general
 - warn() - Advertencias
 - error() - Errores críticos
-```
+\`\`\`
 
 **Configuración:**
 - ✅ Auto-deshabilitado en producción
@@ -357,9 +357,9 @@ Usuario Recibe NFT → Dashboard Actualizado
 ### **Para Lanzamiento Inmediato** (1-2 días)
 
 1. **Ejecutar Script SQL de Stefano Cionini**
-   ```sql
+   \`\`\`sql
    -- scripts/030_add_stefano_cionini.sql
-   ```
+   \`\`\`
    Para que aparezca en el workspace del equipo
 
 2. **Configurar Webhooks en Producción**

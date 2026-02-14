@@ -47,7 +47,7 @@ WEEK-CHAIN es una plataforma de tokenización y gestión de propiedades vacacion
 
 ### 🔧 Estructura de Proyecto
 
-```
+\`\`\`
 weekchainmvp/
 ├── app/                          # Next.js App Router
 │   ├── (auth)/                   # Rutas de autenticación
@@ -92,16 +92,16 @@ weekchainmvp/
 │   └── [90+ migration scripts]/
 └── middleware.ts                 # Middleware de seguridad
 
-```
+\`\`\`
 
 ### 🔄 Flujo de Datos
 
-```
+\`\`\`
 Usuario → Middleware (Auth + Rate Limit) → App Router → API Routes → Supabase → PostgreSQL
                                                             ↓
                                                      External APIs
                                                   (Conekta, Legalario, etc.)
-```
+\`\`\`
 
 ---
 
@@ -287,7 +287,7 @@ Usuario → Middleware (Auth + Rate Limit) → App Router → API Routes → Sup
 
 ### 🔐 A. Flujo de Registro y Autenticación
 
-```mermaid
+\`\`\`mermaid
 graph TD
     A[Usuario llega a /auth] --> B{¿Tiene cuenta?}
     B -->|No| C[Registro con Email/Password]
@@ -313,7 +313,7 @@ graph TD
     N -->|broker| R[/dashboard/broker]
     N -->|owner| S[/dashboard/owner]
     N -->|otros| T[/dashboard/...]
-```
+\`\`\`
 
 **Archivos Involucrados:**
 - `app/auth/page.tsx` - Página principal de auth con formularios
@@ -339,7 +339,7 @@ graph TD
 
 ### 🏠 B. Flujo de Solicitud de Reservación (REQUEST → OFFER → CONFIRM)
 
-```mermaid
+\`\`\`mermaid
 graph TD
     A[Usuario autenticado] --> B[Navega a /destinos]
     B --> C[Ve catálogo de propiedades]
@@ -374,7 +374,7 @@ graph TD
     U --> W[Cambiar status a confirmed]
     W --> X[Redirigir a pago]
     X --> Y[Flujo de Pago]
-```
+\`\`\`
 
 **Archivos Involucrados:**
 - `app/destinos/page.tsx` - Catálogo de destinos
@@ -403,7 +403,7 @@ graph TD
 
 ### 💳 C. Flujo de Pago
 
-```mermaid
+\`\`\`mermaid
 graph TD
     A[Usuario confirma reservación] --> B{¿Método de pago?}
     
@@ -434,7 +434,7 @@ graph TD
     R --> S[Actualizar week<br/>owner_wallet]
     S --> T[Enviar email confirmación]
     T --> U[Dashboard actualizado]
-```
+\`\`\`
 
 **Archivos Involucrados:**
 - `app/api/certificates/create-checkout/route.ts`
@@ -456,7 +456,7 @@ graph TD
 
 ### 📄 D. Flujo de Documentos Legales
 
-```mermaid
+\`\`\`mermaid
 graph TD
     A[Usuario completa pago] --> B[Sistema genera contrato]
     B --> C[POST /api/legal/generate-contract]
@@ -479,7 +479,7 @@ graph TD
     N --> O[POST /api/legal/download]
     O --> P[Guardar en signed_contracts]
     P --> Q[Disponible en dashboard]
-```
+\`\`\`
 
 **Archivos Involucrados:**
 - `app/api/legal/generate-contract/route.ts`
@@ -498,7 +498,7 @@ graph TD
 
 ### 🏢 E. Flujo de Submisión de Propiedad (Property Owners)
 
-```mermaid
+\`\`\`mermaid
 graph TD
     A[Propietario registrado] --> B[Dashboard Owner]
     B --> C[Click Submit New Property]
@@ -528,7 +528,7 @@ graph TD
     S --> T[Crear property en properties]
     T --> U[Generar weeks]
     U --> V[Propiedad activa en catálogo]
-```
+\`\`\`
 
 **Archivos Involucrados:**
 - `app/dashboard/owner/page.tsx`
@@ -549,7 +549,7 @@ graph TD
 
 ### 💰 F. Flujo de Comisiones de Broker
 
-```mermaid
+\`\`\`mermaid
 graph TD
     A[Broker registrado] --> B[Obtiene referral_code]
     B --> C[Comparte código con prospectos]
@@ -583,7 +583,7 @@ graph TD
     
     S --> T[Actualizar profiles.total_sales]
     T --> U[Notificar broker]
-```
+\`\`\`
 
 **Archivos Involucrados:**
 - `app/dashboard/broker/page.tsx`
@@ -602,7 +602,7 @@ graph TD
 
 ### 🏦 G. Flujo de VAFI (DeFi Lending)
 
-```mermaid
+\`\`\`mermaid
 graph TD
     A[NFT Holder] --> B[Dashboard VAFI]
     B --> C[Selecciona NFT como colateral]
@@ -633,7 +633,7 @@ graph TD
     
     R -->|No| V{¿Vencido?}
     V -->|Sí| N
-```
+\`\`\`
 
 **Archivos Involucrados:**
 - `app/dashboard/vafi/page.tsx`
@@ -652,7 +652,7 @@ graph TD
 
 ### 🗳️ H. Flujo de DAO Governance
 
-```mermaid
+\`\`\`mermaid
 graph TD
     A[Token Holder] --> B[Dashboard DAO]
     B --> C[Crear propuesta]
@@ -687,7 +687,7 @@ graph TD
     S --> V[execution_status: executed]
     T --> V
     U --> V
-```
+\`\`\`
 
 **Archivos Involucrados:**
 - `app/dashboard/dao/page.tsx`
@@ -950,7 +950,7 @@ graph TD
 
 ### 🔐 Stack de Autenticación
 
-```
+\`\`\`
 Supabase Auth (Base)
     ↓
 Custom 2FA (TOTP)
@@ -958,7 +958,7 @@ Custom 2FA (TOTP)
 Session Management
     ↓
 Role-Based Access Control (RBAC)
-```
+\`\`\`
 
 ### 🔑 Componentes
 
@@ -1003,7 +1003,7 @@ Role-Based Access Control (RBAC)
 #### C. **Role-Based Access Control (RBAC)**
 
 **Roles Disponibles:**
-```typescript
+\`\`\`typescript
 type UserRole =
   | 'admin'
   | 'user'
@@ -1018,10 +1018,10 @@ type UserRole =
   | 'of-counsel'
   | 'dao-member'
   | 'vafi-user'
-```
+\`\`\`
 
 **Jerarquía:**
-```
+\`\`\`
 admin (ALL access)
   ↓
 staff (operational)
@@ -1035,7 +1035,7 @@ broker (affiliates)
 member (NFT holders)
   ↓
 user (general users)
-```
+\`\`\`
 
 **Determinación de Rol:**
 1. Check `admin_users` table (email = corporativo@morises.com)
@@ -1057,7 +1057,7 @@ user (general users)
 - Server-side validation
 
 **Middleware Flow:**
-```typescript
+\`\`\`typescript
 Request
   ↓
 middleware.ts
@@ -1075,7 +1075,7 @@ Protected Route Check
 Security Headers
   ↓
 Response
-```
+\`\`\`
 
 ---
 
@@ -1233,13 +1233,13 @@ Response
 ### 🔒 A. Seguridad General
 
 #### **Rate Limiting**
-```typescript
+\`\`\`typescript
 // middleware.ts
 const RATE_LIMIT = {
   general: 120, // requests per minute
   webhooks: 10,  // requests per minute
 }
-```
+\`\`\`
 
 #### **Security Headers**
 - `X-Frame-Options: DENY`
@@ -1362,7 +1362,7 @@ const RATE_LIMIT = {
 
 ### 📂 Estructura de APIs
 
-```
+\`\`\`
 /api/
 ├── certificates/           # Gestión de certificados NFT
 │   ├── activate/          # Activar certificado
@@ -1450,7 +1450,7 @@ const RATE_LIMIT = {
 │   └── GET
 └── inngest/                # Inngest workflows
     └── POST
-```
+\`\`\`
 
 ---
 
@@ -1465,7 +1465,7 @@ const RATE_LIMIT = {
 - Propiedad no existe en tabla `properties`
 
 **Solución:**
-```sql
+\`\`\`sql
 -- Ejecutar script: scripts/UXAN_INSERT_FINAL.sql
 INSERT INTO properties (
   name,
@@ -1486,7 +1486,7 @@ INSERT INTO properties (
   '/images/uxan/main.jpg',
   -- ... resto de valores
 );
-```
+\`\`\`
 
 **IMPORTANTE:** NO crear weeks for UXAN, el modelo es REQUEST → OFFER → CONFIRM.
 
@@ -1499,7 +1499,7 @@ INSERT INTO properties (
 - No hay audit trail de eventos críticos
 
 **Solución:**
-```sql
+\`\`\`sql
 CREATE TABLE evidence_events (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   event_type TEXT NOT NULL,
@@ -1519,7 +1519,7 @@ CREATE TABLE evidence_events (
 CREATE INDEX idx_evidence_events_user ON evidence_events(user_id);
 CREATE INDEX idx_evidence_events_type ON evidence_events(event_type);
 CREATE INDEX idx_evidence_events_occurred ON evidence_events(occurred_at DESC);
-```
+\`\`\`
 
 Integrar logging en:
 - `/api/certificates/activate`
@@ -1550,7 +1550,7 @@ Integrar logging en:
 - Usuarios se desconectan al navegar al dashboard admin
 
 **Solución Aplicada:**
-```typescript
+\`\`\`typescript
 // lib/supabase/middleware.ts
 export async function updateSession(request: NextRequest) {
   const response = NextResponse.next()
@@ -1562,7 +1562,7 @@ export async function updateSession(request: NextRequest) {
   
   return response
 }
-```
+\`\`\`
 
 ---
 
@@ -1586,28 +1586,28 @@ export async function updateSession(request: NextRequest) {
 #### 🔧 **Performance**
 
 1. **Agregar índices faltantes:**
-```sql
+\`\`\`sql
 CREATE INDEX idx_reservations_user_status ON reservations(user_id, status);
 CREATE INDEX idx_payments_user_status ON payments(user_id, status);
 CREATE INDEX idx_weeks_property_status ON weeks(property_id, status);
 CREATE INDEX idx_broker_commissions_broker_status ON broker_commissions(broker_id, status);
-```
+\`\`\`
 
 2. **Implementar caching con Redis:**
-```typescript
+\`\`\`typescript
 // Cache destinos populares
 // Cache perfiles de usuario
 // Cache métricas de dashboard
-```
+\`\`\`
 
 3. **Lazy loading de imágenes:**
-```typescript
+\`\`\`typescript
 <Image
   src="/images/property.jpg"
   loading="lazy"
   placeholder="blur"
 />
-```
+\`\`\`
 
 ---
 
@@ -1619,14 +1619,14 @@ CREATE INDEX idx_broker_commissions_broker_status ON broker_commissions(broker_i
 - Progress bars en uploads
 
 2. **Error handling mejorado:**
-```typescript
+\`\`\`typescript
 try {
   await submitReservation()
 } catch (error) {
   toast.error("Error al enviar solicitud. Por favor intenta de nuevo.")
   // Log error to Sentry
 }
-```
+\`\`\`
 
 3. **Validación en tiempo real:**
 - Email format
@@ -1638,24 +1638,24 @@ try {
 #### 📊 **Analytics & Monitoring**
 
 1. **Implementar Sentry:**
-```typescript
+\`\`\`typescript
 import * as Sentry from "@sentry/nextjs"
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   tracesSampleRate: 0.1,
 })
-```
+\`\`\`
 
 2. **Agregar logs estructurados:**
-```typescript
+\`\`\`typescript
 logger.info("Reservation created", {
   userId,
   propertyId,
   weekId,
   amount,
 })
-```
+\`\`\`
 
 3. **Dashboards de métricas:**
 - Reservaciones por día
@@ -1668,43 +1668,43 @@ logger.info("Reservation created", {
 #### 🔐 **Security Hardening**
 
 1. **Implementar CAPTCHA:**
-```typescript
+\`\`\`typescript
 // En formularios de registro y login
 <ReCAPTCHA
   sitekey="[REDACTED - Configure via environment variables]"
   onChange={handleCaptcha}
 />
-```
+\`\`\`
 
 2. **Agregar webhook signature verification:**
-```typescript
+\`\`\`typescript
 // Verificar signature de Conekta/Legalario
 const signature = request.headers.get("x-webhook-signature")
 const isValid = verifySignature(signature, payload)
-```
+\`\`\`
 
 3. **Rate limiting más granular:**
-```typescript
+\`\`\`typescript
 const limits = {
   auth: 5,        // 5 intentos de login por minuto
   api: 60,        // 60 requests por minuto
   webhooks: 10,   // 10 webhooks por minuto
   uploads: 3,     // 3 uploads por minuto
 }
-```
+\`\`\`
 
 ---
 
 #### 🌐 **Internacionalización (i18n)**
 
 1. **Agregar soporte multi-idioma:**
-```typescript
+\`\`\`typescript
 // next-i18next
 import { useTranslation } from 'next-i18next'
 
 const { t } = useTranslation('common')
 <h1>{t('welcome')}</h1>
-```
+\`\`\`
 
 2. **Idiomas objetivo:**
 - Español (MX) - primario
@@ -1716,7 +1716,7 @@ const { t } = useTranslation('common')
 #### 📱 **Mobile Optimization**
 
 1. **Progressive Web App (PWA):**
-```json
+\`\`\`json
 // manifest.json
 {
   "name": "WEEK-CHAIN",
@@ -1727,7 +1727,7 @@ const { t } = useTranslation('common')
   "scope": "/",
   "start_url": "/"
 }
-```
+\`\`\`
 
 2. **Touch optimizations:**
 - Botones mínimo 44x44px

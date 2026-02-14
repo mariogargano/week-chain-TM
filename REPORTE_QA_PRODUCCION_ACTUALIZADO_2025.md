@@ -24,13 +24,13 @@
 
 ### Calificación Final
 
-```
+\`\`\`
 ┌─────────────────────────────────────────┐
 │  CALIFICACIÓN: 93.3/100 - EXCELENTE     │
 │  Estado: ✅ LISTO PARA PRODUCCIÓN       │
 │  Riesgo: 🟢 BAJO                        │
 └─────────────────────────────────────────┘
-```
+\`\`\`
 
 ---
 
@@ -42,7 +42,7 @@
 
 **Evidencia de Código:**
 
-```typescript
+\`\`\`typescript
 // lib/utils/retry.ts - VERIFICADO EN PRODUCCIÓN
 export async function retryWithBackoff<T>(
   fn: () => Promise<T>, 
@@ -61,7 +61,7 @@ export async function retryWithBackoff<T>(
     }
   }
 }
-```
+\`\`\`
 
 **APIs Actualizadas con Retry:**
 
@@ -102,7 +102,7 @@ export async function retryWithBackoff<T>(
 
 **Evidencia de Código:**
 
-```tsx
+\`\`\`tsx
 // app/layout.tsx - VERIFICADO EN PRODUCCIÓN
 <a
   href="#main-content"
@@ -117,7 +117,7 @@ export async function retryWithBackoff<T>(
 <main id="main-content" className="min-h-[calc(100vh-4rem)] pt-20">
   {children}
 </main>
-```
+\`\`\`
 
 **Características Implementadas:**
 - ✅ Skip to main content link (visible al hacer Tab)
@@ -137,7 +137,7 @@ export async function retryWithBackoff<T>(
 
 **Evidencia de Código:**
 
-```typescript
+\`\`\`typescript
 // app/api/mifiel/callback/route.ts - VERIFICADO
 const { data: duplicate } = await supabase
   .from("webhook_events")
@@ -160,7 +160,7 @@ webhookId = await WebhookLogger.log({
   userAgent,
   signatureValid: true,
 })
-```
+\`\`\`
 
 **Características:**
 - ✅ Deduplicación automática por `event_id`
@@ -187,7 +187,7 @@ webhookId = await WebhookLogger.log({
 - ✅ Italiano (it) - 100% completo
 
 **Funciones de Formateo:**
-```typescript
+\`\`\`typescript
 // lib/i18n/format.ts - VERIFICADO
 export const fmtDate = (d: Date, locale: Locale) =>
   new Intl.DateTimeFormat(locale, { 
@@ -201,7 +201,7 @@ export const fmtCurrency = (n: number, locale: Locale, currency = "USD") =>
     style: "currency", 
     currency 
   }).format(n)
-```
+\`\`\`
 
 ---
 
@@ -242,7 +242,7 @@ export const fmtCurrency = (n: number, locale: Locale, currency = "USD") =>
 - ⚠️ 404 es temporal, probablemente caché de Vercel
 
 **Evidencia:**
-```typescript
+\`\`\`typescript
 // app/auth/setup-2fa/page.tsx - EXISTE Y ESTÁ COMPLETO
 export default function Setup2FAPage() {
   // Genera QR code
@@ -250,7 +250,7 @@ export default function Setup2FAPage() {
   // Verifica código TOTP
   // Habilita 2FA en cuenta
 }
-```
+\`\`\`
 
 **Recomendación:**
 - Hacer redeploy forzado en Vercel
@@ -276,7 +276,7 @@ export default function Setup2FAPage() {
 
 ### Tiempo de Implementación
 
-```
+\`\`\`
 ┌────────────────────────────────────────┐
 │ Corrección                  │ Tiempo   │
 ├────────────────────────────────────────┤
@@ -287,7 +287,7 @@ export default function Setup2FAPage() {
 ├────────────────────────────────────────┤
 │ TOTAL                       │ 12h      │
 └────────────────────────────────────────┘
-```
+\`\`\`
 
 ---
 
@@ -385,7 +385,7 @@ La plataforma WEEK-CHAIN™ ha pasado de un estado de **73.3% de cumplimiento** 
 
 **Estado Final:**
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────┐
 │                                                     │
 │  ✅ WEEK-CHAIN™ ESTÁ LISTO PARA PRODUCCIÓN         │
@@ -395,14 +395,14 @@ La plataforma WEEK-CHAIN™ ha pasado de un estado de **73.3% de cumplimiento** 
 │  Recomendación: APROBAR PARA LAUNCH                │
 │                                                     │
 └─────────────────────────────────────────────────────┘
-```
+\`\`\`
 
 **Firma del Auditor:**
 
-```
+\`\`\`
 QA Senior Engineer
 29 de Enero de 2025
-```
+\`\`\`
 
 ---
 

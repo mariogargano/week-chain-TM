@@ -86,9 +86,9 @@ Los nuevos visitantes que lleguen directamente (no desde Google) verán:
 
 Para acelerar la verificación, agrega a tus variables de entorno:
 
-```
+\`\`\`
 GOOGLE_SITE_VERIFICATION=tu_código_de_verificación
-```
+\`\`\`
 
 Lo obtienes en Google Search Console → Settings → Verification.
 
@@ -102,4 +102,4 @@ Lo obtienes en Google Search Console → Settings → Verification.
 🔍 **Verifica ahora** con las herramientas de test (Facebook Debugger, Rich Results)
 
 **Paciencia**: Es frustrante pero normal. Google actualiza cuando lo considera necesario, no de inmediato.
-```
+\`\`\`

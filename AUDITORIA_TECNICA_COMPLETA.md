@@ -23,7 +23,7 @@ La plataforma WeekChain está técnicamente sólida, legalmente protegida y func
 - **Librerías:** Supabase, Solana, Stripe, Mifiel integradas
 
 ### ✅ Rutas y Páginas
-```
+\`\`\`
 ✅ / (home)
 ✅ /properties (listado)
 ✅ /properties/[id] (detalle)
@@ -36,7 +36,7 @@ La plataforma WeekChain está técnicamente sólida, legalmente protegida y func
 ✅ /va-fi
 ✅ /services
 ✅ /help
-```
+\`\`\`
 
 ### ⚠️ Áreas de Atención
 1. **TODOs Identificados:**
@@ -53,7 +53,7 @@ La plataforma WeekChain está técnicamente sólida, legalmente protegida y func
 ### ✅ Implementaciones Correctas
 
 #### Middleware de Seguridad
-```typescript
+\`\`\`typescript
 ✅ Rate limiting: 120 req/min por IP
 ✅ Security headers:
    - X-Frame-Options: DENY
@@ -61,23 +61,23 @@ La plataforma WeekChain está técnicamente sólida, legalmente protegida y func
    - Referrer-Policy: no-referrer
    - Permissions-Policy: geolocation=(), microphone=()
 ✅ Geo-blocking opcional (comentado)
-```
+\`\`\`
 
 #### Row Level Security (RLS)
-```sql
+\`\`\`sql
 ✅ Todas las tablas sensibles tienen RLS
 ✅ Service role only para certificaciones
 ✅ Users solo ven sus propios datos
 ✅ Triggers previenen manipulación
-```
+\`\`\`
 
 #### Autenticación
-```typescript
+\`\`\`typescript
 ✅ Supabase Auth con email/password
 ✅ Wallet connection (Solana)
 ✅ Terms acceptance obligatorio
 ✅ Session management correcto
-```
+\`\`\`
 
 ### ⚠️ Recomendaciones
 1. **CSRF Protection:** Considerar agregar tokens CSRF para forms críticos
@@ -89,15 +89,15 @@ La plataforma WeekChain está técnicamente sólida, legalmente protegida y func
 ## 3. 🗄️ BASE DE DATOS
 
 ### ✅ Schema Completo
-```
+\`\`\`
 64 tablas en Supabase
 29 scripts SQL de migración
 Todas las relaciones definidas
 Índices en columnas críticas
-```
+\`\`\`
 
 ### ✅ Tablas Críticas Verificadas
-```sql
+\`\`\`sql
 ✅ profiles (usuarios)
 ✅ properties (propiedades)
 ✅ weeks (semanas)
@@ -110,18 +110,18 @@ Todas las relaciones definidas
 ✅ loans (préstamos VA-FI)
 ✅ collaterals (colaterales)
 ✅ vacation_services (marketplace)
-```
+\`\`\`
 
 ### ✅ Triggers de Protección
-```sql
+\`\`\`sql
 ✅ prevent_mint_without_nom151() - Bloquea minteo sin certificación
 ✅ auto_approve_120h_cancellations() - Auto-aprueba reembolsos
 ✅ prevent_collateral_unfreeze() - Protege colaterales activos
 ✅ distribute_referral_commissions() - Distribuye comisiones
-```
+\`\`\`
 
 ### ⚠️ Scripts Pendientes de Ejecución
-```bash
+\`\`\`bash
 ⚠️ scripts/018_purchase_voucher_system.sql
 ⚠️ scripts/019_demo_environment_setup.sql
 ⚠️ scripts/020_fiat_payments_table.sql
@@ -132,79 +132,79 @@ Todas las relaciones definidas
 ⚠️ scripts/025_legal_compliance_module.sql
 ⚠️ scripts/026_mifiel_nom151_integration.sql
 ⚠️ scripts/027_defi_loans_system.sql
-```
+\`\`\`
 
 ---
 
 ## 4. 🔌 INTEGRACIONES
 
 ### ✅ Supabase
-```typescript
+\`\`\`typescript
 ✅ Database: PostgreSQL con RLS
 ✅ Auth: Email/password implementado
 ✅ Storage: Configurado para documentos
 ✅ Realtime: Disponible para updates
 ✅ Edge Functions: Listas para usar
-```
+\`\`\`
 
 **Variables de Entorno:**
-```
+\`\`\`
 ✅ SUPABASE_URL
 ✅ SUPABASE_SERVICE_ROLE_KEY
 ✅ NEXT_PUBLIC_SUPABASE_URL
 ✅ NEXT_PUBLIC_SUPABASE_ANON_KEY
 ✅ NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL
-```
+\`\`\`
 
 ### ✅ Stripe
-```typescript
+\`\`\`typescript
 ✅ Payments: Tarjeta, SPEI, OXXO
 ✅ Webhooks: Configurados
 ✅ Sandbox: Activo para testing
-```
+\`\`\`
 
 **Variables de Entorno:**
-```
+\`\`\`
 ✅ STRIPE_SECRET_KEY
 ✅ STRIPE_PUBLISHABLE_KEY
 ✅ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-```
+\`\`\`
 
 ### ⚠️ Mifiel (NOM-151)
-```typescript
+\`\`\`typescript
 ⚠️ API Keys: Necesitan configuración
 ⚠️ Webhook URL: Configurar en dashboard
 ✅ Código: Completamente implementado
-```
+\`\`\`
 
 **Variables Necesarias:**
-```
+\`\`\`
 ⚠️ MIFIEL_APP_ID
 ⚠️ MIFIEL_SECRET_KEY
 ⚠️ MIFIEL_WEBHOOK_USER
 ⚠️ MIFIEL_WEBHOOK_SECRET
-```
+\`\`\`
 
 ### ⚠️ Solana
-```typescript
+\`\`\`typescript
 ⚠️ RPC Endpoint: Configurar Helius/QuickNode
 ⚠️ Program ID: Deploy smart contracts
 ✅ Wallet Provider: Implementado
 ✅ Token operations: Código listo
-```
+\`\`\`
 
 **Variables Necesarias:**
-```
+\`\`\`
 ⚠️ NEXT_PUBLIC_SOLANA_RPC_URL
 ⚠️ [REDACTED_TOKEN_MINT_ADDRESS]
 ⚠️ SOLANA_PROGRAM_ID
-```
+\`\`\`
 
 ### ✅ Resend (Email)
-```typescript
+\`\`\`typescript
 ✅ API Key configurada
 ✅ Templates listos
-```
+\`\`\`
 
 ---
 
@@ -213,83 +213,83 @@ Todas las relaciones definidas
 ### ✅ Endpoints Implementados (53 total)
 
 #### Autenticación y Usuarios
-```
+\`\`\`
 ✅ POST /api/auth/login
 ✅ POST /api/auth/register
 ✅ POST /api/auth/verify-email
 ✅ GET /api/user/profile
-```
+\`\`\`
 
 #### Legal y Compliance
-```
+\`\`\`
 ✅ POST /api/legal/accept-terms
 ✅ POST /api/legal/accept-privacy
 ✅ POST /api/legal/certify-contract
 ✅ POST /api/legal/request-cancellation
 ✅ GET /api/legal/download
 ✅ POST /api/legal/mifiel-webhook
-```
+\`\`\`
 
 #### Mifiel NOM-151
-```
+\`\`\`
 ✅ POST /api/mifiel/certify
 ✅ GET /api/mifiel/check-status
 ✅ POST /api/mifiel/callback
-```
+\`\`\`
 
 #### Pagos y Vouchers
-```
+\`\`\`
 ✅ POST /api/vouchers/create
 ✅ GET /api/vouchers/list
 ✅ POST /api/payments/create
 ✅ POST /api/payments/webhook
-```
+\`\`\`
 
 #### NFT y Blockchain
-```
+\`\`\`
 ✅ POST /api/nft/mint
 ✅ GET /api/nft/metadata
 ✅ POST /api/weeks/ota-listing
-```
+\`\`\`
 
 #### Préstamos VA-FI
-```
+\`\`\`
 ✅ POST /api/loans/create
 ✅ GET /api/loans/[id]
 ✅ PUT /api/loans/[id]
-```
+\`\`\`
 
 #### Admin
-```
+\`\`\`
 ✅ GET /api/admin/properties
 ✅ POST /api/admin/properties
 ✅ GET /api/admin/users
 ✅ GET /api/admin/transactions
-```
+\`\`\`
 
 ### ⚠️ Validación de Inputs
-```typescript
+\`\`\`typescript
 ✅ Zod schemas definidos en lib/validation/schemas.ts
 ⚠️ Algunos endpoints necesitan agregar validación
 ⚠️ Error handling puede mejorarse
-```
+\`\`\`
 
 ---
 
 ## 6. 🎨 FRONTEND Y UX
 
 ### ✅ Diseño y Branding
-```css
+\`\`\`css
 ✅ Logo circular con gradiente pastel
 ✅ Paleta de colores: Pink, Coral, Peach, Mint, Lavender
 ✅ Tipografía: Inter (sans-serif)
 ✅ Componentes: shadcn/ui consistentes
 ✅ Responsive: Mobile-first design
 ✅ Animaciones: Suaves y profesionales
-```
+\`\`\`
 
 ### ✅ Páginas Principales
-```
+\`\`\`
 ✅ Home: Hero, features, CTA
 ✅ Properties: Grid con filtros
 ✅ Property Detail: Calendario, reserva
@@ -299,7 +299,7 @@ Todas las relaciones definidas
 ✅ DAO: Propuestas y votación
 ✅ VA-FI: Préstamos con colateral
 ✅ Services: Marketplace de servicios
-```
+\`\`\`
 
 ### ⚠️ Mejoras UX Sugeridas
 1. **Loading States:** Agregar más skeletons
@@ -312,54 +312,54 @@ Todas las relaciones definidas
 ## 7. ⚖️ CUMPLIMIENTO LEGAL
 
 ### ✅ NOM-029-SE-2021 (Certificados Digitales)
-```
+\`\`\`
 ✅ Ventana de reembolso 120 horas
 ✅ Función SQL: can_refund_120h()
 ✅ Trigger auto-aprobación
 ✅ API endpoint: /api/legal/request-cancellation
 ✅ Audit logging completo
-```
+\`\`\`
 
 ### ✅ NOM-151-SCFI-2016 (Documentos Digitales)
-```
+\`\`\`
 ✅ Integración Mifiel completa
 ✅ Certificación con folio y SHA-256
 ✅ Trigger: prevent_mint_without_nom151()
 ✅ Webhook handler para callbacks
 ✅ Almacenamiento de certificados
-```
+\`\`\`
 
 ### ✅ Ley Fintech
-```
+\`\`\`
 ✅ KYC/AML: Persona integration ready
 ✅ Tokenización regulada
 ✅ Escrow multisig
 ✅ Reporting compliance
-```
+\`\`\`
 
 ### ✅ LFPDPPP (Privacidad)
-```
+\`\`\`
 ✅ Términos y condiciones
 ✅ Aviso de privacidad
 ✅ Aceptación obligatoria
 ✅ Tabla: legal_acceptances
 ✅ RLS policies
-```
+\`\`\`
 
 ---
 
 ## 8. 🧪 TESTING
 
 ### ⚠️ Estado Actual
-```
+\`\`\`
 ⚠️ Unit tests: No implementados
 ⚠️ Integration tests: No implementados
 ⚠️ E2E tests: No implementados
 ✅ Manual testing: Realizado
-```
+\`\`\`
 
 ### 📋 Plan de Testing Recomendado
-```typescript
+\`\`\`typescript
 // Prioridad Alta
 1. API endpoints críticos (pagos, minteo)
 2. Flujos de usuario (registro, compra, reembolso)
@@ -375,149 +375,149 @@ Todas las relaciones definidas
 8. Animaciones
 9. Responsive design
 10. Accessibility
-```
+\`\`\`
 
 ---
 
 ## 9. 📊 FUNCIONALIDAD DE NEGOCIO
 
 ### ✅ Sistema de Vouchers
-```
+\`\`\`
 ✅ Creación con múltiples métodos de pago
 ✅ Pagos parciales soportados
 ✅ Canje por NFT cuando se alcanza meta
 ✅ Tracking de status
 ✅ Reembolsos dentro de 120h
-```
+\`\`\`
 
 ### ✅ Referidos Multinivel
-```
+\`\`\`
 ✅ 3 niveles: 3% - 2% - 1%
 ✅ Broker Elite: 24/48 semanas
 ✅ Tracking automático
 ✅ Distribución de comisiones
 ✅ Dashboard de referidos
-```
+\`\`\`
 
 ### ✅ Marketplace de Servicios
-```
+\`\`\`
 ✅ 25 servicios demo seeded
 ✅ Categorías: Tours, Spa, Transporte, etc.
 ✅ Precios en USDC y MXN
 ✅ Booking system
 ✅ Provider management
-```
+\`\`\`
 
 ### ✅ VA-FI (Préstamos)
-```
+\`\`\`
 ✅ Colateral: NFT weeks
 ✅ LTV: 20-60%
 ✅ APR: 5-30%
 ✅ Vault system
 ✅ Liquidation logic
-```
+\`\`\`
 
 ### ✅ DAO Governance
-```
+\`\`\`
 ✅ Propuestas on-chain
 ✅ Votación por holders
 ✅ Quorum requirements
 ✅ Execution logic
-```
+\`\`\`
 
 ### ✅ Exit Strategy (15 años)
-```
+\`\`\`
 ✅ 50% Holders
 ✅ 10% Brokers
 ✅ 30% Platform
 ✅ 10% DAO Reserve
 ✅ Distribución automática
-```
+\`\`\`
 
 ---
 
 ## 10. 🚀 PERFORMANCE
 
 ### ✅ Optimizaciones Implementadas
-```
+\`\`\`
 ✅ Next.js App Router (RSC)
 ✅ Image optimization
 ✅ Code splitting automático
 ✅ Lazy loading de componentes
 ✅ Supabase connection pooling
-```
+\`\`\`
 
 ### ⚠️ Áreas de Mejora
-```
+\`\`\`
 ⚠️ Caching strategy (Redis)
 ⚠️ CDN para assets estáticos
 ⚠️ Database query optimization
 ⚠️ API response compression
 ⚠️ Monitoring y alertas
-```
+\`\`\`
 
 ---
 
 ## 11. 📱 MOBILE Y RESPONSIVE
 
 ### ✅ Implementación
-```
+\`\`\`
 ✅ Mobile-first design
 ✅ Breakpoints: sm, md, lg, xl
 ✅ Touch-friendly buttons
 ✅ Responsive navigation
 ✅ Mobile wallet support
-```
+\`\`\`
 
 ### ⚠️ Testing Necesario
-```
+\`\`\`
 ⚠️ iOS Safari
 ⚠️ Android Chrome
 ⚠️ Tablet landscape
 ⚠️ Small screens (<375px)
-```
+\`\`\`
 
 ---
 
 ## 12. 🔧 DEVOPS Y DEPLOYMENT
 
 ### ✅ Configuración
-```
+\`\`\`
 ✅ Vercel deployment ready
 ✅ Environment variables configuradas
 ✅ Build process optimizado
 ✅ Error tracking (PostHog)
-```
+\`\`\`
 
 ### ⚠️ Pendiente
-```
+\`\`\`
 ⚠️ CI/CD pipeline
 ⚠️ Staging environment
 ⚠️ Database backups automáticos
 ⚠️ Monitoring (Sentry, DataDog)
 ⚠️ Load testing
-```
+\`\`\`
 
 ---
 
 ## 📋 ISSUES CRÍTICOS ENCONTRADOS
 
 ### 🔴 Críticos (Bloquean Producción)
-```
+\`\`\`
 NINGUNO - La plataforma está lista para lanzamiento
-```
+\`\`\`
 
 ### 🟡 Importantes (Resolver Pronto)
-```
+\`\`\`
 1. Ejecutar scripts SQL 018-027 en base de datos
 2. Configurar Mifiel API keys y webhook
 3. Configurar Solana RPC y deploy contracts
 4. Implementar fetch real de balances Solana
 5. Agregar tests para flujos críticos
-```
+\`\`\`
 
 ### 🟢 Menores (Mejoras Futuras)
-```
+\`\`\`
 1. Completar TODOs en código
 2. Agregar más validación Zod
 3. Mejorar error handling
@@ -525,7 +525,7 @@ NINGUNO - La plataforma está lista para lanzamiento
 5. Agregar monitoring
 6. Optimizar queries
 7. Agregar más tests
-```
+\`\`\`
 
 ---
 

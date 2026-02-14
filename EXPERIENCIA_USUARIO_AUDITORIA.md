@@ -100,11 +100,11 @@ La plataforma WEEK-CHAIN ofrece una experiencia de usuario **excepcional** para 
 
 **SOLUCIÓN IMPLEMENTADA**: El código ya tiene un sistema de fallback que muestra 4 propiedades demo cuando no hay propiedades reales en la base de datos.
 
-```typescript
+\`\`\`typescript
 const mockProperties = properties && properties.length > 0 ? properties : [
   // 4 propiedades demo con datos completos
 ]
-```
+\`\`\`
 
 #### 💡 Recomendaciones:
 1. **Agregar Propiedades Reales a la Base de Datos**:
@@ -147,9 +147,9 @@ const mockProperties = properties && properties.length > 0 ? properties : [
 ### 4. **Navegación y Rutas** - 9/10 ⭐
 
 #### ✅ Navbar Principal:
-```
+\`\`\`
 Logo | Propiedades | Servicios | Equipo | Contacto | [Login/Dashboard]
-```
+\`\`\`
 
 #### ✅ Rutas Principales Verificadas:
 - `/` - Home (✅ Funciona)
@@ -241,27 +241,27 @@ Logo | Propiedades | Servicios | Equipo | Contacto | [Login/Dashboard]
 ## 🔍 Flujos de Usuario Principales
 
 ### Flujo 1: Usuario Nuevo Explora Propiedades
-```
+\`\`\`
 Home → Ver Propiedades → Seleccionar Propiedad → Ver Detalles → Registrarse → Reservar
-```
+\`\`\`
 **Estado**: ✅ FUNCIONA PERFECTAMENTE
 
 ### Flujo 2: Usuario Registrado Compra Semana
-```
+\`\`\`
 Login → Dashboard → Propiedades → Seleccionar Semana → Elegir Método de Pago → Confirmar → Recibir Voucher
-```
+\`\`\`
 **Estado**: ✅ FUNCIONA (requiere testing con pagos reales)
 
 ### Flujo 3: Broker Registra Propiedad
-```
+\`\`\`
 Login (Broker) → Dashboard Broker → Nueva Propiedad → Llenar Formulario → Submit → Esperar Aprobación
-```
+\`\`\`
 **Estado**: ✅ FUNCIONA
 
 ### Flujo 4: Admin Gestiona Plataforma
-```
+\`\`\`
 Login (Admin) → Dashboard Admin → [Propiedades/Usuarios/Ventas/Reportes]
-```
+\`\`\`
 **Estado**: ✅ FUNCIONA
 
 ---

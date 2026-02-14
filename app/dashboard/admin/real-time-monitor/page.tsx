@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Navbar } from "@/components/navbar"
 import { createClient } from "@/lib/supabase/client"
 import { useEffect, useState } from "react"
 import {
@@ -17,6 +16,7 @@ import {
   TrendingUp,
   AlertCircle,
 } from "lucide-react"
+
 
 export default function RealTimeMonitorPage() {
   const [roleStats, setRoleStats] = useState<Record<string, any>>({})
@@ -135,19 +135,14 @@ export default function RealTimeMonitorPage() {
 
   if (loading) {
     return (
-      <>
-        <Navbar user={true} />
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
-          <p className="text-slate-600">Cargando monitor en tiempo real...</p>
-        </div>
-      </>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+        <p className="text-slate-600">Cargando monitor en tiempo real...</p>
+      </div>
     )
   }
 
   return (
-    <>
-      <Navbar user={true} />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex items-center justify-between">
             <div>
@@ -343,6 +338,6 @@ export default function RealTimeMonitorPage() {
           </Tabs>
         </div>
       </div>
-    </>
+    </div>
   )
 }

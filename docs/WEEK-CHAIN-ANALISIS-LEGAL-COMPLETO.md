@@ -294,11 +294,11 @@
 
 ### 14.2 Registro de Hash (Opcional)
 
-```
+\`\`\`
 Contrato firmado PDF → SHA-256 hash → Registro en blockchain pública
                                     → Explorador muestra registro
                                     → Usuario puede verificar existencia
-```
+\`\`\`
 
 **Importante:** El valor legal del contrato deriva de la certificación NOM-151 de Legalario, NO del registro en blockchain.
 

@@ -8,8 +8,8 @@ import { DollarSign, Calendar, Search, ArrowLeft, ExternalLink, TrendingUp } fro
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { RoleGuard } from "@/components/role-guard"
-import { Navbar } from "@/components/navbar"
 import { useRouter } from "next/navigation"
+
 
 export default function AdminTransactionsPage() {
   return (
@@ -53,9 +53,7 @@ function AdminTransactionsContent() {
   )
 
   return (
-    <>
-      <Navbar user={true} />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
+  <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex items-center gap-4">
             <Button
@@ -205,6 +203,6 @@ function AdminTransactionsContent() {
           )}
         </div>
       </div>
-    </>
+    </div>
   )
 }

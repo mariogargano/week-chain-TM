@@ -137,26 +137,26 @@
 ### Gradientes
 
 **Brand Gradient**
-```css
+\`\`\`css
 background: linear-gradient(to right, #FF9AA2, #FFB7B2, #C7CEEA);
-```
+\`\`\`
 
 **Hero Gradient**
-```css
+\`\`\`css
 background: linear-gradient(to bottom right, #FFDAC1/30%, #B5EAD7/20%, #C7CEEA/30%);
-```
+\`\`\`
 
 ### Sombras
 
 **Card Shadow**
-```css
+\`\`\`css
 box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-```
+\`\`\`
 
 **Elevated Shadow**
-```css
+\`\`\`css
 box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-```
+\`\`\`
 
 ### Bordes
 - Border Radius: 12px (cards), 24px (sections), 9999px (pills)

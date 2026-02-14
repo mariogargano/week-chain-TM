@@ -11,15 +11,15 @@ This guide explains how to access the WEEK-CHAIN admin panel and configure admin
 ## Step-by-Step Setup
 
 ### 1. Create Your Account (If Not Already Done)
-```
+\`\`\`
 1. Go to: https://your-domain.com/auth/sign-up
 2. Sign up with email: corporativo@morises.com
 3. Verify your email
 4. Complete the sign-in process
-```
+\`\`\`
 
 ### 2. Run Admin Setup Script
-```sql
+\`\`\`sql
 -- Option A: Using Supabase Dashboard
 1. Go to Supabase Dashboard
 2. Navigate to SQL Editor
@@ -29,20 +29,20 @@ This guide explains how to access the WEEK-CHAIN admin panel and configure admin
 
 -- Option B: Using psql CLI
 psql $DATABASE_URL -f scripts/094_setup_admin_access.sql
-```
+\`\`\`
 
 ### 3. Run Email Automation Setup
-```sql
+\`\`\`sql
 -- This creates the email tables (email_templates, email_logs, email_unsubscribes)
 psql $DATABASE_URL -f scripts/093_email_automation_complete_setup.sql
-```
+\`\`\`
 
 ### 4. Access Admin Panel
-```
+\`\`\`
 1. Sign in to the platform with: corporativo@morises.com
 2. Navigate to: https://your-domain.com/dashboard/admin
 3. You should see the admin dashboard with all panels
-```
+\`\`\`
 
 ## Admin Panel Structure
 
@@ -64,7 +64,7 @@ psql $DATABASE_URL -f scripts/093_email_automation_complete_setup.sql
 ### Issue: "Access Denied" when visiting /dashboard/admin
 
 **Solution 1: Check Database Records**
-```sql
+\`\`\`sql
 -- Verify your user has correct roles
 SELECT 
   au.email,
@@ -74,7 +74,7 @@ SELECT
 FROM admin_users au
 LEFT JOIN profiles p ON p.id = au.user_id
 WHERE au.email = 'corporativo@morises.com';
-```
+\`\`\`
 
 Expected result:
 - `admin_role`: `super_admin`
@@ -82,10 +82,10 @@ Expected result:
 - `profile_role`: `admin`
 
 **Solution 2: Re-run Setup Script**
-```sql
+\`\`\`sql
 -- Run the setup script again
 psql $DATABASE_URL -f scripts/094_setup_admin_access.sql
-```
+\`\`\`
 
 **Solution 3: Clear Browser Cache**
 1. Sign out completely
@@ -96,10 +96,10 @@ psql $DATABASE_URL -f scripts/094_setup_admin_access.sql
 ### Issue: Email tables don't exist
 
 **Solution:**
-```sql
+\`\`\`sql
 -- Run the email automation setup
 psql $DATABASE_URL -f scripts/093_email_automation_complete_setup.sql
-```
+\`\`\`
 
 ### Issue: Can't see email sections in sidebar
 
@@ -122,7 +122,7 @@ Check that AdminSidebar includes email sections:
 
 To grant admin access to another user:
 
-```sql
+\`\`\`sql
 -- Replace with the new admin's email
 DO $$
 DECLARE
@@ -150,16 +150,16 @@ BEGIN
     
   RAISE NOTICE 'Admin access granted to %', v_new_admin_email;
 END $$;
-```
+\`\`\`
 
 ## Testing Email System
 
 ### Quick Test Flow
 
 1. **Go to Email Test Page**
-   ```
+   \`\`\`
    https://your-domain.com/dashboard/admin/email-test-flow
-   ```
+   \`\`\`
 
 2. **Run System Checks**
    - Verify tables exist
@@ -168,18 +168,18 @@ END $$;
    - Test admin access
 
 3. **Send Test Email**
-   ```
+   \`\`\`
    https://your-domain.com/dashboard/admin/email-automation/test
-   ```
+   \`\`\`
    - Select a template
    - Enter your email
    - Click "Send Test Email"
    - Check inbox for delivery
 
 4. **View Logs**
-   ```
+   \`\`\`
    https://your-domain.com/dashboard/admin/email-logs
-   ```
+   \`\`\`
    - Check delivery status
    - View open/click rates
    - Monitor bounces
@@ -188,7 +188,7 @@ END $$;
 
 Ensure these are set in your Vercel/deployment:
 
-```env
+\`\`\`env
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
@@ -200,7 +200,7 @@ RESEND_API_KEY=re_your_api_key
 # Optional: Google OAuth
 GOOGLE_CLIENT_ID=your-client-id
 GOOGLE_CLIENT_SECRET=your-client-secret
-```
+\`\`\`
 
 ## Support
 

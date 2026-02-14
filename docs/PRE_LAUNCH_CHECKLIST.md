@@ -5,11 +5,11 @@
 ### 1. Database Setup (5 minutes)
 
 **Execute the master fix script:**
-```bash
+\`\`\`bash
 # From Supabase Dashboard → SQL Editor
 # Copy and paste the entire 100_PRE_LAUNCH_COMPLETE_FIX.sql
 # Click "Run"
-```
+\`\`\`
 
 This script fixes:
 - ✅ admin_users table (adds user_id column)
@@ -128,7 +128,7 @@ These are already set in your Vercel project:
 #### Issue: "corporativo@morises.com cannot access admin panel"
 
 **Solution:**
-```sql
+\`\`\`sql
 -- Run in Supabase SQL Editor
 UPDATE profiles 
 SET role = 'admin' 
@@ -137,25 +137,25 @@ WHERE email = 'corporativo@morises.com';
 UPDATE admin_users 
 SET status = 'active', role = 'super_admin'
 WHERE email = 'corporativo@morises.com';
-```
+\`\`\`
 
 #### Issue: "Email templates not showing"
 
 **Solution:**
-```sql
+\`\`\`sql
 -- Run in Supabase SQL Editor
 SELECT * FROM email_templates;
 -- If empty, re-run PART 7 of 100_PRE_LAUNCH_COMPLETE_FIX.sql
-```
+\`\`\`
 
 #### Issue: "User profile not created after signup"
 
 **Solution:**
-```sql
+\`\`\`sql
 -- Verify trigger exists
 SELECT * FROM pg_trigger WHERE tgname = 'on_auth_user_created';
 -- If missing, re-run PART 2 of 100_PRE_LAUNCH_COMPLETE_FIX.sql
-```
+\`\`\`
 
 #### Issue: "Google OAuth not working"
 

@@ -52,7 +52,7 @@ WEEK-CHAIN ha integrado la blockchain de **Solana** como capa adicional de regis
 
 ### Stack Tecnológico:
 
-```
+\`\`\`
 WEEK-CHAIN SVC
     ↓
 Supabase (Base de datos principal)
@@ -60,7 +60,7 @@ Supabase (Base de datos principal)
 Solana RPC Endpoint
     ↓
 Blockchain Solana (Registro inmutable)
-```
+\`\`\`
 
 ### Flujo de Registro:
 
@@ -143,7 +143,7 @@ Blockchain Solana (Registro inmutable)
 
 ### Verificación de Certificado:
 
-```
+\`\`\`
 Usuario ingresa Certificate ID en https://week-chain.com/verify/[ID]
    ↓
 Sistema consulta Solana blockchain
@@ -151,11 +151,11 @@ Sistema consulta Solana blockchain
 Muestra: Issue Date, Tier, Validity, Solana Signature
    ↓
 Usuario confirma autenticidad
-```
+\`\`\`
 
 ### Auditoría Externa:
 
-```
+\`\`\`
 Auditor externo solicita lista de certificados emitidos
    ↓
 WEEK-CHAIN proporciona lista de Solana signatures públicas
@@ -163,7 +163,7 @@ WEEK-CHAIN proporciona lista de Solana signatures públicas
 Auditor verifica en Solana Explorer
    ↓
 Confirma número real de certificados vs. reportado
-```
+\`\`\`
 
 ---
 

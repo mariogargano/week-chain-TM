@@ -28,7 +28,7 @@ Row Level Security (RLS) es una característica de PostgreSQL/Supabase que permi
 
 ### Niveles de Acceso
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────┐
 │                  SERVICE ROLE                    │
 │         (Acceso completo a todas las tablas)     │
@@ -48,19 +48,19 @@ Row Level Security (RLS) es una característica de PostgreSQL/Supabase que permi
 │                  ANONYMOUS                       │
 │         (Solo datos públicos)                    │
 └─────────────────────────────────────────────────┘
-```
+\`\`\`
 
 ### Tipos de Políticas
 
 #### 1. **Self-Access (Acceso Propio)**
-```sql
+\`\`\`sql
 CREATE POLICY "Users can view their own data"
 ON table_name FOR SELECT
 USING (auth.uid() = user_id);
-```
+\`\`\`
 
 #### 2. **Relationship-Based (Basado en Relaciones)**
-```sql
+\`\`\`sql
 CREATE POLICY "Users can view related data"
 ON table_name FOR SELECT
 USING (
@@ -68,23 +68,23 @@ USING (
     SELECT id FROM parent_table WHERE user_id = auth.uid()
   )
 );
-```
+\`\`\`
 
 #### 3. **Role-Based (Basado en Roles)**
-```sql
+\`\`\`sql
 CREATE POLICY "Admins can view all data"
 ON table_name FOR SELECT
 USING (
   (auth.jwt() ->> 'role')::text IN ('admin', 'management')
 );
-```
+\`\`\`
 
 #### 4. **Public Access (Acceso Público)**
-```sql
+\`\`\`sql
 CREATE POLICY "Anyone can view public data"
 ON table_name FOR SELECT
 USING (true);
-```
+\`\`\`
 
 ---
 
@@ -173,38 +173,38 @@ USING (true);
 
 ### 1. Verificar RLS Habilitado
 
-```sql
+\`\`\`sql
 -- Ver todas las tablas y su estado de RLS
 SELECT * FROM verify_rls_enabled();
-```
+\`\`\`
 
 **Resultado esperado:**
-```
+\`\`\`
 table_name              | rls_enabled | policies_count
 ------------------------+-------------+---------------
 escrow_deposits         | true        | 2
 week_balances           | true        | 2
 purchase_vouchers       | true        | 3
 ...
-```
+\`\`\`
 
 ### 2. Listar Tablas Sin RLS
 
-```sql
+\`\`\`sql
 -- Ver tablas que NO tienen RLS (riesgo de seguridad)
 SELECT * FROM tables_without_rls();
-```
+\`\`\`
 
 **Resultado esperado:**
-```
+\`\`\`
 table_name
 -----------
 (0 rows)  -- ¡Ideal! Todas las tablas tienen RLS
-```
+\`\`\`
 
 ### 3. Test Manual de Políticas
 
-```sql
+\`\`\`sql
 -- Como usuario normal (usando anon key)
 SELECT * FROM escrow_deposits;
 -- Debe retornar solo los depósitos del usuario actual
@@ -212,16 +212,16 @@ SELECT * FROM escrow_deposits;
 -- Como admin (usando service role key)
 SELECT * FROM escrow_deposits;
 -- Debe retornar todos los depósitos
-```
+\`\`\`
 
 ### 4. Test de Inserción
 
-```sql
+\`\`\`sql
 -- Intentar insertar datos de otro usuario (debe fallar)
 INSERT INTO purchase_vouchers (user_id, property_id, ...)
 VALUES ('otro-user-id', ...);
 -- Error: new row violates row-level security policy
-```
+\`\`\`
 
 ---
 
@@ -229,7 +229,7 @@ VALUES ('otro-user-id', ...);
 
 ### 1. **Siempre Habilitar RLS en Tablas Nuevas**
 
-```sql
+\`\`\`sql
 -- Al crear una tabla nueva
 CREATE TABLE new_table (...);
 
@@ -238,11 +238,11 @@ ALTER TABLE new_table ENABLE ROW LEVEL SECURITY;
 
 -- Y crear políticas
 CREATE POLICY "..." ON new_table ...;
-```
+\`\`\`
 
 ### 2. **Usar Service Role Solo en Backend**
 
-```typescript
+\`\`\`typescript
 // ❌ MAL: Usar service role en cliente
 const supabase = createClient(url, SERVICE_ROLE_KEY) // NUNCA en cliente
 
@@ -252,11 +252,11 @@ const supabase = createClient(url, ANON_KEY)
 // ✅ BIEN: Service role solo en API routes
 // app/api/admin/route.ts
 const supabase = createClient(url, SERVICE_ROLE_KEY)
-```
+\`\`\`
 
 ### 3. **Verificar Políticas Antes de Deploy**
 
-```bash
+\`\`\`bash
 # En CI/CD pipeline
 psql $DATABASE_URL -c "SELECT * FROM tables_without_rls();"
 
@@ -265,11 +265,11 @@ if [ $? -ne 0 ]; then
   echo "❌ Tablas sin RLS detectadas!"
   exit 1
 fi
-```
+\`\`\`
 
 ### 4. **Auditar RLS Mensualmente**
 
-```sql
+\`\`\`sql
 -- Crear recordatorio mensual
 SELECT 
   table_name,
@@ -283,11 +283,11 @@ SELECT
 FROM verify_rls_enabled()
 WHERE rls_enabled = true
 ORDER BY policies_count ASC;
-```
+\`\`\`
 
 ### 5. **Documentar Políticas Complejas**
 
-```sql
+\`\`\`sql
 CREATE POLICY "Complex policy with business logic"
 ON table_name FOR SELECT
 USING (
@@ -302,7 +302,7 @@ USING (
 
 COMMENT ON POLICY "Complex policy with business logic" ON table_name IS
 'Permite acceso a usuarios propios y admins de la misma región';
-```
+\`\`\`
 
 ---
 
@@ -313,53 +313,53 @@ COMMENT ON POLICY "Complex policy with business logic" ON table_name IS
 **Causa:** RLS habilitado pero sin políticas
 
 **Solución:**
-```sql
+\`\`\`sql
 -- Verificar políticas existentes
 SELECT * FROM pg_policies WHERE tablename = 'nombre_tabla';
 
 -- Si no hay políticas, crear una
 CREATE POLICY "..." ON nombre_tabla FOR SELECT USING (...);
-```
+\`\`\`
 
 ### Problema 2: Usuario no puede ver sus propios datos
 
 **Causa:** Política incorrecta o auth.uid() null
 
 **Solución:**
-```sql
+\`\`\`sql
 -- Verificar que auth.uid() funciona
 SELECT auth.uid();
 
 -- Si retorna null, el usuario no está autenticado
 -- Verificar que se está usando el token correcto
-```
+\`\`\`
 
 ### Problema 3: Admin no puede ver todos los datos
 
 **Causa:** Falta política para role admin
 
 **Solución:**
-```sql
+\`\`\`sql
 CREATE POLICY "Admins can view all data"
 ON table_name FOR ALL
 USING (
   (auth.jwt() ->> 'role')::text IN ('admin', 'management')
 );
-```
+\`\`\`
 
 ### Problema 4: Queries muy lentos después de RLS
 
 **Causa:** Políticas con subqueries complejos sin índices
 
 **Solución:**
-```sql
+\`\`\`sql
 -- Agregar índices en columnas usadas en políticas
 CREATE INDEX idx_table_user_id ON table_name(user_id);
 CREATE INDEX idx_table_parent_id ON table_name(parent_id);
 
 -- Analizar query plan
 EXPLAIN ANALYZE SELECT * FROM table_name;
-```
+\`\`\`
 
 ---
 

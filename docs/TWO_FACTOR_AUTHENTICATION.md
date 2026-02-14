@@ -18,7 +18,7 @@ WEEK-CHAIN™ implementa un sistema robusto de autenticación de dos factores (2
 ### Base de Datos
 
 #### Tabla `user_two_factor`
-```sql
+\`\`\`sql
 CREATE TABLE user_two_factor (
     id UUID PRIMARY KEY,
     user_id UUID REFERENCES auth.users(id),
@@ -30,10 +30,10 @@ CREATE TABLE user_two_factor (
     created_at TIMESTAMPTZ,
     updated_at TIMESTAMPTZ
 );
-```
+\`\`\`
 
 #### Tabla `two_factor_audit_log`
-```sql
+\`\`\`sql
 CREATE TABLE two_factor_audit_log (
     id UUID PRIMARY KEY,
     user_id UUID REFERENCES auth.users(id),
@@ -43,7 +43,7 @@ CREATE TABLE two_factor_audit_log (
     success BOOLEAN,
     created_at TIMESTAMPTZ
 );
-```
+\`\`\`
 
 ### Funciones SQL
 
@@ -57,7 +57,7 @@ Trigger que valida que usuarios con roles críticos tengan 2FA habilitado.
 
 ### 1. Configuración Inicial
 
-```typescript
+\`\`\`typescript
 // Usuario navega a /auth/setup-2fa
 1. Sistema genera secreto TOTP
 2. Sistema genera 10 códigos de respaldo
@@ -65,11 +65,11 @@ Trigger que valida que usuarios con roles críticos tengan 2FA habilitado.
 4. Usuario ingresa código de verificación
 5. Sistema valida código y habilita 2FA
 6. Usuario guarda códigos de respaldo
-```
+\`\`\`
 
 ### 2. Login con 2FA
 
-```typescript
+\`\`\`typescript
 // Usuario con 2FA habilitado intenta acceder a ruta protegida
 1. Usuario inicia sesión normalmente
 2. Middleware detecta que requiere 2FA
@@ -78,17 +78,17 @@ Trigger que valida que usuarios con roles críticos tengan 2FA habilitado.
 5. Sistema valida código
 6. Establece cookie de sesión 2FA (24h)
 7. Redirige a destino original
-```
+\`\`\`
 
 ### 3. Uso de Código de Respaldo
 
-```typescript
+\`\`\`typescript
 // Usuario perdió acceso a app de autenticación
 1. En pantalla de verificación, click "Usar código de respaldo"
 2. Ingresa uno de los 10 códigos
 3. Sistema valida y remueve código usado
 4. Acceso concedido
-```
+\`\`\`
 
 ## APIs
 
@@ -96,69 +96,69 @@ Trigger que valida que usuarios con roles críticos tengan 2FA habilitado.
 Genera secreto TOTP y códigos de respaldo.
 
 **Response:**
-```json
+\`\`\`json
 {
   "secret": "JBSWY3DPEHPK3PXP",
   "qrCode": "otpauth://totp/WEEK-CHAIN:user@example.com?secret=...",
   "backupCodes": ["A1B2C3D4", "E5F6G7H8", ...]
 }
-```
+\`\`\`
 
 ### POST `/api/auth/2fa/enable`
 Habilita 2FA después de verificar código.
 
 **Request:**
-```json
+\`\`\`json
 {
   "code": "123456"
 }
-```
+\`\`\`
 
 **Response:**
-```json
+\`\`\`json
 {
   "success": true
 }
-```
+\`\`\`
 
 ### POST `/api/auth/2fa/verify`
 Verifica código TOTP durante login.
 
 **Request:**
-```json
+\`\`\`json
 {
   "code": "123456"
 }
-```
+\`\`\`
 
 **Response:**
-```json
+\`\`\`json
 {
   "success": true
 }
-```
+\`\`\`
 
 ### GET `/api/auth/2fa/status`
 Obtiene estado de 2FA del usuario actual.
 
 **Response:**
-```json
+\`\`\`json
 {
   "enabled": true,
   "enabled_at": "2025-01-29T10:00:00Z",
   "last_used_at": "2025-01-29T15:30:00Z"
 }
-```
+\`\`\`
 
 ### POST `/api/auth/2fa/disable`
 Deshabilita 2FA (requiere confirmación).
 
 **Response:**
-```json
+\`\`\`json
 {
   "success": true
 }
-```
+\`\`\`
 
 ## Middleware
 
@@ -169,7 +169,7 @@ El middleware en `middleware.ts` verifica automáticamente:
 3. **Estado 2FA**: Si tiene 2FA habilitado
 4. **Sesión 2FA**: Si ya verificó 2FA en esta sesión (cookie 24h)
 
-```typescript
+\`\`\`typescript
 // Rutas protegidas
 const protectedRoutes = [
   "/admin",
@@ -185,7 +185,7 @@ const rolesRequiring2FA = [
   "management",
   "notaria"
 ]
-```
+\`\`\`
 
 ## Seguridad
 
@@ -251,19 +251,19 @@ Dashboard de seguridad para administradores:
 ## Testing
 
 ### Unit Tests
-```bash
+\`\`\`bash
 npm run test:unit -- two-factor
-```
+\`\`\`
 
 ### Integration Tests
-```bash
+\`\`\`bash
 npm run test:integration -- 2fa
-```
+\`\`\`
 
 ### E2E Tests
-```bash
+\`\`\`bash
 npm run test:e2e -- auth/2fa
-```
+\`\`\`
 
 ## Troubleshooting
 

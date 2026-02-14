@@ -472,14 +472,14 @@ La plataforma administrativa de WEEK-CHAIN es **excepcionalmente completa** con 
 **Calificación: 10/10** ✅
 
 **Roles Definidos:**
-```typescript
+\`\`\`typescript
 - admin: Acceso completo
 - management: Gestión de propiedades y transacciones
 - broker: Ver reportes y transacciones
 - notaria: Aprobar documentos
 - of_counsel: Gestión de propiedades y documentos legales
 - user: Sin permisos administrativos
-```
+\`\`\`
 
 **Permisos por Rol:**
 - `canManageUsers`
@@ -604,14 +604,14 @@ Ninguno ✅
 ### Fase 1: Correcciones Inmediatas (1-2 horas)
 
 1. **Implementar Aprobar/Rechazar Propiedades**
-   ```typescript
+   \`\`\`typescript
    // Crear endpoints:
    POST /api/admin/properties/approve
    POST /api/admin/properties/reject
-   ```
+   \`\`\`
 
 2. **Agregar Paginación a Tablas**
-   ```typescript
+   \`\`\`typescript
    // Usar shadcn pagination component
    import {
   Pagination,
@@ -622,15 +622,15 @@ Ninguno ✅
   PaginationPrevious,
   PaginationNext
 } from "@/components/ui/pagination"
-   ```
+   \`\`\`
 
 ### Fase 2: Mejoras UX (2-3 horas)
 
 1. **Agregar Gráficos en Analytics**
-   ```typescript
+   \`\`\`typescript
    // Usar Recharts
    import { LineChart, BarChart } from "recharts"
-   ```
+   \`\`\`
 
 2. **Mejorar Responsividad Mobile**
    - Convertir tablas a cards en mobile

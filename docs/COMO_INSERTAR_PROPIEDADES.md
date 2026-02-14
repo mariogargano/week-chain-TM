@@ -117,9 +117,9 @@ El sistema de autenticación está **FUNCIONANDO CORRECTAMENTE**:
 ### Si las propiedades no aparecen después de ejecutar el script:
 
 1. **Verifica en Supabase** que la tabla `properties` tenga 8 registros:
-   ```sql
+   \`\`\`sql
    SELECT COUNT(*) FROM properties;
-   ```
+   \`\`\`
 
 2. **Refresca la aplicación** (Cmd/Ctrl + R) para limpiar el caché
 

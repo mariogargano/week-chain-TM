@@ -24,7 +24,7 @@ La plataforma WEEK-CHAIN ofrece un **sistema de brokers excepcionalmente complet
 ### 1. SISTEMA DE COMISIONES MULTINIVEL ✅
 
 **Estructura de 3 Niveles:**
-```
+\`\`\`
 Nivel 1 (5%): Ventas directas con tu código
 ├─ Comisión inmediata del 5% del valor de la semana
 ├─ Pago después del minteo del NFT
@@ -39,7 +39,7 @@ Nivel 3 (1%): Ventas de la red de tus referidos
 ├─ Comisión del 1% de tercer nivel
 ├─ Escalabilidad exponencial
 └─ Ingresos completamente pasivos
-```
+\`\`\`
 
 **Ejemplo de Ganancias:**
 - Venta directa de $10,000 USD → **$500 USD** (5%)
@@ -61,7 +61,7 @@ Nivel 3 (1%): Ventas de la red de tus referidos
 - ✅ Clientes activos
 
 **Tabla de Reservaciones:**
-```
+\`\`\`
 Columnas disponibles:
 ├─ Fecha de venta
 ├─ Propiedad (nombre y ubicación)
@@ -70,7 +70,7 @@ Columnas disponibles:
 ├─ Monto en USDC
 ├─ Comisión calculada (5%)
 └─ Estado (completado/pendiente)
-```
+\`\`\`
 
 **Funcionalidades:**
 - ✅ Filtrado por fecha
@@ -82,9 +82,9 @@ Columnas disponibles:
 ### 3. HERRAMIENTAS DE REFERIDOS ✅
 
 **Enlace de Referido Único:**
-```
+\`\`\`
 https://week-chain.com/properties?ref=[TU_CODIGO]
-```
+\`\`\`
 
 **Canales de Compartición:**
 - ✅ WhatsApp (mensaje pre-formateado)
@@ -97,7 +97,7 @@ https://week-chain.com/properties?ref=[TU_CODIGO]
 - ✅ Compartir nativo del dispositivo
 
 **Mensajes Pre-formateados:**
-```
+\`\`\`
 WhatsApp:
 "🏖️ ¡Invierte en propiedades vacacionales con WEEK-CHAIN!
 
@@ -112,7 +112,7 @@ Hola,
 
 Quiero compartir contigo una oportunidad única de inversión...
 [Plantilla completa profesional]
-```
+\`\`\`
 
 ### 4. PROGRAMA BROKER ELITE ✅
 
@@ -123,7 +123,7 @@ Quiero compartir contigo una oportunidad única de inversión...
 - ✅ Compromiso de promoción activa
 
 **Beneficios Exclusivos:**
-```
+\`\`\`
 1. Comisión Base Aumentada
    └─ 5% en ventas directas (vs 3% usuarios regulares)
 
@@ -147,12 +147,12 @@ Quiero compartir contigo una oportunidad única de inversión...
    ├─ Visualización de red multinivel
    ├─ Proyecciones de ingresos
    └─ Reportes detallados
-```
+\`\`\`
 
 ### 5. BROKER ELITE DASHBOARD ✅
 
 **Visualización de Red Multinivel:**
-```
+\`\`\`
 Tú (Broker Elite)
 ├─ Referido 1 (Nivel 1) → $500 comisión (5%)
 │   ├─ Sub-referido 1.1 (Nivel 2) → $200 comisión (2%)
@@ -162,7 +162,7 @@ Tú (Broker Elite)
 └─ Referido 3 (Nivel 1) → $500 comisión (5%)
 
 Total: $2,000 USD en comisiones
-```
+\`\`\`
 
 **Secciones del Dashboard:**
 1. **Ventas Recientes**
@@ -192,7 +192,7 @@ Total: $2,000 USD en comisiones
 ### 6. PROCESO DE APLICACIÓN ✅
 
 **Formulario de Solicitud:**
-```
+\`\`\`
 Campos requeridos:
 ├─ Nombre completo
 ├─ Email
@@ -200,7 +200,7 @@ Campos requeridos:
 ├─ Empresa (opcional)
 ├─ Experiencia en bienes raíces (textarea)
 └─ Descripción de red de contactos (textarea)
-```
+\`\`\`
 
 **Flujo de Aprobación:**
 1. Envío de solicitud
@@ -232,7 +232,7 @@ Campos requeridos:
 ### 8. INTEGRACIÓN CON SISTEMA DE PAGOS ✅
 
 **Flujo de Comisiones:**
-```
+\`\`\`
 1. Cliente usa código de referido
    └─ Sistema registra referido en base de datos
 
@@ -247,7 +247,7 @@ Campos requeridos:
 
 5. Pago automático a wallet del broker
    └─ Notificación por email y dashboard
-```
+\`\`\`
 
 **Métodos de Pago de Comisiones:**
 - ✅ USDC directo a wallet Solana
@@ -356,14 +356,14 @@ Campos requeridos:
 ### 2. Dashboard de Broker (`/dashboard/broker`)
 
 **Métricas Principales:**
-```
+\`\`\`
 ┌─────────────────────────────────────┐
 │ Total Referidos: 15                 │
 │ Comisión Total: $7,500 USD          │
 │ Comisión Pendiente: $2,000 USD      │
 │ Tasa de Comisión: 5%                │
 └─────────────────────────────────────┘
-```
+\`\`\`
 
 **Tabla de Reservaciones:**
 - ✅ Paginación (10 por página)
@@ -380,7 +380,7 @@ Campos requeridos:
 ### 3. Broker Elite Dashboard (`/broker-elite/dashboard`)
 
 **Visualización de Red:**
-```
+\`\`\`
                     Tú
                     │
         ┌───────────┼───────────┐
@@ -395,7 +395,7 @@ Sub 1.1  Sub 1.2
     │
 Sub 1.1.1
   (1%)
-```
+\`\`\`
 
 **Análisis Avanzado:**
 - ✅ Proyección de ingresos mensuales
@@ -423,7 +423,7 @@ Sub 1.1.1
 ### 5. Sistema de Comisiones
 
 **Cálculo Automático:**
-```typescript
+\`\`\`typescript
 // Nivel 1: Venta directa
 comision = precioSemana * 0.05
 
@@ -432,7 +432,7 @@ comision = precioSemana * 0.02
 
 // Nivel 3: Venta de red
 comision = precioSemana * 0.01
-```
+\`\`\`
 
 **Tracking:**
 - ✅ Registro en base de datos

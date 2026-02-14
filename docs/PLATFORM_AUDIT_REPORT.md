@@ -37,23 +37,23 @@ Estimated Fix Time: **2-3 hours**
 - Causes sporadic auth failures and session issues
 
 **Files Affected**:
-```
+\`\`\`
 app/api/admin/**/route.ts (50+ files)
 app/api/broker/**/route.ts (10+ files)
 app/api/certificates/**/route.ts (5+ files)
 app/dashboard/admin/**/*.tsx (40+ files)
 app/dashboard/broker/**/*.tsx (10+ files)
 ... and 100+ more
-```
+\`\`\`
 
 **Solution**:
-```typescript
+\`\`\`typescript
 // ❌ WRONG (current)
 const supabase = await createClient()
 
 // ✅ CORRECT (should be)
 const supabase = await createServerClient()
-```
+\`\`\`
 
 ---
 
@@ -200,7 +200,7 @@ const supabase = await createServerClient()
 ## 🔧 IMMEDIATE ACTION PLAN
 
 ### Step 1: Fix Critical Blockers (30 minutes)
-```bash
+\`\`\`bash
 # 1. Create email automation tables
 psql $DATABASE_URL < scripts/093_email_automation_complete_setup.sql
 
@@ -209,26 +209,26 @@ psql $DATABASE_URL < scripts/095_fix_auth_profile_creation.sql
 
 # 3. Verify tables created
 psql $DATABASE_URL -c "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'email%';"
-```
+\`\`\`
 
 ### Step 2: Fix Supabase Client Usage (60 minutes)
 Use find-and-replace with verification:
-```typescript
+\`\`\`typescript
 // Find all instances in server-side code
 grep -r "const supabase = await createClient()" app/
 
 // Replace with correct usage
 // Manually verify each file to ensure it's server-side
-```
+\`\`\`
 
 ### Step 3: Add Dynamic Rendering (20 minutes)
 Add to all server components that fetch data:
-```typescript
+\`\`\`typescript
 export const dynamic = 'force-dynamic'
-```
+\`\`\`
 
 ### Step 4: Enable RLS Policies (30 minutes)
-```sql
+\`\`\`sql
 -- Enable RLS on critical tables
 ALTER TABLE admin_users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE properties ENABLE ROW LEVEL SECURITY;
@@ -236,7 +236,7 @@ ALTER TABLE weeks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE reservations ENABLE ROW LEVEL SECURITY;
 
 -- Create policies (see scripts/096_enable_rls_policies.sql)
-```
+\`\`\`
 
 ### Step 5: Full Platform Test (60 minutes)
 - Test as regular user

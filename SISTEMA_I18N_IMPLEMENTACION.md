@@ -19,7 +19,7 @@ El sistema de traducciones está completo en `lib/i18n/translations.ts` con 5 id
 
 Agregar traducciones faltantes para todas las páginas principales:
 
-```typescript
+\`\`\`typescript
 // Nuevas secciones agregadas a translations.ts
 {
   properties: {
@@ -39,7 +39,7 @@ Agregar traducciones faltantes para todas las páginas principales:
     // ... traducciones
   }
 }
-```
+\`\`\`
 
 ### 2. Convertir Páginas a Client Components
 

@@ -2,7 +2,7 @@
 
 ## System Overview
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────────────────┐
 │                     LEGAL-FIRST ARCHITECTURE                    │
 └─────────────────────────────────────────────────────────────────┘
@@ -20,7 +20,7 @@
 6. EVIDENCE GENERATION (ZIP Package)
    ↓
 7. STORAGE (Supabase + Arweave)
-```
+\`\`\`
 
 ## Components
 
@@ -92,7 +92,7 @@
 - **Storage**: Arweave via Irys uploader
 - **Format**: JSON with NOM-151 fields
 - **Structure**:
-  ```json
+  \`\`\`json
   {
     "name": "Property Name - Week X",
     "symbol": "WEEK",
@@ -104,7 +104,7 @@
       "certified_at": "2025-01-15T10:00:00Z"
     }
   }
-  ```
+  \`\`\`
 
 ### 9. Evidence Generator (`lib/evidence/zip-generator.ts`)
 - **Package Contents**:
@@ -130,7 +130,7 @@
 
 ### Certification Flow
 
-```
+\`\`\`
 Legalario API
     ↓ (certifies contract)
 Webhook POST
@@ -148,11 +148,11 @@ Database Update
 legal_contracts table
     ↓ (status = 'certified')
 Ready for Minting
-```
+\`\`\`
 
 ### Minting Flow
 
-```
+\`\`\`
 Mint API Request
     ↓ (contract_id + recipient)
 Database Guard
@@ -172,7 +172,7 @@ Generate Evidence ZIP
 Upload to Supabase
     ↓ (storage bucket)
 Complete
-```
+\`\`\`
 
 ## Database Schema
 
