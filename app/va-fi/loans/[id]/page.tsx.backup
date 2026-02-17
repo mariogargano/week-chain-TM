@@ -1,0 +1,197 @@
+import { createServerClient } from "@/lib/supabase/server"
+import { redirect, notFound } from "next/navigation"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { AlertCircle, CheckCircle } from "lucide-react"
+import Link from "next/link"
+
+export default async function LoanDetailPage({ params }: { params: { id: string } }) {
+  const supabase = await createServerClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect("/auth/login")
+  }
+
+  const { data: loan } = await supabase
+    .from("vafi_loans")
+    .select("*, nft_mints(*, weeks(*))")
+    .eq("id", params.id)
+    .eq("borrower_id", user.id)
+    .single()
+
+  if (!loan) {
+    notFound()
+  }
+
+  async function repayLoan(formData: FormData) {
+    "use server"
+    const supabase = await createServerClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    if (!user) return
+
+    await supabase
+      .from("vafi_loans")
+      .update({
+        status: "repaid",
+        repaid_at: new Date().toISOString(),
+      })
+      .eq("id", params.id)
+
+    await supabase.from("nft_mints").update({ status: "minted" }).eq("id", loan.nft_collateral_id)
+    redirect("/va-fi")
+  }
+
+  const totalDue = (loan.loan_amount || 0) * (1 + (loan.interest_rate || 0) / 100)
+  const daysUntilDue = Math.ceil((new Date(loan.due_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+  const isOverdue = daysUntilDue < 0
+  \
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <Link href="/va-fi" className="inline-block mb-6">
+          <Button variant="ghost">← Back to VA-FI</Button>
+        </Link>
+
+        {isOverdue ? (
+          <Alert variant="destructive" className="mb-6">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              This loan is overdue! Please repay immediately to avoid liquidation of your NFT collateral.
+            </AlertDescription>
+          </Alert>
+        ) : daysUntilDue <= 7 ? (
+          <Alert className="mb-6">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>Your loan is due in {daysUntilDue} days. Please prepare to repay soon.</AlertDescription>
+          </Alert>
+        ) : null}
+
+        <Card className="mb-6">
+          <CardHeader>
+            <div className="flex items-start justify-between">
+              <div>
+                <CardTitle className="text-2xl mb-2">Loan #{loan.id.slice(0, 8)}</CardTitle>
+                <CardDescription>Created on {new Date(loan.created_at).toLocaleDateString()}</CardDescription>
+              </div>
+              <Badge variant={loan.status === "active" ? "default" : "secondary"}>{loan.status}</Badge>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">Loan Amount</p>
+                  <p className="text-3xl font-bold">${loan.loan_amount?.toLocaleString()}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">Interest Rate</p>
+                  <p className="text-2xl font-bold">{loan.interest_rate}% APR</p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">Total Due</p>
+                  <p className="text-3xl font-bold text-primary">${totalDue.toLocaleString()}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">Due Date</p>
+                  <p className="text-2xl font-bold">{new Date(loan.due_date).toLocaleDateString()}</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>Collateral NFT</CardTitle>
+            <CardDescription>This NFT is locked as collateral for your loan</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-start justify-between">
+              <div className="space-y-2">
+                <h3 className="text-xl font-semibold">Week #{loan.nft_mints?.weeks?.week_number}</h3>
+                <p className="text-muted-foreground">{loan.nft_mints?.weeks?.property_name}</p>
+                <div className="flex gap-4 text-sm">
+                  <div>
+                    <span className="text-muted-foreground">NFT Value: </span>
+                    <span className="font-medium">${loan.nft_mints?.weeks?.price?.toLocaleString()}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">LTV: </span>
+                    <span className="font-medium">
+                      {(((loan.loan_amount || 0) / (loan.nft_mints?.weeks?.price || 1)) * 100).toFixed(1)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <Badge variant="outline">Locked</Badge>
+            </div>
+          </CardContent>
+        </Card>
+
+        {loan.status === "active" && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Repay Loan</CardTitle>
+              <CardDescription>Repay your loan to unlock your NFT collateral</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div className="rounded-lg border p-4 space-y-3 bg-muted/50">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Principal</span>
+                    <span className="font-medium">${loan.loan_amount?.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Interest ({loan.interest_rate}%)</span>
+                    <span className="font-medium">
+                      ${(((loan.loan_amount || 0) * (loan.interest_rate || 0)) / 100).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="border-t pt-3 flex justify-between">
+                    <span className="font-semibold">Total to Repay</span>
+                    <span className="text-xl font-bold text-primary">${totalDue.toLocaleString()} USDC</span>
+                  </div>
+                </div>
+
+                <form action={repayLoan}>
+                  <Button type="submit" size="lg" className="w-full">
+                    Repay Loan & Unlock NFT
+                  </Button>
+                </form>
+
+                <Alert>
+                  <CheckCircle className="h-4 w-4" />
+                  <AlertDescription>
+                    Once repaid, your NFT will be immediately unlocked and returned to your wallet.
+                  </AlertDescription>
+                </Alert>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {loan.status === "repaid" && (
+          <Card>
+            <CardContent className="py-8 text-center">
+              <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Loan Repaid Successfully</h3>
+              <p className="text-muted-foreground">
+                Your NFT collateral has been unlocked and returned to your wallet.
+              </p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    </div>
+  )
+}

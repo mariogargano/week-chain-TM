@@ -1,0 +1,839 @@
+"use client"
+
+import type React from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { toast } from "sonner"
+import { AlertCircle, Mail, Shield } from "lucide-react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useState, useEffect } from "react"
+import Image from "next/image"
+
+export default function AuthPage() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState<"login" | "register" | "magic">("login")
+  const [hasAccepted, setHasAccepted] = useState(false)
+  const [showTermsDialog, setShowTermsDialog] = useState(false)
+  const [pendingAction, setPendingAction] = useState<"google" | null>(null)
+  const [magicLinkSent, setMagicLinkSent] = useState(false)
+  const [magicLinkEmail, setMagicLinkEmail] = useState("")
+
+  // Login state
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  // Register state
+  const [registerName, setRegisterName] = useState("")
+  const [registerPhone, setRegisterPhone] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [registerTermsAccepted, setRegisterTermsAccepted] = useState(false)
+  const [referralCode, setReferralCode] = useState("")
+  const [referrerName, setReferrerName] = useState<string | null>(null)
+
+  useEffect(() => {
+    const ref = searchParams?.get("ref")
+    if (ref) {
+      setReferralCode(ref)
+      fetchReferrerName(ref)
+    }
+
+    const errorMsg = searchParams?.get("error")
+    if (errorMsg) {
+      setError(decodeURIComponent(errorMsg))
+    }
+  }, [searchParams])
+
+  const fetchReferrerName = async (code: string) => {
+    try {
+      const supabase = createClient()
+      const { data } = await supabase.from("users").select("full_name").eq("referral_code", code).single()
+
+      if (data?.full_name) {
+        setReferrerName(data.full_name)
+      }
+    } catch (error) {
+      console.error("[v0] Error fetching referrer:", error)
+    }
+  }
+
+  const handleGoogleLogin = async () => {
+    if (hasAccepted === false) {
+      setPendingAction("google")
+      setShowTermsDialog(true)
+      return
+    }
+
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      console.log("[v0] Starting custom Google OAuth flow...")
+      window.location.href = "/api/auth/google"
+    } catch (error: any) {
+      console.error("[v0] Google OAuth failed:", error)
+      setError("Error al conectar con Google. Intenta nuevamente o usa email y contraseña.")
+      toast.error("Error de autenticación con Google")
+      setIsLoading(false)
+    }
+  }
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      console.log("[v0] Attempting login...")
+      const supabase = createClient()
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
+      if (error) {
+        console.error("[v0] Login error:", error)
+        throw error
+      }
+
+      if (data.user) {
+        console.log("[v0] Login successful, fetching user role...")
+
+        const { data: userData } = await supabase
+          .from("users")
+          .select("role, full_name")
+          .eq("id", data.user.id)
+          .single()
+
+        const role = userData?.role || "user"
+        console.log("[v0] User role:", role)
+
+        let dashboardPath = "/dashboard/member"
+
+        if (role === "admin" || role === "super_admin") {
+          dashboardPath = "/dashboard/admin"
+        } else if (role === "broker" || role === "broker_elite") {
+          dashboardPath = "/dashboard/broker"
+        } else if (role === "management") {
+          dashboardPath = "/management"
+        } else if (role === "notaria") {
+          dashboardPath = "/notaria"
+        } else if (role === "service_provider") {
+          dashboardPath = "/dashboard/service-provider"
+        } else if (role === "vafi_manager") {
+          dashboardPath = "/dashboard/vafi"
+        } else if (role === "dao_member") {
+          dashboardPath = "/dashboard/dao"
+        } else if (role === "property_owner") {
+          dashboardPath = "/dashboard/owner"
+        } else {
+          dashboardPath = "/dashboard/member"
+        }
+
+        console.log("[v0] Redirecting to:", dashboardPath)
+        router.push(dashboardPath)
+        toast.success("¡Bienvenido de vuelta!")
+      }
+    } catch (error: any) {
+      console.error("[v0] Login failed:", error)
+      setError(error.message || "Error al iniciar sesión")
+      toast.error("Error al iniciar sesión")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      if (password !== confirmPassword) {
+        setError("Las contrasenas no coinciden")
+        setIsLoading(false)
+        return
+      }
+      if (!registerTermsAccepted) {
+        setError("Debes aceptar los terminos y condiciones para registrarte")
+        setIsLoading(false)
+        return
+      }
+      console.log("[v0] Attempting registration...")
+      const supabase = createClient()
+
+      if (referralCode) {
+        const { data: referrer } = await supabase.from("users").select("id").eq("referral_code", referralCode).single()
+
+        if (!referrer) {
+          throw new Error("Código de referido inválido")
+        }
+      }
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: registerName,
+            phone: registerPhone,
+            referral_code: referralCode,
+          },
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      })
+
+      if (error) {
+        console.error("[v0] Registration error:", error)
+        throw error
+      }
+
+      console.log("[v0] Registration successful")
+      toast.success("¡Registro exitoso! Revisa tu email para confirmar tu cuenta.")
+      setActiveTab("login")
+    } catch (error: any) {
+      console.error("[v0] Registration failed:", error)
+      setError(error.message || "Error al registrarse")
+      toast.error(error.message || "Error al registrarse")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleTermsAcceptance = () => {
+    setHasAccepted(true)
+    setShowTermsDialog(false)
+
+    if (pendingAction === "google") {
+      handleGoogleLogin()
+    }
+  }
+
+  const handleMagicLink = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      console.log("[v0] Sending magic link to:", magicLinkEmail)
+      const supabase = createClient()
+
+      const { data, error } = await supabase.auth.signInWithOtp({
+        email: magicLinkEmail,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      })
+
+      if (error) {
+        console.error("[v0] Magic link error:", error)
+        throw error
+      }
+
+      console.log("[v0] Magic link sent successfully")
+      setMagicLinkSent(true)
+      toast.success("¡Revisa tu email! Te hemos enviado un enlace mágico para iniciar sesión.")
+    } catch (error: any) {
+      console.error("[v0] Magic link failed:", error)
+      if (error.message?.includes("rate")) {
+        setError("Demasiados intentos. Por favor espera un momento antes de intentar nuevamente.")
+      } else if (error.message?.includes("invalid")) {
+        setError("Email inválido. Por favor verifica tu dirección de correo.")
+      } else {
+        setError(error.message || "Error al enviar el enlace mágico")
+      }
+      toast.error("Error al enviar el enlace mágico")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center justify-center p-4">
+      <div className="text-center mb-8">
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <Image
+            src="/logo.png"
+            alt="WEEK-CHAIN Logo"
+            width={64}
+            height={64}
+            className="rounded-full shadow-lg"
+            priority
+          />
+          <div className="text-left">
+            <h1 className="text-3xl font-bold text-gray-900">WEEK-CHAIN™</h1>
+            <p className="text-sm text-gray-600">Smart Vacational Certificate</p>
+          </div>
+        </div>
+      </div>
+
+      <Card className="w-full max-w-md shadow-2xl bg-white/80 backdrop-blur-xl border-sky-200/50">
+        <CardContent className="pt-8 pb-8 px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              {activeTab === "login" ? "Bienvenido de nuevo" : "Crea tu cuenta"}
+            </h2>
+            <p className="text-gray-600">
+              {activeTab === "login"
+                ? "Accede a tus certificados vacacionales"
+                : "Registrate para obtener tu certificado digital"}
+            </p>
+          </div>
+
+          {error && (
+            <Alert variant="destructive" className="mb-6">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
+          {referrerName && (
+            <div className="mb-6 p-3 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-lg">
+              <p className="text-sm text-emerald-800 text-center">
+                <span className="font-semibold">{referrerName}</span> te ha invitado a unirte
+              </p>
+            </div>
+          )}
+
+          <button
+            onClick={handleGoogleLogin}
+            disabled={isLoading}
+            type="button"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              height: "48px",
+              marginBottom: "24px",
+              padding: "12px 24px",
+              backgroundColor: "#FFFFFF",
+              border: "2px solid #E5E7EB",
+              borderRadius: "8px",
+              fontSize: "16px",
+              fontWeight: "500",
+              color: "#374151",
+              cursor: isLoading ? "not-allowed" : "pointer",
+              opacity: isLoading ? 0.7 : 1,
+              transition: "all 0.2s ease",
+            }}
+            onMouseOver={(e) => {
+              if (!isLoading) {
+                e.currentTarget.style.backgroundColor = "#F9FAFB"
+                e.currentTarget.style.borderColor = "#D1D5DB"
+              }
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = "#FFFFFF"
+              e.currentTarget.style.borderColor = "#E5E7EB"
+            }}
+          >
+            <svg style={{ width: "20px", height: "20px", marginRight: "12px" }} viewBox="0 0 24 24">
+              <path
+                fill="#4285F4"
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+              />
+              <path
+                fill="#34A853"
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+              />
+              <path
+                fill="#FBBC05"
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+              />
+              <path
+                fill="#EA4335"
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+              />
+            </svg>
+            Continuar con Google
+          </button>
+
+          <div className="relative mb-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-white text-gray-500 uppercase tracking-wider">O CONTINÚA CON EMAIL</span>
+            </div>
+          </div>
+
+          <div className="flex gap-2 mb-6">
+            <Button
+              type="button"
+              onClick={() => {
+                setActiveTab("login")
+                setMagicLinkSent(false)
+              }}
+              variant={activeTab === "login" ? "default" : "outline"}
+              className={`flex-1 h-11 text-sm ${
+                activeTab === "login"
+                  ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-200"
+                  : "border-2 border-sky-200 hover:bg-sky-50 bg-transparent"
+              }`}
+            >
+              Contraseña
+            </Button>
+            <Button
+              type="button"
+              onClick={() => {
+                setActiveTab("magic")
+                setMagicLinkSent(false)
+              }}
+              variant={activeTab === "magic" ? "default" : "outline"}
+              className={`flex-1 h-11 text-sm ${
+                activeTab === "magic"
+                  ? "bg-purple-500 hover:bg-purple-600 text-white shadow-md shadow-purple-200"
+                  : "border-2 border-purple-200 hover:bg-purple-50 bg-transparent"
+              }`}
+            >
+              Enlace Mágico
+            </Button>
+            <Button
+              type="button"
+              onClick={() => {
+                setActiveTab("register")
+                setMagicLinkSent(false)
+              }}
+              variant={activeTab === "register" ? "default" : "outline"}
+              className={`flex-1 h-11 text-sm ${
+                activeTab === "register" ? "bg-cyan-500 hover:bg-cyan-600 text-white shadow-md shadow-cyan-200" : "border-2 border-cyan-200 hover:bg-cyan-50 bg-transparent"
+              }`}
+            >
+              Registro
+            </Button>
+          </div>
+
+          {activeTab === "magic" && !magicLinkSent && (
+            <form onSubmit={handleMagicLink} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="magic-email" className="text-gray-700">
+                  Correo electrónico
+                </Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Input
+                    id="magic-email"
+                    type="email"
+                    placeholder="tu@email.com"
+                    value={magicLinkEmail}
+                    onChange={(e) => setMagicLinkEmail(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    className="pl-10 h-12 border-gray-300"
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  Te enviaremos un enlace seguro para iniciar sesión sin contraseña
+                </p>
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full h-12 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white text-base font-semibold shadow-md shadow-purple-200"
+                disabled={isLoading}
+              >
+                {isLoading ? "Enviando..." : "Enviar Enlace Mágico"}
+              </Button>
+            </form>
+          )}
+
+          {activeTab === "magic" && magicLinkSent && (
+            <div className="text-center space-y-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                <Mail className="h-8 w-8 text-green-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">¡Revisa tu email!</h3>
+              <p className="text-gray-600">
+                Hemos enviado un enlace mágico a <strong>{magicLinkEmail}</strong>
+              </p>
+              <p className="text-sm text-gray-500">
+                Haz clic en el enlace del email para iniciar sesión automáticamente.
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setMagicLinkSent(false)
+                  setMagicLinkEmail("")
+                }}
+                className="mt-4"
+              >
+                Enviar a otro email
+              </Button>
+            </div>
+          )}
+
+          {activeTab === "login" && (
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-gray-700">
+                  Correo electrónico
+                </Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="tu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    className="pl-10 h-12 border-gray-300"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <Label htmlFor="password" className="text-gray-700">
+                    Contraseña
+                  </Label>
+                  <button type="button" className="text-sm text-sky-600 hover:text-sky-700">
+                    ¿Olvidaste tu contraseña?
+                  </button>
+                </div>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  className="h-12 border-gray-300"
+                />
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white text-base font-semibold shadow-md shadow-sky-200"
+                disabled={isLoading}
+              >
+                {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
+              </Button>
+            </form>
+          )}
+
+          {activeTab === "register" && (
+            <form onSubmit={handleRegister} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="register-name" className="text-gray-700">
+                  Nombre completo
+                </Label>
+                <Input
+                  id="register-name"
+                  type="text"
+                  placeholder="Juan Pérez"
+                  value={registerName}
+                  onChange={(e) => setRegisterName(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  className="h-12 border-gray-300"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="register-email" className="text-gray-700">
+                  Correo electrónico
+                </Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Input
+                    id="register-email"
+                    type="email"
+                    placeholder="tu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    className="pl-10 h-12 border-gray-300"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="register-phone" className="text-gray-700">
+                  Teléfono
+                </Label>
+                <Input
+                  id="register-phone"
+                  type="tel"
+                  placeholder="+52 123 456 7890"
+                  value={registerPhone}
+                  onChange={(e) => setRegisterPhone(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  className="h-12 border-gray-300"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="register-password" className="text-gray-700">
+                  Contrasena (min. 6 caracteres)
+                </Label>
+                <Input
+                  id="register-password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  minLength={6}
+                  className="h-12 border-gray-300"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirm-password" className="text-gray-700">
+                  Confirmar contrasena
+                </Label>
+                <Input
+                  id="confirm-password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  minLength={6}
+                  className="h-12 border-gray-300"
+                />
+                {confirmPassword && password !== confirmPassword && (
+                  <p className="text-xs text-red-500 mt-1">Las contrasenas no coinciden</p>
+                )}
+              </div>
+
+              {referralCode && (
+                <div className="space-y-2">
+                  <Label htmlFor="referral-code" className="text-gray-700">
+                    Código de referido
+                  </Label>
+                  <Input
+                    id="referral-code"
+                    type="text"
+                    value={referralCode}
+                    disabled
+                    className="h-12 bg-gray-50 border-gray-300"
+                  />
+                </div>
+              )}
+
+              <div className="flex items-start gap-3 p-3 bg-sky-50 rounded-lg border border-sky-200">
+                <input
+                  type="checkbox"
+                  id="register-terms"
+                  checked={registerTermsAccepted}
+                  onChange={(e) => setRegisterTermsAccepted(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500"
+                />
+                <label htmlFor="register-terms" className="text-xs text-gray-600 leading-relaxed cursor-pointer">
+                  Acepto los{" "}
+                  <button type="button" onClick={() => setShowTermsDialog(true)} className="text-sky-600 underline hover:text-sky-700 font-medium">
+                    Terminos y Condiciones
+                  </button>
+                  ,{" "}
+                  <button type="button" onClick={() => setShowTermsDialog(true)} className="text-sky-600 underline hover:text-sky-700 font-medium">
+                    Politica de Privacidad
+                  </button>{" "}
+                  y el{" "}
+                  <button type="button" onClick={() => setShowTermsDialog(true)} className="text-sky-600 underline hover:text-sky-700 font-medium">
+                    Contrato de Adhesion NOM-029
+                  </button>
+                </label>
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full h-12 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white text-base font-semibold shadow-md shadow-cyan-200 disabled:opacity-50"
+                disabled={isLoading || !registerTermsAccepted || (confirmPassword !== "" && password !== confirmPassword)}
+              >
+                {isLoading ? "Creando cuenta..." : "Crear cuenta"}
+              </Button>
+            </form>
+          )}
+        </CardContent>
+      </Card>
+
+      {showTermsDialog && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#FFFFFF",
+              padding: "32px",
+              borderRadius: "16px",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+              width: "100%",
+              maxWidth: "600px",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              margin: "16px",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+              <div style={{ padding: "8px", borderRadius: "8px", backgroundColor: "#E0F2FE" }}>
+                <Shield className="h-6 w-6 text-sky-600" />
+              </div>
+              <h2 style={{ fontSize: "24px", fontWeight: "bold", color: "#111827" }}>Términos y Condiciones</h2>
+            </div>
+
+            <div
+              style={{
+                marginBottom: "24px",
+                padding: "16px",
+                backgroundColor: "#F8FAFC",
+                borderRadius: "8px",
+                border: "1px solid #E2E8F0",
+                maxHeight: "250px",
+                overflowY: "auto",
+              }}
+            >
+              <div style={{ fontSize: "14px", color: "#475569" }}>
+                <p style={{ fontWeight: "600", marginBottom: "16px" }}>
+                  Para proteger tanto a usted como a WEEK-CHAIN, debe aceptar nuestros términos legales antes de
+                  continuar con el inicio de sesión con Google.
+                </p>
+
+                <h3 style={{ fontWeight: "600", color: "#0F172A", marginTop: "16px", marginBottom: "8px" }}>
+                  Términos Principales:
+                </h3>
+                <ul style={{ listStyle: "disc", paddingLeft: "24px" }}>
+                  <li style={{ marginBottom: "8px" }}>
+                    Los certificados digitales de WEEK-CHAIN representan derechos de uso vacacional por 15 años
+                  </li>
+                  <li style={{ marginBottom: "8px" }}>
+                    No constituyen propiedad inmobiliaria ni instrumento financiero
+                  </li>
+                  <li style={{ marginBottom: "8px" }}>
+                    Sujeto a las regulaciones mexicanas NOM-029-SE-2021 y NOM-151-SCFI-2016
+                  </li>
+                  <li style={{ marginBottom: "8px" }}>
+                    Tiene un periodo de reflexión de 5 días hábiles para cancelar su compra
+                  </li>
+                  <li style={{ marginBottom: "8px" }}>Sus datos personales serán tratados conforme a la LFPDPPP</li>
+                </ul>
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "16px",
+                padding: "20px",
+                backgroundColor: "#FFFBEB",
+                borderRadius: "12px",
+                border: "2px solid #F59E0B",
+                marginBottom: "24px",
+              }}
+            >
+              <input
+                type="checkbox"
+                id="accept-terms-google"
+                checked={hasAccepted}
+                onChange={(e) => setHasAccepted(e.target.checked)}
+                style={{
+                  width: "28px",
+                  height: "28px",
+                  cursor: "pointer",
+                  accentColor: "#F59E0B",
+                  flexShrink: 0,
+                }}
+              />
+              <label
+                htmlFor="accept-terms-google"
+                style={{ fontSize: "15px", color: "#78350F", cursor: "pointer", lineHeight: "1.5" }}
+              >
+                <strong>He leído y acepto</strong> los{" "}
+                <a
+                  href="/legal/terms"
+                  target="_blank"
+                  style={{ color: "#D97706", fontWeight: "600", textDecoration: "underline" }}
+                  rel="noreferrer"
+                >
+                  Términos y Condiciones
+                </a>{" "}
+                y el{" "}
+                <a
+                  href="/legal/privacy"
+                  target="_blank"
+                  style={{ color: "#D97706", fontWeight: "600", textDecoration: "underline" }}
+                  rel="noreferrer"
+                >
+                  Aviso de Privacidad
+                </a>{" "}
+                de WEEK-CHAIN S.A.P.I. de C.V.
+              </label>
+            </div>
+
+            <div style={{ display: "flex", gap: "16px" }}>
+              <button
+                onClick={() => {
+                  setShowTermsDialog(false)
+                  setPendingAction(null)
+                  setHasAccepted(false)
+                }}
+                type="button"
+                style={{
+                  flex: 1,
+                  height: "56px",
+                  padding: "16px 24px",
+                  backgroundColor: "#FFFFFF",
+                  border: "2px solid #D1D5DB",
+                  borderRadius: "12px",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  color: "#374151",
+                  cursor: "pointer",
+                }}
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleTermsAcceptance}
+                disabled={!hasAccepted}
+                type="button"
+                style={{
+                  flex: 1,
+                  height: "56px",
+                  padding: "16px 24px",
+                  background: hasAccepted ? "linear-gradient(to right, #F59E0B, #EA580C)" : "#D1D5DB",
+                  border: "none",
+                  borderRadius: "12px",
+                  fontSize: "16px",
+                  fontWeight: "700",
+                  color: hasAccepted ? "#FFFFFF" : "#9CA3AF",
+                  cursor: hasAccepted ? "pointer" : "not-allowed",
+                  boxShadow: hasAccepted ? "0 4px 14px rgba(245, 158, 11, 0.4)" : "none",
+                }}
+              >
+                {hasAccepted ? "✓ Aceptar y Continuar" : "Marca la casilla primero"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
