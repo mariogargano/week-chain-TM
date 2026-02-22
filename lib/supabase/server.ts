@@ -8,17 +8,44 @@ async function createSupabaseServerClientWithCookies() {
 
   if (!supabaseUrl || !supabaseAnonKey) {
     console.log("[v0] Supabase credentials not found. Returning mock client.")
-    const mockQueryBuilder = {
+    const mockQueryBuilder: any = {
       select: () => mockQueryBuilder,
       eq: () => mockQueryBuilder,
+      neq: () => mockQueryBuilder,
+      gt: () => mockQueryBuilder,
+      lt: () => mockQueryBuilder,
+      gte: () => mockQueryBuilder,
+      lte: () => mockQueryBuilder,
+      like: () => mockQueryBuilder,
+      ilike: () => mockQueryBuilder,
+      is: () => mockQueryBuilder,
+      in: () => mockQueryBuilder,
+      contains: () => mockQueryBuilder,
+      containedBy: () => mockQueryBuilder,
+      rangeGt: () => mockQueryBuilder,
+      rangeGte: () => mockQueryBuilder,
+      rangeLt: () => mockQueryBuilder,
+      rangeLte: () => mockQueryBuilder,
+      rangeAdjacent: () => mockQueryBuilder,
+      overlaps: () => mockQueryBuilder,
+      match: () => mockQueryBuilder,
+      not: () => mockQueryBuilder,
+      or: () => mockQueryBuilder,
+      filter: () => mockQueryBuilder,
       order: () => mockQueryBuilder,
-      single: () => Promise.resolve({ data: null, error: null }),
-      then: (resolve: any) => resolve({ data: null, error: null }),
+      limit: () => mockQueryBuilder,
+      range: () => mockQueryBuilder,
+      abortSignal: () => mockQueryBuilder,
+      single: () => Promise.resolve({ data: null, error: null, count: 0 }),
+      maybeSingle: () => Promise.resolve({ data: null, error: null, count: 0 }),
+      then: (resolve: any) => resolve({ data: [], error: null, count: 0 }),
     }
 
     return {
       auth: {
         getUser: async () => ({ data: { user: null }, error: null }),
+        getSession: async () => ({ data: { session: null }, error: null }),
+        onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
       },
       from: () => mockQueryBuilder,
     } as any
