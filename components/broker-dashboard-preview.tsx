@@ -188,7 +188,9 @@ export function BrokerDashboardPreview() {
                           +12%
                         </span>
                       </div>
-                      <p className="text-xl font-bold text-white">${(profile.totalSales * 0.04).toLocaleString()}</p>
+                      <p className="text-xl font-bold text-white">
+                        ${(profile.totalSales * 0.04).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                      </p>
                       <p className="text-xs text-slate-400">
                         Honorarios Totales <span className="text-emerald-400">(IVA inc.)</span>
                       </p>
@@ -202,7 +204,9 @@ export function BrokerDashboardPreview() {
                           +8%
                         </span>
                       </div>
-                      <p className="text-xl font-bold text-white">${(profile.thisMonth * 0.04).toLocaleString()}</p>
+                      <p className="text-xl font-bold text-white">
+                        ${(profile.thisMonth * 0.04).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                      </p>
                       <p className="text-xs text-slate-400">
                         Este Mes <span className="text-emerald-400">(IVA inc.)</span>
                       </p>
@@ -306,7 +310,7 @@ export function BrokerDashboardPreview() {
                   </div>
                   <div className="bg-white/5 rounded-xl p-3 border border-white/10 text-center">
                     <p className="text-emerald-400 font-bold text-xl">
-                      ${(profile.totalSales * 0.04).toLocaleString()}
+                      ${(profile.totalSales * 0.04).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </p>
                     <p className="text-slate-500 text-xs">Ganado</p>
                   </div>
