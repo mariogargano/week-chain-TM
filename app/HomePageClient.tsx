@@ -140,13 +140,6 @@ export function HomePageClient() {
   const [showBrokerSection, setShowBrokerSection] = useState(false)
   const [showLegalNotice, setShowLegalNotice] = useState(true)
 
-  useEffect(() => {
-    console.log("[v0] HomePageClient mounted successfully")
-    return () => {
-      console.log("[v0] HomePageClient unmounting")
-    }
-  }, [])
-
   const hero = t?.hero || fallback.hero
   const buyerBenefits = t?.buyerBenefits || fallback.buyerBenefits
   const howItWorks = t?.howItWorks || fallback.howItWorks
