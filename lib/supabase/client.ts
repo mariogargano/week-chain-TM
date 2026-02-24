@@ -80,10 +80,7 @@ export function createBrowserClient(url?: string, key?: string) {
   const effectiveKey = key && !key.includes("!") ? key : supabaseAnonKey
 
   if (!effectiveUrl || !effectiveKey || effectiveUrl.startsWith("http://localhost") === false && effectiveUrl.includes("supabase.co") === false) {
-    console.warn("[v0] Supabase credentials missing or invalid - using mock client:", {
-      hasUrl: !!effectiveUrl,
-      hasKey: !!effectiveKey,
-    })
+    // Supabase credentials missing or invalid - using mock client
     if (!browserClient) {
       browserClient = createMockClient()
     }
@@ -115,7 +112,6 @@ export function createBrowserClient(url?: string, key?: string) {
     },
   })
 
-  console.log("[v0] Supabase client initialized successfully")
   return browserClient
 }
 
