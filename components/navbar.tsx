@@ -254,13 +254,13 @@ export function Navbar() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
-              <div className="relative">
+              <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden bg-white shadow-md shadow-sky-100/50 ring-1 ring-slate-200/60 transition-transform group-hover:scale-105 flex-shrink-0">
                 <Image
                   src="/logo.png"
                   alt="WEEK-CHAIN Logo"
                   width={56}
                   height={56}
-                  className="w-12 h-12 sm:w-14 sm:h-14 transition-transform group-hover:scale-105"
+                  className="w-full h-full object-contain scale-110"
                   priority
                 />
               </div>
