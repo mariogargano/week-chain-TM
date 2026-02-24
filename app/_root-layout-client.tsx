@@ -28,7 +28,7 @@ export function RootLayoutClient({ children, interVariable }: RootLayoutClientPr
   const isDashboardRoute = pathname.startsWith("/dashboard")
 
   return (
-    <html lang={locale} className={interVariable}>
+    <html lang={locale} className={`${interVariable} bg-background`}>
       <head>
         <OrganizationJsonLd />
         <WebsiteJsonLd />

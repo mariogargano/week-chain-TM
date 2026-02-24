@@ -51,10 +51,6 @@ export function Navbar() {
   const router = useRouter()
   const t = useTranslations()
 
-  useEffect(() => {
-    console.log("[v0] Navbar component mounted successfully")
-  }, [])
-
   const nav = {
     aboutUs: t?.nav?.aboutUs || fallbackNav.aboutUs,
     myPanel: t?.nav?.myPanel || fallbackNav.myPanel,

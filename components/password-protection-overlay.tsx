@@ -17,6 +17,19 @@ export function PasswordProtectionOverlay() {
   const [emailSent, setEmailSent] = useState(false)
 
   useEffect(() => {
+    // Skip password protection in development/preview environments
+    const isDev = process.env.NODE_ENV === "development"
+    const isPreview = typeof window !== "undefined" && (
+      window.location.hostname.includes("vercel.app") ||
+      window.location.hostname.includes("v0.dev") ||
+      window.location.hostname === "localhost"
+    )
+    
+    if (isDev || isPreview) {
+      setIsUnlocked(true)
+      return
+    }
+    
     // Check if already unlocked
     const accessGranted = localStorage.getItem(STORAGE_KEY)
     if (accessGranted === "true") {
