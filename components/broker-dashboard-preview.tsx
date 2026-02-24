@@ -111,6 +111,11 @@ export function BrokerDashboardPreview() {
 
   const COMMISSION_RATE = 4 // Flat 4% for all brokers
 
+  // Use a stable formatter that won't cause hydration mismatches
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("en-US").format(value)
+  }
+
   return (
     <section className="px-4 py-16 md:py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
@@ -188,7 +193,7 @@ export function BrokerDashboardPreview() {
                           +12%
                         </span>
                       </div>
-                      <p className="text-xl font-bold text-white">${(profile.totalSales * 0.04).toLocaleString()}</p>
+                      <p className="text-xl font-bold text-white">${formatCurrency(profile.totalSales * 0.04)}</p>
                       <p className="text-xs text-slate-400">
                         Honorarios Totales <span className="text-emerald-400">(IVA inc.)</span>
                       </p>
@@ -202,7 +207,7 @@ export function BrokerDashboardPreview() {
                           +8%
                         </span>
                       </div>
-                      <p className="text-xl font-bold text-white">${(profile.thisMonth * 0.04).toLocaleString()}</p>
+                      <p className="text-xl font-bold text-white">${formatCurrency(profile.thisMonth * 0.04)}</p>
                       <p className="text-xs text-slate-400">
                         Este Mes <span className="text-emerald-400">(IVA inc.)</span>
                       </p>
@@ -306,7 +311,7 @@ export function BrokerDashboardPreview() {
                   </div>
                   <div className="bg-white/5 rounded-xl p-3 border border-white/10 text-center">
                     <p className="text-emerald-400 font-bold text-xl">
-                      ${(profile.totalSales * 0.04).toLocaleString()}
+                      ${formatCurrency(profile.totalSales * 0.04)}
                     </p>
                     <p className="text-slate-500 text-xs">Ganado</p>
                   </div>

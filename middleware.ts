@@ -108,7 +108,7 @@ export async function middleware(request: NextRequest) {
         .maybeSingle()
 
       if (!profile) {
-        console.log("[v0] No profile found for user:", user.id)
+        // No profile found for user
         // Redirect to auth if profile doesn't exist
         return NextResponse.redirect(new URL("/auth?error=no_profile", request.url))
       }
@@ -177,7 +177,7 @@ export async function middleware(request: NextRequest) {
       }
 
       if (!isAuthorized && requiredRoles.length > 0) {
-        console.log("[v0] RBAC: Access denied for role:", profile.role, "to route:", pathname)
+        // RBAC: Access denied
 
         // Redirect to user's appropriate dashboard
         const userDashboardMap: Record<string, string> = {
@@ -200,11 +200,11 @@ export async function middleware(request: NextRequest) {
         }
 
         const redirectPath = userDashboardMap[profile.role] || "/dashboard/holder"
-        console.log("[v0] RBAC: Redirecting to:", redirectPath)
+        // RBAC: Redirecting to appropriate dashboard
         return NextResponse.redirect(new URL(redirectPath, request.url))
       }
 
-      console.log("[v0] RBAC: Access granted for role:", profile.role, "to route:", pathname)
+      // RBAC: Access granted
     }
   }
 

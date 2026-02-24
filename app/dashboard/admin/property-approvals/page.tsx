@@ -204,6 +204,5 @@ function AdminPropertyApprovalsContent() {
           )}
         </div>
       </div>
-    </div>
   )
 }

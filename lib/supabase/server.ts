@@ -7,7 +7,7 @@ async function createSupabaseServerClientWithCookies() {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.log("[v0] Supabase credentials not found. Returning mock client.")
+    // Supabase credentials not found - returning mock client
     const mockQueryBuilder: any = {
       select: () => mockQueryBuilder,
       eq: () => mockQueryBuilder,
@@ -76,7 +76,7 @@ export function createServiceRoleClient() {
   const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
-    console.error("[v0] Service role credentials not found. URL:", !!supabaseUrl, "Key:", !!supabaseServiceRoleKey)
+    console.error("Service role credentials not found")
     throw new Error("Service role credentials not configured")
   }
 
