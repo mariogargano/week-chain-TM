@@ -129,8 +129,8 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-4">
-              <div className="h-12 w-12 rounded-full overflow-hidden bg-white p-1">
-                <Image src="/logo.png" alt="WEEK-CHAIN" width={44} height={44} className="object-cover" />
+              <div className="h-12 w-12 rounded-full overflow-hidden bg-white shadow-md shadow-sky-200/20 ring-1 ring-white/20 flex-shrink-0">
+                <Image src="/logo.png" alt="WEEK-CHAIN" width={48} height={48} className="w-full h-full object-contain scale-110" />
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-bold">
@@ -249,7 +249,9 @@ export function Footer() {
               <span className="text-blue-500 text-xs font-mono bg-blue-950 px-2 py-1 rounded">
                 v2.0.1 - WEEK Review Added
               </span>
-              <Image src="/logo.png" alt="WEEK-CHAIN" width={24} height={24} className="opacity-50" />
+              <div className="w-6 h-6 rounded-full overflow-hidden bg-white/80 opacity-50">
+                <Image src="/logo.png" alt="WEEK-CHAIN" width={24} height={24} className="w-full h-full object-contain" />
+              </div>
             </div>
           </div>
         </div>
