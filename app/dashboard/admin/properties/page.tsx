@@ -648,6 +648,5 @@ function AdminPropertiesContent() {
           )}
         </div>
       </div>
-    </div>
   )
 }

@@ -338,6 +338,5 @@ export default function RealTimeMonitorPage() {
           </Tabs>
         </div>
       </div>
-    </div>
   )
 }
