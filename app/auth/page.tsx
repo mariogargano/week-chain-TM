@@ -258,13 +258,13 @@ export default function AuthPage() {
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center justify-center p-4">
       <div className="text-center mb-8">
         <div className="flex items-center justify-center gap-3 mb-2">
-          <div className="w-16 h-16 rounded-full overflow-hidden bg-white shadow-lg shadow-sky-200/50 ring-1 ring-slate-200/60 flex-shrink-0">
+          <div className="w-16 h-16 rounded-full overflow-hidden shadow-lg shadow-sky-200/50 ring-1 ring-slate-200/30 flex-shrink-0">
             <Image
               src="/logo.png"
               alt="WEEK-CHAIN Logo"
               width={64}
               height={64}
-              className="w-full h-full object-contain scale-110"
+              className="w-full h-full object-contain scale-[1.15] mix-blend-multiply"
               priority
             />
           </div>

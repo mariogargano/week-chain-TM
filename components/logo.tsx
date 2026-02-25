@@ -4,13 +4,13 @@ import Image from "next/image"
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <Link href="/" className={`flex items-center gap-3 group ${className}`}>
-      <div className="relative flex h-12 w-12 items-center justify-center rounded-full overflow-hidden group-hover:scale-110 transition-all duration-300 shadow-lg shadow-sky-200/40 group-hover:shadow-xl group-hover:shadow-sky-300/50 bg-white/90 backdrop-blur-sm ring-1 ring-slate-200/50">
+      <div className="relative flex h-12 w-12 items-center justify-center rounded-full overflow-hidden group-hover:scale-110 transition-all duration-300 shadow-lg shadow-sky-200/40 group-hover:shadow-xl group-hover:shadow-sky-300/50 backdrop-blur-sm ring-1 ring-white/30">
         <Image
           src="/logo.png"
           alt="WEEK-CHAIN™ Logo"
           width={48}
           height={48}
-          className="object-contain scale-110"
+          className="object-contain scale-[1.15] mix-blend-multiply"
           priority
         />
       </div>
