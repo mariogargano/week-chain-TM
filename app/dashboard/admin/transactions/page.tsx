@@ -203,6 +203,5 @@ function AdminTransactionsContent() {
           )}
         </div>
       </div>
-    </div>
   )
 }
