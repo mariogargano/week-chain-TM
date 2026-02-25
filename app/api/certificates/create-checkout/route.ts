@@ -47,7 +47,23 @@ export async function POST(req: Request) {
 
     const { successUrl, cancelUrl } = body
 
-    console.log(`[v0] Checking availability for product: ${product.display_name}`)
+    // KYC Gate: Block checkout if KYC not approved
+    const { data: kycData } = await supabase
+      .from("kyc_users")
+      .select("status")
+      .eq("user_id", userData.user.id)
+      .maybeSingle()
+
+    if (!kycData || kycData.status !== "approved") {
+      return NextResponse.json(
+        {
+          error: "KYC_REQUIRED",
+          message: "Debes completar la verificacion de identidad (KYC) antes de comprar un certificado.",
+          kycStatus: kycData?.status || "not_started",
+        },
+        { status: 403 },
+      )
+    }
 
     const availability = await isProductAvailable(product.id)
 

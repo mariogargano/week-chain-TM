@@ -58,35 +58,88 @@ export async function POST(req: Request) {
     const annualResetDate = new Date()
     annualResetDate.setFullYear(annualResetDate.getFullYear() + 1)
 
+    // Idempotent upsert on stripe_session_id (prevents duplicates on webhook retry)
+    const upsertData: Record<string, any> = {
+      user_id: userId,
+      product_id: product.id,
+      max_pax: product.max_pax,
+      max_estancias_per_year: product.max_estancias_per_year,
+      purchase_price_usd: product.price_usd,
+      start_date: startDate.toISOString().split("T")[0],
+      end_date: endDate.toISOString().split("T")[0],
+      annual_entitlement_estancias: product.max_estancias_per_year,
+      annual_used_estancias: 0,
+      annual_reset_at: annualResetDate.toISOString().split("T")[0],
+      status: "active",
+      order_id: orderId,
+    }
+
+    if (stripeSessionId) {
+      upsertData.stripe_session_id = stripeSessionId
+    }
+
     const { data: certificate, error: certError } = await supabase
       .from("user_certificates_v2")
-      .insert({
-        user_id: userId,
-        product_id: product.id,
-        max_pax: product.max_pax,
-        max_estancias_per_year: product.max_estancias_per_year,
-        purchase_price_usd: product.price_usd,
-        start_date: startDate.toISOString().split("T")[0],
-        end_date: endDate.toISOString().split("T")[0],
-        annual_entitlement_estancias: product.max_estancias_per_year,
-        annual_used_estancias: 0,
-        annual_reset_at: annualResetDate.toISOString().split("T")[0],
-        status: "active",
-        order_id: orderId,
-        stripe_session_id: stripeSessionId,
+      .upsert(upsertData, {
+        onConflict: stripeSessionId ? "stripe_session_id" : undefined,
       })
       .select()
       .single()
 
     if (certError) {
-      console.error("[v0] Error creating certificate:", certError)
+      console.error("[issue] Error upserting certificate:", certError)
       return NextResponse.json({ error: "Failed to create certificate" }, { status: 500 })
     }
 
-    console.log(`[v0] Certificate issued successfully: ${certificate.id}`)
+    // Create week_token linked to certificate (idempotent on user_certificate_v2_id)
+    const crypto = await import("crypto")
+    const certIdShort = `WC-${new Date().getFullYear()}-${certificate.id.slice(0, 5).toUpperCase()}`
+    const hashPayload = `${certificate.id}:${userId}:${orderId}:${Date.now()}`
+    const blockchainHash = crypto.createHash("sha256").update(hashPayload).digest("hex")
+
+    await supabase
+      .from("week_tokens")
+      .upsert(
+        {
+          user_id: userId,
+          user_certificate_v2_id: certificate.id,
+          certificate_id: certIdShort,
+          blockchain_hash: blockchainHash,
+          qr_code: `https://weekchain.com/verify/${certIdShort}`,
+          status: "active",
+          metadata: {
+            provider: "stripe",
+            order_id: orderId,
+            pax: product.max_pax,
+            estancias: product.max_estancias_per_year,
+          },
+        },
+        { onConflict: "user_certificate_v2_id" }
+      )
+
+    // Create certificate_visual_state
+    const { data: token } = await supabase
+      .from("week_tokens")
+      .select("id")
+      .eq("user_certificate_v2_id", certificate.id)
+      .single()
+
+    if (token) {
+      await supabase
+        .from("certificate_visual_state")
+        .upsert(
+          {
+            certificate_id: token.id,
+            current_status: "active",
+            last_reservation_date: null,
+            last_property_name: null,
+            reservations_count: 0,
+          },
+          { onConflict: "certificate_id" }
+        )
+    }
 
     // Recalculate capacity
-    console.log(`[v0] Recalculating capacity engine...`)
     await runCapacityEngineCalculation()
 
     return NextResponse.json({
