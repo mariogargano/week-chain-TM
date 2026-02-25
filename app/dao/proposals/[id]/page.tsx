@@ -14,7 +14,7 @@ export default async function ProposalDetailPage({ params }: { params: { id: str
   } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect("/auth/login")
+    redirect("/auth")
   }
 
   // Fetch proposal

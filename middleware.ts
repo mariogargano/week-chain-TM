@@ -99,112 +99,73 @@ export async function middleware(request: NextRequest) {
 
       // RBAC: Check role-based access
       const pathname = request.nextUrl.pathname
+      const userEmail = user.email?.toLowerCase() || ""
 
-      // Get user's profile with role
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("role, status")
-        .eq("id", user.id)
-        .maybeSingle()
+      // Admin email always gets full access
+      if (userEmail === ADMIN_EMAIL.toLowerCase()) {
+        // Admin email - full access granted
+      } else {
+        // Get user's role from users table (primary source)
+        const { data: userData } = await supabase
+          .from("users")
+          .select("role")
+          .eq("id", user.id)
+          .maybeSingle()
 
-      if (!profile) {
-        // No profile found for user
-        // Redirect to auth if profile doesn't exist
-        return NextResponse.redirect(new URL("/auth?error=no_profile", request.url))
-      }
+        const userRole = userData?.role || "user"
 
-      // Define role-based route permissions
-      const roleRouteMap: Record<string, string[]> = {
-        // Admin routes
-        "/dashboard/admin": ["admin_super", "admin_ops", "admin_finance", "admin_compliance"],
-        "/admin": ["admin_super", "admin_ops", "admin_finance", "admin_compliance"],
-
-        // Holder/Member routes
-        "/dashboard/holder": ["holder"],
-        "/dashboard/member": ["holder"], // Legacy member route
-        "/dashboard/user": ["holder"], // Legacy user route
-
-        // Management routes
-        "/dashboard/management": ["management"],
-        "/management": ["management"],
-
-        // Booking coordinator routes
-        "/dashboard/booking": ["booking"],
-
-        // Agent routes
-        "/dashboard/agent": ["agent"],
-        "/dashboard/broker": ["agent"], // Legacy broker route
-
-        // Service provider routes
-        "/dashboard/service-provider": ["service_provider_company"],
-
-        // Insurance routes
-        "/dashboard/insurance": ["insurance"],
-
-        // Vendor routes
-        "/dashboard/vendor": ["vendor"],
-
-        // Review moderation routes
-        "/dashboard/review-moderation": ["review_moderation"],
-
-        // Track/Logistics routes
-        "/dashboard/track": ["booking", "vendor", "admin_ops"],
-
-        // Foundation routes
-        "/dashboard/foundation": ["foundation", "admin_super"],
-
-        // VA-FI routes
-        "/dashboard/vafi": ["vafi", "admin_finance"],
-        "/dashboard/dao": ["holder", "admin_super"],
-
-        // Agency B2B routes
-        "/dashboard/agency": ["agency_b2b"],
-
-        // Support routes
-        "/dashboard/support": ["support_l2", "admin_ops"],
-      }
-
-      // Check if current route requires specific role
-      let isAuthorized = true
-      let requiredRoles: string[] = []
-
-      for (const [routePrefix, allowedRoles] of Object.entries(roleRouteMap)) {
-        if (pathname.startsWith(routePrefix)) {
-          requiredRoles = allowedRoles
-          isAuthorized = allowedRoles.includes(profile.role)
-          break
-        }
-      }
-
-      if (!isAuthorized && requiredRoles.length > 0) {
-        // RBAC: Access denied
-
-        // Redirect to user's appropriate dashboard
-        const userDashboardMap: Record<string, string> = {
-          admin_super: "/dashboard/admin",
-          admin_ops: "/dashboard/admin",
-          admin_finance: "/dashboard/admin",
-          admin_compliance: "/dashboard/admin",
-          holder: "/dashboard/holder",
-          management: "/dashboard/management",
-          booking: "/dashboard/booking",
-          agent: "/dashboard/agent",
-          service_provider_company: "/dashboard/service-provider",
-          insurance: "/dashboard/insurance",
-          vendor: "/dashboard/vendor",
-          review_moderation: "/dashboard/review-moderation",
-          foundation: "/dashboard/foundation",
-          vafi: "/dashboard/vafi",
-          agency_b2b: "/dashboard/agency",
-          support_l2: "/dashboard/support",
+        // Define role-based route permissions using actual role names
+        const roleRouteMap: Record<string, string[]> = {
+          "/dashboard/admin": ["admin", "super_admin"],
+          "/dashboard/member": ["user", "broker", "broker_elite", "dao_member", "property_owner", "staff", "admin", "super_admin"],
+          "/dashboard/broker": ["broker", "broker_elite", "admin", "super_admin"],
+          "/dashboard/management": ["management", "admin", "super_admin"],
+          "/dashboard/notaria": ["notaria", "admin", "super_admin"],
+          "/dashboard/of-counsel": ["of_counsel", "admin", "super_admin"],
+          "/dashboard/service-provider": ["service_provider", "admin", "super_admin"],
+          "/dashboard/vafi": ["vafi_manager", "admin", "super_admin"],
+          "/dashboard/dao": ["dao_member", "user", "admin", "super_admin"],
+          "/dashboard/owner": ["property_owner", "admin", "super_admin"],
+          "/dashboard/staff": ["staff", "admin", "super_admin"],
+          "/dashboard/user": ["user", "admin", "super_admin"],
+          "/dashboard/intermediary": ["broker", "broker_elite", "admin", "super_admin"],
+          "/management": ["management", "admin", "super_admin"],
+          "/notaria": ["notaria", "admin", "super_admin"],
         }
 
-        const redirectPath = userDashboardMap[profile.role] || "/dashboard/holder"
-        // RBAC: Redirecting to appropriate dashboard
-        return NextResponse.redirect(new URL(redirectPath, request.url))
-      }
+        // Check if current route requires specific role
+        let isAuthorized = true
+        let requiredRoles: string[] = []
 
-      // RBAC: Access granted
+        for (const [routePrefix, allowedRoles] of Object.entries(roleRouteMap)) {
+          if (pathname.startsWith(routePrefix)) {
+            requiredRoles = allowedRoles
+            isAuthorized = allowedRoles.includes(userRole)
+            break
+          }
+        }
+
+        if (!isAuthorized && requiredRoles.length > 0) {
+          // Redirect to user's appropriate dashboard
+          const userDashboardMap: Record<string, string> = {
+            admin: "/dashboard/admin",
+            super_admin: "/dashboard/admin",
+            broker: "/dashboard/broker",
+            broker_elite: "/dashboard/broker",
+            management: "/dashboard/management",
+            notaria: "/dashboard/notaria",
+            of_counsel: "/dashboard/of-counsel",
+            service_provider: "/dashboard/service-provider",
+            vafi_manager: "/dashboard/vafi",
+            dao_member: "/dashboard/dao",
+            property_owner: "/dashboard/owner",
+            staff: "/dashboard/member",
+          }
+
+          const redirectPath = userDashboardMap[userRole] || "/dashboard/member"
+          return NextResponse.redirect(new URL(redirectPath, request.url))
+        }
+      }
     }
   }
 

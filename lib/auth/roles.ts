@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/client"
-import { logger } from "@/lib/config/logger"
 
 export const ADMIN_EMAIL = "corporativo@morises.com"
 
@@ -26,17 +25,22 @@ export interface RoleInfo {
 
 export async function getUserRoleByEmail(email: string): Promise<RoleInfo | null> {
   try {
+    // Admin email always returns admin role
+    if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+      return {
+        role: "admin",
+        name: "Administrador",
+        email: email,
+      }
+    }
+
     const supabase = createClient()
 
-    const { data: userData, error: userError } = await supabase
+    const { data: userData } = await supabase
       .from("users")
       .select("email, role, full_name")
       .eq("email", email.toLowerCase())
       .maybeSingle()
-
-    if (userError) {
-      logger.debug("[v0] Users table query error:", userError.message)
-    }
 
     if (userData && userData.role) {
       return {
@@ -51,8 +55,7 @@ export async function getUserRoleByEmail(email: string): Promise<RoleInfo | null
       name: email.split("@")[0],
       email: email,
     }
-  } catch (error) {
-    logger.error("[v0] Error in getUserRoleByEmail:", error)
+  } catch {
     return {
       role: "user",
       name: email.split("@")[0],

@@ -73,7 +73,6 @@ export default function AdminDashboard() {
 
       const supabase = createClient()
 
-      // Use getUser() instead of getSession() for more reliable auth check
       const {
         data: { user },
         error: userError,
@@ -89,61 +88,29 @@ export default function AdminDashboard() {
       
       setAuthChecked(true)
 
-      const { data: adminUser } = await supabase
-        .from("admin_users")
-        .select("*")
-        .eq("email", user.email.toLowerCase())
-        .eq("status", "active")
-        .single()
+      const userEmail = user.email.toLowerCase()
 
-      // List of authorized admin emails
-      const authorizedAdmins = [
-        "corporativo@morises.com",
-        // Add more admin emails here as needed
-      ]
-
-      const userEmail = user.email?.toLowerCase() || ""
-      
-      // Also check if user has admin role in profiles table
-      const { data: profileData } = await supabase
-        .from("profiles")
+      // Check admin access via users table role or hardcoded admin email
+      const { data: userData } = await supabase
+        .from("users")
         .select("role")
-        .eq("email", userEmail)
-        .single()
-      
-      const hasAdminRole = profileData?.role === "admin" || profileData?.role === "super_admin"
-      const isAuthorizedAdmin = authorizedAdmins.includes(userEmail) || adminUser || hasAdminRole
+        .eq("id", user.id)
+        .maybeSingle()
 
-      if (!adminUser && isAuthorizedAdmin) {
-        // Auto-create admin user for authorized emails
-        const { error: createError } = await supabase.from("admin_users").upsert(
-          {
-            email: userEmail,
-            name: user.user_metadata?.full_name || user.user_metadata?.name || "Administrador",
-            role: "super_admin",
-            status: "active",
-            updated_at: new Date().toISOString(),
-          },
-          { onConflict: "email" },
-        )
+      const isAdmin =
+        userEmail === "corporativo@morises.com" ||
+        userData?.role === "admin" ||
+        userData?.role === "super_admin"
 
-        if (createError) {
-          console.error("[v0] Failed to create admin user:", createError)
-          setError("Error al crear usuario administrador. Por favor intenta de nuevo.")
-          setLoading(false)
-          return
-        }
-
-        setAdminEmail(userEmail)
-      } else if (adminUser) {
-        setAdminEmail(user.email || "")
-      } else {
+      if (!isAdmin) {
         if (!isRedirecting) {
           setIsRedirecting(true)
           router.replace("/dashboard")
         }
         return
       }
+
+      setAdminEmail(userEmail)
 
       const [capacityResponse, users, kyc, reservationReqs] = await Promise.all([
         fetch("/api/admin/capacity/global-status").then((r) => r.json()),

@@ -319,7 +319,7 @@ export function Navbar() {
             {/* Right Side Actions - Solo si esta autenticado */}
             <div className="hidden lg:flex items-center gap-3">
               {!isAuthenticated ? (
-                <Link href="/auth/login">
+                <Link href="/auth">
                   <Button
                     variant="outline"
                     className="border-slate-300 text-slate-700 font-semibold text-sm px-5 py-2.5 h-auto hover:bg-slate-50 transition-all rounded-lg bg-transparent"
@@ -410,9 +410,16 @@ export function Navbar() {
                   <>
                     {/* Google Sign In Button - Mobile */}
                     <button
-                      onClick={() => {
+                      onClick={async () => {
                         setMobileMenuOpen(false)
-                        window.location.href = "/api/auth/google"
+                        const supabase = createClient()
+                        await supabase.auth.signInWithOAuth({
+                          provider: "google",
+                          options: {
+                            redirectTo: `${window.location.origin}/auth/callback`,
+                            queryParams: { access_type: "offline", prompt: "consent" },
+                          },
+                        })
                       }}
                       className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-slate-300 rounded-xl font-semibold text-slate-700 hover:bg-slate-50 transition-all active:scale-95"
                     >

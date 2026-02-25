@@ -15,7 +15,7 @@ export default async function AdminUsersPage() {
   } = await supabase.auth.getUser()
 
   if (error || !user) {
-    redirect("/auth/login")
+    redirect("/auth")
   }
 
   const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single()

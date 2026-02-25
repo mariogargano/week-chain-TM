@@ -309,7 +309,7 @@ export default function ProcesoCompletoPage() {
                     size="lg"
                     className="bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 text-white font-semibold"
                   >
-                    <Link href="/auth/sign-up">
+                    <Link href="/auth">
                       Crear mi Cuenta
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>

@@ -16,7 +16,7 @@ export default async function CreateProposalPage() {
   } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect("/auth/login")
+    redirect("/auth")
   }
 
   async function createProposal(formData: FormData) {

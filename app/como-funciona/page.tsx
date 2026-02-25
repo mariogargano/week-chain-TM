@@ -60,7 +60,7 @@ export default function ComoFuncionaPage() {
                   Ver Proceso Step-by-Step
                 </Button>
               </Link>
-              <Link href="/auth/sign-up">
+              <Link href="/auth">
                 <Button
                   size="lg"
                   variant="outline"
@@ -331,7 +331,7 @@ export default function ComoFuncionaPage() {
                     Ver Proceso Completo
                   </Button>
                 </Link>
-                <Link href="/auth/sign-up">
+                <Link href="/auth">
                   <Button
                     size="lg"
                     variant="outline"

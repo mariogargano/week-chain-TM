@@ -19,7 +19,7 @@ export default async function MyWeeksPage() {
   } = await supabase.auth.getUser()
 
   if (error || !user) {
-    redirect("/auth/login")
+    redirect("/auth")
   }
 
   const env = getEnvironment()

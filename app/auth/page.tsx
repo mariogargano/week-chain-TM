@@ -58,8 +58,8 @@ export default function AuthPage() {
       if (data?.full_name) {
         setReferrerName(data.full_name)
       }
-    } catch (error) {
-      console.error("[v0] Error fetching referrer:", error)
+    } catch {
+      // Referrer not found
     }
   }
 
@@ -74,12 +74,26 @@ export default function AuthPage() {
     setError(null)
 
     try {
-      console.log("[v0] Starting custom Google OAuth flow...")
-      window.location.href = "/api/auth/google"
+      const supabase = createClient()
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent",
+          },
+        },
+      })
+
+      if (error) {
+        throw error
+      }
+
+      // Supabase handles the redirect automatically
     } catch (error: any) {
-      console.error("[v0] Google OAuth failed:", error)
       setError("Error al conectar con Google. Intenta nuevamente o usa email y contraseña.")
-      toast.error("Error de autenticación con Google")
+      toast.error("Error de autenticacion con Google")
       setIsLoading(false)
     }
   }
@@ -90,60 +104,52 @@ export default function AuthPage() {
     setError(null)
 
     try {
-      console.log("[v0] Attempting login...")
       const supabase = createClient()
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
-      if (error) {
-        console.error("[v0] Login error:", error)
-        throw error
-      }
+      if (error) throw error
 
       if (data.user) {
-        console.log("[v0] Login successful, fetching user role...")
-
-        const { data: userData } = await supabase
-          .from("users")
-          .select("role, full_name")
-          .eq("id", data.user.id)
-          .single()
-
-        const role = userData?.role || "user"
-        console.log("[v0] User role:", role)
-
-        let dashboardPath = "/dashboard/member"
-
-        if (role === "admin" || role === "super_admin") {
-          dashboardPath = "/dashboard/admin"
-        } else if (role === "broker" || role === "broker_elite") {
-          dashboardPath = "/dashboard/broker"
-        } else if (role === "management") {
-          dashboardPath = "/management"
-        } else if (role === "notaria") {
-          dashboardPath = "/notaria"
-        } else if (role === "service_provider") {
-          dashboardPath = "/dashboard/service-provider"
-        } else if (role === "vafi_manager") {
-          dashboardPath = "/dashboard/vafi"
-        } else if (role === "dao_member") {
-          dashboardPath = "/dashboard/dao"
-        } else if (role === "property_owner") {
-          dashboardPath = "/dashboard/owner"
-        } else {
-          dashboardPath = "/dashboard/member"
+        // Check if admin email
+        if (data.user.email?.toLowerCase() === "corporativo@morises.com") {
+          router.push("/dashboard/admin")
+          toast.success("Bienvenido, Administrador!")
+          return
         }
 
-        console.log("[v0] Redirecting to:", dashboardPath)
+        // Fetch role from users table
+        const { data: userData } = await supabase
+          .from("users")
+          .select("role")
+          .eq("id", data.user.id)
+          .maybeSingle()
+
+        const role = userData?.role || "user"
+
+        const roleRouteMap: Record<string, string> = {
+          admin: "/dashboard/admin",
+          super_admin: "/dashboard/admin",
+          broker: "/dashboard/broker",
+          broker_elite: "/dashboard/broker",
+          management: "/dashboard/management",
+          notaria: "/dashboard/notaria",
+          of_counsel: "/dashboard/of-counsel",
+          service_provider: "/dashboard/service-provider",
+          vafi_manager: "/dashboard/vafi",
+          dao_member: "/dashboard/dao",
+          property_owner: "/dashboard/owner",
+        }
+
+        const dashboardPath = roleRouteMap[role] || "/dashboard/member"
         router.push(dashboardPath)
-        toast.success("¡Bienvenido de vuelta!")
+        toast.success("Bienvenido de vuelta!")
       }
     } catch (error: any) {
-      console.error("[v0] Login failed:", error)
-      setError(error.message || "Error al iniciar sesión")
-      toast.error("Error al iniciar sesión")
+      setError(error.message || "Error al iniciar sesion")
+      toast.error("Error al iniciar sesion")
     } finally {
       setIsLoading(false)
     }
@@ -165,7 +171,6 @@ export default function AuthPage() {
         setIsLoading(false)
         return
       }
-      console.log("[v0] Attempting registration...")
       const supabase = createClient()
 
       if (referralCode) {
@@ -189,16 +194,10 @@ export default function AuthPage() {
         },
       })
 
-      if (error) {
-        console.error("[v0] Registration error:", error)
-        throw error
-      }
-
-      console.log("[v0] Registration successful")
+      if (error) throw error
       toast.success("¡Registro exitoso! Revisa tu email para confirmar tu cuenta.")
       setActiveTab("login")
     } catch (error: any) {
-      console.error("[v0] Registration failed:", error)
       setError(error.message || "Error al registrarse")
       toast.error(error.message || "Error al registrarse")
     } finally {
@@ -221,9 +220,7 @@ export default function AuthPage() {
     setError(null)
 
     try {
-      console.log("[v0] Sending magic link to:", magicLinkEmail)
       const supabase = createClient()
-
       const { data, error } = await supabase.auth.signInWithOtp({
         email: magicLinkEmail,
         options: {
@@ -231,16 +228,10 @@ export default function AuthPage() {
         },
       })
 
-      if (error) {
-        console.error("[v0] Magic link error:", error)
-        throw error
-      }
-
-      console.log("[v0] Magic link sent successfully")
+      if (error) throw error
       setMagicLinkSent(true)
       toast.success("¡Revisa tu email! Te hemos enviado un enlace mágico para iniciar sesión.")
     } catch (error: any) {
-      console.error("[v0] Magic link failed:", error)
       if (error.message?.includes("rate")) {
         setError("Demasiados intentos. Por favor espera un momento antes de intentar nuevamente.")
       } else if (error.message?.includes("invalid")) {
