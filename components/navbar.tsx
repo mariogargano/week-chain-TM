@@ -244,10 +244,10 @@ export function Navbar() {
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
-              <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-md shadow-sky-100/50 ring-1 ring-slate-200/30 transition-transform group-hover:scale-105 flex-shrink-0">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group">
+              <div className="relative w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-md shadow-sky-100/50 ring-1 ring-slate-200/30 transition-transform group-hover:scale-105 flex-shrink-0">
                 <Image
                   src="/logo.png"
                   alt="WEEK-CHAIN Logo"
@@ -258,8 +258,8 @@ export function Navbar() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-slate-900 text-lg sm:text-xl tracking-tight">WEEK-CHAIN</span>
-                <span className="text-[10px] sm:text-xs text-slate-500 font-medium">Smart Vacational Certificate</span>
+                <span className="font-bold text-slate-900 text-base sm:text-xl tracking-tight">WEEK-CHAIN</span>
+                <span className="text-[9px] sm:text-xs text-slate-500 font-medium hidden sm:block">Smart Vacational Certificate</span>
               </div>
             </Link>
 
@@ -372,16 +372,16 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200 bg-white shadow-xl">
-            <div className="container mx-auto px-4 py-6 space-y-2 max-h-[calc(100vh-80px)] overflow-y-auto">
+          <div className="lg:hidden border-t border-slate-200 bg-background shadow-xl">
+            <div className="container mx-auto px-4 py-4 space-y-1 max-h-[calc(100vh-64px)] overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom,16px)]">
               {navItems.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-4 px-5 py-4 rounded-xl text-slate-700 font-semibold transition-all active:scale-95 ${item.bgHover} text-base`}
+                  className={`flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl text-slate-700 font-semibold transition-all active:scale-[0.98] ${item.bgHover} text-base`}
                 >
-                  <span className={`${item.color} text-xl`}>{item.icon}</span>
+                  <span className={`${item.color}`}>{item.icon}</span>
                   <span>{item.label}</span>
                 </Link>
               ))}
@@ -395,17 +395,17 @@ export function Navbar() {
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-start gap-4 px-5 py-4 rounded-xl text-slate-700 hover:bg-slate-50 transition-all active:scale-95"
+                  className="flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl text-slate-700 hover:bg-slate-50 transition-all active:scale-[0.98]"
                 >
-                  <span className={`${item.color} text-xl mt-0.5`}>{item.icon}</span>
-                  <div className="flex-1">
-                    <p className="font-bold text-base">{item.label}</p>
-                    <p className="text-sm text-slate-500 mt-1">{item.description}</p>
+                  <span className={`${item.color} flex-shrink-0`}>{item.icon}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-sm">{item.label}</p>
+                    <p className="text-xs text-slate-500 truncate">{item.description}</p>
                   </div>
                 </Link>
               ))}
 
-              <div className="pt-6 mt-6 border-t-2 border-slate-200 space-y-3">
+              <div className="pt-4 mt-4 border-t-2 border-slate-200 space-y-3">
                 {!isAuthenticated ? (
                   <>
                     {/* Google Sign In Button - Mobile */}
@@ -421,7 +421,7 @@ export function Navbar() {
                           },
                         })
                       }}
-                      className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-slate-300 rounded-xl font-semibold text-slate-700 hover:bg-slate-50 transition-all active:scale-95"
+                      className="w-full flex items-center justify-center gap-3 px-5 py-3 min-h-[48px] bg-background border-2 border-slate-300 rounded-xl font-semibold text-slate-700 hover:bg-slate-50 transition-all active:scale-[0.98]"
                     >
                       <svg className="w-6 h-6" viewBox="0 0 24 24">
                         <path
@@ -445,7 +445,7 @@ export function Navbar() {
                     </button>
 
                     <Link href="/auth" onClick={() => setMobileMenuOpen(false)}>
-                      <Button className="w-full bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-500 text-white font-black text-lg py-6 hover:shadow-xl transition-all shadow-lg shadow-sky-300/50 border-2 border-sky-200 rounded-xl hover:scale-105 mt-3">
+                      <Button className="w-full bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-500 text-primary-foreground font-bold text-base min-h-[48px] py-3 hover:shadow-xl transition-all shadow-lg shadow-sky-300/50 border-2 border-sky-200 rounded-xl active:scale-[0.98] mt-3">
                         <Play className="w-6 h-6 fill-white mr-2" />
                         COMENZAR CON EMAIL
                       </Button>

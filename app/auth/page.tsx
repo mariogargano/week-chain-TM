@@ -246,10 +246,10 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center justify-center p-4">
-      <div className="text-center mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center justify-start sm:justify-center px-4 py-8 sm:p-4">
+      <div className="text-center mb-6 sm:mb-8">
         <div className="flex items-center justify-center gap-3 mb-2">
-          <div className="w-16 h-16 rounded-full overflow-hidden shadow-lg shadow-sky-200/50 ring-1 ring-slate-200/30 flex-shrink-0">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-lg shadow-sky-200/50 ring-1 ring-slate-200/30 flex-shrink-0">
             <Image
               src="/logo.png"
               alt="WEEK-CHAIN Logo"
@@ -260,22 +260,24 @@ export default function AuthPage() {
             />
           </div>
           <div className="text-left">
-            <h1 className="text-3xl font-bold text-gray-900">WEEK-CHAIN™</h1>
-            <p className="text-sm text-gray-600">Smart Vacational Certificate</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">WEEK-CHAIN</h1>
+            <p className="text-xs sm:text-sm text-muted-foreground">Smart Vacational Certificate</p>
           </div>
         </div>
       </div>
 
-      <Card className="w-full max-w-md shadow-2xl bg-white/80 backdrop-blur-xl border-sky-200/50">
-        <CardContent className="pt-8 pb-8 px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              {activeTab === "login" ? "Bienvenido de nuevo" : "Crea tu cuenta"}
+      <Card className="w-full max-w-md shadow-2xl bg-card/80 backdrop-blur-xl border-sky-200/50">
+        <CardContent className="pt-6 pb-6 px-4 sm:pt-8 sm:pb-8 sm:px-8">
+          <div className="text-center mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-1 sm:mb-2">
+              {activeTab === "login" ? "Bienvenido de nuevo" : activeTab === "magic" ? "Enlace magico" : "Crea tu cuenta"}
             </h2>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-muted-foreground">
               {activeTab === "login"
                 ? "Accede a tus certificados vacacionales"
-                : "Registrate para obtener tu certificado digital"}
+                : activeTab === "magic"
+                  ? "Inicia sesion sin contrasena"
+                  : "Registrate para obtener tu certificado digital"}
             </p>
           </div>
 
@@ -298,36 +300,9 @@ export default function AuthPage() {
             onClick={handleGoogleLogin}
             disabled={isLoading}
             type="button"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-              height: "48px",
-              marginBottom: "24px",
-              padding: "12px 24px",
-              backgroundColor: "#FFFFFF",
-              border: "2px solid #E5E7EB",
-              borderRadius: "8px",
-              fontSize: "16px",
-              fontWeight: "500",
-              color: "#374151",
-              cursor: isLoading ? "not-allowed" : "pointer",
-              opacity: isLoading ? 0.7 : 1,
-              transition: "all 0.2s ease",
-            }}
-            onMouseOver={(e) => {
-              if (!isLoading) {
-                e.currentTarget.style.backgroundColor = "#F9FAFB"
-                e.currentTarget.style.borderColor = "#D1D5DB"
-              }
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = "#FFFFFF"
-              e.currentTarget.style.borderColor = "#E5E7EB"
-            }}
+            className="flex items-center justify-center w-full min-h-[48px] mb-5 sm:mb-6 px-4 sm:px-6 py-3 bg-background border-2 border-border rounded-lg text-base font-medium text-foreground transition-all hover:bg-secondary active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            <svg style={{ width: "20px", height: "20px", marginRight: "12px" }} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 mr-3 flex-shrink-0" viewBox="0 0 24 24">
               <path
                 fill="#4285F4"
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -348,16 +323,16 @@ export default function AuthPage() {
             Continuar con Google
           </button>
 
-          <div className="relative mb-6">
+          <div className="relative mb-5 sm:mb-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-border"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-gray-500 uppercase tracking-wider">O CONTINÚA CON EMAIL</span>
+            <div className="relative flex justify-center text-xs sm:text-sm">
+              <span className="px-3 sm:px-4 bg-card text-muted-foreground uppercase tracking-wider">o con email</span>
             </div>
           </div>
 
-          <div className="flex gap-2 mb-6">
+          <div className="flex gap-1.5 sm:gap-2 mb-5 sm:mb-6">
             <Button
               type="button"
               onClick={() => {
@@ -365,13 +340,13 @@ export default function AuthPage() {
                 setMagicLinkSent(false)
               }}
               variant={activeTab === "login" ? "default" : "outline"}
-              className={`flex-1 h-11 text-sm ${
+              className={`flex-1 min-h-[44px] text-xs sm:text-sm px-2 sm:px-4 ${
                 activeTab === "login"
-                  ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-200"
+                  ? "bg-sky-500 hover:bg-sky-600 text-primary-foreground shadow-md shadow-sky-200"
                   : "border-2 border-sky-200 hover:bg-sky-50 bg-transparent"
               }`}
             >
-              Contraseña
+              Login
             </Button>
             <Button
               type="button"
@@ -380,13 +355,13 @@ export default function AuthPage() {
                 setMagicLinkSent(false)
               }}
               variant={activeTab === "magic" ? "default" : "outline"}
-              className={`flex-1 h-11 text-sm ${
+              className={`flex-1 min-h-[44px] text-xs sm:text-sm px-2 sm:px-4 ${
                 activeTab === "magic"
-                  ? "bg-purple-500 hover:bg-purple-600 text-white shadow-md shadow-purple-200"
-                  : "border-2 border-purple-200 hover:bg-purple-50 bg-transparent"
+                  ? "bg-sky-600 hover:bg-sky-700 text-primary-foreground shadow-md shadow-sky-200"
+                  : "border-2 border-sky-200 hover:bg-sky-50 bg-transparent"
               }`}
             >
-              Enlace Mágico
+              Magic Link
             </Button>
             <Button
               type="button"
@@ -395,8 +370,8 @@ export default function AuthPage() {
                 setMagicLinkSent(false)
               }}
               variant={activeTab === "register" ? "default" : "outline"}
-              className={`flex-1 h-11 text-sm ${
-                activeTab === "register" ? "bg-cyan-500 hover:bg-cyan-600 text-white shadow-md shadow-cyan-200" : "border-2 border-cyan-200 hover:bg-cyan-50 bg-transparent"
+              className={`flex-1 min-h-[44px] text-xs sm:text-sm px-2 sm:px-4 ${
+                activeTab === "register" ? "bg-cyan-500 hover:bg-cyan-600 text-primary-foreground shadow-md shadow-cyan-200" : "border-2 border-cyan-200 hover:bg-cyan-50 bg-transparent"
               }`}
             >
               Registro
@@ -657,130 +632,54 @@ export default function AuthPage() {
       </Card>
 
       {showTermsDialog && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 9999,
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "#FFFFFF",
-              padding: "32px",
-              borderRadius: "16px",
-              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-              width: "100%",
-              maxWidth: "600px",
-              maxHeight: "90vh",
-              overflowY: "auto",
-              margin: "16px",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
-              <div style={{ padding: "8px", borderRadius: "8px", backgroundColor: "#E0F2FE" }}>
-                <Shield className="h-6 w-6 text-sky-600" />
+        <div className="fixed inset-0 bg-foreground/70 flex items-end sm:items-center justify-center z-[9999]">
+          <div className="bg-background rounded-t-2xl sm:rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto mx-0 sm:mx-4 p-5 sm:p-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 rounded-lg bg-sky-100">
+                <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-sky-600" />
               </div>
-              <h2 style={{ fontSize: "24px", fontWeight: "bold", color: "#111827" }}>Términos y Condiciones</h2>
+              <h2 className="text-lg sm:text-2xl font-bold text-foreground">Terminos y Condiciones</h2>
             </div>
 
-            <div
-              style={{
-                marginBottom: "24px",
-                padding: "16px",
-                backgroundColor: "#F8FAFC",
-                borderRadius: "8px",
-                border: "1px solid #E2E8F0",
-                maxHeight: "250px",
-                overflowY: "auto",
-              }}
-            >
-              <div style={{ fontSize: "14px", color: "#475569" }}>
-                <p style={{ fontWeight: "600", marginBottom: "16px" }}>
-                  Para proteger tanto a usted como a WEEK-CHAIN, debe aceptar nuestros términos legales antes de
-                  continuar con el inicio de sesión con Google.
+            <div className="mb-5 p-3 sm:p-4 bg-secondary rounded-lg border border-border max-h-[200px] sm:max-h-[250px] overflow-y-auto">
+              <div className="text-sm text-muted-foreground">
+                <p className="font-semibold mb-3">
+                  Para proteger tanto a usted como a WEEK-CHAIN, debe aceptar nuestros terminos legales antes de
+                  continuar con el inicio de sesion con Google.
                 </p>
-
-                <h3 style={{ fontWeight: "600", color: "#0F172A", marginTop: "16px", marginBottom: "8px" }}>
-                  Términos Principales:
-                </h3>
-                <ul style={{ listStyle: "disc", paddingLeft: "24px" }}>
-                  <li style={{ marginBottom: "8px" }}>
-                    Los certificados digitales de WEEK-CHAIN representan derechos de uso vacacional por 15 años
-                  </li>
-                  <li style={{ marginBottom: "8px" }}>
-                    No constituyen propiedad inmobiliaria ni instrumento financiero
-                  </li>
-                  <li style={{ marginBottom: "8px" }}>
-                    Sujeto a las regulaciones mexicanas NOM-029-SE-2021 y NOM-151-SCFI-2016
-                  </li>
-                  <li style={{ marginBottom: "8px" }}>
-                    Tiene un periodo de reflexión de 5 días hábiles para cancelar su compra
-                  </li>
-                  <li style={{ marginBottom: "8px" }}>Sus datos personales serán tratados conforme a la LFPDPPP</li>
+                <h3 className="font-semibold text-foreground mt-3 mb-2">Terminos Principales:</h3>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>Los certificados digitales representan derechos de uso vacacional por 15 anos</li>
+                  <li>No constituyen propiedad inmobiliaria ni instrumento financiero</li>
+                  <li>Sujeto a las regulaciones mexicanas NOM-029-SE-2021 y NOM-151-SCFI-2016</li>
+                  <li>Periodo de reflexion de 5 dias habiles para cancelar</li>
+                  <li>Sus datos personales seran tratados conforme a la LFPDPPP</li>
                 </ul>
               </div>
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "16px",
-                padding: "20px",
-                backgroundColor: "#FFFBEB",
-                borderRadius: "12px",
-                border: "2px solid #F59E0B",
-                marginBottom: "24px",
-              }}
-            >
+            <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-5 bg-amber-50 rounded-xl border-2 border-amber-400 mb-5">
               <input
                 type="checkbox"
                 id="accept-terms-google"
                 checked={hasAccepted}
                 onChange={(e) => setHasAccepted(e.target.checked)}
-                style={{
-                  width: "28px",
-                  height: "28px",
-                  cursor: "pointer",
-                  accentColor: "#F59E0B",
-                  flexShrink: 0,
-                }}
+                className="w-6 h-6 sm:w-7 sm:h-7 cursor-pointer accent-amber-500 flex-shrink-0 mt-0.5"
               />
-              <label
-                htmlFor="accept-terms-google"
-                style={{ fontSize: "15px", color: "#78350F", cursor: "pointer", lineHeight: "1.5" }}
-              >
-                <strong>He leído y acepto</strong> los{" "}
-                <a
-                  href="/legal/terms"
-                  target="_blank"
-                  style={{ color: "#D97706", fontWeight: "600", textDecoration: "underline" }}
-                  rel="noreferrer"
-                >
-                  Términos y Condiciones
+              <label htmlFor="accept-terms-google" className="text-sm sm:text-[15px] text-amber-900 cursor-pointer leading-relaxed">
+                <strong>He leido y acepto</strong> los{" "}
+                <a href="/legal/terms" target="_blank" rel="noreferrer" className="text-amber-700 font-semibold underline">
+                  Terminos y Condiciones
                 </a>{" "}
                 y el{" "}
-                <a
-                  href="/legal/privacy"
-                  target="_blank"
-                  style={{ color: "#D97706", fontWeight: "600", textDecoration: "underline" }}
-                  rel="noreferrer"
-                >
+                <a href="/legal/privacy" target="_blank" rel="noreferrer" className="text-amber-700 font-semibold underline">
                   Aviso de Privacidad
                 </a>{" "}
                 de WEEK-CHAIN S.A.P.I. de C.V.
               </label>
             </div>
 
-            <div style={{ display: "flex", gap: "16px" }}>
+            <div className="flex gap-3 sm:gap-4">
               <button
                 onClick={() => {
                   setShowTermsDialog(false)
@@ -788,18 +687,7 @@ export default function AuthPage() {
                   setHasAccepted(false)
                 }}
                 type="button"
-                style={{
-                  flex: 1,
-                  height: "56px",
-                  padding: "16px 24px",
-                  backgroundColor: "#FFFFFF",
-                  border: "2px solid #D1D5DB",
-                  borderRadius: "12px",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  color: "#374151",
-                  cursor: "pointer",
-                }}
+                className="flex-1 min-h-[48px] sm:min-h-[56px] px-4 sm:px-6 bg-background border-2 border-border rounded-xl text-base font-semibold text-foreground cursor-pointer active:scale-[0.98] transition-transform"
               >
                 Cancelar
               </button>
@@ -807,21 +695,13 @@ export default function AuthPage() {
                 onClick={handleTermsAcceptance}
                 disabled={!hasAccepted}
                 type="button"
-                style={{
-                  flex: 1,
-                  height: "56px",
-                  padding: "16px 24px",
-                  background: hasAccepted ? "linear-gradient(to right, #F59E0B, #EA580C)" : "#D1D5DB",
-                  border: "none",
-                  borderRadius: "12px",
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  color: hasAccepted ? "#FFFFFF" : "#9CA3AF",
-                  cursor: hasAccepted ? "pointer" : "not-allowed",
-                  boxShadow: hasAccepted ? "0 4px 14px rgba(245, 158, 11, 0.4)" : "none",
-                }}
+                className={`flex-1 min-h-[48px] sm:min-h-[56px] px-4 sm:px-6 border-none rounded-xl text-base font-bold transition-all active:scale-[0.98] ${
+                  hasAccepted
+                    ? "bg-gradient-to-r from-amber-500 to-orange-600 text-primary-foreground shadow-lg shadow-amber-500/40 cursor-pointer"
+                    : "bg-secondary text-muted-foreground cursor-not-allowed"
+                }`}
               >
-                {hasAccepted ? "✓ Aceptar y Continuar" : "Marca la casilla primero"}
+                {hasAccepted ? "Aceptar y Continuar" : "Marca la casilla"}
               </button>
             </div>
           </div>

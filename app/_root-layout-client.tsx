@@ -28,7 +28,7 @@ export function RootLayoutClient({ children, interVariable }: RootLayoutClientPr
   const isDashboardRoute = pathname.startsWith("/dashboard")
 
   return (
-    <html lang={locale} className={interVariable}>
+    <html lang={locale} className={`${interVariable} bg-background`}>
       <head>
         <OrganizationJsonLd />
         <WebsiteJsonLd />
@@ -50,7 +50,7 @@ export function RootLayoutClient({ children, interVariable }: RootLayoutClientPr
             {!isDashboardRoute && <BetaBanner />}
             <ScrollToTop />
             {!isDashboardRoute && <Navbar />}
-            <main id="main-content" className={isDashboardRoute ? "" : "min-h-[calc(100vh-4rem)] pt-16 sm:pt-20"}>
+            <main id="main-content" className={isDashboardRoute ? "" : "min-h-[calc(100vh-4rem)] pt-20"}>
               {children}
             </main>
             {!isDashboardRoute && <SiteFooter />}
