@@ -18,7 +18,7 @@ export default function AuthPage() {
   const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<"login" | "register" | "magic">("login")
+  const [activeTab, setActiveTab] = useState<"choose" | "login" | "register" | "magic">("choose")
   const [hasAccepted, setHasAccepted] = useState(false)
   const [showTermsDialog, setShowTermsDialog] = useState(false)
   const [pendingAction, setPendingAction] = useState<"google" | null>(null)
@@ -42,6 +42,13 @@ export default function AuthPage() {
     if (ref) {
       setReferralCode(ref)
       fetchReferrerName(ref)
+      // Referral links should go directly to register
+      setActiveTab("register")
+    }
+
+    const tab = searchParams?.get("tab")
+    if (tab === "login" || tab === "register") {
+      setActiveTab(tab)
     }
 
     const errorMsg = searchParams?.get("error")
@@ -249,13 +256,13 @@ export default function AuthPage() {
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center justify-start sm:justify-center px-4 py-8 sm:p-4">
       <div className="text-center mb-6 sm:mb-8">
         <div className="flex items-center justify-center gap-3 mb-2">
-          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-lg shadow-sky-200/50 ring-1 ring-slate-200/30 flex-shrink-0">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-lg shadow-sky-500/20 ring-2 ring-sky-200/40 flex-shrink-0">
             <Image
-              src="/logo.png"
+              src="/logo-transparent.jpg"
               alt="WEEK-CHAIN Logo"
               width={64}
               height={64}
-              className="w-full h-full object-contain scale-[1.15] mix-blend-multiply"
+              className="w-full h-full object-cover"
               priority
             />
           </div>
@@ -268,115 +275,148 @@ export default function AuthPage() {
 
       <Card className="w-full max-w-md shadow-2xl bg-card/80 backdrop-blur-xl border-sky-200/50">
         <CardContent className="pt-6 pb-6 px-4 sm:pt-8 sm:pb-8 sm:px-8">
-          <div className="text-center mb-6 sm:mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-1 sm:mb-2">
-              {activeTab === "login" ? "Bienvenido de nuevo" : activeTab === "magic" ? "Enlace magico" : "Crea tu cuenta"}
-            </h2>
-            <p className="text-sm sm:text-base text-muted-foreground">
-              {activeTab === "login"
-                ? "Accede a tus certificados vacacionales"
-                : activeTab === "magic"
-                  ? "Inicia sesion sin contrasena"
-                  : "Registrate para obtener tu certificado digital"}
-            </p>
-          </div>
 
           {error && (
-            <Alert variant="destructive" className="mb-6">
+            <Alert variant="destructive" className="mb-5">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
 
           {referrerName && (
-            <div className="mb-6 p-3 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-lg">
+            <div className="mb-5 p-3 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-lg">
               <p className="text-sm text-emerald-800 text-center">
                 <span className="font-semibold">{referrerName}</span> te ha invitado a unirte
               </p>
             </div>
           )}
 
-          <button
-            onClick={handleGoogleLogin}
-            disabled={isLoading}
-            type="button"
-            className="flex items-center justify-center w-full min-h-[48px] mb-5 sm:mb-6 px-4 sm:px-6 py-3 bg-background border-2 border-border rounded-lg text-base font-medium text-foreground transition-all hover:bg-secondary active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
-          >
-            <svg className="w-5 h-5 mr-3 flex-shrink-0" viewBox="0 0 24 24">
-              <path
-                fill="#4285F4"
-                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-              />
-              <path
-                fill="#34A853"
-                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-              />
-              <path
-                fill="#FBBC05"
-                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-              />
-              <path
-                fill="#EA4335"
-                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-              />
-            </svg>
-            Continuar con Google
-          </button>
+          {/* ===== CHOOSE SCREEN ===== */}
+          {activeTab === "choose" && (
+            <div className="space-y-5">
+              <div className="text-center">
+                <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-1">Bienvenido</h2>
+                <p className="text-sm text-muted-foreground">Accede o crea tu cuenta de certificados vacacionales</p>
+              </div>
 
-          <div className="relative mb-5 sm:mb-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border"></div>
-            </div>
-            <div className="relative flex justify-center text-xs sm:text-sm">
-              <span className="px-3 sm:px-4 bg-card text-muted-foreground uppercase tracking-wider">o con email</span>
-            </div>
-          </div>
+              {/* Google SSO */}
+              <button
+                onClick={handleGoogleLogin}
+                disabled={isLoading}
+                type="button"
+                className="flex items-center justify-center w-full min-h-[48px] px-4 py-3 bg-background border-2 border-border rounded-xl text-base font-medium text-foreground transition-all hover:bg-secondary active:scale-[0.98] disabled:opacity-70"
+              >
+                <svg className="w-5 h-5 mr-3 flex-shrink-0" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                </svg>
+                Continuar con Google
+              </button>
 
-          <div className="flex gap-1.5 sm:gap-2 mb-5 sm:mb-6">
-            <Button
-              type="button"
-              onClick={() => {
-                setActiveTab("login")
-                setMagicLinkSent(false)
-              }}
-              variant={activeTab === "login" ? "default" : "outline"}
-              className={`flex-1 min-h-[44px] text-xs sm:text-sm px-2 sm:px-4 ${
-                activeTab === "login"
-                  ? "bg-sky-500 hover:bg-sky-600 text-primary-foreground shadow-md shadow-sky-200"
-                  : "border-2 border-sky-200 hover:bg-sky-50 bg-transparent"
-              }`}
-            >
-              Login
-            </Button>
-            <Button
-              type="button"
-              onClick={() => {
-                setActiveTab("magic")
-                setMagicLinkSent(false)
-              }}
-              variant={activeTab === "magic" ? "default" : "outline"}
-              className={`flex-1 min-h-[44px] text-xs sm:text-sm px-2 sm:px-4 ${
-                activeTab === "magic"
-                  ? "bg-sky-600 hover:bg-sky-700 text-primary-foreground shadow-md shadow-sky-200"
-                  : "border-2 border-sky-200 hover:bg-sky-50 bg-transparent"
-              }`}
-            >
-              Magic Link
-            </Button>
-            <Button
-              type="button"
-              onClick={() => {
-                setActiveTab("register")
-                setMagicLinkSent(false)
-              }}
-              variant={activeTab === "register" ? "default" : "outline"}
-              className={`flex-1 min-h-[44px] text-xs sm:text-sm px-2 sm:px-4 ${
-                activeTab === "register" ? "bg-cyan-500 hover:bg-cyan-600 text-primary-foreground shadow-md shadow-cyan-200" : "border-2 border-cyan-200 hover:bg-cyan-50 bg-transparent"
-              }`}
-            >
-              Registro
-            </Button>
-          </div>
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-border"></div>
+                </div>
+                <div className="relative flex justify-center text-xs">
+                  <span className="px-4 bg-card text-muted-foreground uppercase tracking-wider">o con email</span>
+                </div>
+              </div>
+
+              {/* Two option cards */}
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("login")}
+                  className="flex flex-col items-center gap-2 p-4 sm:p-5 rounded-xl border-2 border-sky-200 bg-sky-50/50 hover:bg-sky-100/70 hover:border-sky-400 transition-all active:scale-[0.97] group"
+                >
+                  <div className="w-10 h-10 rounded-full bg-sky-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Mail className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-sm font-bold text-foreground">Iniciar Sesion</span>
+                  <span className="text-[11px] text-muted-foreground leading-tight text-center">Ya tengo una cuenta</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("register")}
+                  className="flex flex-col items-center gap-2 p-4 sm:p-5 rounded-xl border-2 border-cyan-200 bg-cyan-50/50 hover:bg-cyan-100/70 hover:border-cyan-400 transition-all active:scale-[0.97] group"
+                >
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-teal-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Shield className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-sm font-bold text-foreground">Crear Cuenta</span>
+                  <span className="text-[11px] text-muted-foreground leading-tight text-center">Soy nuevo usuario</span>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => { setActiveTab("magic"); setMagicLinkSent(false) }}
+                className="w-full text-center text-xs text-muted-foreground hover:text-sky-600 transition-colors py-2"
+              >
+                Iniciar sesion con enlace magico (sin contrasena)
+              </button>
+            </div>
+          )}
+
+          {/* ===== BACK BUTTON for sub-pages ===== */}
+          {activeTab !== "choose" && (
+            <div className="mb-4">
+              <button
+                type="button"
+                onClick={() => { setActiveTab("choose"); setError(null); setMagicLinkSent(false) }}
+                className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                Volver
+              </button>
+
+              <div className="text-center mt-2">
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-1">
+                  {activeTab === "login" ? "Iniciar Sesion" : activeTab === "magic" ? "Enlace Magico" : "Crear Cuenta"}
+                </h2>
+                <p className="text-xs sm:text-sm text-muted-foreground">
+                  {activeTab === "login"
+                    ? "Accede a tus certificados vacacionales"
+                    : activeTab === "magic"
+                      ? "Inicia sesion sin contrasena"
+                      : "Registrate para obtener tu certificado digital"}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* ===== Google button on login/register sub-pages ===== */}
+          {(activeTab === "login" || activeTab === "register") && (
+            <>
+              <button
+                onClick={handleGoogleLogin}
+                disabled={isLoading}
+                type="button"
+                className="flex items-center justify-center w-full min-h-[48px] mb-4 px-4 py-3 bg-background border-2 border-border rounded-xl text-sm font-medium text-foreground transition-all hover:bg-secondary active:scale-[0.98] disabled:opacity-70"
+              >
+                <svg className="w-5 h-5 mr-3 flex-shrink-0" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                </svg>
+                Continuar con Google
+              </button>
+              <div className="relative mb-4">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-border"></div>
+                </div>
+                <div className="relative flex justify-center text-xs">
+                  <span className="px-4 bg-card text-muted-foreground uppercase tracking-wider">o con email</span>
+                </div>
+              </div>
+            </>
+          )}
 
           {activeTab === "magic" && !magicLinkSent && (
             <form onSubmit={handleMagicLink} className="space-y-4">
@@ -464,9 +504,9 @@ export default function AuthPage() {
                   <Label htmlFor="password" className="text-gray-700">
                     Contraseña
                   </Label>
-                  <button type="button" className="text-sm text-sky-600 hover:text-sky-700">
-                    ¿Olvidaste tu contraseña?
-                  </button>
+                  <a href="/auth/forgot-password" className="text-sm text-sky-600 hover:text-sky-700">
+                    Olvidaste tu contrasena?
+                  </a>
                 </div>
                 <Input
                   id="password"
@@ -485,8 +525,15 @@ export default function AuthPage() {
                 className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white text-base font-semibold shadow-md shadow-sky-200"
                 disabled={isLoading}
               >
-                {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
+                {isLoading ? "Iniciando sesion..." : "Iniciar Sesion"}
               </Button>
+
+              <p className="text-center text-sm text-muted-foreground mt-4">
+                {"No tienes cuenta? "}
+                <button type="button" onClick={() => setActiveTab("register")} className="text-cyan-600 font-semibold hover:text-cyan-700 underline underline-offset-2">
+                  Crear una cuenta
+                </button>
+              </p>
             </form>
           )}
 
@@ -626,6 +673,13 @@ export default function AuthPage() {
               >
                 {isLoading ? "Creando cuenta..." : "Crear cuenta"}
               </Button>
+
+              <p className="text-center text-sm text-muted-foreground mt-4">
+                {"Ya tienes cuenta? "}
+                <button type="button" onClick={() => setActiveTab("login")} className="text-sky-600 font-semibold hover:text-sky-700 underline underline-offset-2">
+                  Iniciar sesion
+                </button>
+              </p>
             </form>
           )}
         </CardContent>
