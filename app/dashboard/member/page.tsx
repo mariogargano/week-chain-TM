@@ -625,22 +625,17 @@ export default function MemberDashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50">
-        <Navbar />
-        <div className="flex-1 flex items-center justify-center">
-          <div className="glass-card rounded-2xl p-8 text-center">
-            <Loader2 className="h-8 w-8 animate-spin text-sky-500 mx-auto mb-4" />
-            <p className="text-slate-600">Cargando tu dashboard...</p>
-          </div>
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <div className="rounded-2xl p-8 text-center bg-background shadow-sm">
+          <Loader2 className="h-8 w-8 animate-spin text-sky-500 mx-auto mb-4" />
+          <p className="text-muted-foreground">Cargando tu dashboard...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50">
-      <Navbar />
-
+    <div className="space-y-6">
       {profile?.referral_code && (
         <SocialShareSidebar
           referralCode={profile.referral_code}
@@ -649,70 +644,67 @@ export default function MemberDashboardPage() {
         />
       )}
 
-      <main className="flex-1 overflow-y-auto pt-16">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-7xl mx-auto">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-3xl font-bold text-slate-900">
-                  Bienvenido, {profile?.full_name?.split(" ")[0] || "Usuario"}
-                </h1>
-                <p className="text-slate-600">Panel de Intermediario WEEK-CHAIN</p>
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-xl sm:text-3xl font-bold text-foreground">
+            Bienvenido, {profile?.full_name?.split(" ")[0] || "Usuario"}
+          </h1>
+          <p className="text-sm text-muted-foreground">Panel de Intermediario WEEK-CHAIN</p>
+        </div>
+        <div className="flex items-center gap-2 sm:gap-3">
+          {profileCompletion < 100 && (
+            <div className="hidden sm:flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 rounded-xl">
+              <AlertCircle className="w-4 h-4 text-amber-500 flex-shrink-0" />
+              <span className="text-sm text-amber-700">Completa tu perfil</span>
+            </div>
+          )}
+          <Button asChild variant="outline" size="sm" className="min-h-[44px]">
+            <Link href="/dashboard/member/profile">
+              <UserCog className="w-4 h-4 mr-2" />
+              Mi Perfil
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      {profileCompletion < 100 && (
+        <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-4 sm:p-6 text-white">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <div className="flex items-center gap-3">
-                {profileCompletion < 100 && (
-                  <div className="flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-xl">
-                    <AlertCircle className="w-4 h-4 text-amber-500" />
-                    <span className="text-sm text-amber-700">Completa tu perfil</span>
-                  </div>
-                )}
-                <Button asChild variant="outline">
-                  <Link href="/dashboard/member/profile">
-                    <UserCog className="w-4 h-4 mr-2" />
-                    Mi Perfil
-                  </Link>
-                </Button>
+              <div>
+                <h3 className="font-bold text-base sm:text-lg">Completa tu perfil para verificar tu cuenta</h3>
+                <p className="text-white/80 text-xs sm:text-sm">
+                  Sube tus documentos para habilitar todas las funciones
+                </p>
               </div>
             </div>
+            <Button asChild className="bg-white text-amber-600 hover:bg-white/90 min-h-[44px] self-start sm:self-auto">
+              <Link href="/dashboard/member/profile">
+                Completar Perfil
+                <ChevronRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      )}
 
-            {profileCompletion < 100 && (
-              <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-6 mb-6 text-white">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                      <Shield className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-lg">Completa tu perfil para verificar tu cuenta</h3>
-                      <p className="text-white/80 text-sm">
-                        Sube tus documentos para prevenir fraudes y habilitar todas las funciones
-                      </p>
-                    </div>
-                  </div>
-                  <Button asChild className="bg-white text-amber-600 hover:bg-white/90">
-                    <Link href="/dashboard/member/profile">
-                      Completar Perfil
-                      <ChevronRight className="w-4 h-4 ml-2" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            )}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        {/* Left Column - Member Card & Stats */}
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
+          {/* Member Card */}
+          <div className="bg-background rounded-2xl p-4 sm:p-6 shadow-sm">
+            <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">Tu Tarjeta Digital</h2>
 
-            <div className="grid lg:grid-cols-3 gap-6">
-              {/* Left Column - Member Card & Stats */}
-              <div className="lg:col-span-2 space-y-6">
-                {/* Member Card - Exact design from reference */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm">
-                  <h2 className="text-lg font-semibold text-slate-900 mb-4">Tu Tarjeta Digital</h2>
-
-                  <div
-                    ref={cardRef}
-                    className="relative w-full max-w-md mx-auto rounded-2xl overflow-hidden"
-                    style={{ backgroundColor: "#1a2332" }}
-                  >
-                    <div className="p-6">
+            <div
+              ref={cardRef}
+              className="relative w-full max-w-md mx-auto rounded-2xl overflow-hidden"
+              style={{ backgroundColor: "#1a2332" }}
+            >
+              <div className="p-4 sm:p-6">
                       {/* Header with Logo and Photo */}
                       <div className="flex items-start justify-between mb-6">
                         <div>
@@ -839,96 +831,96 @@ export default function MemberDashboardPage() {
                     <div className="h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" />
                   </div>
 
-                  {/* Card Actions */}
-                  <div className="flex gap-3 mt-4 justify-center flex-wrap">
-                    <Button
-                      onClick={copyReferralCode}
-                      variant="outline"
-                      size="sm"
-                      className="text-slate-600 bg-transparent"
-                    >
-                      {copied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
-                      {copied ? "Copiado" : "Compartir Enlace"}
-                    </Button>
-                    <Button
-                      onClick={downloadCard}
-                      variant="outline"
-                      size="sm"
-                      disabled={isDownloading}
-                      className="text-slate-600 bg-transparent"
-                    >
-                      {isDownloading ? (
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      ) : (
-                        <Download className="h-4 w-4 mr-2" />
-                      )}
-                      Descargar
-                    </Button>
-                    <Button
-                      onClick={addToAppleWallet}
-                      variant="outline"
-                      size="sm"
-                      disabled={isAddingToWallet}
-                      className="text-slate-600 bg-transparent"
-                    >
-                      {isAddingToWallet ? (
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      ) : (
-                        <Wallet className="h-4 w-4 mr-2" />
-                      )}
-                      Apple Wallet
-                    </Button>
+            {/* Card Actions */}
+            <div className="flex gap-2 sm:gap-3 mt-3 sm:mt-4 justify-center flex-wrap">
+              <Button
+                onClick={copyReferralCode}
+                variant="outline"
+                size="sm"
+                className="text-muted-foreground bg-transparent min-h-[40px] text-xs sm:text-sm"
+              >
+                {copied ? <Check className="h-4 w-4 mr-1.5" /> : <Copy className="h-4 w-4 mr-1.5" />}
+                {copied ? "Copiado" : "Compartir"}
+              </Button>
+              <Button
+                onClick={downloadCard}
+                variant="outline"
+                size="sm"
+                disabled={isDownloading}
+                className="text-muted-foreground bg-transparent min-h-[40px] text-xs sm:text-sm"
+              >
+                {isDownloading ? (
+                  <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
+                ) : (
+                  <Download className="h-4 w-4 mr-1.5" />
+                )}
+                Descargar
+              </Button>
+              <Button
+                onClick={addToAppleWallet}
+                variant="outline"
+                size="sm"
+                disabled={isAddingToWallet}
+                className="text-muted-foreground bg-transparent min-h-[40px] text-xs sm:text-sm"
+              >
+                {isAddingToWallet ? (
+                  <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
+                ) : (
+                  <Wallet className="h-4 w-4 mr-1.5" />
+                )}
+                Wallet
+              </Button>
+            </div>
+          </div>
+
+          {/* Stats Panel */}
+          <div className="rounded-2xl p-4 sm:p-6 text-white" style={{ backgroundColor: "#1a2332" }}>
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                {profile?.avatar_url ? (
+                  <img
+                    src={profile.avatar_url || "/placeholder.svg"}
+                    alt={profile.full_name}
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover flex-shrink-0"
+                  />
+                ) : (
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-700 flex items-center justify-center flex-shrink-0">
+                    <User className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400" />
                   </div>
+                )}
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-sm sm:text-base truncate">{profile?.full_name}</h3>
+                  <p className="text-slate-400 text-xs sm:text-sm flex items-center gap-1">
+                    <MapPin className="h-3 w-3 flex-shrink-0" />
+                    Mexico
+                  </p>
                 </div>
+              </div>
+              <div className="text-right flex-shrink-0 hidden sm:block">
+                <div className="text-white font-bold text-lg">
+                  WEEK-CHAIN<sup className="text-[8px]">TM</sup>
+                </div>
+                <div className="text-slate-400 text-sm">Panel de Intermediario</div>
+              </div>
+            </div>
 
-                {/* Stats Panel - Broker Dashboard Style */}
-                <div className="rounded-2xl p-6 text-white" style={{ backgroundColor: "#1a2332" }}>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-3">
-                      {profile?.avatar_url ? (
-                        <img
-                          src={profile.avatar_url || "/placeholder.svg"}
-                          alt={profile.full_name}
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-12 h-12 rounded-full bg-slate-700 flex items-center justify-center">
-                          <User className="h-6 w-6 text-slate-400" />
-                        </div>
-                      )}
-                      <div>
-                        <h3 className="font-semibold">{profile?.full_name}</h3>
-                        <p className="text-slate-400 text-sm flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          México
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-white font-bold text-lg">
-                        WEEK-CHAIN<sup className="text-[8px]">™</sup>
-                      </div>
-                      <div className="text-slate-400 text-sm">Panel de Intermediario</div>
-                    </div>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <div className="bg-slate-800/50 rounded-xl p-3 sm:p-4 border border-slate-700">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                    <span className="text-emerald-400 font-bold text-sm">$</span>
                   </div>
-
-                  {/* Stats Grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
-                          <span className="text-emerald-400 font-bold">$</span>
-                        </div>
-                        {stats.totalEarnings > 0 && (
-                          <Badge className="bg-emerald-500/20 text-emerald-400 border-0 text-xs">
-                            <ArrowUpRight className="h-3 w-3 mr-0.5" />
-                            +12%
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="text-2xl font-bold">${stats.totalEarnings.toLocaleString()}</div>
-                      <div className="text-slate-400 text-xs">Honorarios Totales (IVA inc.)</div>
-                    </div>
+                  {stats.totalEarnings > 0 && (
+                    <Badge className="bg-emerald-500/20 text-emerald-400 border-0 text-[10px] sm:text-xs">
+                      <ArrowUpRight className="h-3 w-3 mr-0.5" />
+                      +12%
+                    </Badge>
+                  )}
+                </div>
+                <div className="text-lg sm:text-2xl font-bold">${stats.totalEarnings.toLocaleString()}</div>
+                <div className="text-slate-400 text-[10px] sm:text-xs">Honorarios Totales</div>
+              </div>
 
                     <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
                       <div className="flex items-center justify-between mb-2">
@@ -1144,44 +1136,41 @@ export default function MemberDashboardPage() {
                   ))}
                 </div>
 
-                {/* Quick Actions */}
-                <div className="bg-white rounded-2xl p-4 shadow-sm">
-                  <h3 className="font-semibold text-slate-900 mb-3">Acciones Rápidas</h3>
-                  <div className="space-y-2">
-                    <Button asChild variant="outline" className="w-full justify-between bg-transparent">
-                      <Link href="/properties">
-                        <span className="flex items-center gap-2">
-                          <Building2 className="h-4 w-4" />
-                          Explorar Ejemplos de Destinos
-                        </span>
-                        <ChevronRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                    <Button asChild variant="outline" className="w-full justify-between bg-transparent">
-                      <Link href="/dashboard/my-weeks">
-                        <span className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4" />
-                          Mis Semanas
-                        </span>
-                        <ChevronRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                    <Button asChild variant="outline" className="w-full justify-between bg-transparent">
-                      <Link href="/dashboard/user/certificate">
-                        <span className="flex items-center gap-2">
-                          <Shield className="h-4 w-4" />
-                          Ver Certificados
-                        </span>
-                        <ChevronRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </div>
+          {/* Quick Actions */}
+          <div className="bg-background rounded-2xl p-4 shadow-sm">
+            <h3 className="font-semibold text-foreground mb-3">Acciones Rapidas</h3>
+            <div className="space-y-2">
+              <Button asChild variant="outline" className="w-full justify-between bg-transparent min-h-[44px]">
+                <Link href="/properties">
+                  <span className="flex items-center gap-2">
+                    <Building2 className="h-4 w-4 flex-shrink-0" />
+                    Explorar Destinos
+                  </span>
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="w-full justify-between bg-transparent min-h-[44px]">
+                <Link href="/dashboard/my-weeks">
+                  <span className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4 flex-shrink-0" />
+                    Mis Semanas
+                  </span>
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="w-full justify-between bg-transparent min-h-[44px]">
+                <Link href="/dashboard/user/certificate">
+                  <span className="flex items-center gap-2">
+                    <Shield className="h-4 w-4 flex-shrink-0" />
+                    Ver Certificados
+                  </span>
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   )
 }

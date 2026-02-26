@@ -6,7 +6,7 @@
 import { createClient } from "@/lib/supabase/server"
 
 export async function reverseCommission(orderId: string, reason: string) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data: commission } = await supabase.from("commission_records").select("*").eq("order_id", orderId).single()
 
@@ -34,7 +34,7 @@ export async function reverseCommission(orderId: string, reason: string) {
 }
 
 export async function approveDueCommissions() {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Find all commissions that have passed hold period
   const { data: dueCommissions } = await supabase

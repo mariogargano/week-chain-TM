@@ -65,11 +65,15 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
         >
           <div className="flex h-full flex-col">
             {/* Logo */}
-            <div className="flex h-16 items-center justify-between border-b border-white/10 px-6">
+            <div className="flex h-16 items-center justify-between border-b border-white/10 px-4 sm:px-6">
               <Link href="/" className="flex items-center gap-2">
-                <div className="text-2xl font-bold">WEEK-CHAIN</div>
+                <div className="text-xl sm:text-2xl font-bold text-white">WEEK-CHAIN</div>
               </Link>
-              <button onClick={() => setSidebarOpen(false)} className="lg:hidden">
+              <button
+                onClick={() => setSidebarOpen(false)}
+                className="lg:hidden p-2 -mr-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-white/10 active:scale-[0.95] transition-all"
+                aria-label="Cerrar menu"
+              >
                 <X className="h-6 w-6" />
               </button>
             </div>
@@ -89,18 +93,19 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 space-y-1 p-4">
+            <nav className="flex-1 space-y-1 p-3 sm:p-4">
               {navigation.map((item) => {
                 const isActive = pathname === item.href
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                    onClick={() => setSidebarOpen(false)}
+                    className={`flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-sm font-medium transition-colors active:scale-[0.98] ${
                       isActive ? "bg-cyan-600 text-white" : "text-gray-300 hover:bg-white/5 hover:text-white"
                     }`}
                   >
-                    <item.icon className="h-5 w-5" />
+                    <item.icon className="h-5 w-5 flex-shrink-0" />
                     {item.name}
                   </Link>
                 )
@@ -108,13 +113,13 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
             </nav>
 
             {/* Logout */}
-            <div className="border-t border-white/10 p-4">
+            <div className="border-t border-white/10 p-3 sm:p-4">
               <button
                 onClick={handleLogout}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-300 transition-colors hover:bg-red-600/20 hover:text-red-400"
+                className="flex w-full items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-sm font-medium text-gray-300 transition-colors hover:bg-red-600/20 hover:text-red-400 active:scale-[0.98]"
               >
-                <LogOut className="h-5 w-5" />
-                Cerrar Sesión
+                <LogOut className="h-5 w-5 flex-shrink-0" />
+                Cerrar Sesion
               </button>
             </div>
           </div>
@@ -124,29 +129,34 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
       {/* Main Content */}
       <div className="flex flex-1 flex-col lg:pl-64">
         {/* Top Bar */}
-        <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b bg-white px-4 lg:px-8">
-          <button onClick={() => setSidebarOpen(true)} className="rounded-lg p-2 hover:bg-gray-100 lg:hidden">
+        <header className="sticky top-0 z-40 flex h-14 sm:h-16 items-center justify-between border-b bg-background px-3 sm:px-4 lg:px-8">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="rounded-lg p-2 min-h-[44px] min-w-[44px] flex items-center justify-center hover:bg-secondary lg:hidden active:scale-[0.95] transition-all"
+            aria-label="Abrir menu"
+          >
             <Menu className="h-6 w-6" />
           </button>
 
           <div className="flex flex-1 items-center gap-4 lg:ml-0">
+            <p className="text-sm font-semibold text-foreground lg:hidden">WEEK-CHAIN</p>
             <div className="relative hidden w-full max-w-md lg:block">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input placeholder="Buscar..." className="pl-10" />
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="relative">
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="icon" className="relative min-h-[44px] min-w-[44px]">
               <Bell className="h-5 w-5" />
-              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-red-500"></span>
+              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500"></span>
             </Button>
           </div>
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto">
-          <div className="container mx-auto p-4 lg:p-8">{children}</div>
+        <main className="flex-1 overflow-y-auto overscroll-contain">
+          <div className="container mx-auto px-3 py-4 sm:p-4 lg:p-8">{children}</div>
         </main>
       </div>
 
@@ -157,7 +167,11 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
 
       {/* Mobile overlay */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-40 bg-black/50 lg:hidden" onClick={() => setSidebarOpen(false)} />
+        <div
+          className="fixed inset-0 z-40 bg-foreground/50 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+        />
       )}
     </div>
   )

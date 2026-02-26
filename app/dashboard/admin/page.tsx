@@ -73,7 +73,6 @@ export default function AdminDashboard() {
 
       const supabase = createClient()
 
-      // Use getUser() instead of getSession() for more reliable auth check
       const {
         data: { user },
         error: userError,
@@ -89,61 +88,29 @@ export default function AdminDashboard() {
       
       setAuthChecked(true)
 
-      const { data: adminUser } = await supabase
-        .from("admin_users")
-        .select("*")
-        .eq("email", user.email.toLowerCase())
-        .eq("status", "active")
-        .single()
+      const userEmail = user.email.toLowerCase()
 
-      // List of authorized admin emails
-      const authorizedAdmins = [
-        "corporativo@morises.com",
-        // Add more admin emails here as needed
-      ]
-
-      const userEmail = user.email?.toLowerCase() || ""
-      
-      // Also check if user has admin role in profiles table
-      const { data: profileData } = await supabase
-        .from("profiles")
+      // Check admin access via users table role or hardcoded admin email
+      const { data: userData } = await supabase
+        .from("users")
         .select("role")
-        .eq("email", userEmail)
-        .single()
-      
-      const hasAdminRole = profileData?.role === "admin" || profileData?.role === "super_admin"
-      const isAuthorizedAdmin = authorizedAdmins.includes(userEmail) || adminUser || hasAdminRole
+        .eq("id", user.id)
+        .maybeSingle()
 
-      if (!adminUser && isAuthorizedAdmin) {
-        // Auto-create admin user for authorized emails
-        const { error: createError } = await supabase.from("admin_users").upsert(
-          {
-            email: userEmail,
-            name: user.user_metadata?.full_name || user.user_metadata?.name || "Administrador",
-            role: "super_admin",
-            status: "active",
-            updated_at: new Date().toISOString(),
-          },
-          { onConflict: "email" },
-        )
+      const isAdmin =
+        userEmail === "corporativo@morises.com" ||
+        userData?.role === "admin" ||
+        userData?.role === "super_admin"
 
-        if (createError) {
-          console.error("[v0] Failed to create admin user:", createError)
-          setError("Error al crear usuario administrador. Por favor intenta de nuevo.")
-          setLoading(false)
-          return
-        }
-
-        setAdminEmail(userEmail)
-      } else if (adminUser) {
-        setAdminEmail(user.email || "")
-      } else {
+      if (!isAdmin) {
         if (!isRedirecting) {
           setIsRedirecting(true)
           router.replace("/dashboard")
         }
         return
       }
+
+      setAdminEmail(userEmail)
 
       const [capacityResponse, users, kyc, reservationReqs] = await Promise.all([
         fetch("/api/admin/capacity/global-status").then((r) => r.json()),
@@ -321,20 +288,21 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-slate-900 via-sky-900/50 to-slate-900">
-      {/* Fixed Header - Liquid Glass Blue */}
+    <div className="flex flex-col min-h-full bg-gradient-to-br from-slate-900 via-sky-900/50 to-slate-900 -m-3 sm:-m-4 lg:-m-6">
+      {/* Fixed Header */}
       <div className="flex-shrink-0 border-b border-sky-500/20 glass-dark">
-        <div className="flex items-center justify-between p-6">
-          <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-sky-300 via-cyan-300 to-teal-300 bg-clip-text text-transparent">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between p-4 sm:p-6">
+          <div className="min-w-0">
+            <h1 className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-sky-300 via-cyan-300 to-teal-300 bg-clip-text text-transparent truncate">
               Control Global WEEK-CHAIN
             </h1>
-            <p className="text-sky-300/80 mt-1">Bienvenido, {adminEmail}</p>
+            <p className="text-sky-300/80 mt-1 text-sm sm:text-base truncate">Bienvenido, {adminEmail}</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-shrink-0">
             <Button
               variant="outline"
-              className="border-sky-400/30 text-sky-200 hover:bg-sky-500/10 bg-sky-500/5 backdrop-blur"
+              size="sm"
+              className="border-sky-400/30 text-sky-200 hover:bg-sky-500/10 bg-sky-500/5 backdrop-blur min-h-[44px]"
               onClick={() => fetchDashboardData()}
               disabled={refreshing}
             >
@@ -347,7 +315,7 @@ export default function AdminDashboard() {
 
       {/* Scrollable Content Area */}
       <div className="flex-1 overflow-y-auto">
-        <div className="p-6 space-y-6">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
           <Card
             className={`border-2 backdrop-blur-xl ${
               globalMetrics.systemStatus === "RED"
@@ -359,31 +327,31 @@ export default function AdminDashboard() {
                     : "border-emerald-400 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20"
             } shadow-2xl`}
           >
-            <CardContent className="p-8">
-              <div className="flex items-center justify-between">
+            <CardContent className="p-4 sm:p-8">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="text-sm font-medium text-white/90">ESTADO DEL SISTEMA</p>
-                  <p className="text-5xl font-bold mt-2">{globalMetrics.systemStatus}</p>
-                  <p className="text-lg text-white/90 mt-2">
-                    Utilización: {globalMetrics.currentUtilization.toFixed(1)}% de capacidad
+                  <p className="text-xs sm:text-sm font-medium text-white/90">ESTADO DEL SISTEMA</p>
+                  <p className="text-3xl sm:text-5xl font-bold mt-1 sm:mt-2">{globalMetrics.systemStatus}</p>
+                  <p className="text-sm sm:text-lg text-white/90 mt-1 sm:mt-2">
+                    Utilizacion: {globalMetrics.currentUtilization.toFixed(1)}% de capacidad
                   </p>
-                  <div className="flex gap-4 mt-4 text-sm">
+                  <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 mt-3 sm:mt-4 text-xs sm:text-sm">
                     <div>
                       <span className="text-white/70">Supply Total:</span>{" "}
                       <span className="font-bold">{globalMetrics.totalSupplyWeeks} semanas</span>
                     </div>
                     <div>
-                      <span className="text-white/70">Capacidad Segura (70%):</span>{" "}
+                      <span className="text-white/70">Capacidad Segura:</span>{" "}
                       <span className="font-bold">{globalMetrics.safeCapacityWeeks} semanas</span>
                     </div>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="text-sm text-white/80">
-                    <div>{globalMetrics.totalSupplyProperties} propiedades activas</div>
-                    <div>{globalMetrics.activeCountries} países operando</div>
-                    <div className="mt-4">
-                      <Badge className="bg-white/20 text-white text-base px-4 py-2">
+                <div className="sm:text-right">
+                  <div className="text-xs sm:text-sm text-white/80 flex flex-wrap gap-2 sm:block">
+                    <span className="sm:block">{globalMetrics.totalSupplyProperties} propiedades activas</span>
+                    <span className="sm:block">{globalMetrics.activeCountries} paises operando</span>
+                    <div className="mt-2 sm:mt-4">
+                      <Badge className="bg-white/20 text-white text-xs sm:text-base px-3 sm:px-4 py-1 sm:py-2">
                         {globalMetrics.waitlistSize > 0
                           ? `${globalMetrics.waitlistSize} en lista de espera`
                           : "Sin lista de espera"}
@@ -395,7 +363,7 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
 
-          <div className="grid gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
             <Card
               className={`border-2 backdrop-blur-lg ${stopSaleFlags.silver ? "border-red-400 bg-red-900/30" : "border-emerald-400 bg-emerald-900/30"}`}
             >
@@ -443,36 +411,36 @@ export default function AdminDashboard() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold text-white mb-4">Módulos de Control Global</h2>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <h2 className="text-lg sm:text-2xl font-bold text-white mb-3 sm:mb-4">Modulos de Control Global</h2>
+            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {quickActions.map((action) => {
                 const Icon = action.icon
                 return (
                   <Link key={action.href} href={action.href}>
-                    <Card className="group cursor-pointer border-2 border-sky-400/30 bg-white/5 backdrop-blur-lg transition-all hover:border-sky-400 hover:shadow-xl hover:shadow-sky-500/20 hover:bg-white/10">
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className="p-3 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-600 shadow-lg group-hover:from-sky-400 group-hover:to-cyan-500 transition-all group-hover:scale-110">
-                            <Icon className="h-6 w-6 text-white" />
+                    <Card className="group cursor-pointer border-2 border-sky-400/30 bg-white/5 backdrop-blur-lg transition-all hover:border-sky-400 hover:shadow-xl hover:shadow-sky-500/20 hover:bg-white/10 active:scale-[0.98]">
+                      <CardContent className="p-4 sm:p-6">
+                        <div className="flex items-start gap-3 sm:gap-4">
+                          <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-600 shadow-lg flex-shrink-0">
+                            <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                           </div>
-                          <div className="flex-1">
-                            <h3 className="font-bold text-white group-hover:text-sky-200 transition-colors">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-bold text-sm sm:text-base text-white group-hover:text-sky-200 transition-colors">
                               {action.title}
                             </h3>
-                            <p className="text-sm text-sky-200/70">{action.description}</p>
-                            <div className="mt-2 flex items-center gap-2">
-                              <span className="text-xs font-medium text-sky-300">{action.stats}</span>
+                            <p className="text-xs sm:text-sm text-sky-200/70 truncate">{action.description}</p>
+                            <div className="mt-1.5 sm:mt-2 flex items-center gap-2">
+                              <span className="text-[10px] sm:text-xs font-medium text-sky-300">{action.stats}</span>
                               {action.badge && (
                                 <Badge
                                   variant="secondary"
-                                  className={action.badgeColor || "bg-sky-500/30 text-sky-100 text-xs backdrop-blur"}
+                                  className={action.badgeColor || "bg-sky-500/30 text-sky-100 text-[10px] sm:text-xs backdrop-blur"}
                                 >
                                   {action.badge}
                                 </Badge>
                               )}
                             </div>
                           </div>
-                          <ArrowUpRight className="h-5 w-5 text-sky-400 group-hover:text-sky-200 transition-colors group-hover:translate-x-1 group-hover:-translate-y-1" />
+                          <ArrowUpRight className="h-4 w-4 sm:h-5 sm:w-5 text-sky-400 flex-shrink-0" />
                         </div>
                       </CardContent>
                     </Card>

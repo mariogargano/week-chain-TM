@@ -19,7 +19,7 @@ export interface ConsentRequirement {
  * CRITICAL: This blocks actions if consent is missing
  */
 export async function checkConsent(userId: string, consentType: ConsentType): Promise<boolean> {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data, error } = await supabase.rpc("has_valid_consent", {
     p_user_id: userId,
@@ -47,7 +47,7 @@ export async function recordConsent(
   userAgent: string,
   metadata: Record<string, any> = {},
 ): Promise<string | null> {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data, error } = await supabase.rpc("record_consent", {
     p_user_id: userId,
@@ -82,7 +82,7 @@ export async function enforceConsent(userId: string, action: ConsentType): Promi
  * Get all consents for a user (for admin audit)
  */
 export async function getUserConsents(userId: string) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data, error } = await supabase
     .from("user_consents")

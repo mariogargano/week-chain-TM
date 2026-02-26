@@ -28,7 +28,7 @@ export interface VoucherData {
 
 export async function generateVoucher(data: VoucherData): Promise<{ voucherCode: string; voucherId: string }> {
   const cookieStore = cookies()
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Generar código único de voucher
   const voucherCode = generateVoucherCode()

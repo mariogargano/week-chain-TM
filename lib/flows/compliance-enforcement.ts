@@ -12,7 +12,7 @@ export async function issueComplianceStrike(params: {
   evidenceUrl?: string
   actionTaken: "warning" | "suspend" | "ban"
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Create strike record
   const { data: strike, error: strikeError } = await supabase
@@ -59,7 +59,7 @@ export async function issueComplianceStrike(params: {
 }
 
 export async function getIntermediaryStrikes(intermediaryId: string) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data: strikes } = await supabase
     .from("compliance_strikes")

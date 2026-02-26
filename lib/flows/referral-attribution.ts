@@ -13,7 +13,7 @@ export async function createReferralAttribution(params: {
   leadEmail?: string
   leadUserId?: string
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Validate that intermediary exists and is active
   const { data: intermediary } = await supabase
@@ -49,7 +49,7 @@ export async function createReferralAttribution(params: {
 }
 
 export async function getActiveAttribution(params: { email?: string; userId?: string }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   let query = supabase
     .from("referral_attributions")
@@ -72,7 +72,7 @@ export async function getActiveAttribution(params: { email?: string; userId?: st
 }
 
 export async function storeReferralCodeInCookie(referralCode: string) {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
 
   cookieStore.set("week_chain_ref", referralCode, {
     maxAge: 60 * 60 * 24 * ATTRIBUTION_WINDOW_DAYS, // 30 days
@@ -84,6 +84,6 @@ export async function storeReferralCodeInCookie(referralCode: string) {
 }
 
 export async function getReferralCodeFromCookie() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   return cookieStore.get("week_chain_ref")?.value || null
 }

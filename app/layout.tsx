@@ -87,13 +87,12 @@ export const metadata: Metadata = {
   referrer: "origin-when-cross-origin",
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", type: "image/png", sizes: "32x32" },
-      { url: "/icon-192.jpg", type: "image/png", sizes: "192x192" },
-      { url: "/icon-512.jpg", type: "image/png", sizes: "512x512" },
+      { url: "/icon.png", type: "image/png" },
+      { url: "/icon-192.jpg", type: "image/jpeg", sizes: "192x192" },
+      { url: "/icon-512.jpg", type: "image/jpeg", sizes: "512x512" },
     ],
-    shortcut: "/favicon.ico",
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: "/icon.png",
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png" }],
   },
   manifest: "/manifest.json",
   verification: {
@@ -109,8 +108,8 @@ export const viewport: Viewport = {
   ],
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
+  maximumScale: 1,
+  userScalable: false,
   colorScheme: "light dark",
 }
 

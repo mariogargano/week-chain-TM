@@ -50,34 +50,34 @@ export function BetaBanner() {
 
   return (
     <div className={`relative z-40 bg-gradient-to-r ${getBannerColor()} text-white shadow-lg`}>
-      <div className="container mx-auto px-4 py-3">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="flex-shrink-0">
+      <div className="container mx-auto px-3 sm:px-4 py-2 sm:py-3">
+        <div className="flex items-center justify-between gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+            <div className="flex-shrink-0 hidden sm:block">
               <Sparkles className="h-5 w-5 text-yellow-300 animate-pulse" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm sm:text-base font-semibold mb-0.5 flex items-center gap-2">
-                Versión Beta Controlada - Solo {betaStats.remaining} Certificados Disponibles
-                {betaStats.remaining <= 10 && <TrendingUp className="h-4 w-4 animate-bounce" />}
+              <p className="text-xs sm:text-base font-semibold mb-0.5 flex items-center gap-2 truncate">
+                <span className="sm:hidden">Beta - {betaStats.remaining} disponibles</span>
+                <span className="hidden sm:inline">Beta Controlada - Solo {betaStats.remaining} Certificados Disponibles</span>
+                {betaStats.remaining <= 10 && <TrendingUp className="h-4 w-4 animate-bounce flex-shrink-0" />}
               </p>
-              <p className="text-xs sm:text-sm text-blue-100">
-                {betaStats.sold} de 68 certificados activados ({betaStats.percentage.toFixed(1)}% vendido). Algunos
-                destinos en proceso de incorporación.
+              <p className="text-[10px] sm:text-sm text-blue-100 truncate">
+                {betaStats.sold}/68 activados ({betaStats.percentage.toFixed(0)}%)
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
             <a
               href="/faq"
               className="hidden sm:inline-flex text-xs font-medium text-white hover:text-yellow-300 transition-colors underline"
             >
-              Más Info
+              Info
             </a>
             <Button
               variant="ghost"
               size="sm"
-              className="text-white hover:bg-white/20 hover:text-white p-1.5 h-auto"
+              className="text-white hover:bg-white/20 hover:text-white p-1 sm:p-1.5 h-auto min-h-[36px] min-w-[36px] flex items-center justify-center"
               onClick={handleDismiss}
               aria-label="Cerrar banner"
             >

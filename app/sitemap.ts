@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/valuation", priority: 0.7, changeFrequency: "monthly" as const },
     { path: "/pitch", priority: 0.6, changeFrequency: "monthly" as const },
     { path: "/auth", priority: 0.5, changeFrequency: "yearly" as const },
-    { path: "/auth/login", priority: 0.5, changeFrequency: "yearly" as const },
+
     // Legal pages
     { path: "/privacy", priority: 0.4, changeFrequency: "yearly" as const },
     { path: "/terms", priority: 0.4, changeFrequency: "yearly" as const },

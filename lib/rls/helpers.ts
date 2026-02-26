@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server"
  */
 
 export async function isAdmin(): Promise<boolean> {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data, error } = await supabase.rpc("is_admin")
 
@@ -21,7 +21,7 @@ export async function isAdmin(): Promise<boolean> {
 export async function hasAdminRole(
   role: "super_admin" | "ops" | "finance" | "compliance" | "support",
 ): Promise<boolean> {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data, error } = await supabase.rpc("has_admin_role", { required_role: role })
 
@@ -34,7 +34,7 @@ export async function hasAdminRole(
 }
 
 export async function getAdminUser() {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const {
     data: { user },
@@ -53,7 +53,7 @@ export async function getAdminUser() {
 }
 
 export async function logAdminAction(action: string, entityType: string, entityId: string | null, changes: any = null) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const {
     data: { user },

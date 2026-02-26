@@ -19,7 +19,9 @@ export default function AdminLayout({
           <AdminSidebar />
           <div className="flex flex-1 flex-col overflow-hidden">
             <AdminHeader />
-            <main className="flex-1 overflow-y-auto bg-slate-50/50">{children}</main>
+            <main className="flex-1 overflow-y-auto overscroll-contain bg-slate-50/50">
+              <div className="p-3 sm:p-4 lg:p-6">{children}</div>
+            </main>
           </div>
         </div>
       </SidebarProvider>

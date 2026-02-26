@@ -18,7 +18,7 @@ export default async function WeekDetailPage({ params }: { params: Promise<{ id:
   } = await supabase.auth.getUser()
 
   if (error || !user) {
-    redirect("/auth/login")
+    redirect("/auth")
   }
 
   const { data: week } = await supabase

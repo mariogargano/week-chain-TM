@@ -6,96 +6,110 @@ import type { NextRequest } from "next/server"
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get("code")
-  const next = requestUrl.searchParams.get("next") ?? "/dashboard"
-
-  console.log("[v0 Auth Callback] Processing authentication...")
-  console.log("[v0 Auth Callback] Code received:", !!code)
+  const next = requestUrl.searchParams.get("next") || "/dashboard/member"
 
   if (code) {
-    try {
-      const cookieStore = await cookies()
+    const cookieStore = await cookies()
 
-      const supabase = createServerClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        {
-          cookies: {
-            getAll() {
-              return cookieStore.getAll()
-            },
-            setAll(cookiesToSet) {
-              try {
-                cookiesToSet.forEach(({ name, value, options }) => {
-                  cookieStore.set(name, value, options)
-                })
-              } catch (error) {
-                console.error("[v0 Auth Callback] Error setting cookies:", error)
-              }
-            },
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return cookieStore.getAll()
+          },
+          setAll(cookiesToSet) {
+            try {
+              cookiesToSet.forEach(({ name, value, options }) =>
+                cookieStore.set(name, value, options)
+              )
+            } catch {
+              // The `setAll` method was called from a Server Component.
+            }
           },
         },
-      )
+      }
+    )
 
-      const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
 
-      if (error) {
-        console.error("[v0 Auth Callback] Session error:", error)
-        return NextResponse.redirect(new URL("/auth/login?error=auth_failed", requestUrl.origin))
+    if (!error && data.user) {
+      // Check if user has a profile in the users table, create if not
+      const { data: existingUser } = await supabase
+        .from("users")
+        .select("id, role")
+        .eq("id", data.user.id)
+        .maybeSingle()
+
+      if (!existingUser) {
+        // Auto-create user profile for new OAuth users
+        const metadata = data.user.user_metadata || {}
+        await supabase.from("users").insert({
+          id: data.user.id,
+          email: data.user.email,
+          full_name: metadata.full_name || metadata.name || "",
+          avatar_url: metadata.avatar_url || metadata.picture || "",
+          role: "user",
+          account_type: "individual",
+          referral_code: generateReferralCode(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        })
+
+        // Also create a profile entry if it doesn't exist
+        await supabase.from("profiles").upsert({
+          id: data.user.id,
+          email: data.user.email,
+          display_name: metadata.full_name || metadata.name || "",
+          avatar_url: metadata.avatar_url || metadata.picture || "",
+          username: generateUsername(data.user.email || ""),
+          role: "user",
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }, { onConflict: "id" })
       }
 
-      console.log("[v0 Auth Callback] Session created successfully for:", data.user.email)
-
-      // Check if user is admin (either by email or existing admin_users entry)
-      const userEmail = data.user.email?.toLowerCase() || ""
-      const authorizedAdminEmails = ["corporativo@morises.com"]
-      
-      // Check admin_users table
-      const { data: adminUser } = await supabase
-        .from("admin_users")
-        .select("id")
-        .eq("email", userEmail)
-        .eq("status", "active")
-        .single()
-      
-      // Check profiles table for admin role
-      const { data: profileCheck } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("email", userEmail)
-        .single()
-      
-      const isAdmin = authorizedAdminEmails.includes(userEmail) || 
-                      adminUser || 
-                      profileCheck?.role === "admin" || 
-                      profileCheck?.role === "super_admin"
-
-      const { error: profileError } = await supabase.from("profiles").upsert({
-        user_id: data.user.id,
-        email: data.user.email,
-        full_name:
-          data.user.user_metadata?.full_name || data.user.user_metadata?.name || data.user.email?.split("@")[0],
-        avatar_url: data.user.user_metadata?.avatar_url || data.user.user_metadata?.picture,
-        role: isAdmin ? "admin" : (profileCheck?.role || "user"),
-        updated_at: new Date().toISOString(),
-      })
-
-      if (profileError) {
-        console.error("[v0 Auth Callback] Profile error:", profileError)
+      // Redirect based on role
+      const userRole = existingUser?.role || "user"
+      const roleRouteMap: Record<string, string> = {
+        admin: "/dashboard/admin",
+        super_admin: "/dashboard/admin",
+        broker: "/dashboard/broker",
+        broker_elite: "/dashboard/broker",
+        management: "/dashboard/management",
+        notaria: "/dashboard/notaria",
+        of_counsel: "/dashboard/of-counsel",
+        service_provider: "/dashboard/service-provider",
+        vafi_manager: "/dashboard/vafi",
+        dao_member: "/dashboard/dao",
+        property_owner: "/dashboard/owner",
       }
 
-      const dashboardUrl = isAdmin ? "/dashboard/admin" : "/dashboard"
-
-      console.log("[v0 Auth Callback] Redirecting to:", dashboardUrl)
-
-      const response = NextResponse.redirect(new URL(dashboardUrl, requestUrl.origin))
-
-      return response
-    } catch (error) {
-      console.error("[v0 Auth Callback] Unexpected error:", error)
-      return NextResponse.redirect(new URL("/auth/login?error=unexpected", requestUrl.origin))
+      const redirectPath = roleRouteMap[userRole] || next
+      return NextResponse.redirect(new URL(redirectPath, requestUrl.origin))
     }
   }
 
-  console.log("[v0 Auth Callback] No code provided, redirecting to login")
-  return NextResponse.redirect(new URL("/auth/login?error=no_code", requestUrl.origin))
+  // If code exchange fails, redirect to auth with error
+  return NextResponse.redirect(
+    new URL("/auth?error=Could%20not%20authenticate%20user", requestUrl.origin)
+  )
+}
+
+function generateReferralCode(): string {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  let result = "WC-"
+  for (let i = 0; i < 6; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+  return result
+}
+
+function generateUsername(email: string): string {
+  const base = email.split("@")[0].replace(/[^a-zA-Z0-9]/g, "").toLowerCase()
+  const suffix = Math.floor(Math.random() * 9999)
+    .toString()
+    .padStart(4, "0")
+  return `${base}${suffix}`
 }

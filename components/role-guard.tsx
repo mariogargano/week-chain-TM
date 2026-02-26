@@ -3,7 +3,7 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { getUserRoleByEmail, ADMIN_EMAIL, type UserRole } from "@/lib/auth/roles"
+import { ADMIN_EMAIL, type UserRole } from "@/lib/auth/roles"
 import { createClient } from "@/lib/supabase/client"
 import { Loader2, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -32,7 +32,6 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
         } = await supabase.auth.getUser()
 
         if (userError || !user?.email) {
-          console.log("[v0] No authenticated user, redirecting to auth")
           router.push("/auth")
           return
         }
@@ -40,73 +39,42 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
         const email = user.email.toLowerCase()
         setUserEmail(email)
 
-        console.log("[v0] Checking authorization for:", email, "Required roles:", allowedRoles)
-
+        // Admin email always gets access to admin pages
         if (email === ADMIN_EMAIL.toLowerCase() && allowedRoles.includes("admin")) {
-          console.log("[v0] Admin email detected - granting access")
-
-          const { data: existingAdmin } = await supabase.from("admin_users").select("id").eq("email", email).single()
-
-          if (!existingAdmin) {
-            // Insert new admin user
-            const { error: insertError } = await supabase.from("admin_users").insert({
-              id: user.id,
-              email: email,
-              name: "Administrador WEEK-CHAIN",
-              role: "super_admin",
-              password_hash: "",
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString(),
-            })
-
-            if (insertError) {
-              console.error("[v0] Admin user insert error:", insertError)
-            } else {
-              console.log("[v0] Admin user created successfully")
-            }
-          } else {
-            // Update existing admin user
-            const { error: updateError } = await supabase
-              .from("admin_users")
-              .update({
-                updated_at: new Date().toISOString(),
-              })
-              .eq("email", email)
-
-            if (updateError) {
-              console.warn("[v0] Admin user update warning:", updateError.message)
-            } else {
-              console.log("[v0] Admin user updated successfully")
-            }
-          }
-
-          localStorage.setItem("user_role", "admin")
-          localStorage.setItem("user_email", email)
           setIsAuthorized(true)
           setIsLoading(false)
           return
         }
 
-        const roleInfo = await getUserRoleByEmail(email)
-        const role = roleInfo?.role || "user"
+        // Fetch role from users table (primary source of truth)
+        const { data: userData } = await supabase
+          .from("users")
+          .select("role")
+          .eq("id", user.id)
+          .maybeSingle()
 
-        console.log("[v0] User role:", role)
+        const role = (userData?.role || "user") as UserRole
 
-        localStorage.setItem("user_role", role)
-        localStorage.setItem("user_email", email)
-
-        if (!allowedRoles.includes(role)) {
-          console.log("[v0] Access denied - insufficient permissions")
-          setError(`No tienes permisos para acceder a esta página. Tu rol: ${role}`)
+        // Admin/super_admin roles get access to admin pages
+        if (
+          (role === "admin" || role === "super_admin") &&
+          allowedRoles.includes("admin")
+        ) {
+          setIsAuthorized(true)
           setIsLoading(false)
           return
         }
 
-        console.log("[v0] Access granted")
+        // Check if user's role is in the allowed roles list
+        if (!allowedRoles.includes(role)) {
+          setError(`No tienes permisos para acceder a esta pagina. Tu rol: ${role}`)
+          setIsLoading(false)
+          return
+        }
+
         setIsAuthorized(true)
         setIsLoading(false)
-      } catch (err) {
-        console.error("[v0] RoleGuard: Error during authorization:", err)
+      } catch {
         setError("Error al verificar permisos. Por favor, intenta nuevamente.")
         setIsLoading(false)
       }
@@ -117,17 +85,11 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
     const supabase = createClient()
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("[v0] Auth state changed:", event)
+    } = supabase.auth.onAuthStateChange((event) => {
       if (event === "SIGNED_OUT") {
         setIsAuthorized(false)
-        localStorage.removeItem("user_role")
-        localStorage.removeItem("user_email")
         router.push("/auth")
-      } else if (event === "TOKEN_REFRESHED") {
-        console.log("[v0] Token refreshed successfully - maintaining session")
       } else if (event === "SIGNED_IN") {
-        console.log("[v0] User signed in - rechecking authorization")
         checkAuthorization()
       }
     })
@@ -173,7 +135,7 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
               variant="outline"
               className="w-full border-blue-400/30 text-blue-200 hover:bg-white/10"
             >
-              Iniciar Sesión
+              Iniciar Sesion
             </Button>
           </CardContent>
         </Card>

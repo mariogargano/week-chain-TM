@@ -38,23 +38,15 @@ export function calculateSafeCapacity(totalSupplyWeeks: number): number {
 }
 
 /**
- * Calculate projected demand based on active certificates
+ * Calculate projected demand based on active certificates.
+ * Queries both legacy user_certificates (tier-based) and user_certificates_v2 (PAX-based).
  */
 export async function calculateProjectedDemand(): Promise<{
   demand: number
   counts: Record<CertificateTier, number>
+  v2Count: number
 }> {
   const supabase = await createClient()
-
-  const { data, error } = await supabase.from("user_certificates").select("tier").eq("status", "active")
-
-  if (error || !data) {
-    console.error("[CapacityEngine] Error fetching certificates:", error)
-    return {
-      demand: 0,
-      counts: { Silver: 0, Gold: 0, Platinum: 0, Signature: 0 },
-    }
-  }
 
   const counts: Record<CertificateTier, number> = {
     Silver: 0,
@@ -63,20 +55,46 @@ export async function calculateProjectedDemand(): Promise<{
     Signature: 0,
   }
 
-  data.forEach((cert) => {
-    if (cert.tier in counts) {
-      counts[cert.tier as CertificateTier]++
-    }
-  })
+  let v2Demand = 0
+  let v2Count = 0
 
-  // ProjectedDemand = SUM(Certificates * WeeksPerYear * ExpectedUsageRate)
-  const demand = Object.entries(counts).reduce((sum, [tier, count]) => {
+  // 1. Legacy certificates (tier-based)
+  const { data: legacyData } = await supabase
+    .from("user_certificates")
+    .select("tier")
+    .eq("status", "active")
+
+  if (legacyData) {
+    legacyData.forEach((cert) => {
+      if (cert.tier in counts) {
+        counts[cert.tier as CertificateTier]++
+      }
+    })
+  }
+
+  // 2. V2 certificates (PAX-based)
+  const { data: v2Data } = await supabase
+    .from("user_certificates_v2")
+    .select("max_pax, max_estancias_per_year")
+    .eq("status", "active")
+
+  if (v2Data) {
+    v2Count = v2Data.length
+    // Each v2 certificate contributes: estancias_per_year * avg_usage_rate (0.7)
+    v2Demand = v2Data.reduce((sum, cert) => {
+      const estancias = cert.max_estancias_per_year || 1
+      return sum + estancias * 0.7
+    }, 0)
+  }
+
+  // Legacy demand
+  const legacyDemand = Object.entries(counts).reduce((sum, [tier, count]) => {
     const weeks = CERTIFICATE_WEEKS[tier as CertificateTier]
     const usageRate = EXPECTED_USAGE_RATES[tier as CertificateTier]
     return sum + count * weeks * usageRate
   }, 0)
 
-  return { demand, counts }
+  return { demand: legacyDemand + v2Demand, counts, v2Count }
 }
 
 /**

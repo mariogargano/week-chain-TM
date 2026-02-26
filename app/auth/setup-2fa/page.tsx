@@ -45,7 +45,7 @@ export default function Setup2FAPage() {
 
       if (!user) {
         console.log("[v0] 2FA Setup: No user found, redirecting to login")
-        router.push("/auth/login")
+        router.push("/auth")
         return
       }
 

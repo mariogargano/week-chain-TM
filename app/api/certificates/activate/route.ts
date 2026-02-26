@@ -10,7 +10,7 @@ import { logEvidenceEvent, extractRequestMetadata } from "@/lib/evidence/logger"
  */
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Get authenticated user
     const {

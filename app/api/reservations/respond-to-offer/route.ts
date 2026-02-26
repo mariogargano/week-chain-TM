@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid response. Must be 'accept' or 'decline'" }, { status: 400 })
     }
 
-    // Get reservation request
+    // Get reservation request (only own requests)
     const { data: reservationRequest, error: reqError } = await supabase
       .from("reservation_requests")
       .select("*")
@@ -39,12 +39,10 @@ export async function POST(request: Request) {
     // Check if offer expired
     if (new Date(reservationRequest.offer_expires_at) < new Date()) {
       await supabase.from("reservation_requests").update({ status: "expired" }).eq("id", request_id)
-
       return NextResponse.json({ error: "Offer has expired" }, { status: 400 })
     }
 
     if (response === "decline") {
-      // User declined the offer
       const { error: declineError } = await supabase
         .from("reservation_requests")
         .update({
@@ -67,21 +65,54 @@ export async function POST(request: Request) {
       })
     }
 
-    // ACCEPT: Create confirmed reservation
-    const { data: certificate } = await supabase
-      .from("user_certificates")
-      .select("*")
-      .eq("id", reservationRequest.certificate_id)
-      .single()
+    // ===== ACCEPT FLOW =====
 
-    if (!certificate || certificate.remaining_weeks_this_year <= 0) {
+    // Validate certificate has remaining weeks
+    // Try user_certificates_v2 first (new system), fall back to user_certificates (legacy)
+    let certificate: any = null
+    let certTable = "user_certificates_v2"
+
+    if (reservationRequest.certificate_id) {
+      const { data: certV2 } = await supabase
+        .from("user_certificates_v2")
+        .select("*")
+        .eq("id", reservationRequest.certificate_id)
+        .single()
+
+      if (certV2) {
+        certificate = certV2
+      } else {
+        // Fall back to legacy table
+        const { data: certLegacy } = await supabase
+          .from("user_certificates")
+          .select("*")
+          .eq("id", reservationRequest.certificate_id)
+          .single()
+
+        if (certLegacy) {
+          certificate = certLegacy
+          certTable = "user_certificates"
+        }
+      }
+    }
+
+    if (!certificate) {
+      return NextResponse.json({ error: "Certificate not found" }, { status: 400 })
+    }
+
+    // Check remaining entitlement
+    const remaining = certTable === "user_certificates_v2"
+      ? certificate.annual_entitlement_estancias - certificate.annual_used_estancias
+      : certificate.remaining_weeks_this_year
+
+    if (remaining <= 0) {
       return NextResponse.json({ error: "Certificate no longer has available weeks" }, { status: 400 })
     }
 
-    // Check for conflicts one more time (race condition protection)
+    // Race condition protection: check for date conflicts
     const { data: conflicts } = await supabase
       .from("confirmed_reservations")
-      .select("*")
+      .select("id")
       .eq("property_id", reservationRequest.offered_property_id)
       .gte("check_out", reservationRequest.offered_dates_start)
       .lte("check_in", reservationRequest.offered_dates_end)
@@ -95,6 +126,23 @@ export async function POST(request: Request) {
         },
         { status: 409 },
       )
+    }
+
+    // Lock the week in `weeks` table if a specific week is referenced
+    if (reservationRequest.week_id) {
+      const { error: lockError } = await supabase
+        .from("weeks")
+        .update({
+          status: "reserved",
+          reserved_by: user.id,
+          reserved_at: new Date().toISOString(),
+        })
+        .eq("id", reservationRequest.week_id)
+        .eq("status", "available") // Only lock if still available (optimistic lock)
+
+      if (lockError) {
+        return NextResponse.json({ error: "Week is no longer available" }, { status: 409 })
+      }
     }
 
     // Create confirmed reservation
@@ -114,7 +162,13 @@ export async function POST(request: Request) {
       .single()
 
     if (confirmError) {
-      console.error("[v0] Failed to create confirmed reservation:", confirmError)
+      // Rollback week lock if confirmation failed
+      if (reservationRequest.week_id) {
+        await supabase
+          .from("weeks")
+          .update({ status: "available", reserved_by: null, reserved_at: null })
+          .eq("id", reservationRequest.week_id)
+      }
       return NextResponse.json({ error: "Failed to confirm reservation" }, { status: 500 })
     }
 
@@ -129,23 +183,71 @@ export async function POST(request: Request) {
       .eq("id", request_id)
 
     // Decrement remaining weeks on certificate
-    await supabase
-      .from("user_certificates")
-      .update({
-        remaining_weeks_this_year: certificate.remaining_weeks_this_year - 1,
-        reservations_used_this_year: certificate.reservations_used_this_year + 1,
-      })
-      .eq("id", reservationRequest.certificate_id)
+    if (certTable === "user_certificates_v2") {
+      await supabase
+        .from("user_certificates_v2")
+        .update({
+          annual_used_estancias: certificate.annual_used_estancias + 1,
+        })
+        .eq("id", certificate.id)
+    } else {
+      await supabase
+        .from("user_certificates")
+        .update({
+          remaining_weeks_this_year: certificate.remaining_weeks_this_year - 1,
+          reservations_used_this_year: certificate.reservations_used_this_year + 1,
+        })
+        .eq("id", certificate.id)
+    }
 
-    // TODO: Send confirmation email with check-in instructions
+    // Update certificate_visual_state via week_tokens
+    const { data: weekToken } = await supabase
+      .from("week_tokens")
+      .select("id")
+      .eq("user_certificate_v2_id", certificate.id)
+      .maybeSingle()
+
+    if (weekToken) {
+      // Get property name for visual state
+      const { data: prop } = await supabase
+        .from("supply_properties")
+        .select("name")
+        .eq("id", reservationRequest.offered_property_id)
+        .maybeSingle()
+
+      const propName = prop?.name || "Propiedad confirmada"
+
+      await supabase
+        .from("certificate_visual_state")
+        .upsert(
+          {
+            certificate_id: weekToken.id,
+            current_status: "active",
+            last_reservation_date: new Date().toISOString(),
+            last_property_name: propName,
+            reservations_count: (certTable === "user_certificates_v2"
+              ? certificate.annual_used_estancias + 1
+              : certificate.reservations_used_this_year + 1),
+          },
+          { onConflict: "certificate_id" }
+        )
+    }
+
+    // Insert notification for user
+    await supabase.from("notifications").insert({
+      recipient: user.id,
+      title: "Reservacion confirmada",
+      message: `Tu reservacion del ${reservationRequest.offered_dates_start} al ${reservationRequest.offered_dates_end} ha sido confirmada.`,
+      type: "reservation_confirmed",
+    })
 
     return NextResponse.json({
       success: true,
       reservation: confirmedReservation,
-      message: "Reservation confirmed! Check-in instructions have been sent to your email.",
+      message: "Reservation confirmed!",
     })
   } catch (error: any) {
-    console.error("[v0] Respond to offer error:", error)
+    console.error("[respond-to-offer] Error:", error)
     return NextResponse.json({ error: error.message || "Failed to process response" }, { status: 500 })
   }
 }

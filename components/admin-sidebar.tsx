@@ -214,7 +214,7 @@ export function AdminSidebar() {
                         <Link
                           href={item.href}
                           className={cn(
-                            "flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-200",
+                            "flex items-center gap-3 rounded-lg px-3 py-2.5 min-h-[44px] transition-all duration-200 active:scale-[0.98]",
                             isActive
                               ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold shadow-md"
                               : "text-slate-700 hover:bg-blue-50 hover:text-blue-700",
@@ -253,7 +253,7 @@ export function AdminSidebar() {
             <SidebarMenuButton asChild tooltip={state === "collapsed" ? "Salir" : undefined}>
               <Link
                 href="/"
-                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-red-600 transition-all duration-200 hover:bg-red-50 font-medium"
+                className="flex items-center gap-3 rounded-lg px-3 py-2.5 min-h-[44px] text-red-600 transition-all duration-200 hover:bg-red-50 font-medium active:scale-[0.98]"
               >
                 <LogOut className="h-5 w-5" />
                 {state === "expanded" && <span>Salir</span>}

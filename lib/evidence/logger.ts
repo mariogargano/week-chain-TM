@@ -62,7 +62,7 @@ function canonicalizePayload(payload: Record<string, any>): string {
  */
 export async function logEvidenceEvent(params: LogEvidenceParams): Promise<string | null> {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Canonicalize payload for hashing
     const canonicalPayload = canonicalizePayload(params.payload)
@@ -118,7 +118,7 @@ export function extractRequestMetadata(request: Request) {
  */
 export async function verifyEvidenceChain(entityId: string, entityType: EntityType) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const { data, error } = await supabase.rpc("verify_evidence_chain", {
       p_entity_id: entityId,

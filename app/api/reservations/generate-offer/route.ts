@@ -2,6 +2,8 @@ import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { addDays } from "date-fns"
 
+const ADMIN_EMAIL = "corporativo@morises.com"
+
 export async function POST(request: Request) {
   try {
     const supabase = await createClient()
@@ -15,15 +17,20 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    // Check if user is admin
-    const { data: adminUser } = await supabase
-      .from("admin_users")
-      .select("*")
-      .eq("user_id", user.id)
-      .eq("status", "active")
-      .single()
+    // Check if user is admin via users.role (consistent with middleware)
+    const userEmail = user.email?.toLowerCase() || ""
+    const { data: userData } = await supabase
+      .from("users")
+      .select("role")
+      .eq("id", user.id)
+      .maybeSingle()
 
-    if (!adminUser) {
+    const isAdmin =
+      userEmail === ADMIN_EMAIL ||
+      userData?.role === "admin" ||
+      userData?.role === "super_admin"
+
+    if (!isAdmin) {
       return NextResponse.json({ error: "Admin access required" }, { status: 403 })
     }
 
@@ -94,11 +101,16 @@ export async function POST(request: Request) {
       .single()
 
     if (updateError) {
-      console.error("[v0] Failed to update request with offer:", updateError)
       return NextResponse.json({ error: "Failed to create offer" }, { status: 500 })
     }
 
-    // TODO: Send email notification to user about offer
+    // Notify the user about the offer
+    await supabase.from("notifications").insert({
+      recipient: reservationRequest.user_id,
+      title: "Nueva oferta de reservacion",
+      message: `Tienes una nueva oferta para ${property.name || "una propiedad"} del ${offered_dates_start} al ${offered_dates_end}. Tienes ${offer_expires_hours}h para responder.`,
+      type: "offer_created",
+    })
 
     return NextResponse.json({
       success: true,
