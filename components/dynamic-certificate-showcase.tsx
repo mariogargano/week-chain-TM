@@ -115,7 +115,7 @@ export function DynamicCertificateShowcase() {
       setTimeout(() => {
         setCurrentIndex((prev) => (prev + 1) % certificateDataFallback.length)
         setIsAnimating(false)
-      }, 4000)
+      }, 400)
     }, 5000)
     return () => clearInterval(interval)
   }, [])
@@ -315,7 +315,7 @@ export function DynamicCertificateShowcase() {
 
           {/* Certificate Card - Second on mobile */}
           <div
-            className={`relative transition-all duration-300 order-2 lg:order-1 ${isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+            className={`relative transition-all duration-500 ease-in-out order-2 lg:order-1 ${isAnimating ? "opacity-0 scale-95 translate-y-2" : "opacity-100 scale-100 translate-y-0"}`}
           >
             <div className="relative w-full max-w-md mx-auto">
               {/* Card */}
