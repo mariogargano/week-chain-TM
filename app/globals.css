@@ -3,6 +3,39 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* iOS Safe Areas + Mobile improvements */
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Prevent iOS zoom on input focus (input font-size >= 16px) */
+@media screen and (max-width: 767px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Smooth scrolling for all scroll containers */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
 :root {
   /* LIQUID GLASS BLUE - Sistema de diseño */
   /* Colores principales */

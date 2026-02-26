@@ -55,39 +55,39 @@ export function AdminHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b border-slate-200 bg-white px-6">
-      <SidebarTrigger />
+    <header className="sticky top-0 z-10 flex h-14 sm:h-16 items-center gap-2 sm:gap-4 border-b border-slate-200 bg-background px-3 sm:px-6">
+      <SidebarTrigger className="min-h-[44px] min-w-[44px]" />
 
-      <div className="flex flex-1 items-center justify-between">
+      <div className="flex flex-1 items-center justify-between min-w-0">
         <div className="flex items-center gap-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <div className="relative hidden sm:block">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="search"
-              placeholder="Search..."
-              className="h-9 w-64 rounded-lg border border-slate-200 bg-slate-50 pl-10 pr-4 text-sm outline-none transition-colors focus:border-blue-500 focus:bg-white"
+              placeholder="Buscar..."
+              className="h-9 w-48 lg:w-64 rounded-lg border border-border bg-secondary pl-10 pr-4 text-sm outline-none transition-colors focus:border-blue-500 focus:bg-background"
             />
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="h-5 w-5 text-slate-600" />
-            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-red-500" />
+        <div className="flex items-center gap-1 sm:gap-3">
+          <Button variant="ghost" size="icon" className="relative min-h-[44px] min-w-[44px]">
+            <Bell className="h-5 w-5 text-muted-foreground" />
+            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500" />
           </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="flex items-center gap-3 px-2">
+              <Button variant="ghost" className="flex items-center gap-2 sm:gap-3 px-2 min-h-[44px]">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/admin-avatar.png" />
-                  <AvatarFallback className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white">
+                  <AvatarFallback className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white text-sm">
                     {userName.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="hidden flex-col items-start md:flex">
-                  <span className="text-sm font-medium text-slate-900">{userName}</span>
-                  <span className="text-xs text-slate-500">
+                  <span className="text-sm font-medium text-foreground">{userName}</span>
+                  <span className="text-xs text-muted-foreground">
                     {userWallet ? `${userWallet.slice(0, 6)}...${userWallet.slice(-4)}` : "Admin"}
                   </span>
                 </div>

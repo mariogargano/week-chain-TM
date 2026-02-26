@@ -31,8 +31,8 @@ export function SiteFooter() {
 
   return (
     <footer className="border-t border-white/10 bg-black text-white">
-      <div className="container mx-auto px-6 py-16">
-        <div className="mb-12 p-6 bg-amber-900/20 border border-amber-700/30 rounded-xl">
+      <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-16">
+        <div className="mb-8 sm:mb-12 p-4 sm:p-6 bg-amber-900/20 border border-amber-700/30 rounded-xl">
           <div className="flex items-start gap-3">
             <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
             <div>
@@ -53,9 +53,9 @@ export function SiteFooter() {
 
         <div className="mb-12 space-y-6">{/* WEEK-Tracker Banner (Rose/Pink) */}</div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 lg:gap-12 mb-8 sm:mb-12">
           {/* Brand Column */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="col-span-2 lg:col-span-2 space-y-4 sm:space-y-6">
             <div className="flex items-center gap-2">
               <Logo />
               <span className="text-xl font-bold">™</span>
@@ -64,35 +64,22 @@ export function SiteFooter() {
               WEEK-CHAIN™ opera un sistema de certificados digitales que otorgan derechos personales y temporales de uso
               vacacional por hasta 15 años, sujetos a disponibilidad y reglas operativas del sistema.
             </p>
-            <div className="flex gap-4">
-              <Link
-                href="#"
-                aria-label="Síguenos en Twitter"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
-              >
-                <Twitter className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                aria-label="Visita nuestro GitHub"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
-              >
-                <Github className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                aria-label="Conéctate en LinkedIn"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
-              >
-                <Linkedin className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                aria-label="Síguenos en Instagram"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
-              >
-                <Instagram className="h-5 w-5" />
-              </Link>
+            <div className="flex gap-3">
+              {[
+                { icon: Twitter, label: "Twitter" },
+                { icon: Github, label: "GitHub" },
+                { icon: Linkedin, label: "LinkedIn" },
+                { icon: Instagram, label: "Instagram" },
+              ].map((s) => (
+                <Link
+                  key={s.label}
+                  href="#"
+                  aria-label={s.label}
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors active:scale-95"
+                >
+                  <s.icon className="h-5 w-5" />
+                </Link>
+              ))}
             </div>
           </div>
 

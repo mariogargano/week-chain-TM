@@ -109,64 +109,55 @@ export function SocialShareSidebar({ referralCode, referralUrl, userName }: Soci
       {/* Floating Toggle Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed right-6 bottom-6 z-40 group transition-all duration-300 ${isOpen ? "opacity-0 pointer-events-none scale-75" : "opacity-100 scale-100"}`}
+        className={`fixed right-4 sm:right-6 bottom-4 sm:bottom-6 z-40 group transition-all duration-300 ${isOpen ? "opacity-0 pointer-events-none scale-75" : "opacity-100 scale-100"}`}
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+        aria-label="Abrir centro de promocion"
       >
         <div className="relative">
-          {/* Pulse Animation */}
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full animate-ping opacity-25" />
-
-          {/* Main Button */}
-          <div className="relative w-14 h-14 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full shadow-lg shadow-emerald-500/30 flex items-center justify-center hover:shadow-xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105">
-            <Share2 className="w-6 h-6 text-white" />
+          <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full shadow-lg shadow-emerald-500/30 flex items-center justify-center hover:shadow-xl transition-all duration-300 active:scale-95">
+            <Share2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
-
-          {/* Badge */}
-          <div className="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white animate-bounce">
+          <div className="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white">
             {messages.length}
           </div>
-        </div>
-
-        {/* Tooltip */}
-        <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-slate-900 text-white text-sm px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-          Compartir y ganar
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 w-2 h-2 bg-slate-900 rotate-45" />
         </div>
       </button>
 
       {/* Sidebar Panel */}
       <div
-        className={`fixed right-0 top-0 h-full w-96 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-l border-slate-800 shadow-2xl z-50 transform transition-all duration-500 ease-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed right-0 top-0 h-full w-full sm:w-96 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-l border-slate-800 shadow-2xl z-50 transform transition-all duration-500 ease-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         {/* Decorative Elements */}
         <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-emerald-500/10 to-transparent pointer-events-none" />
-        <div className="absolute top-20 right-10 w-32 h-32 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Header */}
-        <div className="relative p-6 border-b border-slate-800/50">
+        <div className="relative p-4 sm:p-6 border-b border-slate-800/50">
           <button
             onClick={() => setIsOpen(false)}
-            className="absolute top-4 right-4 p-2 hover:bg-slate-800 rounded-xl transition-colors"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center hover:bg-slate-800 rounded-xl transition-colors active:scale-95"
+            aria-label="Cerrar"
           >
             <X className="w-5 h-5 text-slate-400" />
           </button>
 
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-              <Sparkles className="w-7 h-7 text-white" />
+          <div className="flex items-center gap-3 sm:gap-4 pr-12">
+            <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 flex-shrink-0">
+              <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">Centro de Promocion</h3>
-              <p className="text-slate-400 text-sm">Comparte y gana comisiones</p>
+              <h3 className="text-lg sm:text-xl font-bold text-white">Centro de Promocion</h3>
+              <p className="text-slate-400 text-xs sm:text-sm">Comparte y gana comisiones</p>
             </div>
           </div>
         </div>
 
         {/* Referral Card */}
-        <div className="mx-6 mt-6 p-4 rounded-2xl bg-gradient-to-r from-slate-800/80 to-slate-800/40 border border-slate-700/50 backdrop-blur">
-          <div className="flex items-center justify-between">
-            <div>
+        <div className="mx-4 sm:mx-6 mt-4 sm:mt-6 p-3 sm:p-4 rounded-2xl bg-gradient-to-r from-slate-800/80 to-slate-800/40 border border-slate-700/50 backdrop-blur">
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
               <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">Tu codigo de referido</p>
-              <code className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
+              <code className="text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
                 {referralCode}
               </code>
             </div>
@@ -175,7 +166,7 @@ export function SocialShareSidebar({ referralCode, referralUrl, userName }: Soci
                 navigator.clipboard.writeText(referralCode)
                 toast.success("Codigo copiado")
               }}
-              className="p-3 bg-emerald-500/20 hover:bg-emerald-500/30 rounded-xl transition-colors"
+              className="p-3 min-h-[44px] min-w-[44px] flex items-center justify-center bg-emerald-500/20 hover:bg-emerald-500/30 rounded-xl transition-colors active:scale-95 flex-shrink-0"
             >
               <Copy className="w-5 h-5 text-emerald-400" />
             </button>
@@ -183,7 +174,7 @@ export function SocialShareSidebar({ referralCode, referralUrl, userName }: Soci
         </div>
 
         {/* Quick Share Buttons */}
-        <div className="px-6 py-4">
+        <div className="px-4 sm:px-6 py-3 sm:py-4">
           <p className="text-slate-500 text-xs uppercase tracking-wider mb-3">Compartir enlace rapido</p>
           <div className="flex gap-2">
             {[
@@ -225,11 +216,11 @@ export function SocialShareSidebar({ referralCode, referralUrl, userName }: Soci
                     "_blank",
                   ),
               },
-            ].map((item, i) => (
+            ]            .map((item, i) => (
               <button
                 key={i}
                 onClick={item.action}
-                className={`flex-1 p-3 ${item.color} rounded-xl transition-all duration-200 hover:scale-105 hover:shadow-lg`}
+                className={`flex-1 p-2.5 sm:p-3 min-h-[44px] ${item.color} rounded-xl transition-all duration-200 active:scale-95`}
               >
                 <item.icon className="w-5 h-5 text-white mx-auto" />
               </button>
@@ -238,7 +229,7 @@ export function SocialShareSidebar({ referralCode, referralUrl, userName }: Soci
         </div>
 
         {/* Category Filter */}
-        <div className="px-6 pb-3">
+        <div className="px-4 sm:px-6 pb-3">
           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
             {categories.map((cat) => (
               <button
@@ -257,7 +248,7 @@ export function SocialShareSidebar({ referralCode, referralUrl, userName }: Soci
         </div>
 
         {/* Messages List */}
-        <div className="flex-1 overflow-y-auto px-6 pb-24" style={{ maxHeight: "calc(100vh - 380px)" }}>
+        <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 pb-24" style={{ maxHeight: "calc(100vh - 380px)" }}>
           {loading ? (
             <div className="flex items-center justify-center py-12">
               <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
