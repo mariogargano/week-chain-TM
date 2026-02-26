@@ -13,7 +13,7 @@ export async function logCertificateActivation(params: {
   ipAddress?: string
   userAgent?: string
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   return await logEvidenceEvent(supabase, {
     event_type: "certificate_activated",
@@ -42,7 +42,7 @@ export async function logReservationRequest(params: {
   ipAddress?: string
   userAgent?: string
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   return await logEvidenceEvent(supabase, {
     event_type: "reservation_requested",
@@ -72,7 +72,7 @@ export async function logOfferGeneration(params: {
   ipAddress?: string
   userAgent?: string
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   return await logEvidenceEvent(supabase, {
     event_type: "offer_generated",
@@ -99,7 +99,7 @@ export async function logOfferAcceptance(params: {
   ipAddress?: string
   userAgent?: string
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   return await logEvidenceEvent(supabase, {
     event_type: "offer_accepted",
@@ -125,7 +125,7 @@ export async function logConsentAcceptance(params: {
   ipAddress?: string
   userAgent?: string
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   return await logEvidenceEvent(supabase, {
     event_type: "consent_accepted",
@@ -152,7 +152,7 @@ export async function logCertificateIssuance(params: {
   ipAddress?: string
   userAgent?: string
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   return await logEvidenceEvent(supabase, {
     event_type: "certificate_issued",

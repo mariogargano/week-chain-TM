@@ -11,7 +11,7 @@ export async function executeCommissionPayout(params: {
   payoutMethod: string
   payoutReference: string
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Validate all commissions are approved
   const { data: commissions } = await supabase.from("commission_records").select("*").in("id", params.commissionIds)

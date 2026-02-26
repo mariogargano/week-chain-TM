@@ -13,7 +13,7 @@ export async function createReferralAttribution(params: {
   leadEmail?: string
   leadUserId?: string
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Validate that intermediary exists and is active
   const { data: intermediary } = await supabase
@@ -49,7 +49,7 @@ export async function createReferralAttribution(params: {
 }
 
 export async function getActiveAttribution(params: { email?: string; userId?: string }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   let query = supabase
     .from("referral_attributions")

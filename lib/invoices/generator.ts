@@ -22,7 +22,7 @@ export async function generateInvoice(
   data: InvoiceData,
 ): Promise<{ invoiceId: string; status: string; facturaUuid?: string }> {
   const cookieStore = cookies()
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Insertar solicitud de factura
   const { data: invoiceRequest, error } = await supabase

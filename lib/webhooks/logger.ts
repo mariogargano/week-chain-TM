@@ -18,7 +18,7 @@ export class WebhookLogger {
    */
   static async log(data: WebhookEventData): Promise<string | null> {
     try {
-      const supabase = createClient()
+      const supabase = await createClient()
 
       const enhancedPayload = {
         ...data.payload,
@@ -58,7 +58,7 @@ export class WebhookLogger {
    */
   static async markProcessed(webhookId: string): Promise<boolean> {
     try {
-      const supabase = createClient()
+      const supabase = await createClient()
 
       const { error } = await supabase.rpc("mark_webhook_processed", {
         p_webhook_id: webhookId,
@@ -83,7 +83,7 @@ export class WebhookLogger {
    */
   static async markFailed(webhookId: string, errorMessage: string): Promise<boolean> {
     try {
-      const supabase = createClient()
+      const supabase = await createClient()
 
       const { error } = await supabase.rpc("mark_webhook_processed", {
         p_webhook_id: webhookId,
@@ -108,7 +108,7 @@ export class WebhookLogger {
    */
   static async getPending(source?: string, limit = 100) {
     try {
-      const supabase = createClient()
+      const supabase = await createClient()
 
       const { data, error } = await supabase.rpc("get_pending_webhooks", {
         p_source: source || null,
@@ -132,7 +132,7 @@ export class WebhookLogger {
    */
   static async cleanup(daysOld = 90): Promise<number> {
     try {
-      const supabase = createClient()
+      const supabase = await createClient()
 
       const { data, error } = await supabase.rpc("cleanup_old_webhooks", {
         p_days_old: daysOld,

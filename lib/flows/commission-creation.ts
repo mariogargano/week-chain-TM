@@ -13,7 +13,7 @@ export async function createCommissionFromOrder(params: {
   certificateTier: "silver" | "gold" | "platinum" | "signature" | "wedding"
   saleAmount: number
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Check for active attribution
   const attribution = await getActiveAttribution({
