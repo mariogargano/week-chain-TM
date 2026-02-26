@@ -256,13 +256,13 @@ export default function AuthPage() {
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center justify-start sm:justify-center px-4 py-8 sm:p-4">
       <div className="text-center mb-6 sm:mb-8">
         <div className="flex items-center justify-center gap-3 mb-2">
-          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-lg shadow-sky-500/20 ring-2 ring-sky-200/40 flex-shrink-0">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-lg shadow-slate-400/30 ring-1 ring-slate-300/50 bg-white flex-shrink-0">
             <Image
-              src="/logo-transparent.jpg"
+              src="/logo-wc.png"
               alt="WEEK-CHAIN Logo"
               width={64}
               height={64}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain p-0.5"
               priority
             />
           </div>
