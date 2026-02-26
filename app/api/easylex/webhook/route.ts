@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     const payload = verification.payload!
     logger.info("EasyLex webhook received:", payload.event, payload.data.documentId)
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // 4. Process webhook event
     switch (payload.event) {

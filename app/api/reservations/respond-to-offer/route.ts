@@ -235,7 +235,7 @@ export async function POST(request: Request) {
 
     // Insert notification for user
     await supabase.from("notifications").insert({
-      user_id: user.id,
+      recipient: user.id,
       title: "Reservacion confirmada",
       message: `Tu reservacion del ${reservationRequest.offered_dates_start} al ${reservationRequest.offered_dates_end} ha sido confirmada.`,
       type: "reservation_confirmed",

@@ -6,8 +6,8 @@ export const dynamic = "force-dynamic"
 
 export async function POST(request: Request) {
   try {
-    const cookieStore = cookies()
-    const supabase = createClient()
+    const cookieStore = await cookies()
+    const supabase = await createClient()
 
     const {
       data: { user },

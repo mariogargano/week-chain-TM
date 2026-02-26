@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
+import { createCommissionFromOrder } from "@/lib/flows/commission-creation"
 import { logger } from "@/lib/config/logger"
 import { WebhookLogger } from "@/lib/webhooks/logger"
 import crypto from "crypto"
@@ -223,6 +224,27 @@ async function handleOrderPaid(supabase: any, order: any) {
           }
           logger.info("Week token and visual state created for cert:", cert.id)
         }
+      }
+    }
+
+    // Commission creation
+    if (user_id) {
+      const pax = max_pax ? parseInt(max_pax) : 2
+      const estancias = max_estancias ? parseInt(max_estancias) : 1
+      const certificateTier = product_id
+        ? `PAX${pax}_EST${estancias}`
+        : "default"
+
+      try {
+        await createCommissionFromOrder({
+          orderId: order.id,
+          buyerUserId: user_id,
+          buyerEmail: metadata.user_email || "",
+          certificateTier,
+          saleAmount: amountUsd,
+        })
+      } catch (commErr) {
+        logger.error("Error creating commission from Conekta order:", commErr)
       }
     }
 

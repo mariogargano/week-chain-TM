@@ -10,7 +10,7 @@ export async function createCommissionFromOrder(params: {
   orderId: string
   buyerUserId: string
   buyerEmail: string
-  certificateTier: "silver" | "gold" | "platinum" | "signature" | "wedding"
+  certificateTier: string
   saleAmount: number
 }) {
   const supabase = await createClient()
@@ -26,18 +26,28 @@ export async function createCommissionFromOrder(params: {
     return null
   }
 
-  // Get commission rate for this tier
+  // Get commission rate for this tier (try exact match, then fallback to default)
   const { data: rateConfig } = await supabase
     .from("commission_rates")
     .select("*")
     .eq("certificate_tier", params.certificateTier)
     .single()
 
-  if (!rateConfig) {
-    throw new Error(`No commission rate configured for tier: ${params.certificateTier}`)
-  }
+  let commissionRate: number
 
-  const commissionRate = rateConfig.default_rate
+  if (rateConfig) {
+    commissionRate = rateConfig.default_rate
+  } else {
+    // Fallback: try a "default" rate row, or use 8% as hardcoded minimum
+    const { data: defaultRate } = await supabase
+      .from("commission_rates")
+      .select("default_rate")
+      .eq("certificate_tier", "default")
+      .single()
+
+    commissionRate = defaultRate?.default_rate ?? 0.08
+    console.log(`[Commission] No rate for tier "${params.certificateTier}", using fallback: ${commissionRate}`)
+  }
   const commissionAmount = params.saleAmount * commissionRate
 
   // Create commission with PENDING status and hold period

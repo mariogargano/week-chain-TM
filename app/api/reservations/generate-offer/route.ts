@@ -106,7 +106,7 @@ export async function POST(request: Request) {
 
     // Notify the user about the offer
     await supabase.from("notifications").insert({
-      user_id: reservationRequest.user_id,
+      recipient: reservationRequest.user_id,
       title: "Nueva oferta de reservacion",
       message: `Tienes una nueva oferta para ${property.name || "una propiedad"} del ${offered_dates_start} al ${offered_dates_end}. Tienes ${offer_expires_hours}h para responder.`,
       type: "offer_created",
