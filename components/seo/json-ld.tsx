@@ -4,8 +4,8 @@ export function OrganizationJsonLd() {
     "@type": "Organization",
     name: "WEEK-CHAIN",
     alternateName: "WEEK-CHAIN™",
-    url: "https://weekchain.com",
-    logo: "https://weekchain.com/logo.png",
+    url: "https://www.week-chain.com",
+    logo: "https://www.week-chain.com/logo-wc.png",
     description:
       "Plataforma de certificados vacacionales inteligentes. Compra semanas vacacionales en alojamientos de lujo en México respaldadas por certificados digitales verificados.",
     foundingDate: "2024",
@@ -54,14 +54,14 @@ export function WebsiteJsonLd() {
     "@type": "WebSite",
     name: "WEEK-CHAIN",
     alternateName: "WEEK-CHAIN™",
-    url: "https://weekchain.com",
+    url: "https://www.week-chain.com",
     description: "Plataforma de certificados vacacionales inteligentes en alojamientos de lujo en México",
     inLanguage: "es-MX",
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://weekchain.com/properties?search={search_term_string}",
+        urlTemplate: "https://www.week-chain.com/properties?search={search_term_string}",
       },
       "query-input": "required name=search_term_string",
     },
@@ -160,9 +160,9 @@ export function LocalBusinessJsonLd() {
     name: "WEEK-CHAIN",
     description:
       "Plataforma de certificados vacacionales inteligentes. Semanas vacacionales en alojamientos de lujo en México.",
-    url: "https://weekchain.com",
-    logo: "https://weekchain.com/logo.png",
-    image: "https://weekchain.com/og-image.jpg",
+    url: "https://www.week-chain.com",
+    logo: "https://www.week-chain.com/logo-wc.png",
+    image: "https://www.week-chain.com/og-image.jpg",
     priceRange: "$$$",
     address: {
       "@type": "PostalAddress",
