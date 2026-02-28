@@ -47,9 +47,9 @@ export function RootLayoutClient({ children, interVariable }: RootLayoutClientPr
         </a>
         <PostHogProvider>
           <LanguageProvider>
-            {!isDashboardRoute && <BetaBanner />}
             <ScrollToTop />
             {!isDashboardRoute && <Navbar />}
+            {!isDashboardRoute && <BetaBanner />}
             <main id="main-content" className={isDashboardRoute ? "" : "min-h-[calc(100vh-4rem)] pt-20"}>
               {children}
             </main>

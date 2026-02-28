@@ -194,12 +194,13 @@ export function SupportChatbot() {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            className="fixed bottom-6 right-6 z-50"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50"
+            style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
           >
             <Button
               size="lg"
               onClick={() => setIsOpen(true)}
-              className="h-16 w-16 rounded-full shadow-2xl bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 hover:shadow-pink-500/50 hover:scale-110 transition-all duration-300"
+              className="h-14 w-14 sm:h-16 sm:w-16 rounded-full shadow-2xl bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 hover:shadow-pink-500/50 hover:scale-110 transition-all duration-300"
             >
               <MessageCircle className="h-6 w-6 text-white" />
               <span className="absolute -top-1 -right-1 h-4 w-4 bg-green-500 rounded-full animate-pulse" />
@@ -215,9 +216,9 @@ export function SupportChatbot() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-3rem)]"
+            className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-50 w-full sm:w-[400px] sm:max-w-[calc(100vw-3rem)]"
           >
-            <Card className="shadow-2xl border-2 border-purple-200/50 overflow-hidden">
+            <Card className="shadow-2xl border-2 border-purple-200/50 overflow-hidden rounded-none sm:rounded-xl max-h-[100dvh] sm:max-h-none">
               <CardHeader className="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 text-white pb-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -236,7 +237,7 @@ export function SupportChatbot() {
                     variant="ghost"
                     size="icon"
                     onClick={() => setIsOpen(false)}
-                    className="text-white hover:bg-white/20"
+                    className="text-white hover:bg-white/20 min-h-[44px] min-w-[44px]"
                   >
                     <X className="h-5 w-5" />
                   </Button>
