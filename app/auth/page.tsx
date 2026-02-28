@@ -258,7 +258,7 @@ export default function AuthPage() {
         <div className="flex items-center justify-center gap-3 mb-2">
           <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-lg shadow-slate-400/30 ring-1 ring-slate-300/50 bg-white flex-shrink-0">
             <Image
-              src="/logo-wc.png"
+              src="/logo-wc.jpg"
               alt="WEEK-CHAIN Logo"
               width={64}
               height={64}

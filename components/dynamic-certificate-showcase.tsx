@@ -438,7 +438,7 @@ export function DynamicCertificateShowcase() {
                       <span className="text-xs text-slate-500 font-mono">{certNumber}</span>
                     </div>
                     <img
-                      src="/week-chain-logo-white.png"
+                      src="/week-chain-logo-white.jpg"
                       alt="WEEK-CHAIN"
                       className="h-4 opacity-50"
                       onError={(e) => {
