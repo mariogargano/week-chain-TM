@@ -241,9 +241,8 @@ export default async function VerifyCertificatePage({
   }
 
   const statusInfo = getStatusInfo(certificate.status)
-  const issueDate = new Date(certificate.reservation?.created_at || certificate.created_at)
-  const expirationDate = new Date(issueDate)
-  expirationDate.setFullYear(expirationDate.getFullYear() + 15)
+  const issueDate = new Date(certificate.valid_from || certificate.created_at)
+  const expirationDate = new Date(certificate.valid_until || new Date(issueDate).setFullYear(issueDate.getFullYear() + 15))
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 via-white to-blue-50 py-12">
@@ -334,28 +333,28 @@ export default async function VerifyCertificatePage({
 
             <Separator />
 
-            {/* Week Info */}
+            {/* Certificate Details */}
             <div className="grid md:grid-cols-3 gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <Calendar className="h-4 w-4" />
-                  Semana
+                  <User className="h-4 w-4" />
+                  Capacidad
                 </div>
-                <p className="font-medium text-gray-900">Semana {certificate.week_number}</p>
+                <p className="font-medium text-gray-900">{certificate.max_pax} PAX</p>
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <Clock className="h-4 w-4" />
-                  Temporada
+                  <Calendar className="h-4 w-4" />
+                  Estancias / Ano
                 </div>
-                <p className="font-medium text-gray-900">{getSeasonName(certificate.season)}</p>
+                <p className="font-medium text-gray-900">{certificate.estancias} por ano</p>
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                   <User className="h-4 w-4" />
                   Titular
                 </div>
-                <p className="font-medium text-gray-900 font-mono text-sm">{maskWallet(certificate.owner_wallet)}</p>
+                <p className="font-medium text-gray-900">{certificate.owner_name}</p>
               </div>
             </div>
 
@@ -387,14 +386,28 @@ export default async function VerifyCertificatePage({
             </div>
 
             {/* Value */}
-            {certificate.reservation?.usdc_equivalent > 0 && (
+            {certificate.price_paid > 0 && (
               <>
                 <Separator />
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <div className="text-sm text-gray-500 mb-1">Valor del Certificado</div>
                   <p className="text-2xl font-bold text-gray-900">
-                    ${certificate.reservation.usdc_equivalent.toLocaleString("en-US")} USD
+                    ${certificate.price_paid.toLocaleString("es-MX")} MXN
                   </p>
+                </div>
+              </>
+            )}
+
+            {/* Token Hash */}
+            {certificate.token_hash && (
+              <>
+                <Separator />
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
+                    <Shield className="h-4 w-4" />
+                    Hash de Verificacion
+                  </div>
+                  <code className="text-xs font-mono text-gray-900 break-all">{certificate.token_hash}</code>
                 </div>
               </>
             )}

@@ -4,7 +4,8 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Shield, CheckCircle2, Clock, XCircle } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Shield, CheckCircle2, Clock, XCircle, ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
 import { PersonaKYCWidget } from "@/components/persona-kyc-widget"
 
@@ -26,19 +27,24 @@ export default function KYCPage() {
     } = await supabase.auth.getUser()
 
     if (!user) {
-      toast.error("Please sign in to complete KYC")
+      toast.error("Inicia sesion para completar la verificacion")
       router.push("/auth?redirect=/kyc")
       return
     }
 
     setUser(user)
 
-    const { data: kycData } = await supabase.from("kyc_users").select("*").eq("email", user.email).single()
+    // Query by user_id (primary key), not email
+    const { data: kycData } = await supabase
+      .from("kyc_users")
+      .select("*")
+      .eq("user_id", user.id)
+      .single()
 
     if (kycData) {
       setKycStatus(kycData.status)
       if (kycData.status === "approved") {
-        toast.success("Your KYC is already approved!")
+        toast.success("Tu verificacion ya fue aprobada.")
       }
     }
 
@@ -46,64 +52,70 @@ export default function KYCPage() {
   }
 
   const handleComplete = () => {
-    toast.success("KYC verification submitted! We'll review your application shortly.")
+    toast.success("Verificacion enviada. Revisaremos tu solicitud en breve.")
     setKycStatus("pending")
   }
 
-  const handleError = (error: any) => {
-    toast.error("An error occurred during verification. Please try again.")
+  const handleError = () => {
+    toast.error("Ocurrio un error durante la verificacion. Intenta de nuevo.")
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-900 to-slate-800">
         <div className="text-center">
-          <Shield className="h-12 w-12 mx-auto mb-4 text-primary animate-pulse" />
-          <p className="text-muted-foreground">Loading verification...</p>
+          <Shield className="h-12 w-12 mx-auto mb-4 text-sky-400 animate-pulse" />
+          <p className="text-slate-400">Cargando verificacion...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 bg-sky-500/10 text-sky-400 px-4 py-2 rounded-full mb-4">
             <Shield className="h-4 w-4" />
-            <span className="text-sm font-medium">Secure Verification</span>
+            <span className="text-sm font-medium">Verificacion Segura</span>
           </div>
-          <h1 className="text-4xl font-bold mb-4">Identity Verification</h1>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Complete your KYC verification to unlock full platform access and start investing in tokenized real estate.
+          <h1 className="text-4xl font-bold mb-4 text-white text-balance">Verificacion de Identidad (KYC)</h1>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto text-pretty">
+            Completa tu verificacion de identidad para poder adquirir certificados digitales de uso vacacional en WEEK-CHAIN.
           </p>
         </div>
 
         {kycStatus === "approved" && (
-          <Card className="mb-8 border-green-200 bg-green-50 dark:bg-green-950/20">
+          <Card className="mb-8 border-green-500/30 bg-green-950/30">
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="h-6 w-6 text-green-600" />
+                <CheckCircle2 className="h-6 w-6 text-green-400" />
                 <div>
-                  <h3 className="font-semibold text-green-900 dark:text-green-100">Verification Approved</h3>
-                  <p className="text-sm text-green-700 dark:text-green-200">
-                    Your identity has been verified. You have full access to all platform features.
+                  <h3 className="font-semibold text-green-100">Verificacion Aprobada</h3>
+                  <p className="text-sm text-green-300">
+                    Tu identidad ha sido verificada. Tienes acceso completo para adquirir certificados.
                   </p>
                 </div>
               </div>
+              <Button
+                onClick={() => router.push("/dashboard/member")}
+                className="mt-4 bg-sky-500 hover:bg-sky-600 text-white"
+              >
+                Ir a mi Dashboard
+              </Button>
             </CardContent>
           </Card>
         )}
 
         {kycStatus === "pending" && (
-          <Card className="mb-8 border-yellow-200 bg-yellow-50 dark:bg-yellow-950/20">
+          <Card className="mb-8 border-yellow-500/30 bg-yellow-950/30">
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
-                <Clock className="h-6 w-6 text-yellow-600" />
+                <Clock className="h-6 w-6 text-yellow-400" />
                 <div>
-                  <h3 className="font-semibold text-yellow-900 dark:text-yellow-100">Verification In Progress</h3>
-                  <p className="text-sm text-yellow-700 dark:text-yellow-200">
-                    We're reviewing your documents. This typically takes 24-48 hours. We'll email you once complete.
+                  <h3 className="font-semibold text-yellow-100">Verificacion en Proceso</h3>
+                  <p className="text-sm text-yellow-300">
+                    Estamos revisando tus documentos. Esto generalmente toma 24-48 horas. Te enviaremos un correo cuando se complete.
                   </p>
                 </div>
               </div>
@@ -112,14 +124,14 @@ export default function KYCPage() {
         )}
 
         {kycStatus === "rejected" && (
-          <Card className="mb-8 border-red-200 bg-red-50 dark:bg-red-950/20">
+          <Card className="mb-8 border-red-500/30 bg-red-950/30">
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
-                <XCircle className="h-6 w-6 text-red-600" />
+                <XCircle className="h-6 w-6 text-red-400" />
                 <div>
-                  <h3 className="font-semibold text-red-900 dark:text-red-100">Verification Requires Attention</h3>
-                  <p className="text-sm text-red-700 dark:text-red-200">
-                    We were unable to verify your identity. Please submit new documents below.
+                  <h3 className="font-semibold text-red-100">Verificacion Requiere Atencion</h3>
+                  <p className="text-sm text-red-300">
+                    No pudimos verificar tu identidad. Por favor, envia nuevos documentos a continuacion.
                   </p>
                 </div>
               </div>
@@ -128,11 +140,11 @@ export default function KYCPage() {
         )}
 
         {(!kycStatus || kycStatus === "rejected") && user && (
-          <Card>
+          <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
-              <CardTitle>Complete Your Verification</CardTitle>
-              <CardDescription>
-                Follow the steps below to verify your identity. You'll need a government-issued ID and a selfie.
+              <CardTitle className="text-white">Completa tu Verificacion</CardTitle>
+              <CardDescription className="text-slate-400">
+                Sigue los pasos para verificar tu identidad. Necesitaras una identificacion oficial vigente y una selfie.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -146,10 +158,18 @@ export default function KYCPage() {
           </Card>
         )}
 
-        <div className="mt-8 text-center">
-          <p className="text-sm text-muted-foreground">
+        <div className="mt-8 flex flex-col items-center gap-4">
+          <Button
+            variant="ghost"
+            onClick={() => router.back()}
+            className="text-slate-400 hover:text-white hover:bg-slate-800"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Volver
+          </Button>
+          <p className="text-sm text-slate-500">
             <Shield className="inline h-4 w-4 mr-1" />
-            Your data is encrypted and securely stored. We comply with international data protection regulations.
+            Tus datos estan encriptados y almacenados de forma segura. Cumplimos con regulaciones internacionales de proteccion de datos.
           </p>
         </div>
       </div>

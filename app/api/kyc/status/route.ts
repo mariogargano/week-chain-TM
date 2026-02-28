@@ -14,14 +14,15 @@ export async function GET() {
 
     const { data: kyc } = await supabase
       .from("kyc_users")
-      .select("status, persona_inquiry_id, kyc_updated_at")
+      .select("status, persona_inquiry_id, persona_session_token, kyc_updated_at")
       .eq("user_id", user.id)
       .single()
 
     return NextResponse.json({
-      status: kyc?.status || "none",
-      inquiryId: kyc?.persona_inquiry_id || null,
-      updatedAt: kyc?.kyc_updated_at || null,
+      status: kyc?.status || "missing",
+      persona_inquiry_id: kyc?.persona_inquiry_id || null,
+      persona_session_token: kyc?.persona_session_token || null,
+      kyc_updated_at: kyc?.kyc_updated_at || null,
     })
   } catch (error: any) {
     console.error("KYC status error:", error)

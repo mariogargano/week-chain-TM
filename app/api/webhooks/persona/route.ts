@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { createServiceRoleClient } from "@/lib/supabase/server"
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,7 +11,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing inquiry ID" }, { status: 400 })
     }
 
-    const supabase = await createClient()
+    // Use service role to bypass RLS - webhook has no user session
+    const supabase = createServiceRoleClient()
 
     // Map Persona statuses to our internal statuses
     let newStatus: string

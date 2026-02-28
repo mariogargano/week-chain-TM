@@ -10,60 +10,106 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
   const supabase = await createClient()
 
-  // Try to find by week ID
-  const { data: week, error } = await supabase
-    .from("weeks")
-    .select(`
-      id,
-      status,
-      created_at,
-      week_number,
-      season,
-      owner_wallet,
-      property:properties(name, location)
-    `)
+  // Try user_certificates_v2 first (current schema)
+  const { data: cert } = await supabase
+    .from("user_certificates_v2")
+    .select("*")
     .eq("id", id)
     .single()
 
-  if (error || !week) {
-    // Try to find by reservation ID
-    const { data: reservation } = await supabase
-      .from("reservations")
-      .select(`
-        id,
-        status,
-        created_at,
-        usdc_equivalent,
-        user_wallet
-      `)
-      .eq("id", id)
+  if (cert) {
+    // Get associated week_token for hash verification
+    const { data: token } = await supabase
+      .from("week_tokens")
+      .select("token_hash, qr_code, qr_payload")
+      .eq("certificate_id", cert.id)
       .single()
 
-    if (!reservation) {
-      return NextResponse.json(
-        {
-          valid: false,
-          error: "Certificado no encontrado",
-          id: id,
-          verified_at: new Date().toISOString(),
-        },
-        { status: 404 },
-      )
-    }
+    // Get owner info (masked for privacy)
+    const { data: owner } = await supabase
+      .from("users")
+      .select("full_name, email")
+      .eq("id", cert.user_id)
+      .single()
 
-    const isValid = ["confirmed", "active", "sold"].includes(reservation.status?.toLowerCase())
+    const isValid = ["confirmed", "active", "sold"].includes(cert.status?.toLowerCase())
 
     return NextResponse.json({
       valid: isValid,
       certificate: {
-        id: reservation.id,
-        type: "reservation",
-        status: reservation.status,
-        issued_at: reservation.created_at,
-        value_usd: reservation.usdc_equivalent,
-        holder: reservation.user_wallet
-          ? `${reservation.user_wallet.slice(0, 6)}...${reservation.user_wallet.slice(-4)}`
-          : null,
+        id: cert.id,
+        type: "certificate_v2",
+        status: cert.status,
+        max_pax: cert.max_pax,
+        estancias: cert.estancias,
+        issued_at: cert.created_at,
+        valid_from: cert.valid_from,
+        valid_until: cert.valid_until,
+        holder: owner?.full_name || "Titular Verificado",
+        token_hash: token?.token_hash || null,
+      },
+      issuer: {
+        name: "WEEK-CHAIN SAPI de CV",
+        rfc: "WCH240101XXX",
+        regulatory_framework: "NOM-029-SCFI-2010",
+        digital_certification: "NOM-151-SCFI-2016",
+      },
+      verified_at: new Date().toISOString(),
+    })
+  }
+
+  // Fallback: try week_tokens by ID
+  const { data: tokenDirect } = await supabase
+    .from("week_tokens")
+    .select("*, certificate:user_certificates_v2(*)")
+    .eq("id", id)
+    .single()
+
+  if (tokenDirect?.certificate) {
+    const c = Array.isArray(tokenDirect.certificate) ? tokenDirect.certificate[0] : tokenDirect.certificate
+
+    const isValid = ["confirmed", "active", "sold"].includes(c?.status?.toLowerCase())
+
+    return NextResponse.json({
+      valid: isValid,
+      certificate: {
+        id: c?.id || tokenDirect.id,
+        type: "week_token",
+        status: c?.status || "active",
+        max_pax: c?.max_pax,
+        estancias: c?.estancias,
+        issued_at: c?.created_at,
+        valid_from: c?.valid_from,
+        valid_until: c?.valid_until,
+        token_hash: tokenDirect.token_hash || null,
+      },
+      issuer: {
+        name: "WEEK-CHAIN SAPI de CV",
+        rfc: "WCH240101XXX",
+        regulatory_framework: "NOM-029-SCFI-2010",
+        digital_certification: "NOM-151-SCFI-2016",
+      },
+      verified_at: new Date().toISOString(),
+    })
+  }
+
+  // Fallback: try old user_certificates table
+  const { data: oldCert } = await supabase
+    .from("user_certificates")
+    .select("*")
+    .eq("id", id)
+    .single()
+
+  if (oldCert) {
+    const isValid = ["confirmed", "active", "sold"].includes(oldCert.status?.toLowerCase())
+
+    return NextResponse.json({
+      valid: isValid,
+      certificate: {
+        id: oldCert.id,
+        type: "certificate_legacy",
+        status: oldCert.status,
+        issued_at: oldCert.created_at,
       },
       issuer: {
         name: "WEEK-CHAIN SAPI de CV",
@@ -74,29 +120,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     })
   }
 
-  const isValid = ["confirmed", "active", "sold", "available"].includes(week.status?.toLowerCase())
-  const propertyData = week.property
-
-  return NextResponse.json({
-    valid: isValid,
-    certificate: {
-      id: week.id,
-      type: "week",
-      status: week.status,
-      week_number: week.week_number,
-      season: week.season,
-      issued_at: week.created_at,
-      property: {
-        name: Array.isArray(propertyData) ? propertyData[0]?.name : propertyData?.name,
-        location: Array.isArray(propertyData) ? propertyData[0]?.location : propertyData?.location,
-      },
-      holder: week.owner_wallet ? `${week.owner_wallet.slice(0, 6)}...${week.owner_wallet.slice(-4)}` : null,
+  return NextResponse.json(
+    {
+      valid: false,
+      error: "Certificado no encontrado",
+      id: id,
+      verified_at: new Date().toISOString(),
     },
-    issuer: {
-      name: "WEEK-CHAIN SAPI de CV",
-      rfc: "WCH240101XXX",
-      regulatory_framework: "NOM-029-SCFI-2010",
-    },
-    verified_at: new Date().toISOString(),
-  })
+    { status: 404 },
+  )
 }
