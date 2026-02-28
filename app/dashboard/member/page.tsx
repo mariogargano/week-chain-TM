@@ -241,7 +241,7 @@ export default function MemberDashboardPage() {
           </div>
         </div>
       )}
-      {purchaseStatus === "canceled" && (
+      {(purchaseStatus === "canceled" || purchaseStatus === "cancelled") && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
           <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0">
             <AlertCircle className="w-4 h-4 text-white" />

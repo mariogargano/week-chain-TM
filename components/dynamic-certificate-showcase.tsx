@@ -161,7 +161,7 @@ export function DynamicCertificateShowcase() {
       const { data: { session } } = await supabase.auth.getSession()
 
       if (!session) {
-        window.location.href = "/auth?tab=register"
+        window.location.href = "/auth?tab=register&next=/checkout"
         return
       }
 
@@ -179,7 +179,7 @@ export function DynamicCertificateShowcase() {
       if (!res.ok) {
         if (data.error === "KYC_REQUIRED") {
           setCheckoutError("Debes completar la verificacion de identidad (KYC) antes de comprar.")
-          setTimeout(() => { window.location.href = "/kyc" }, 2000)
+          setTimeout(() => { window.location.href = "/dashboard/member/kyc?next=checkout" }, 2000)
           return
         }
         if (data.error === "CAPACITY_BLOCKED") {
