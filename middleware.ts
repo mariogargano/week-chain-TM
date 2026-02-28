@@ -134,10 +134,15 @@ export async function middleware(request: NextRequest) {
         }
 
         // Check if current route requires specific role
+        // Sort by longest prefix first to avoid greedy matching (/dashboard/management before /dashboard/member)
         let isAuthorized = true
         let requiredRoles: string[] = []
 
-        for (const [routePrefix, allowedRoles] of Object.entries(roleRouteMap)) {
+        const sortedRoutes = Object.entries(roleRouteMap).sort(
+          ([a], [b]) => b.length - a.length
+        )
+
+        for (const [routePrefix, allowedRoles] of sortedRoutes) {
           if (pathname.startsWith(routePrefix)) {
             requiredRoles = allowedRoles
             isAuthorized = allowedRoles.includes(userRole)
