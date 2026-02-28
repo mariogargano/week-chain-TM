@@ -54,7 +54,7 @@ export default function AccessPage() {
         {/* Logo and Header */}
         <div className="text-center mb-8 space-y-4">
           <div className="inline-block bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-2xl">
-            <Image src="/icon.jpg" alt="WEEK-CHAIN" width={120} height={120} className="h-20 w-auto mx-auto" priority />
+            <Image src="/wc-icon.jpg" alt="WEEK-CHAIN" width={120} height={120} className="h-20 w-auto mx-auto" priority />
           </div>
 
           <div className="space-y-2">

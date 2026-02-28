@@ -25,114 +25,134 @@ interface CertificateData {
   id: string
   status: string
   created_at: string
-  week_number: number
+  max_pax: number
+  estancias: number
   year: number
   season: string
-  owner_wallet: string
+  owner_name: string
+  owner_email: string
+  valid_from: string
+  valid_until: string
+  price_paid: number
+  token_hash: string | null
   property: {
     name: string
     location: string
-  }
-  reservation: {
-    id: string
-    usdc_equivalent: number
-    created_at: string
-  }
-  profiles?: {
-    display_name: string
-    username: string
   }
 }
 
 async function getCertificateData(id: string): Promise<CertificateData | null> {
   const supabase = await createClient()
 
-  // First try to find by week ID
-  const { data: week, error } = await supabase
-    .from("weeks")
-    .select(`
-      id,
-      status,
-      created_at,
-      week_number,
-      season,
-      owner_wallet,
-      reservation_id,
-      property:properties(name, location),
-      reservation:reservations(id, usdc_equivalent, created_at)
-    `)
+  // Try user_certificates_v2 first (new schema)
+  const { data: cert } = await supabase
+    .from("user_certificates_v2")
+    .select("*")
     .eq("id", id)
     .single()
 
-  if (error || !week) {
-    // Try to find by reservation ID
-    const { data: reservation } = await supabase
-      .from("reservations")
-      .select(`
-        id,
-        status,
-        created_at,
-        usdc_equivalent,
-        user_wallet,
-        week:weeks(id, week_number, season, owner_wallet, property:properties(name, location))
-      `)
-      .eq("id", id)
+  if (cert) {
+    // Get associated week_token for blockchain hash
+    const { data: token } = await supabase
+      .from("week_tokens")
+      .select("token_hash, qr_code, qr_payload")
+      .eq("certificate_id", cert.id)
       .single()
 
-    if (!reservation || !reservation.week) return null
-
-    const weekData = Array.isArray(reservation.week) ? reservation.week[0] : reservation.week
-    const propertyData = weekData?.property
+    // Get owner info
+    const { data: owner } = await supabase
+      .from("users")
+      .select("full_name, email")
+      .eq("id", cert.user_id)
+      .single()
 
     return {
-      id: reservation.id,
-      status: reservation.status,
-      created_at: reservation.created_at,
-      week_number: weekData?.week_number || 0,
-      year: new Date().getFullYear(),
-      season: weekData?.season || "standard",
-      owner_wallet: reservation.user_wallet,
+      id: cert.id,
+      status: cert.status || "active",
+      created_at: cert.created_at,
+      max_pax: cert.max_pax || 2,
+      estancias: cert.estancias || 1,
+      year: new Date(cert.created_at).getFullYear(),
+      season: "standard",
+      owner_name: owner?.full_name || "Titular Verificado",
+      owner_email: owner?.email ? `${owner.email.slice(0, 3)}***@${owner.email.split("@")[1]}` : "***",
+      valid_from: cert.valid_from || cert.created_at,
+      valid_until: cert.valid_until || new Date(new Date(cert.created_at).setFullYear(new Date(cert.created_at).getFullYear() + 15)).toISOString(),
+      price_paid: cert.price_mxn || 0,
+      token_hash: token?.token_hash || null,
       property: {
-        name: Array.isArray(propertyData) ? propertyData[0]?.name : propertyData?.name || "Propiedad WEEK-CHAIN",
-        location: Array.isArray(propertyData) ? propertyData[0]?.location : propertyData?.location || "México",
-      },
-      reservation: {
-        id: reservation.id,
-        usdc_equivalent: reservation.usdc_equivalent,
-        created_at: reservation.created_at,
+        name: "Red de Propiedades WEEK-CHAIN",
+        location: "Mexico",
       },
     }
   }
 
-  const propertyData = week.property
-  const reservationData = week.reservation
+  // Fallback: try week_tokens by ID
+  const { data: tokenDirect } = await supabase
+    .from("week_tokens")
+    .select("*, certificate:user_certificates_v2(*)")
+    .eq("id", id)
+    .single()
 
-  return {
-    id: week.id,
-    status: week.status,
-    created_at: week.created_at,
-    week_number: week.week_number,
-    year: new Date().getFullYear(),
-    season: week.season || "standard",
-    owner_wallet: week.owner_wallet,
-    property: {
-      name: Array.isArray(propertyData) ? propertyData[0]?.name : propertyData?.name || "Propiedad WEEK-CHAIN",
-      location: Array.isArray(propertyData) ? propertyData[0]?.location : propertyData?.location || "México",
-    },
-    reservation: reservationData
-      ? {
-          id: Array.isArray(reservationData) ? reservationData[0]?.id : reservationData?.id,
-          usdc_equivalent: Array.isArray(reservationData)
-            ? reservationData[0]?.usdc_equivalent
-            : reservationData?.usdc_equivalent,
-          created_at: Array.isArray(reservationData) ? reservationData[0]?.created_at : reservationData?.created_at,
-        }
-      : {
-          id: "",
-          usdc_equivalent: 0,
-          created_at: week.created_at,
-        },
+  if (tokenDirect?.certificate) {
+    const c = Array.isArray(tokenDirect.certificate) ? tokenDirect.certificate[0] : tokenDirect.certificate
+    const { data: owner } = await supabase
+      .from("users")
+      .select("full_name, email")
+      .eq("id", c.user_id)
+      .single()
+
+    return {
+      id: c.id,
+      status: c.status || "active",
+      created_at: c.created_at,
+      max_pax: c.max_pax || 2,
+      estancias: c.estancias || 1,
+      year: new Date(c.created_at).getFullYear(),
+      season: "standard",
+      owner_name: owner?.full_name || "Titular Verificado",
+      owner_email: owner?.email ? `${owner.email.slice(0, 3)}***@${owner.email.split("@")[1]}` : "***",
+      valid_from: c.valid_from || c.created_at,
+      valid_until: c.valid_until || new Date(new Date(c.created_at).setFullYear(new Date(c.created_at).getFullYear() + 15)).toISOString(),
+      price_paid: c.price_mxn || 0,
+      token_hash: tokenDirect.token_hash || null,
+      property: {
+        name: "Red de Propiedades WEEK-CHAIN",
+        location: "Mexico",
+      },
+    }
   }
+
+  // Fallback: try old user_certificates table
+  const { data: oldCert } = await supabase
+    .from("user_certificates")
+    .select("*")
+    .eq("id", id)
+    .single()
+
+  if (oldCert) {
+    return {
+      id: oldCert.id,
+      status: oldCert.status || "active",
+      created_at: oldCert.created_at,
+      max_pax: 2,
+      estancias: 1,
+      year: new Date(oldCert.created_at).getFullYear(),
+      season: "standard",
+      owner_name: "Titular Verificado",
+      owner_email: "***",
+      valid_from: oldCert.created_at,
+      valid_until: new Date(new Date(oldCert.created_at).setFullYear(new Date(oldCert.created_at).getFullYear() + 15)).toISOString(),
+      price_paid: 0,
+      token_hash: null,
+      property: {
+        name: "Red de Propiedades WEEK-CHAIN",
+        location: "Mexico",
+      },
+    }
+  }
+
+  return null
 }
 
 function getSeasonName(season: string): string {
@@ -221,9 +241,8 @@ export default async function VerifyCertificatePage({
   }
 
   const statusInfo = getStatusInfo(certificate.status)
-  const issueDate = new Date(certificate.reservation?.created_at || certificate.created_at)
-  const expirationDate = new Date(issueDate)
-  expirationDate.setFullYear(expirationDate.getFullYear() + 15)
+  const issueDate = new Date(certificate.valid_from || certificate.created_at)
+  const expirationDate = new Date(certificate.valid_until || new Date(issueDate).setFullYear(issueDate.getFullYear() + 15))
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 via-white to-blue-50 py-12">
@@ -314,28 +333,28 @@ export default async function VerifyCertificatePage({
 
             <Separator />
 
-            {/* Week Info */}
+            {/* Certificate Details */}
             <div className="grid md:grid-cols-3 gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <Calendar className="h-4 w-4" />
-                  Semana
+                  <User className="h-4 w-4" />
+                  Capacidad
                 </div>
-                <p className="font-medium text-gray-900">Semana {certificate.week_number}</p>
+                <p className="font-medium text-gray-900">{certificate.max_pax} PAX</p>
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <Clock className="h-4 w-4" />
-                  Temporada
+                  <Calendar className="h-4 w-4" />
+                  Estancias / Ano
                 </div>
-                <p className="font-medium text-gray-900">{getSeasonName(certificate.season)}</p>
+                <p className="font-medium text-gray-900">{certificate.estancias} por ano</p>
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                   <User className="h-4 w-4" />
                   Titular
                 </div>
-                <p className="font-medium text-gray-900 font-mono text-sm">{maskWallet(certificate.owner_wallet)}</p>
+                <p className="font-medium text-gray-900">{certificate.owner_name}</p>
               </div>
             </div>
 
@@ -367,14 +386,28 @@ export default async function VerifyCertificatePage({
             </div>
 
             {/* Value */}
-            {certificate.reservation?.usdc_equivalent > 0 && (
+            {certificate.price_paid > 0 && (
               <>
                 <Separator />
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <div className="text-sm text-gray-500 mb-1">Valor del Certificado</div>
                   <p className="text-2xl font-bold text-gray-900">
-                    ${certificate.reservation.usdc_equivalent.toLocaleString("en-US")} USD
+                    ${certificate.price_paid.toLocaleString("es-MX")} MXN
                   </p>
+                </div>
+              </>
+            )}
+
+            {/* Token Hash */}
+            {certificate.token_hash && (
+              <>
+                <Separator />
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
+                    <Shield className="h-4 w-4" />
+                    Hash de Verificacion
+                  </div>
+                  <code className="text-xs font-mono text-gray-900 break-all">{certificate.token_hash}</code>
                 </div>
               </>
             )}

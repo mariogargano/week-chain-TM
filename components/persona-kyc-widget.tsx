@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react"
 import { createPersonaInquiry } from "@/lib/kyc/persona-client"
 import { Loader2 } from "lucide-react"
-import { analytics } from "@/lib/analytics/events"
-import { logger } from "@/lib/config/logger"
 
 interface PersonaKYCWidgetProps {
   userId: string
@@ -16,42 +14,49 @@ interface PersonaKYCWidgetProps {
 export function PersonaKYCWidget({ userId, userEmail, onComplete, onError }: PersonaKYCWidgetProps) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [inquiryId, setInquiryId] = useState<string | null>(null)
 
   useEffect(() => {
     async function initInquiry() {
       try {
-        analytics.events.startKYC()
-
         const data = await createPersonaInquiry(userId, userEmail)
-        setInquiryId(data.inquiryId)
+
+        // If no Persona API key, the API returns pending status with manual review mode
+        if (data.status === "pending" && !data.inquiryId) {
+          setLoading(false)
+          onComplete?.()
+          return
+        }
 
         const script = document.createElement("script")
         script.src = "https://cdn.withpersona.com/dist/persona-v5.0.0.js"
         script.async = true
         script.onload = () => {
           setLoading(false)
-          initPersonaClient(data.inquiryId, data.sessionToken)
+          if (data.inquiryId && data.sessionToken) {
+            initPersonaClient(data.inquiryId, data.sessionToken)
+          }
         }
         script.onerror = () => {
-          setError("Failed to load verification widget")
+          setError("No se pudo cargar el widget de verificacion")
           setLoading(false)
         }
         document.body.appendChild(script)
 
         return () => {
-          document.body.removeChild(script)
+          if (document.body.contains(script)) {
+            document.body.removeChild(script)
+          }
         }
       } catch (err) {
-        logger.error("Failed to create Persona inquiry:", err)
-        setError("Failed to initialize KYC verification")
+        console.error("[v0] Failed to create Persona inquiry:", err)
+        setError("No se pudo iniciar la verificacion KYC")
         onError?.(err)
         setLoading(false)
       }
     }
 
     initInquiry()
-  }, [userId, userEmail, onError])
+  }, [userId, userEmail, onComplete, onError])
 
   const initPersonaClient = (inquiryId: string, sessionToken: string) => {
     // @ts-ignore - Persona is loaded dynamically
@@ -60,21 +65,20 @@ export function PersonaKYCWidget({ userId, userEmail, onComplete, onError }: Per
       sessionToken,
       environment: process.env.NEXT_PUBLIC_PERSONA_ENVIRONMENT || "sandbox",
       onReady: () => {
-        logger.debug("Persona widget ready")
+        console.log("[v0] Persona widget ready")
         client.open()
       },
-      onComplete: ({ inquiryId, status }: { inquiryId: string; status: string }) => {
-        logger.info("Persona KYC completed", { inquiryId, status })
-        analytics.events.completeKYC()
+      onComplete: ({ status }: { inquiryId: string; status: string }) => {
+        console.log("[v0] Persona KYC completed:", status)
         onComplete?.()
       },
-      onCancel: ({ inquiryId }: { inquiryId: string }) => {
-        logger.info("Persona KYC cancelled", { inquiryId })
+      onCancel: () => {
+        console.log("[v0] Persona KYC cancelled")
       },
-      onError: (error: any) => {
-        logger.error("Persona widget error:", error)
-        setError("An error occurred during verification")
-        onError?.(error)
+      onError: (err: any) => {
+        console.error("[v0] Persona widget error:", err)
+        setError("Ocurrio un error durante la verificacion")
+        onError?.(err)
       },
     })
   }
@@ -82,7 +86,7 @@ export function PersonaKYCWidget({ userId, userEmail, onComplete, onError }: Per
   if (loading) {
     return (
       <div className="flex items-center justify-center p-12">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin text-sky-400" />
       </div>
     )
   }
@@ -90,7 +94,7 @@ export function PersonaKYCWidget({ userId, userEmail, onComplete, onError }: Per
   if (error) {
     return (
       <div className="p-8 text-center">
-        <p className="text-red-600">{error}</p>
+        <p className="text-red-400">{error}</p>
       </div>
     )
   }

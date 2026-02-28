@@ -106,8 +106,10 @@ export function DynamicCertificateShowcase() {
   const [selectedPax, setSelectedPax] = useState(2)
   const [selectedWeeks, setSelectedWeeks] = useState(1)
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [featuredProperty, setFeaturedProperty] = useState<FeaturedProperty | null>(null)
-  const certificateData = certificateDataFallback; // Declare certificateData variable
+  const certificateData = certificateDataFallback;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -115,7 +117,7 @@ export function DynamicCertificateShowcase() {
       setTimeout(() => {
         setCurrentIndex((prev) => (prev + 1) % certificateDataFallback.length)
         setIsAnimating(false)
-      }, 4000)
+      }, 400)
     }, 5000)
     return () => clearInterval(interval)
   }, [])
@@ -147,6 +149,54 @@ export function DynamicCertificateShowcase() {
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("en-US")
+  }
+
+  const handleCheckout = async () => {
+    if (!selectedProduct) return
+    setCheckoutLoading(true)
+    setCheckoutError(null)
+
+    try {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+
+      if (!session) {
+        window.location.href = "/auth?tab=register&next=/checkout"
+        return
+      }
+
+      const res = await fetch("/api/certificates/create-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          maxPax: selectedProduct.pax,
+          estancias: selectedProduct.estancias,
+        }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        if (data.error === "KYC_REQUIRED") {
+          setCheckoutError("Debes completar la verificacion de identidad (KYC) antes de comprar.")
+          setTimeout(() => { window.location.href = "/dashboard/member/kyc?next=checkout" }, 2000)
+          return
+        }
+        if (data.error === "CAPACITY_BLOCKED") {
+          setCheckoutError(data.message || "Este certificado no esta disponible actualmente.")
+          return
+        }
+        throw new Error(data.error || "Error al procesar la compra")
+      }
+
+      if (data.url) {
+        window.location.href = data.url
+      }
+    } catch (err: any) {
+      setCheckoutError(err.message || "Error al procesar. Intenta de nuevo.")
+    } finally {
+      setCheckoutLoading(false)
+    }
   }
 
   return (
@@ -315,7 +365,7 @@ export function DynamicCertificateShowcase() {
 
           {/* Certificate Card - Second on mobile */}
           <div
-            className={`relative transition-all duration-300 order-2 lg:order-1 ${isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+            className={`relative transition-all duration-500 ease-in-out order-2 lg:order-1 ${isAnimating ? "opacity-0 scale-95 translate-y-2" : "opacity-100 scale-100 translate-y-0"}`}
           >
             <div className="relative w-full max-w-md mx-auto">
               {/* Card */}
@@ -529,13 +579,35 @@ export function DynamicCertificateShowcase() {
                   </p>
                 </div>
 
+                {checkoutError && (
+                  <div className="bg-red-900/30 border border-red-700 rounded-lg p-3">
+                    <p className="text-xs text-red-300">{checkoutError}</p>
+                  </div>
+                )}
+
                 <div className="flex gap-3">
-                  <Button variant="outline" onClick={() => setShowConfirmDialog(false)} className="flex-1">
+                  <Button variant="outline" onClick={() => { setShowConfirmDialog(false); setCheckoutError(null) }} className="flex-1" disabled={checkoutLoading}>
                     Cancelar
                   </Button>
-                  <Button className="flex-1 bg-sky-500 hover:bg-sky-600">
-                    Proceder a Pago
-                    <ArrowRight className="h-4 w-4 ml-2" />
+                  <Button
+                    className="flex-1 bg-sky-500 hover:bg-sky-600 disabled:opacity-70"
+                    onClick={handleCheckout}
+                    disabled={checkoutLoading}
+                  >
+                    {checkoutLoading ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Procesando...
+                      </>
+                    ) : (
+                      <>
+                        Proceder a Pago
+                        <ArrowRight className="h-4 w-4 ml-2" />
+                      </>
+                    )}
                   </Button>
                 </div>
               </div>

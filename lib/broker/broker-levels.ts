@@ -33,11 +33,9 @@ export interface BrokerLevelUpdateResult {
   direct_commission_rate: number
 }
 
-// Constantes de comisiones multinivel
-export const MULTI_LEVEL_RATES = {
-  LEVEL_2: 0.01, // 1% para upline nivel 2
-  LEVEL_3: 0.005, // 0.5% para upline nivel 3
-} as const
+// WEEK-CHAIN usa comision FLAT 4% solo para referido directo (nivel 1).
+// NO hay sistema multinivel. Ver lib/broker/commission-calculator.ts
+export const FLAT_REFERRAL_RATE = 0.04 // 4% directo, sin niveles
 
 /**
  * Obtiene todos los niveles de broker configurados

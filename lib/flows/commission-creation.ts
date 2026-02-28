@@ -33,20 +33,15 @@ export async function createCommissionFromOrder(params: {
     .eq("certificate_tier", params.certificateTier)
     .single()
 
+  // WEEK-CHAIN uses a flat 4% referral commission. No multi-level, no tier-based rates.
+  const FLAT_COMMISSION_RATE = 0.04
   let commissionRate: number
 
   if (rateConfig) {
-    commissionRate = rateConfig.default_rate
+    // Cap at 4% even if DB has a higher value (safety guard)
+    commissionRate = Math.min(rateConfig.default_rate, FLAT_COMMISSION_RATE)
   } else {
-    // Fallback: try a "default" rate row, or use 8% as hardcoded minimum
-    const { data: defaultRate } = await supabase
-      .from("commission_rates")
-      .select("default_rate")
-      .eq("certificate_tier", "default")
-      .single()
-
-    commissionRate = defaultRate?.default_rate ?? 0.08
-    console.log(`[Commission] No rate for tier "${params.certificateTier}", using fallback: ${commissionRate}`)
+    commissionRate = FLAT_COMMISSION_RATE
   }
   const commissionAmount = params.saleAmount * commissionRate
 

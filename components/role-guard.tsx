@@ -39,8 +39,8 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
         const email = user.email.toLowerCase()
         setUserEmail(email)
 
-        // Admin email always gets access to admin pages
-        if (email === ADMIN_EMAIL.toLowerCase() && allowedRoles.includes("admin")) {
+        // Admin email always gets full access to ALL dashboards
+        if (email === ADMIN_EMAIL.toLowerCase()) {
           setIsAuthorized(true)
           setIsLoading(false)
           return
