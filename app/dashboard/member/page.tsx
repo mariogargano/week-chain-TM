@@ -532,9 +532,12 @@ export default function MemberDashboardPage() {
               <Users className="h-5 w-5 text-sky-500" />
               <h3 className="font-semibold text-foreground">Programa de Referidos</h3>
             </div>
-            <p className="text-sm text-muted-foreground mb-4">
-              Comparte tu codigo y recibe beneficios por cada persona que se registre.
+            <p className="text-sm text-muted-foreground mb-3">
+              Comparte tu codigo y recibe un <span className="font-semibold text-sky-600">4% de comision</span> por cada venta realizada a traves de tu referido.
             </p>
+            <div className="bg-sky-50 border border-sky-100 rounded-lg px-3 py-2 mb-4">
+              <p className="text-xs text-sky-700">Comision directa y sin niveles: 4% sobre el valor de cada certificado vendido a tu referido.</p>
+            </div>
 
             <div className="bg-muted/50 rounded-xl p-4 mb-3 text-center">
               <p className="text-xs text-muted-foreground mb-1">Tu codigo</p>
