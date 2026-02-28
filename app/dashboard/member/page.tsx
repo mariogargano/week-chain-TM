@@ -1159,10 +1159,10 @@ export default function MemberDashboardPage() {
                 </Link>
               </Button>
               <Button asChild variant="outline" className="w-full justify-between bg-transparent min-h-[44px]">
-                <Link href="/dashboard/user/certificate">
+                <Link href="/dashboard/member/reservations">
                   <span className="flex items-center gap-2">
                     <Shield className="h-4 w-4 flex-shrink-0" />
-                    Ver Certificados
+                    Mis Reservaciones
                   </span>
                   <ChevronRight className="h-4 w-4" />
                 </Link>

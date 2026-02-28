@@ -108,8 +108,8 @@ export async function POST(req: Request) {
         },
       ],
       mode: "payment",
-      success_url: successUrl || `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard/user/certificate?success=true`,
-      cancel_url: cancelUrl || `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard/user/certificate?canceled=true`,
+      success_url: successUrl || `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard/member?purchase=success`,
+      cancel_url: cancelUrl || `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard/member?purchase=canceled`,
       metadata: {
         user_id: userData.user.id,
         user_email: profile?.email || userData.user.email,
