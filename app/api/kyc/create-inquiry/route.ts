@@ -1,8 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
-import { logger } from "@/lib/config/logger"
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     const supabase = await createClient()
     const {
@@ -10,64 +9,94 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json({ error: "No autenticado" }, { status: 401 })
     }
 
-    const body = await request.json()
-    const { userId, userEmail } = body
+    // Check if user already has approved KYC
+    const { data: existing } = await supabase
+      .from("kyc_users")
+      .select("status, persona_inquiry_id")
+      .eq("user_id", user.id)
+      .single()
 
-    if (!process.env.PERSONA_API_KEY) {
-      logger.error("Persona API key not configured")
-      return NextResponse.json({ error: "Persona API key not configured" }, { status: 500 })
+    if (existing?.status === "approved") {
+      return NextResponse.json({ status: "already_approved" })
     }
 
-    const response = await fetch("https://withpersona.com/api/v1/inquiries", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.PERSONA_API_KEY}`,
-        "Persona-Version": "2023-01-05",
-      },
-      body: JSON.stringify({
-        data: {
-          type: "inquiry",
-          attributes: {
-            "inquiry-template-id": process.env.PERSONA_TEMPLATE_ID || "itmpl_default",
-            "reference-id": userId || user.id,
-            "redirect-uri": `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/kyc/complete`,
-          },
-        },
-      }),
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      logger.error("Persona API error:", errorText)
-      return NextResponse.json({ error: "Failed to create inquiry" }, { status: 500 })
-    }
-
-    const data = await response.json()
-    const inquiryId = data.data.id
-    const sessionToken = data.data.attributes["session-token"]
-
-    await supabase.from("kyc_users").upsert(
-      {
-        wallet: user.user_metadata?.wallet_address || "",
-        email: userEmail || user.email || "",
-        name: user.user_metadata?.full_name || "",
+    // If pending inquiry exists, return it
+    if (existing?.persona_inquiry_id && existing?.status === "pending") {
+      return NextResponse.json({
+        inquiryId: existing.persona_inquiry_id,
         status: "pending",
-        persona_inquiry_id: inquiryId,
-        submitted_at: new Date().toISOString(),
-      },
-      {
-        onConflict: "email",
-      },
-    )
+      })
+    }
 
-    logger.info("Persona inquiry created successfully", { inquiryId })
-    return NextResponse.json({ inquiryId, sessionToken })
-  } catch (error) {
-    logger.error("Error creating Persona inquiry:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    // Create/update KYC record
+    const { error: kycError } = await supabase
+      .from("kyc_users")
+      .upsert(
+        {
+          user_id: user.id,
+          status: "pending",
+          kyc_updated_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id" }
+      )
+
+    if (kycError) {
+      console.error("KYC upsert error:", kycError)
+      return NextResponse.json({ error: "Error al crear verificacion" }, { status: 500 })
+    }
+
+    // If Persona API key is configured, create a real inquiry
+    const personaApiKey = process.env.PERSONA_API_KEY
+    const personaTemplateId = process.env.PERSONA_TEMPLATE_ID
+
+    if (personaApiKey && personaTemplateId) {
+      const personaRes = await fetch("https://withpersona.com/api/v1/inquiries", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${personaApiKey}`,
+          "Content-Type": "application/json",
+          "Persona-Version": "2023-01-05",
+        },
+        body: JSON.stringify({
+          data: {
+            type: "inquiry",
+            attributes: {
+              "inquiry-template-id": personaTemplateId,
+              "reference-id": user.id,
+              "redirect-uri": `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.week-chain.com"}/dashboard/member?kyc=complete`,
+            },
+          },
+        }),
+      })
+
+      if (personaRes.ok) {
+        const personaData = await personaRes.json()
+        const inquiryId = personaData.data?.id
+        const sessionToken = personaData.data?.attributes?.["session-token"]
+
+        await supabase
+          .from("kyc_users")
+          .update({
+            persona_inquiry_id: inquiryId,
+            persona_session_token: sessionToken,
+          })
+          .eq("user_id", user.id)
+
+        return NextResponse.json({ inquiryId, sessionToken, status: "pending" })
+      }
+    }
+
+    // Fallback: KYC created in pending mode (admin manual review)
+    return NextResponse.json({
+      status: "pending",
+      mode: personaApiKey ? "persona" : "manual",
+      message: "Verificacion iniciada. Un administrador revisara tu identidad.",
+    })
+  } catch (error: any) {
+    console.error("KYC create-inquiry error:", error)
+    return NextResponse.json({ error: error.message || "Error interno" }, { status: 500 })
   }
 }

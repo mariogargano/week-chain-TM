@@ -2,6 +2,7 @@
 
 import { createBrowserClient } from "@/lib/supabase/client"
 import { useEffect, useState, useRef } from "react"
+import { useSearchParams } from "next/navigation"
 import { Navbar } from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import {
@@ -131,6 +132,8 @@ const seasonConfig = {
 }
 
 export default function MemberDashboardPage() {
+  const searchParams = useSearchParams()
+  const purchaseStatus = searchParams?.get("purchase")
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
   const [copied, setCopied] = useState(false)
@@ -636,6 +639,30 @@ export default function MemberDashboardPage() {
 
   return (
     <div className="space-y-6">
+      {/* Purchase status banners */}
+      {purchaseStatus === "success" && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex items-start gap-3">
+          <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
+            <Check className="w-4 h-4 text-white" />
+          </div>
+          <div>
+            <p className="font-semibold text-emerald-900">Compra exitosa</p>
+            <p className="text-sm text-emerald-700">Tu certificado vacacional ha sido emitido. Recibiras un correo con los detalles y tu QR de verificacion.</p>
+          </div>
+        </div>
+      )}
+      {purchaseStatus === "canceled" && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
+          <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0">
+            <AlertCircle className="w-4 h-4 text-white" />
+          </div>
+          <div>
+            <p className="font-semibold text-amber-900">Pago cancelado</p>
+            <p className="text-sm text-amber-700">Tu proceso de pago fue cancelado. Puedes intentarlo de nuevo cuando lo desees.</p>
+          </div>
+        </div>
+      )}
+
       {profile?.referral_code && (
         <SocialShareSidebar
           referralCode={profile.referral_code}
