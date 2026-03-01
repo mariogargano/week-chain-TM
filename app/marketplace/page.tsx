@@ -41,10 +41,8 @@ export default function MarketplacePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-      <Navbar />
-
-      <main className="container mx-auto px-6 py-12 pt-32">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50/30 to-white">
+      <main className="container mx-auto px-6 py-12 pt-8">
         <div className="text-center mb-12 space-y-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
             <Store className="h-4 w-4" />

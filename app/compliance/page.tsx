@@ -34,8 +34,6 @@ export default async function CompliancePage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar user={user} />
-
       {/* Hero Section */}
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 px-6 py-32">
         <div className="absolute top-20 left-10 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl animate-float" />
@@ -555,8 +553,6 @@ export default async function CompliancePage() {
           </div>
         </div>
       </section>
-
-      <SiteFooter />
     </div>
   )
 }

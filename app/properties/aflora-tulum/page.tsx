@@ -67,12 +67,10 @@ export default function AfloraPropertyPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-[#FFDAC1]/5 to-white">
-      <Navbar />
-
+    <div className="min-h-screen bg-gradient-to-b from-white via-sky-50/5 to-white">
       {/* Hero Section */}
-      <section className="relative pt-24 pb-12 px-4">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FF9AA2]/10 via-[#FFDAC1]/10 to-[#C7CEEA]/10" />
+      <section className="relative pt-8 pb-12 px-4">
+        <div className="absolute inset-0 bg-gradient-to-br from-sky-100/10 via-cyan-50/10 to-teal-50/10" />
         <div className="container mx-auto max-w-6xl relative">
           <div className="mb-4">
             <Link

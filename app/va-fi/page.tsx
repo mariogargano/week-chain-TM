@@ -94,8 +94,6 @@ export default async function VAFIPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <Navbar />
-
       <div className="relative flex-1">
         <div className="absolute inset-0 z-40 bg-slate-900/90 backdrop-blur-sm flex items-start justify-center pt-32">
           <div className="max-w-2xl mx-auto text-center px-6">

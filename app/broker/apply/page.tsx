@@ -265,8 +265,7 @@ function BrokerApplyContent() {
   if (success) {
     return (
       <div className="flex min-h-screen flex-col bg-background">
-        <Navbar />
-        <main className="flex-1 flex items-center justify-center px-4 py-20">
+        <main className="flex-1 flex items-center justify-center px-4 py-8">
           <Card className="max-w-md w-full border-0 shadow-xl">
             <CardContent className="pt-8 pb-8 text-center">
               <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#B5EAD7] to-[#E2F0CB] flex items-center justify-center mx-auto mb-6">
@@ -292,11 +291,9 @@ function BrokerApplyContent() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <Navbar />
-
       <main className="flex-1">
         {/* Header */}
-        <section className="px-4 py-12 bg-gradient-to-br from-white via-[#FF9AA2]/5 to-[#C7CEEA]/10">
+        <section className="px-4 py-8 bg-gradient-to-br from-white via-sky-50/5 to-cyan-50/10">
           <div className="container mx-auto max-w-6xl">
             <Link
               href="/broker-programa"

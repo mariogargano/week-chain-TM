@@ -205,7 +205,7 @@ export function SiteFooter() {
                   href="mailto:info@week-chain.com"
                   className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <Mail className="h-4 w-4 text-[#FF9AA2]" />
+                  <Mail className="h-4 w-4 text-sky-400" />
                   info@week-chain.com
                 </a>
               </li>
@@ -214,7 +214,7 @@ export function SiteFooter() {
                   href="mailto:support@week-chain.com"
                   className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <Mail className="h-4 w-4 text-[#B5EAD7]" />
+                  <Mail className="h-4 w-4 text-emerald-400" />
                   support@week-chain.com
                 </a>
               </li>
@@ -223,20 +223,20 @@ export function SiteFooter() {
                   href="tel:+529981234567"
                   className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <Phone className="h-4 w-4 text-[#C7CEEA]" />
+                  <Phone className="h-4 w-4 text-cyan-400" />
                   +52 998 XXX XXXX
                 </a>
               </li>
               <li>
                 <span className="text-gray-400 flex items-start gap-2">
-                  <MapPin className="h-4 w-4 text-[#FFDAC1] mt-0.5" />
-                  <span>Cancún, Q. Roo, México</span>
+                  <MapPin className="h-4 w-4 text-amber-400 mt-0.5" />
+                  <span>Cancun, Q. Roo, Mexico</span>
                 </span>
               </li>
               <li className="pt-2">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 text-[#FF9AA2] hover:text-[#FFB7B2] transition-colors font-medium"
+                  className="inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 transition-colors font-medium"
                 >
                   Formulario de Contacto
                   <span className="text-xs">→</span>
@@ -255,9 +255,9 @@ export function SiteFooter() {
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
+                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 text-base h-12"
               />
-              <Button className="bg-brand-gradient hover:opacity-90">
+              <Button className="bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 h-12 min-w-[48px]">
                 <Send className="h-4 w-4" />
               </Button>
             </div>

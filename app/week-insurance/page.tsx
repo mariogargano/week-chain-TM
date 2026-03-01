@@ -614,8 +614,6 @@ export default async function WeekInsurancePage() {
           </p>
         </div>
       </section>
-
-      <SiteFooter />
     </div>
   )
 }

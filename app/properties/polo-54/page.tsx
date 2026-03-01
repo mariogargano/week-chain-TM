@@ -97,10 +97,8 @@ export default function Polo54Page() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
-      <Navbar />
-
       {/* Hero Section */}
-      <section className="relative pt-20">
+      <section className="relative pt-4">
         <div className="container mx-auto max-w-7xl px-4 py-8">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-slate-600 mb-6">

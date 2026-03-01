@@ -145,10 +145,9 @@ export default function PropertyDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-        <Navbar />
-        <main className="container mx-auto px-6 py-12 pt-32">
-          <p className="text-center text-slate-600">Loading property details...</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50/20 to-white">
+        <main className="container mx-auto px-6 py-12">
+          <p className="text-center text-muted-foreground">Loading property details...</p>
         </main>
       </div>
     )
@@ -156,10 +155,9 @@ export default function PropertyDetailPage() {
 
   if (!property) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-        <Navbar />
-        <main className="container mx-auto px-6 py-12 pt-32">
-          <p className="text-center text-slate-600">Property not found</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50/20 to-white">
+        <main className="container mx-auto px-6 py-12">
+          <p className="text-center text-muted-foreground">Property not found</p>
         </main>
       </div>
     )
@@ -168,10 +166,8 @@ export default function PropertyDetailPage() {
   const mainImage = property.images?.[0] || property.image_url
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-      <Navbar />
-
-      <main className="container mx-auto px-6 py-12 pt-32">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50/20 to-white">
+      <main className="container mx-auto px-6 py-12">
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             <Card className="border-blue-200/50 bg-white/90 backdrop-blur-sm">

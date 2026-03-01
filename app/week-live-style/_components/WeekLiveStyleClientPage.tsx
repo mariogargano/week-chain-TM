@@ -107,11 +107,9 @@ export default function WeekLiveStyleClientPage() {
       : articles.filter((article) => article.category.toLowerCase() === selectedCategory)
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-pink-50/20 to-white">
-      <Navbar />
-
+    <div className="min-h-screen bg-gradient-to-b from-white via-sky-50/10 to-white">
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4">
+      <section className="pt-8 pb-16 px-4">
         <div className="container mx-auto max-w-6xl text-center">
           <Badge className="mb-6 bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] text-white border-0">
             Blog de Lifestyle

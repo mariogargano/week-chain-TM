@@ -13,9 +13,7 @@ function ReservarContent() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Navbar />
-
-      <div className="container mx-auto max-w-3xl px-4 py-20 text-center">
+      <div className="container mx-auto max-w-3xl px-4 py-8 text-center">
         <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <Lock className="h-10 w-10 text-red-600" />
         </div>

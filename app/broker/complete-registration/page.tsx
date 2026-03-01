@@ -105,8 +105,7 @@ function CompleteRegistrationContent() {
 
   if (completed) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-[#C7CEEA]/10">
-        <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/10">
         <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-6">
           <Card className="w-full max-w-md border-green-200 shadow-xl">
             <CardHeader className="text-center">
@@ -139,12 +138,11 @@ function CompleteRegistrationContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-[#C7CEEA]/10">
-      <Navbar />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/10">
       <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-6">
         <Card className="w-full max-w-md shadow-xl">
           <CardHeader className="text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#FF9AA2] to-[#C7CEEA]">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-cyan-400">
               <Lock className="h-8 w-8 text-white" />
             </div>
             <CardTitle className="text-2xl text-slate-900">Crea tu Contraseña</CardTitle>
@@ -212,8 +210,7 @@ export default function CompleteRegistrationPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-[#C7CEEA]/10">
-          <Navbar />
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50/10">
           <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center">
             <div className="animate-pulse text-slate-400">Cargando...</div>
           </div>

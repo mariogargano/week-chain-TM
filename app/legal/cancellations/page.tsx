@@ -10,9 +10,7 @@ import { SiteFooter } from "@/components/site-footer"
 export default function CancellationsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Navbar />
-
-      <div className="container mx-auto px-4 py-24 max-w-5xl">
+      <div className="container mx-auto px-4 py-8 max-w-5xl">
         {/* Header */}
         <div className="mb-8">
           <Link href="/legal">
@@ -429,8 +427,6 @@ export default function CancellationsPage() {
           </Card>
         </div>
       </div>
-
-      <SiteFooter />
     </div>
   )
 }
