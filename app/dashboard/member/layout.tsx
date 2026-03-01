@@ -55,7 +55,7 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-secondary/30">
       {/* Sidebar izquierdo - Navegación */}
       <Suspense fallback={null}>
         <aside

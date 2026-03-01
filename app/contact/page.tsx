@@ -128,7 +128,6 @@ export default function ContactPage() {
 
   return (
     <>
-      <Navbar />
       <div className="flex flex-col items-center justify-center min-h-screen">
         <Card className="w-full max-w-2xl">
           <CardHeader>
@@ -189,7 +188,6 @@ export default function ContactPage() {
           </CardContent>
         </Card>
       </div>
-      <SiteFooter />
     </>
   )
 }

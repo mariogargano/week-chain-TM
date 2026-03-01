@@ -19,7 +19,7 @@ import {
   Eye,
   Info,
 } from "lucide-react"
-import { Navbar } from "@/components/navbar"
+// Navbar is rendered by root layout for public pages
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import Image from "next/image"
@@ -277,21 +277,21 @@ function DestinationCard({ destination }: { destination: (typeof PARTICIPATING_D
     <div className="relative">
       {/* Premium card with dark header */}
       <div className="bg-gradient-to-r from-slate-800 via-slate-800 to-slate-900 rounded-t-3xl p-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <Badge className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] text-white border-0 text-xs">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <Badge className="bg-gradient-to-r from-sky-400 to-cyan-400 text-white border-0 text-xs">
                 <Eye className="w-3 h-3 mr-1" />
                 {destination.type}
               </Badge>
-              <Badge className="bg-[#B5EAD7]/20 text-[#B5EAD7] border-[#B5EAD7]/30 text-xs">
+              <Badge className="bg-emerald-400/20 text-emerald-300 border-emerald-400/30 text-xs">
                 <Info className="w-3 h-3 mr-1" />
                 Referencia
               </Badge>
             </div>
-            <h2 className="text-2xl font-bold text-white">{destination.name}</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-white">{destination.name}</h2>
             <p className="text-slate-400 flex items-center gap-1 text-sm mt-1">
-              <MapPin className="h-3 w-3 text-[#FF9AA2]" />
+              <MapPin className="h-3 w-3 text-sky-400" />
               {destination.location}
             </p>
             {destination.operator && (
@@ -300,33 +300,33 @@ function DestinationCard({ destination }: { destination: (typeof PARTICIPATING_D
               </p>
             )}
           </div>
-          <div className="text-right">
-            <div className="px-4 py-3 rounded-xl bg-white/10 border border-white/20">
+          <div className="sm:text-right flex-shrink-0">
+            <div className="px-4 py-3 rounded-xl bg-white/10 border border-white/20 inline-block">
               <p className="text-xs text-slate-400 mb-1">Acceso mediante</p>
-              <p className="text-sm font-bold text-[#B5EAD7]">Smart Vacational</p>
-              <p className="text-sm font-bold text-[#B5EAD7]">Certificate</p>
+              <p className="text-sm font-bold text-emerald-300">Smart Vacational</p>
+              <p className="text-sm font-bold text-emerald-300">Certificate</p>
               <p className="text-[10px] text-slate-400 mt-1">Sujeto a disponibilidad</p>
             </div>
           </div>
         </div>
 
         {/* Specs row */}
-        <div className="flex items-center gap-4 text-sm text-slate-300 flex-wrap">
-          <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10">
-            <Bed className="h-4 w-4 text-[#FFB7B2]" />
+        <div className="flex items-center gap-2 sm:gap-4 text-sm text-slate-300 flex-wrap">
+          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10">
+            <Bed className="h-4 w-4 text-sky-300" />
             {destination.specs.bedrooms} Rec.
           </span>
-          <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10">
-            <Bath className="h-4 w-4 text-[#C7CEEA]" />
-            {destination.specs.bathrooms} Baños
+          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10">
+            <Bath className="h-4 w-4 text-cyan-300" />
+            {destination.specs.bathrooms} Banos
           </span>
-          <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10">
-            <Maximize className="h-4 w-4 text-[#B5EAD7]" />
+          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10">
+            <Maximize className="h-4 w-4 text-emerald-300" />
             {destination.specs.size}
           </span>
-          <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10">
-            <Users className="h-4 w-4 text-[#FFDAC1]" />
-            Hasta {destination.specs.maxGuests} huéspedes
+          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10">
+            <Users className="h-4 w-4 text-amber-300" />
+            Hasta {destination.specs.maxGuests} huespedes
           </span>
         </div>
 
@@ -352,15 +352,17 @@ function DestinationCard({ destination }: { destination: (typeof PARTICIPATING_D
                 onClick={() =>
                   setCurrentImageIndex((prev) => (prev - 1 + destination.gallery.length) % destination.gallery.length)
                 }
-                className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all hover:scale-110"
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full shadow-lg transition-all active:scale-95"
+                aria-label="Imagen anterior"
               >
-                <ChevronLeft className="h-4 w-4 text-slate-900" />
+                <ChevronLeft className="h-5 w-5 text-slate-900" />
               </button>
               <button
                 onClick={() => setCurrentImageIndex((prev) => (prev + 1) % destination.gallery.length)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all hover:scale-110"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full shadow-lg transition-all active:scale-95"
+                aria-label="Siguiente imagen"
               >
-                <ChevronRight className="h-4 w-4 text-slate-900" />
+                <ChevronRight className="h-5 w-5 text-slate-900" />
               </button>
               <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
                 {destination.gallery.map((_, idx) => (
@@ -390,9 +392,9 @@ function DestinationCard({ destination }: { destination: (typeof PARTICIPATING_D
                 <Badge
                   key={amenity}
                   variant="secondary"
-                  className="text-xs px-3 py-1 bg-gradient-to-r from-[#FFDAC1]/30 to-[#FFB7B2]/30 text-slate-700 border border-[#FFDAC1]/50"
+                  className="text-xs px-3 py-1.5 bg-sky-50 text-slate-700 border border-sky-200/50"
                 >
-                  <Star className="w-3 h-3 mr-1 text-[#FF9AA2]" />
+                  <Star className="w-3 h-3 mr-1 text-sky-500" />
                   {amenity}
                 </Badge>
               ))}
@@ -418,30 +420,30 @@ function DestinationCard({ destination }: { destination: (typeof PARTICIPATING_D
             </div>
 
             {/* Benefits with SVC language */}
-            <div className="mt-4 p-4 bg-gradient-to-r from-[#FFDAC1]/20 to-[#E2F0CB]/20 rounded-xl border border-[#FFDAC1]/30">
+            <div className="mt-4 p-4 bg-gradient-to-r from-sky-50/50 to-cyan-50/50 rounded-xl border border-sky-200/30">
               <p className="font-medium text-slate-900 mb-2 text-sm">Con tu Smart Vacational Certificate:</p>
-              <div className="grid grid-cols-2 gap-2 text-xs text-slate-600">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-600">
                 <span className="flex items-center gap-2">
-                  <FileText className="h-3.5 w-3.5 text-[#FF9AA2]" />
-                  Derecho de solicitud 15 años
+                  <FileText className="h-3.5 w-3.5 text-sky-500 flex-shrink-0" />
+                  Derecho de solicitud 15 anos
                 </span>
                 <span className="flex items-center gap-2">
-                  <Users className="h-3.5 w-3.5 text-[#C7CEEA]" />
-                  Solicitud según disponibilidad
+                  <Users className="h-3.5 w-3.5 text-cyan-500 flex-shrink-0" />
+                  Solicitud segun disponibilidad
                 </span>
                 <span className="flex items-center gap-2">
-                  <Gift className="h-3.5 w-3.5 text-[#B5EAD7]" />
-                  Gestión opcional (sujeto a aprobación)
+                  <Gift className="h-3.5 w-3.5 text-teal-500 flex-shrink-0" />
+                  Gestion opcional (sujeto a aprobacion)
                 </span>
                 <span className="flex items-center gap-2">
-                  <Shield className="h-3.5 w-3.5 text-[#FFDAC1]" />
-                  Protección de pago
+                  <Shield className="h-3.5 w-3.5 text-sky-600 flex-shrink-0" />
+                  Proteccion de pago
                 </span>
               </div>
             </div>
 
             <Link href="/auth" className="mt-auto">
-              <Button className="w-full mt-5 bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A92] hover:to-[#FFA7A2] text-white shadow-lg shadow-[#FF9AA2]/30 h-12 text-base rounded-xl">
+              <Button className="w-full mt-5 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white shadow-lg shadow-sky-200/50 h-12 text-base rounded-xl">
                 <Sparkles className="h-5 w-5 mr-2" />
                 Adquirir Smart Vacational Certificate
               </Button>
@@ -473,20 +475,19 @@ export default function PropertiesPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-[#FFDAC1]/5 to-white">
-      <Navbar />
+    <div className="min-h-screen bg-gradient-to-b from-white via-sky-50/5 to-white">
 
       <section className="relative pt-24 pb-12 px-4">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FF9AA2]/10 via-[#FFDAC1]/10 to-[#C7CEEA]/10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-sky-100/30 via-cyan-50/20 to-teal-50/10" />
         <div className="container mx-auto max-w-6xl relative">
           <div className="text-center">
-            <Badge className="bg-white/80 text-[#FF6B6B] border border-[#FFB5BA]/50 mb-4 backdrop-blur-sm">
+            <Badge className="bg-white/80 text-sky-600 border border-sky-200/50 mb-4 backdrop-blur-sm">
               <Eye className="w-3 h-3 mr-1" />
-              Catálogo de Destinos Participantes
+              Catalogo de Destinos Participantes
             </Badge>
             <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
               Ejemplos de{" "}
-              <span className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-sky-500 to-cyan-500 bg-clip-text text-transparent">
                 Alojamientos Participantes
               </span>
             </h1>

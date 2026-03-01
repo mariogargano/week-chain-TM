@@ -231,8 +231,6 @@ export default async function WeekInsurancePage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar user={user} />
-
       {/* ===== HERO ===== */}
       <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 px-6 py-32">
         <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-sky-500/15 blur-3xl animate-float" />

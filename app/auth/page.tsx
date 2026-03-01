@@ -367,9 +367,9 @@ export default function AuthPage() {
               <button
                 type="button"
                 onClick={() => { setActiveTab("choose"); setError(null); setMagicLinkSent(false) }}
-                className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors min-h-[44px] px-2 -ml-2 rounded-lg active:bg-secondary"
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
                 Volver
@@ -421,11 +421,11 @@ export default function AuthPage() {
           {activeTab === "magic" && !magicLinkSent && (
             <form onSubmit={handleMagicLink} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="magic-email" className="text-gray-700">
-                  Correo electrónico
+                <Label htmlFor="magic-email" className="text-foreground">
+                  Correo electronico
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <Input
                     id="magic-email"
                     type="email"
@@ -434,35 +434,35 @@ export default function AuthPage() {
                     onChange={(e) => setMagicLinkEmail(e.target.value)}
                     required
                     disabled={isLoading}
-                    className="pl-10 h-12 border-gray-300"
+                    className="pl-10 h-12 text-base border-border"
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-2">
-                  Te enviaremos un enlace seguro para iniciar sesión sin contraseña
+                <p className="text-xs text-muted-foreground mt-2">
+                  Te enviaremos un enlace seguro para iniciar sesion sin contrasena
                 </p>
               </div>
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white text-base font-semibold shadow-md shadow-purple-200"
+                className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white text-base font-semibold shadow-md shadow-sky-200"
                 disabled={isLoading}
               >
-                {isLoading ? "Enviando..." : "Enviar Enlace Mágico"}
+                {isLoading ? "Enviando..." : "Enviar Enlace Magico"}
               </Button>
             </form>
           )}
 
           {activeTab === "magic" && magicLinkSent && (
             <div className="text-center space-y-4">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
-                <Mail className="h-8 w-8 text-green-600" />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
+                <Mail className="h-8 w-8 text-emerald-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">¡Revisa tu email!</h3>
-              <p className="text-gray-600">
-                Hemos enviado un enlace mágico a <strong>{magicLinkEmail}</strong>
+              <h3 className="text-xl font-semibold text-foreground">Revisa tu email!</h3>
+              <p className="text-muted-foreground">
+                Hemos enviado un enlace magico a <strong className="text-foreground">{magicLinkEmail}</strong>
               </p>
-              <p className="text-sm text-gray-500">
-                Haz clic en el enlace del email para iniciar sesión automáticamente.
+              <p className="text-sm text-muted-foreground">
+                Haz clic en el enlace del email para iniciar sesion automaticamente.
               </p>
               <Button
                 type="button"
@@ -471,7 +471,7 @@ export default function AuthPage() {
                   setMagicLinkSent(false)
                   setMagicLinkEmail("")
                 }}
-                className="mt-4"
+                className="mt-4 min-h-[44px]"
               >
                 Enviar a otro email
               </Button>
@@ -481,11 +481,11 @@ export default function AuthPage() {
           {activeTab === "login" && (
             <form onSubmit={handleLogin} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-gray-700">
-                  Correo electrónico
+                <Label htmlFor="email" className="text-foreground">
+                  Correo electronico
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <Input
                     id="email"
                     type="email"
@@ -494,29 +494,29 @@ export default function AuthPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     disabled={isLoading}
-                    className="pl-10 h-12 border-gray-300"
+                    className="pl-10 h-12 text-base border-border"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <Label htmlFor="password" className="text-gray-700">
-                    Contraseña
+                  <Label htmlFor="password" className="text-foreground">
+                    Contrasena
                   </Label>
-                  <a href="/auth/forgot-password" className="text-sm text-sky-600 hover:text-sky-700">
+                  <a href="/auth/forgot-password" className="text-sm text-sky-600 hover:text-sky-700 min-h-[44px] flex items-center">
                     Olvidaste tu contrasena?
                   </a>
                 </div>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="********"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="h-12 border-gray-300"
+                  className="h-12 text-base border-border"
                 />
               </div>
 
@@ -540,27 +540,27 @@ export default function AuthPage() {
           {activeTab === "register" && (
             <form onSubmit={handleRegister} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="register-name" className="text-gray-700">
+                <Label htmlFor="register-name" className="text-foreground">
                   Nombre completo
                 </Label>
                 <Input
                   id="register-name"
                   type="text"
-                  placeholder="Juan Pérez"
+                  placeholder="Juan Perez"
                   value={registerName}
                   onChange={(e) => setRegisterName(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="h-12 border-gray-300"
+                  className="h-12 text-base border-border"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="register-email" className="text-gray-700">
-                  Correo electrónico
+                <Label htmlFor="register-email" className="text-foreground">
+                  Correo electronico
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <Input
                     id="register-email"
                     type="email"
@@ -569,14 +569,14 @@ export default function AuthPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     disabled={isLoading}
-                    className="pl-10 h-12 border-gray-300"
+                    className="pl-10 h-12 text-base border-border"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="register-phone" className="text-gray-700">
-                  Teléfono
+                <Label htmlFor="register-phone" className="text-foreground">
+                  Telefono
                 </Label>
                 <Input
                   id="register-phone"
@@ -586,41 +586,41 @@ export default function AuthPage() {
                   onChange={(e) => setRegisterPhone(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="h-12 border-gray-300"
+                  className="h-12 text-base border-border"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="register-password" className="text-gray-700">
+                <Label htmlFor="register-password" className="text-foreground">
                   Contrasena (min. 6 caracteres)
                 </Label>
                 <Input
                   id="register-password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="********"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={isLoading}
                   minLength={6}
-                  className="h-12 border-gray-300"
+                  className="h-12 text-base border-border"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirm-password" className="text-gray-700">
+                <Label htmlFor="confirm-password" className="text-foreground">
                   Confirmar contrasena
                 </Label>
                 <Input
                   id="confirm-password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="********"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                   disabled={isLoading}
                   minLength={6}
-                  className="h-12 border-gray-300"
+                  className="h-12 text-base border-border"
                 />
                 {confirmPassword && password !== confirmPassword && (
                   <p className="text-xs text-red-500 mt-1">Las contrasenas no coinciden</p>
@@ -629,15 +629,15 @@ export default function AuthPage() {
 
               {referralCode && (
                 <div className="space-y-2">
-                  <Label htmlFor="referral-code" className="text-gray-700">
-                    Código de referido
+                  <Label htmlFor="referral-code" className="text-foreground">
+                    Codigo de referido
                   </Label>
                   <Input
                     id="referral-code"
                     type="text"
                     value={referralCode}
                     disabled
-                    className="h-12 bg-gray-50 border-gray-300"
+                    className="h-12 text-base bg-muted border-border"
                   />
                 </div>
               )}
@@ -648,9 +648,9 @@ export default function AuthPage() {
                   id="register-terms"
                   checked={registerTermsAccepted}
                   onChange={(e) => setRegisterTermsAccepted(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500"
+                  className="mt-0.5 h-5 w-5 rounded border-border text-sky-600 focus:ring-sky-500 flex-shrink-0"
                 />
-                <label htmlFor="register-terms" className="text-xs text-gray-600 leading-relaxed cursor-pointer">
+                <label htmlFor="register-terms" className="text-xs text-muted-foreground leading-relaxed cursor-pointer">
                   Acepto los{" "}
                   <button type="button" onClick={() => setShowTermsDialog(true)} className="text-sky-600 underline hover:text-sky-700 font-medium">
                     Terminos y Condiciones
