@@ -102,8 +102,6 @@ export default function WeekServicePage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <Navbar />
-
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative overflow-hidden px-4 sm:px-6 py-20 sm:py-28 bg-gradient-to-br from-white via-[#C7CEEA]/10 to-[#B5EAD7]/10">

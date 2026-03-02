@@ -203,7 +203,7 @@ export function PlatformShowcase() {
           <Button
             asChild
             size="lg"
-            className="bg-gradient-to-r from-[#FF9AA2] via-[#FFB7B2] to-[#C7CEEA] hover:opacity-90 text-white font-semibold px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white font-semibold px-8 py-6 text-lg shadow-lg shadow-sky-200 hover:shadow-xl transition-all duration-300 min-h-[48px]"
           >
             <Link href="/auth">
               Adquirir Certificado

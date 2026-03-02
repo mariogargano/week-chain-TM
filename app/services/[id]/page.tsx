@@ -370,8 +370,7 @@ export default function ServiceDetailPage() {
   if (!service) {
     return (
       <div className="min-h-screen bg-slate-50">
-        <Navbar />
-        <div className="container mx-auto px-6 py-32 text-center">
+        <div className="container mx-auto px-6 py-12 text-center">
           <h1 className="text-3xl font-bold text-slate-900 mb-4">Servicio no encontrado</h1>
           <Link href="/services">
             <Button>Volver a Servicios</Button>
@@ -385,10 +384,8 @@ export default function ServiceDetailPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      <Navbar />
-
       {isDemo && (
-        <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 mt-20">
+        <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3">
           <div className="container mx-auto px-6 max-w-6xl flex items-center justify-center gap-3">
             <Ticket className="h-5 w-5" />
             <span className="font-medium">
@@ -805,8 +802,6 @@ export default function ServiceDetailPage() {
           </Card>
         </section>
       )}
-
-      <SiteFooter />
     </div>
   )
 }

@@ -12,9 +12,7 @@ export default async function BrandManualPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar user={user} />
-
-      <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-gradient-to-br from-[#FFDAC1]/30 via-[#B5EAD7]/20 to-[#C7CEEA]/30 px-6 py-32">
+      <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-gradient-to-br from-sky-50/30 via-cyan-50/20 to-teal-50/20 px-6 py-16">
         <div className="container relative z-10 mx-auto max-w-5xl text-center">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full glass border border-[#C7CEEA]/30 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm">
             <FileText className="h-4 w-4 text-[#FF9AA2]" />
@@ -59,8 +57,6 @@ export default async function BrandManualPage() {
           </div>
         </div>
       </section>
-
-      <SiteFooter />
     </div>
   )
 }

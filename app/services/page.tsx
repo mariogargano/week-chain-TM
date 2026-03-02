@@ -264,8 +264,7 @@ const conciergeServices = [
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-[#C7CEEA]/5 to-white">
-      <Navbar />
+    <div className="min-h-screen bg-gradient-to-b from-white via-sky-50/5 to-white">
 
       {/* Hero Section - Estilo suave con detalles de tarjeta */}
       <section className="relative overflow-hidden px-6 py-24 pt-36">

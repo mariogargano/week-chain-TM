@@ -126,7 +126,6 @@ export default function HelpCenterPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      <Navbar />
 
       <main className="container mx-auto px-4 py-24">
         {/* Header */}
@@ -298,8 +297,6 @@ export default function HelpCenterPage() {
           </div>
         </div>
       </main>
-
-      <SiteFooter />
     </div>
   )
 }

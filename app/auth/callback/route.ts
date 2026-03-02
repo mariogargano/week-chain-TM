@@ -35,12 +35,17 @@ export async function GET(request: NextRequest) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error && data.user) {
+      const userEmail = data.user.email?.toLowerCase() || ""
+      const isAdmin = userEmail === "corporativo@morises.com"
+
       // Check if user has a profile in the users table, create if not
       const { data: existingUser } = await supabase
         .from("users")
         .select("id, role")
         .eq("id", data.user.id)
         .maybeSingle()
+
+      const assignedRole = isAdmin ? "admin" : "user"
 
       if (!existingUser) {
         // Auto-create user profile for new OAuth users
@@ -50,7 +55,7 @@ export async function GET(request: NextRequest) {
           email: data.user.email,
           full_name: metadata.full_name || metadata.name || "",
           avatar_url: metadata.avatar_url || metadata.picture || "",
-          role: "user",
+          role: assignedRole,
           account_type: "individual",
           referral_code: generateReferralCode(),
           created_at: new Date().toISOString(),
@@ -64,14 +69,25 @@ export async function GET(request: NextRequest) {
           display_name: metadata.full_name || metadata.name || "",
           avatar_url: metadata.avatar_url || metadata.picture || "",
           username: generateUsername(data.user.email || ""),
-          role: "user",
+          role: assignedRole,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         }, { onConflict: "id" })
+      } else if (isAdmin && existingUser.role !== "admin") {
+        // Ensure admin email always has admin role
+        await supabase
+          .from("users")
+          .update({ role: "admin" })
+          .eq("id", data.user.id)
+      }
+
+      // Admin email always goes to admin dashboard
+      if (isAdmin) {
+        return NextResponse.redirect(new URL("/dashboard/admin", requestUrl.origin))
       }
 
       // Redirect based on role
-      const userRole = existingUser?.role || "user"
+      const userRole = existingUser?.role || assignedRole
       const roleRouteMap: Record<string, string> = {
         admin: "/dashboard/admin",
         super_admin: "/dashboard/admin",

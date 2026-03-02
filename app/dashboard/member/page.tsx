@@ -465,13 +465,13 @@ export default function MemberDashboardPage() {
 
           {/* Buy More CTA */}
           {certificates.length > 0 && (
-            <div className="bg-gradient-to-r from-sky-500 to-cyan-500 rounded-2xl p-5 text-white">
-              <div className="flex items-center justify-between">
+            <div className="bg-gradient-to-r from-sky-500 to-cyan-500 rounded-2xl p-4 sm:p-5 text-white">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
                   <h3 className="font-bold text-lg">Adquiere mas certificados</h3>
                   <p className="text-white/80 text-sm">Amplia tu acceso vacacional con certificados adicionales.</p>
                 </div>
-                <Button asChild className="bg-white text-sky-600 hover:bg-white/90">
+                <Button asChild className="bg-white text-sky-600 hover:bg-white/90 min-h-[44px] w-full sm:w-auto flex-shrink-0">
                   <Link href="/#certificados">
                     <ShoppingCart className="h-4 w-4 mr-2" />
                     Comprar

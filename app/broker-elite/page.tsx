@@ -19,10 +19,8 @@ import {
 
 export default function BrokerElitePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FFB7B2]/30 via-[#FFDAC1]/30 to-[#E2F0CB]/30">
-      <Navbar />
-
-      <main className="container mx-auto px-6 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50/30 via-cyan-50/20 to-teal-50/10">
+      <main className="container mx-auto px-6 py-8">
         {/* Hero Section */}
         <div className="text-center mb-16 space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#C7CEEA] text-slate-800 text-sm font-medium mb-4">

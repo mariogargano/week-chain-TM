@@ -9,7 +9,6 @@ import { SiteFooter } from "@/components/site-footer"
 export default function HelpPage() {
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      <Navbar />
 
       <main className="flex-1 pt-24 pb-16">
         <div className="container mx-auto max-w-6xl px-6">
@@ -115,7 +114,7 @@ export default function HelpPage() {
                       <AccordionTrigger>¿La certificación digital tiene validez legal?</AccordionTrigger>
                       <AccordionContent>
                         Sí. Todos los contratos se certifican bajo la NOM-151-SCFI-2016, lo que les otorga la misma
-                        validez legal que un documento físico firmado. La certificación digital es exclusivamente
+                        validez legal que un documento f��sico firmado. La certificación digital es exclusivamente
                         probatoria para la integridad documental del contrato de derechos de solicitud temporal y no
                         representa activos financieros, propiedad inmobiliaria ni derechos patrimoniales sobre
                         inmuebles.
@@ -174,8 +173,6 @@ export default function HelpPage() {
           </div>
         </div>
       </main>
-
-      <SiteFooter />
     </div>
   )
 }

@@ -8,8 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { MessageCircle, HelpCircle, Calendar, Shield, Clock, AlertTriangle, FileText, Ban, MapPin } from "lucide-react"
 import Link from "next/link"
-import { Navbar } from "@/components/navbar"
-import { SiteFooter } from "@/components/site-footer"
+// Navbar and SiteFooter are rendered by root layout
 
 export default function FAQPage() {
   const categories = [
@@ -257,7 +256,6 @@ export default function FAQPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      <Navbar />
 
       <main className="container mx-auto px-4 py-24">
         {/* Header */}
@@ -395,8 +393,6 @@ export default function FAQPage() {
           </p>
         </div>
       </main>
-
-      <SiteFooter />
     </div>
   )
 }

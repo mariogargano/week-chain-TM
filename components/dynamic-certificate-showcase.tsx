@@ -438,7 +438,7 @@ export function DynamicCertificateShowcase() {
                       <span className="text-xs text-slate-500 font-mono">{certNumber}</span>
                     </div>
                     <img
-                      src="/week-chain-logo-white.png"
+                      src="/week-chain-logo-white.jpg"
                       alt="WEEK-CHAIN"
                       className="h-4 opacity-50"
                       onError={(e) => {
@@ -455,7 +455,7 @@ export function DynamicCertificateShowcase() {
             </div>
 
             {/* Dots indicator */}
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center gap-1 mt-6">
               {certificateData.map((_, i) => (
                 <button
                   key={i}
@@ -466,11 +466,13 @@ export function DynamicCertificateShowcase() {
                       setIsAnimating(false)
                     }, 300)
                   }}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    i === currentIndex ? "bg-sky-500 w-6" : "bg-white/30 hover:bg-white/50"
-                  }`}
+                  className="p-2 flex items-center justify-center"
                   aria-label={`Ver certificado ${i + 1}`}
-                />
+                >
+                  <span className={`block rounded-full transition-all duration-300 h-2 ${
+                    i === currentIndex ? "bg-sky-500 w-6" : "bg-white/30 w-2 hover:bg-white/50"
+                  }`} />
+                </button>
               ))}
             </div>
           </div>
@@ -517,7 +519,8 @@ export function DynamicCertificateShowcase() {
 
         {/* Confirmation Dialog */}
         <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-          <DialogContent className="max-w-lg bg-slate-900 border-slate-700">
+          <DialogContent className="max-w-lg bg-slate-900 border-slate-700 max-h-[90dvh] overflow-y-auto mx-4 sm:mx-auto rounded-2xl"
+          >
             <DialogHeader>
               <DialogTitle className="text-2xl text-white">Confirmar Certificado</DialogTitle>
               <DialogDescription className="text-slate-400">
@@ -586,11 +589,11 @@ export function DynamicCertificateShowcase() {
                 )}
 
                 <div className="flex gap-3">
-                  <Button variant="outline" onClick={() => { setShowConfirmDialog(false); setCheckoutError(null) }} className="flex-1" disabled={checkoutLoading}>
+                  <Button variant="outline" onClick={() => { setShowConfirmDialog(false); setCheckoutError(null) }} className="flex-1 min-h-[48px]" disabled={checkoutLoading}>
                     Cancelar
                   </Button>
                   <Button
-                    className="flex-1 bg-sky-500 hover:bg-sky-600 disabled:opacity-70"
+                    className="flex-1 min-h-[48px] bg-sky-500 hover:bg-sky-600 disabled:opacity-70"
                     onClick={handleCheckout}
                     disabled={checkoutLoading}
                   >
