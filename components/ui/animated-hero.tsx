@@ -39,7 +39,7 @@ function AnimatedHero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 sm:px-8 md:px-12 w-full max-w-[90%] sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto pt-24 sm:pt-20">
+      <div className="relative z-10 text-center px-6 sm:px-8 md:px-12 w-full max-w-[90%] sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto pt-16 sm:pt-12">
         {/* Main Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
