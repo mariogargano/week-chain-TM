@@ -6,7 +6,7 @@ export function Logo({ className = "" }: { className?: string }) {
     <Link href="/" className={`flex items-center gap-3 group ${className}`}>
       <div className="relative flex h-12 w-12 items-center justify-center rounded-full overflow-hidden group-hover:scale-110 transition-all duration-300 shadow-lg shadow-slate-400/30 group-hover:shadow-xl group-hover:shadow-slate-500/40 ring-1 ring-slate-300/50 bg-white">
         <Image
-          src="/logo-wc.jpg"
+          src="/logo-wc.png"
           alt="WEEK-CHAIN Logo"
           width={48}
           height={48}
