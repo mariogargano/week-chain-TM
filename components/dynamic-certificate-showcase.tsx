@@ -332,11 +332,15 @@ export function DynamicCertificateShowcase() {
             {featuredProperty && (
               <div className="bg-slate-800/60 backdrop-blur-sm rounded-2xl border border-sky-500/20 overflow-hidden">
                 <div className="relative h-36">
-                  <img
-                    src={featuredProperty.image_url || "/luxury-resort-hero-background.jpg"}
-                    alt={featuredProperty.name}
-                    className="w-full h-full object-cover"
-                  />
+                  {featuredProperty.image_url ? (
+                    <img
+                      src={featuredProperty.image_url}
+                      alt={featuredProperty.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-sky-900 via-cyan-900 to-slate-900" />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent" />
                   <Badge className="absolute top-3 left-3 bg-emerald-500/90 text-white border-0 text-xs">
                     <Star className="h-3 w-3 mr-1" />
