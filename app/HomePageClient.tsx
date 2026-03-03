@@ -178,14 +178,13 @@ export function HomePageClient() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Removed duplicate Navbar import - already in root layout */}
       <div className="flex-1 bg-background">
         <FAQJsonLd faqs={homepageFaqs} />
 
         <div className="flex flex-col bg-white">
-          {/* Hero Section */}
+          {/* Hero Section - pulls up behind the fixed navbar */}
           <article aria-label={hero.badge || "Smart Vacational Certificates"}>
-            <section className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-cyan-50/50 to-teal-50/30">
+            <section className="relative overflow-hidden -mt-20">
               <AnimatedHero />
             </section>
           </article>
