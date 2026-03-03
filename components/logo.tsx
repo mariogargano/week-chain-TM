@@ -10,7 +10,7 @@ export function Logo({ className = "" }: { className?: string }) {
           alt="WEEK-CHAIN Logo"
           width={48}
           height={48}
-          className="w-full h-full object-contain p-0.5"
+          className="w-full h-full object-contain p-0.5 mix-blend-multiply"
           priority
         />
       </div>

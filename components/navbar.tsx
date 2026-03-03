@@ -253,7 +253,7 @@ export function Navbar() {
                   alt="WEEK-CHAIN Logo"
                   width={56}
                   height={56}
-                  className="w-full h-full object-contain p-0.5"
+                  className="w-full h-full object-contain p-0.5 mix-blend-multiply"
                   priority
                 />
               </div>

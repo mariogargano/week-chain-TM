@@ -1,8 +1,14 @@
 import sharp from 'sharp';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const inputPath = path.resolve('public/logo-wc.png');
-const outputPath = path.resolve('public/logo-wc-nobg.png');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const projectRoot = path.resolve(__dirname, '..');
+const inputPath = path.join(projectRoot, 'public', 'logo-wc.png');
+const outputPath = path.join(projectRoot, 'public', 'logo-wc.png');
+
+console.log('Project root:', projectRoot);
+console.log('Input path:', inputPath);
 
 async function removeBg() {
   try {
@@ -47,15 +53,6 @@ async function removeBg() {
     .toFile(outputPath);
     
     console.log('Background removed successfully! Saved to', outputPath);
-    
-    // Also overwrite the original
-    await sharp(newData, {
-      raw: { width, height, channels }
-    })
-    .png()
-    .toFile(inputPath);
-    
-    console.log('Original logo-wc.png also updated with transparent background');
   } catch (err) {
     console.error('Error:', err.message);
   }
