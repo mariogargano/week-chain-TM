@@ -54,7 +54,7 @@ export function Navbar() {
   const t = useTranslations()
 
   // Navbar is transparent only on homepage, when not scrolled, and menu is closed
-  const isTransparent = isTransparent
+  const isTransparent = isHome && !scrolled && !mobileMenuOpen
 
   const nav = {
     aboutUs: t?.nav?.aboutUs || fallbackNav.aboutUs,
