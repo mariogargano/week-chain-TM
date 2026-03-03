@@ -23,7 +23,6 @@ interface RootLayoutClientProps {
 export function RootLayoutClient({ children, interVariable }: RootLayoutClientProps) {
   const locale = useLocale()
   const pathname = usePathname()
-
   // Dashboard routes have their own layout (sidebar + header), so hide the global Navbar/Footer
   const isDashboardRoute = pathname.startsWith("/dashboard")
 

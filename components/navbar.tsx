@@ -228,7 +228,7 @@ export function Navbar() {
     },
     {
       label: "WEEK-Fundación",
-      href: "/fundacion",
+      href: "/week-fundacion",
       icon: <Globe className="w-5 h-5" />,
       color: "text-rose-500",
       description: "Impacto social",
