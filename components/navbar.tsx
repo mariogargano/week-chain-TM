@@ -37,7 +37,7 @@ import {
 const fallbackNav = {
   aboutUs: "Nosotros",
   myPanel: "Mi Panel",
-  signOut: "Cerrar Sesión",
+  signOut: "Cerrar Sesion",
   language: "Idioma",
 }
 
@@ -51,11 +51,10 @@ export function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
-  const isHome = pathname === "/"
+  const isHomePage = pathname === "/"
   const t = useTranslations()
 
-  // Navbar is transparent only on homepage, when not scrolled, and menu is closed
-  const isTransparent = isHome && !scrolled && !mobileMenuOpen
+  const navbarTransparent = isHomePage && !scrolled && !mobileMenuOpen
 
   const nav = {
     aboutUs: t?.nav?.aboutUs || fallbackNav.aboutUs,
@@ -79,7 +78,6 @@ export function Navbar() {
     } else {
       document.body.style.overflow = "unset"
     }
-
     return () => {
       document.body.style.overflow = "unset"
     }
@@ -167,7 +165,7 @@ export function Navbar() {
       bgHover: "hover:bg-blue-50",
     },
     {
-      label: "Cómo Funciona",
+      label: "Como Funciona",
       href: "/proceso-completo",
       icon: <Play className="w-5 h-5" />,
       color: "text-emerald-600",
@@ -189,7 +187,7 @@ export function Navbar() {
       href: "/week-management",
       icon: <Briefcase className="w-5 h-5" />,
       color: "text-purple-500",
-      description: "Gestión de certificados",
+      description: "Gestion de certificados",
     },
     {
       label: "WEEK-Agent",
@@ -227,7 +225,7 @@ export function Navbar() {
       description: "Protocolo financiero",
     },
     {
-      label: "WEEK-Fundación",
+      label: "WEEK-Fundacion",
       href: "/week-fundacion",
       icon: <Globe className="w-5 h-5" />,
       color: "text-rose-500",
@@ -238,7 +236,7 @@ export function Navbar() {
       href: "/week-insurance",
       icon: <Shield className="w-5 h-5" />,
       color: "text-indigo-500",
-      description: "Protección vacacional",
+      description: "Proteccion vacacional",
     },
   ]
 
@@ -246,7 +244,7 @@ export function Navbar() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
-          isTransparent
+          navbarTransparent
             ? "bg-transparent"
             : scrolled || mobileMenuOpen
               ? "bg-white/95 backdrop-blur-lg shadow-xl border-b border-slate-200"
@@ -258,7 +256,7 @@ export function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group">
               <div className={`relative w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-md transition-transform group-hover:scale-105 flex-shrink-0 ${
-                isTransparent ? "shadow-black/30 ring-1 ring-white/20 bg-white/90" : "shadow-slate-400/30 ring-1 ring-slate-300/50 bg-white"
+                navbarTransparent ? "shadow-black/30 ring-1 ring-white/20 bg-white/90" : "shadow-slate-400/30 ring-1 ring-slate-300/50 bg-white"
               }`}>
                 <Image
                   src="/logo-wc.png"
@@ -271,10 +269,10 @@ export function Navbar() {
               </div>
               <div className="flex flex-col">
                 <span className={`font-bold text-base sm:text-xl tracking-tight transition-colors ${
-                  isTransparent ? "text-white" : "text-slate-900"
+                  navbarTransparent ? "text-white" : "text-slate-900"
                 }`}>WEEK-CHAIN</span>
                 <span className={`text-[9px] sm:text-xs font-medium hidden sm:block transition-colors ${
-                  isTransparent ? "text-white/70" : "text-slate-500"
+                  navbarTransparent ? "text-white/70" : "text-slate-500"
                 }`}>Smart Vacational Certificate</span>
               </div>
             </Link>
@@ -286,10 +284,10 @@ export function Navbar() {
                   key={item.label}
                   href={item.href}
                   className={`group flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold transition-all rounded-xl ${
-                    isTransparent ? "text-white/90 hover:text-white hover:bg-white/10" : `text-slate-700 ${item.bgHover} ${item.hoverColor}`
+                    navbarTransparent ? "text-white/90 hover:text-white hover:bg-white/10" : `text-slate-700 ${item.bgHover} ${item.hoverColor}`
                   }`}
                 >
-                  <span className={`${isTransparent ? "text-white/80" : item.color} group-hover:scale-110 transition-transform`}>{item.icon}</span>
+                  <span className={`${navbarTransparent ? "text-white/80" : item.color} group-hover:scale-110 transition-transform`}>{item.icon}</span>
                   <span className="whitespace-nowrap">{item.label}</span>
                 </Link>
               ))}
@@ -297,10 +295,10 @@ export function Navbar() {
               {/* Mundo-WEEK Dropdown */}
               <DropdownMenu open={ecosystemOpen} onOpenChange={setEcosystemOpen}>
                 <DropdownMenuTrigger asChild>
-                    <button className={`group flex items-center gap-2 px-4 py-2.5 text-sm font-semibold transition-all rounded-xl ${
-                      isTransparent ? "text-white/90 hover:text-white hover:bg-white/10" : "text-slate-700 hover:text-sky-500 hover:bg-gradient-to-r hover:from-sky-50 hover:to-cyan-50"
-                    }`}>
-                    <Globe className={`w-5 h-5 group-hover:rotate-12 transition-transform ${isTransparent ? "text-white/80" : "text-sky-600"}`} />
+                  <button className={`group flex items-center gap-2 px-4 py-2.5 text-sm font-semibold transition-all rounded-xl ${
+                    navbarTransparent ? "text-white/90 hover:text-white hover:bg-white/10" : "text-slate-700 hover:text-sky-500 hover:bg-gradient-to-r hover:from-sky-50 hover:to-cyan-50"
+                  }`}>
+                    <Globe className={`w-5 h-5 group-hover:rotate-12 transition-transform ${navbarTransparent ? "text-white/80" : "text-sky-600"}`} />
                     <span className="whitespace-nowrap">Mundo-WEEK</span>
                     <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
                   </button>
@@ -336,24 +334,24 @@ export function Navbar() {
               </Link>
             </nav>
 
-            {/* Right Side Actions - Solo si esta autenticado */}
+            {/* Right Side Actions */}
             <div className="hidden lg:flex items-center gap-3">
               {!isAuthenticated ? (
                 <Link href="/auth">
                   <Button
                     variant="outline"
                     className={`font-semibold text-sm px-5 py-2.5 h-auto transition-all rounded-lg bg-transparent ${
-                      isTransparent ? "border-white/40 text-white hover:bg-white/10" : "border-slate-300 text-slate-700 hover:bg-slate-50"
+                      navbarTransparent ? "border-white/40 text-white hover:bg-white/10" : "border-slate-300 text-slate-700 hover:bg-slate-50"
                     }`}
                   >
-                    Iniciar Sesión
+                    Iniciar Sesion
                   </Button>
                 </Link>
               ) : (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-semibold text-sm transition-all ${
-                      isTransparent ? "bg-white/10 hover:bg-white/20 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+                      navbarTransparent ? "bg-white/10 hover:bg-white/20 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
                     }`}>
                       <UserCircle className="w-5 h-5" />
                       <span className="max-w-[120px] truncate">{userName || "Usuario"}</span>
@@ -379,7 +377,6 @@ export function Navbar() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
-
               <LanguageSelector />
             </div>
 
@@ -387,7 +384,7 @@ export function Navbar() {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className={`lg:hidden p-3 rounded-xl transition-colors active:scale-95 ${
-                isTransparent ? "text-white hover:bg-white/10" : "text-slate-700 hover:bg-slate-100"
+                navbarTransparent ? "text-white hover:bg-white/10" : "text-slate-700 hover:bg-slate-100"
               }`}
               aria-label="Toggle menu"
             >
@@ -407,7 +404,7 @@ export function Navbar() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl text-slate-700 font-semibold transition-all active:scale-[0.98] ${item.bgHover} text-base`}
                 >
-                  <span className={`${item.color}`}>{item.icon}</span>
+                  <span className={item.color}>{item.icon}</span>
                   <span>{item.label}</span>
                 </Link>
               ))}
@@ -434,15 +431,12 @@ export function Navbar() {
               <div className="pt-4 mt-4 border-t-2 border-slate-200 space-y-3">
                 {!isAuthenticated ? (
                   <>
-                    {/* Primary CTA - same flow as desktop COMENZAR */}
                     <Link href="/auth" onClick={() => setMobileMenuOpen(false)}>
                       <Button className="w-full bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-500 text-primary-foreground font-bold text-base min-h-[52px] py-3 hover:shadow-xl transition-all shadow-lg shadow-sky-300/50 border-2 border-sky-200 rounded-xl active:scale-[0.98]">
                         <Play className="w-6 h-6 fill-white mr-2" />
                         COMENZAR
                       </Button>
                     </Link>
-
-                    {/* Secondary actions - same as desktop */}
                     <div className="grid grid-cols-2 gap-3">
                       <Link href="/auth?tab=login" onClick={() => setMobileMenuOpen(false)}>
                         <Button
