@@ -60,14 +60,14 @@ export function Footer() {
   return (
     <footer className="bg-slate-900 text-white">
       {/* WEEK-Tracker Section */}
-      <div className="bg-gradient-to-r from-[#FF6B7A] via-[#FF8A94] to-[#FF6B7A] py-6 sm:py-8">
+      <div className="bg-gradient-to-r from-sky-600 via-sky-500 to-sky-600 py-6 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/ventas" className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 group">
             {/* Icon container con animación */}
             <div className="relative">
               <div className="absolute inset-0 bg-white/30 rounded-full blur-xl animate-pulse" />
               <div className="relative flex items-center justify-center bg-white rounded-full p-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <Activity className="h-8 w-8 text-[#FF6B7A]" />
+                <Activity className="h-8 w-8 text-sky-600" />
               </div>
             </div>
 
@@ -81,7 +81,7 @@ export function Footer() {
             </div>
 
             {/* Botón CTA */}
-            <div className="flex items-center gap-2 bg-white text-[#FF6B7A] font-bold text-base sm:text-lg px-6 py-3 rounded-full shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
+            <div className="flex items-center gap-2 bg-white text-sky-600 font-bold text-base sm:text-lg px-6 py-3 rounded-full shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
               <span>VER TRANSACCIONES</span>
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </div>
@@ -147,7 +147,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-[#FF9AA2] transition-colors"
+                  className="text-slate-400 hover:text-sky-400 transition-colors"
                   aria-label={`Síguenos en ${social.label}`}
                 >
                   <social.icon className="h-5 w-5" />
@@ -162,7 +162,7 @@ export function Footer() {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-slate-400 hover:text-[#FF9AA2] transition-colors text-sm">
+                  <Link href={link.href} className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                     {link.label}
                   </Link>
                 </li>
@@ -178,7 +178,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="flex items-center gap-2 text-slate-400 hover:text-[#FF9AA2] transition-colors text-sm"
+                    className="flex items-center gap-2 text-slate-400 hover:text-sky-400 transition-colors text-sm"
                   >
                     <link.icon className="h-4 w-4" />
                     {link.label}
@@ -194,7 +194,7 @@ export function Footer() {
             <ul className="space-y-3">
               {legalLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-slate-400 hover:text-[#FF9AA2] transition-colors text-sm">
+                  <Link href={link.href} className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                     {link.label}
                   </Link>
                 </li>
@@ -209,18 +209,18 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:info@week-chain.com"
-                  className="flex items-center gap-3 text-slate-400 hover:text-[#FF9AA2] transition-colors text-sm"
+                  className="flex items-center gap-3 text-slate-400 hover:text-sky-400 transition-colors text-sm"
                 >
-                  <Mail className="h-4 w-4 text-[#FF9AA2]" />
+                  <Mail className="h-4 w-4 text-sky-400" />
                   info@week-chain.com
                 </a>
               </li>
               <li>
                 <a
                   href="tel:+529841234567"
-                  className="flex items-center gap-3 text-slate-400 hover:text-[#FF9AA2] transition-colors text-sm"
+                  className="flex items-center gap-3 text-slate-400 hover:text-sky-400 transition-colors text-sm"
                 >
-                  <Phone className="h-4 w-4 text-[#FF9AA2]" />
+                  <Phone className="h-4 w-4 text-sky-400" />
                   +52 984 123 4567
                 </a>
               </li>
@@ -229,9 +229,9 @@ export function Footer() {
                   href="https://www.google.com/maps/place/Playa+del+Carmen,+Quintana+Roo,+Mexico"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start gap-3 text-slate-400 hover:text-[#FF9AA2] transition-colors text-sm"
+                  className="flex items-start gap-3 text-slate-400 hover:text-sky-400 transition-colors text-sm"
                 >
-                  <MapPin className="h-4 w-4 text-[#FF9AA2] mt-0.5" />
+                  <MapPin className="h-4 w-4 text-sky-400 mt-0.5" />
                   Playa del Carmen, Quintana Roo, México
                 </a>
               </li>

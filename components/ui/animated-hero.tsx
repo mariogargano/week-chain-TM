@@ -3,6 +3,8 @@
 import { useEffect, useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTranslations } from "@/lib/i18n/use-translations"
+import { Play } from "lucide-react"
+import Link from "next/link"
 
 const DEFAULT_TITLES = ["Vacaciones", "Certificados Verificados", "Destinos Premium", "15 Años", "Experiencias"]
 
@@ -11,7 +13,6 @@ function AnimatedHero() {
   const [titleNumber, setTitleNumber] = useState(0)
 
   const titlesRef = useRef(DEFAULT_TITLES)
-  const heroTitle = t?.hero?.title || "Democratizando el Acceso a"
 
   if (t?.hero?.animatedTitles && JSON.stringify(t.hero.animatedTitles) !== JSON.stringify(titlesRef.current)) {
     titlesRef.current = t.hero.animatedTitles
@@ -22,30 +23,34 @@ function AnimatedHero() {
       setTitleNumber((prev) => (prev === titlesRef.current.length - 1 ? 0 : prev + 1))
     }, 3000)
     return () => clearTimeout(timeoutId)
-  }, [titleNumber]) // Removed titles from dependencies to prevent infinite loop
+  }, [titleNumber])
 
   return (
     <div className="w-full relative overflow-hidden min-h-[100svh] sm:min-h-[90vh] flex items-center justify-center">
-      {/* Background Image */}
+      {/* Background - rich gradient */}
       <div className="absolute inset-0 z-0">
-        <img src="/luxury-resort-hero-background.jpg" alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-sky-950 to-cyan-950" />
+        {/* Decorative blur circles for depth */}
+        <div className="absolute top-1/4 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-sky-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 sm:w-80 h-64 sm:h-80 bg-cyan-400/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-sky-600/5 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
       </div>
 
-      {/* Content - Simple and Centered */}
-      <div className="relative z-10 text-center px-6 sm:px-8 md:px-12 w-full max-w-[90%] sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto">
+      {/* Content */}
+      <div className="relative z-10 text-center px-6 sm:px-8 md:px-12 w-full max-w-[90%] sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto pt-16 sm:pt-0">
         {/* Main Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white tracking-tight leading-[1.15] sm:leading-[1.1] mb-4 sm:mb-6 md:mb-8 text-balance"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white tracking-tight leading-[1.1] mb-4 sm:mb-6 md:mb-8 text-balance"
         >
           ENJOY YOUR WEEKS
         </motion.h1>
 
         {/* Animated Word */}
-        <div className="relative h-[40px] xs:h-[48px] sm:h-[56px] md:h-[70px] lg:h-[85px] xl:h-[100px] flex items-center justify-center mb-6 sm:mb-8 md:mb-10">
+        <div className="relative h-[44px] sm:h-[56px] md:h-[70px] lg:h-[85px] xl:h-[100px] flex items-center justify-center mb-6 sm:mb-8 md:mb-10">
           <AnimatePresence mode="wait">
             <motion.span
               key={titleNumber}
@@ -57,13 +62,12 @@ function AnimatedHero() {
                 stiffness: 80,
                 damping: 15,
               }}
-              className="absolute text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl font-black whitespace-nowrap"
+              className="absolute text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl font-black whitespace-nowrap"
               style={{
-                background: "linear-gradient(135deg, #FF9AA2 0%, #FFB7B2 30%, #FFDAC1 50%, #B5EAD7 70%, #C7CEEA 100%)",
+                background: "linear-gradient(135deg, #38bdf8 0%, #22d3ee 35%, #06b6d4 60%, #0ea5e9 80%, #38bdf8 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                textShadow: "0 4px 30px rgba(255, 154, 162, 0.3)",
               }}
             >
               {titlesRef.current[titleNumber]}
@@ -71,15 +75,30 @@ function AnimatedHero() {
           </AnimatePresence>
         </div>
 
-        {/* Simple Tagline */}
+        {/* Tagline */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="inline-block px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full bg-[#FF9AA2]/80 backdrop-blur-sm text-base sm:text-lg md:text-xl lg:text-2xl text-white font-semibold tracking-[0.15em] uppercase shadow-lg shadow-[#FF9AA2]/30"
+          className="inline-block px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full bg-sky-500/80 backdrop-blur-sm text-base sm:text-lg md:text-xl lg:text-2xl text-white font-semibold tracking-[0.12em] uppercase shadow-lg shadow-sky-500/30"
         >
           Paga una vez. Disfruta 15 años.
         </motion.p>
+
+        {/* CTA Button - visible on ALL devices including mobile */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-8 sm:mt-10"
+        >
+          <Link href="/auth">
+            <button className="group inline-flex items-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold text-white bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-500 hover:shadow-2xl transition-all rounded-2xl hover:scale-105 shadow-xl shadow-sky-500/40 border border-sky-300/50 active:scale-[0.98] min-h-[52px]">
+              <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-white group-hover:scale-110 transition-transform" />
+              <span>COMENZAR</span>
+            </button>
+          </Link>
+        </motion.div>
       </div>
     </div>
   )
