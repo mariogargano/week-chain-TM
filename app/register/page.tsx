@@ -51,6 +51,14 @@ function RegisterRedirect() {
 }
 
 export default function ReferralRegisterPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><Loader2 className="h-8 w-8 animate-spin text-sky-500" /></div>}>
+      <ReferralRegisterContent />
+    </Suspense>
+  )
+}
+
+function ReferralRegisterContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const refCode = searchParams.get("ref")

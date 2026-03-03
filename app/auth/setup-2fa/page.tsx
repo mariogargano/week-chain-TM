@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -13,6 +13,14 @@ import { createBrowserClient } from "@/lib/supabase/client"
 export const dynamic = "force-dynamic"
 
 export default function Setup2FAPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><Loader2 className="h-8 w-8 animate-spin text-sky-500" /></div>}>
+      <Setup2FAContent />
+    </Suspense>
+  )
+}
+
+function Setup2FAContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const required = searchParams.get("required") === "true"

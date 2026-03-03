@@ -182,9 +182,9 @@ export function HomePageClient() {
         <FAQJsonLd faqs={homepageFaqs} />
 
         <div className="flex flex-col bg-white">
-          {/* Hero Section - pulls up behind the fixed navbar */}
+          {/* Hero Section */}
           <article aria-label={hero.badge || "Smart Vacational Certificates"}>
-            <section className="relative overflow-hidden -mt-20">
+            <section className="relative overflow-hidden">
               <AnimatedHero />
             </section>
           </article>
