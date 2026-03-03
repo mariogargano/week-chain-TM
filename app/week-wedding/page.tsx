@@ -11,14 +11,10 @@ export default function WeekWeddingPage() {
   const [selectedCard, setSelectedCard] = useState<"classic" | "premium" | "luxury">("premium")
 
   const handleDownloadAppleWallet = () => {
-    console.log("[v0] Downloading Apple Wallet pass")
-    // TODO: Implement Apple Wallet pass generation
     alert("Descarga de Apple Wallet - Próximamente")
   }
 
   const handleDownloadGoogleWallet = () => {
-    console.log("[v0] Downloading Google Wallet pass")
-    // TODO: Implement Google Wallet pass generation
     alert("Descarga de Google Wallet - Próximamente")
   }
 

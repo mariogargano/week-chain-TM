@@ -16,14 +16,14 @@ export default function WeekCarePage() {
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("[v0] Newsletter subscription:", email)
+    // Newsletter subscription
     alert("¡Gracias por suscribirte a WEEK-CARE!")
     setEmail("")
   }
 
   const handleContact = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("[v0] Contact form:", { email, message })
+    // Contact form submission
     alert("¡Gracias por tu mensaje! Nos pondremos en contacto pronto.")
     setEmail("")
     setMessage("")
