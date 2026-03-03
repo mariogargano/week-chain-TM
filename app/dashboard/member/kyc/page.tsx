@@ -1,7 +1,7 @@
 "use client"
 
 import { createBrowserClient } from "@/lib/supabase/client"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
@@ -30,6 +30,21 @@ interface KycData {
 }
 
 export default function KycPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <div className="rounded-2xl p-8 text-center bg-background shadow-sm">
+          <Loader2 className="h-8 w-8 animate-spin text-sky-500 mx-auto mb-4" />
+          <p className="text-muted-foreground">Cargando...</p>
+        </div>
+      </div>
+    }>
+      <KycPageContent />
+    </Suspense>
+  )
+}
+
+function KycPageContent() {
   const searchParams = useSearchParams()
   const nextUrl = searchParams?.get("next")
   const [kycData, setKycData] = useState<KycData | null>(null)

@@ -1,7 +1,7 @@
 "use client"
 
 import { createBrowserClient } from "@/lib/supabase/client"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
@@ -72,6 +72,14 @@ interface KycStatus {
 }
 
 export default function MemberDashboardPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-[50vh]"><Loader2 className="h-8 w-8 animate-spin text-sky-500" /></div>}>
+      <MemberDashboardContent />
+    </Suspense>
+  )
+}
+
+function MemberDashboardContent() {
   const searchParams = useSearchParams()
   const purchaseStatus = searchParams?.get("purchase")
   const [profile, setProfile] = useState<UserProfile | null>(null)
