@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
@@ -15,7 +14,6 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // Redirect www to non-www
       {
         source: '/:path*',
         has: [
