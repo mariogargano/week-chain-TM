@@ -24,7 +24,7 @@ import { useState, useEffect } from "react"
 import { LanguageSelector } from "@/components/language-selector"
 import { useTranslations } from "@/lib/i18n/use-translations"
 import { createClient } from "@/lib/supabase/client"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -49,7 +49,12 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
+  const isHome = pathname === "/"
   const t = useTranslations()
+
+  // Navbar is transparent only on homepage, when not scrolled, and menu is closed
+  const isTransparent = isTransparent
 
   const nav = {
     aboutUs: t?.nav?.aboutUs || fallbackNav.aboutUs,
@@ -240,26 +245,36 @@ export function Navbar() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
-          scrolled ? "bg-white/95 backdrop-blur-lg shadow-xl border-b border-slate-200" : "bg-white shadow-md"
+          isTransparent
+            ? "bg-transparent"
+            : scrolled || mobileMenuOpen
+              ? "bg-white/95 backdrop-blur-lg shadow-xl border-b border-slate-200"
+              : "bg-white shadow-md"
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group">
-              <div className="relative w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-md shadow-slate-400/30 ring-1 ring-slate-300/50 bg-white transition-transform group-hover:scale-105 flex-shrink-0">
+              <div className={`relative w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-md transition-transform group-hover:scale-105 flex-shrink-0 ${
+                isTransparent ? "shadow-black/30 ring-1 ring-white/20 bg-white/90" : "shadow-slate-400/30 ring-1 ring-slate-300/50 bg-white"
+              }`}>
                 <Image
                   src="/logo-wc.png"
                   alt="WEEK-CHAIN Logo"
                   width={56}
                   height={56}
-                  className="w-full h-full object-contain p-0.5 mix-blend-multiply"
+                  className="w-full h-full object-contain p-0.5"
                   priority
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-slate-900 text-base sm:text-xl tracking-tight">WEEK-CHAIN</span>
-                <span className="text-[9px] sm:text-xs text-slate-500 font-medium hidden sm:block">Smart Vacational Certificate</span>
+                <span className={`font-bold text-base sm:text-xl tracking-tight transition-colors ${
+                  isTransparent ? "text-white" : "text-slate-900"
+                }`}>WEEK-CHAIN</span>
+                <span className={`text-[9px] sm:text-xs font-medium hidden sm:block transition-colors ${
+                  isTransparent ? "text-white/70" : "text-slate-500"
+                }`}>Smart Vacational Certificate</span>
               </div>
             </Link>
 
@@ -269,9 +284,11 @@ export function Navbar() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`group flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all rounded-xl ${item.bgHover} ${item.hoverColor}`}
+                  className={`group flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold transition-all rounded-xl ${
+                    isTransparent ? "text-white/90 hover:text-white hover:bg-white/10" : `text-slate-700 ${item.bgHover} ${item.hoverColor}`
+                  }`}
                 >
-                  <span className={`${item.color} group-hover:scale-110 transition-transform`}>{item.icon}</span>
+                  <span className={`${isTransparent ? "text-white/80" : item.color} group-hover:scale-110 transition-transform`}>{item.icon}</span>
                   <span className="whitespace-nowrap">{item.label}</span>
                 </Link>
               ))}
@@ -279,8 +296,10 @@ export function Navbar() {
               {/* Mundo-WEEK Dropdown */}
               <DropdownMenu open={ecosystemOpen} onOpenChange={setEcosystemOpen}>
                 <DropdownMenuTrigger asChild>
-                  <button className="group flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-sky-500 transition-all rounded-xl hover:bg-gradient-to-r hover:from-sky-50 hover:to-cyan-50">
-                    <Globe className="w-5 h-5 text-sky-600 group-hover:rotate-12 transition-transform" />
+                    <button className={`group flex items-center gap-2 px-4 py-2.5 text-sm font-semibold transition-all rounded-xl ${
+                      isTransparent ? "text-white/90 hover:text-white hover:bg-white/10" : "text-slate-700 hover:text-sky-500 hover:bg-gradient-to-r hover:from-sky-50 hover:to-cyan-50"
+                    }`}>
+                    <Globe className={`w-5 h-5 group-hover:rotate-12 transition-transform ${isTransparent ? "text-white/80" : "text-sky-600"}`} />
                     <span className="whitespace-nowrap">Mundo-WEEK</span>
                     <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
                   </button>
@@ -322,7 +341,9 @@ export function Navbar() {
                 <Link href="/auth">
                   <Button
                     variant="outline"
-                    className="border-slate-300 text-slate-700 font-semibold text-sm px-5 py-2.5 h-auto hover:bg-slate-50 transition-all rounded-lg bg-transparent"
+                    className={`font-semibold text-sm px-5 py-2.5 h-auto transition-all rounded-lg bg-transparent ${
+                      isTransparent ? "border-white/40 text-white hover:bg-white/10" : "border-slate-300 text-slate-700 hover:bg-slate-50"
+                    }`}
                   >
                     Iniciar Sesión
                   </Button>
@@ -330,7 +351,9 @@ export function Navbar() {
               ) : (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-sm transition-all">
+                    <button className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-semibold text-sm transition-all ${
+                      isTransparent ? "bg-white/10 hover:bg-white/20 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+                    }`}>
                       <UserCircle className="w-5 h-5" />
                       <span className="max-w-[120px] truncate">{userName || "Usuario"}</span>
                       <ChevronDown className="w-4 h-4" />
@@ -362,7 +385,9 @@ export function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-3 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors active:scale-95"
+              className={`lg:hidden p-3 rounded-xl transition-colors active:scale-95 ${
+                isTransparent ? "text-white hover:bg-white/10" : "text-slate-700 hover:bg-slate-100"
+              }`}
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
