@@ -179,15 +179,15 @@ export function AdminSidebar() {
 
   return (
     <Sidebar collapsible="icon" className="border-r border-slate-200 bg-white">
-      <SidebarHeader className="border-b border-slate-200 p-4 bg-slate-900">
+      <SidebarHeader className="border-b border-slate-200 p-4 bg-white">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 shadow-lg">
-            <Building2 className="h-5 w-5 text-white" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 shadow-sm">
+            <Building2 className="h-5 w-5 text-sky-700" />
           </div>
           {state === "expanded" && (
             <div className="flex flex-col">
-              <span className="text-sm font-bold text-white tracking-wide">WEEK-CHAIN</span>
-              <span className="text-[10px] font-medium text-slate-400">Admin Panel</span>
+              <span className="text-sm font-bold text-slate-900 tracking-wide">WEEK-CHAIN</span>
+              <span className="text-[10px] font-medium text-slate-500">Admin Panel</span>
             </div>
           )}
         </div>
