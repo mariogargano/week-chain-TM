@@ -89,6 +89,25 @@ export default function AdminDashboard() {
       setError(null)
       const supabase = createClient()
 
+      // Verify session before making queries
+      const { data: sessionData } = await supabase.auth.getSession()
+      if (!sessionData?.session) {
+        setError("Sesion no valida. Inicia sesion para acceder al panel.")
+        setLoading(false)
+        setRefreshing(false)
+        return
+      }
+
+      const safeQuery = async (query: Promise<any>) => {
+        try {
+          const result = await query
+          if (result.error) return { data: null, count: 0, error: result.error }
+          return result
+        } catch {
+          return { data: null, count: 0, error: "Query failed" }
+        }
+      }
+
       const [
         capacityResponse,
         usersResult,
@@ -102,15 +121,15 @@ export default function AdminDashboard() {
         recentReservations,
       ] = await Promise.all([
         fetch("/api/admin/capacity/global-status").then((r) => r.ok ? r.json() : { globalMetrics: {} }).catch(() => ({ globalMetrics: {} })),
-        supabase.from("users").select("id, created_at", { count: "exact" }),
-        supabase.from("kyc_users").select("id", { count: "exact" }).eq("status", "pending"),
-        supabase.from("certificates").select("id, status", { count: "exact" }),
-        supabase.from("properties").select("id, status", { count: "exact" }),
-        supabase.from("reservation_requests").select("id", { count: "exact" }).in("status", ["requested", "processing"]),
-        supabase.from("payments").select("id, amount, status", { count: "exact" }),
-        supabase.from("broker_applications").select("id", { count: "exact" }).eq("status", "pending"),
-        supabase.from("kyc_users").select("id, name, email, status, created_at").eq("status", "pending").order("created_at", { ascending: false }).limit(5),
-        supabase.from("reservation_requests").select("id, status, created_at, destination_preference").in("status", ["requested", "processing"]).order("created_at", { ascending: false }).limit(5),
+        safeQuery(supabase.from("users").select("id, created_at", { count: "exact" })),
+        safeQuery(supabase.from("kyc_users").select("id", { count: "exact" }).eq("status", "pending")),
+        safeQuery(supabase.from("certificates").select("id, status", { count: "exact" })),
+        safeQuery(supabase.from("properties").select("id, status", { count: "exact" })),
+        safeQuery(supabase.from("reservation_requests").select("id", { count: "exact" }).in("status", ["requested", "processing"])),
+        safeQuery(supabase.from("payments").select("id, amount, status", { count: "exact" })),
+        safeQuery(supabase.from("broker_applications").select("id", { count: "exact" }).eq("status", "pending")),
+        safeQuery(supabase.from("kyc_users").select("id, name, email, status, created_at").eq("status", "pending").order("created_at", { ascending: false }).limit(5)),
+        safeQuery(supabase.from("reservation_requests").select("id, status, created_at, destination_preference").in("status", ["requested", "processing"]).order("created_at", { ascending: false }).limit(5)),
       ])
 
       const now = new Date()
@@ -225,9 +244,16 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-red-600 mb-4">{error}</p>
-            <Button onClick={() => { fetchedRef.current = false; fetchDashboardData() }} className="w-full bg-red-600 hover:bg-red-700 text-white">
-              Reintentar
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={() => { fetchedRef.current = false; fetchDashboardData() }} className="flex-1 bg-red-600 hover:bg-red-700 text-white">
+                Reintentar
+              </Button>
+              <Link href="/auth?tab=login" className="flex-1">
+                <Button variant="outline" className="w-full border-red-300 text-red-700 hover:bg-red-100">
+                  Iniciar Sesion
+                </Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
       </div>
