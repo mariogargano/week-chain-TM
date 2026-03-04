@@ -351,19 +351,19 @@ export default function AdminDashboard() {
           </h3>
           <div className="space-y-2.5">
             {[
-              { condition: data.pendingKYC > 0, label: "Verificaciones KYC", count: data.pendingKYC, icon: BadgeCheck, color: "amber", href: "/dashboard/admin/kyc" },
-              { condition: data.pendingReservations > 0, label: "Solicitudes de Reserva", count: data.pendingReservations, icon: Calendar, color: "sky", href: "/dashboard/admin/reservations" },
-              { condition: data.pendingPropertySubmissions > 0, label: "Propiedades por Aprobar", count: data.pendingPropertySubmissions, icon: Building2, color: "violet", href: "/dashboard/admin/property-approvals" },
-              { condition: data.pendingContracts > 0, label: "Contratos Pendientes", count: data.pendingContracts, icon: FileText, color: "emerald", href: "/dashboard/admin/legalario" },
-              { condition: data.waitlistSize > 0, label: "Lista de Espera", count: data.waitlistSize, icon: Star, color: "orange", href: "/dashboard/admin/presale" },
+              { condition: data.pendingKYC > 0, label: "Verificaciones KYC", count: data.pendingKYC, icon: BadgeCheck, bg: "bg-amber-500/10 border-amber-500/20 hover:bg-amber-500/20", iconCls: "text-amber-600", badgeCls: "bg-amber-500/20 text-amber-700 border-amber-500/30", href: "/dashboard/admin/kyc" },
+              { condition: data.pendingReservations > 0, label: "Solicitudes de Reserva", count: data.pendingReservations, icon: Calendar, bg: "bg-sky-500/10 border-sky-500/20 hover:bg-sky-500/20", iconCls: "text-sky-600", badgeCls: "bg-sky-500/20 text-sky-700 border-sky-500/30", href: "/dashboard/admin/reservations" },
+              { condition: data.pendingPropertySubmissions > 0, label: "Propiedades por Aprobar", count: data.pendingPropertySubmissions, icon: Building2, bg: "bg-violet-500/10 border-violet-500/20 hover:bg-violet-500/20", iconCls: "text-violet-600", badgeCls: "bg-violet-500/20 text-violet-700 border-violet-500/30", href: "/dashboard/admin/property-approvals" },
+              { condition: data.pendingContracts > 0, label: "Contratos Pendientes", count: data.pendingContracts, icon: FileText, bg: "bg-emerald-500/10 border-emerald-500/20 hover:bg-emerald-500/20", iconCls: "text-emerald-600", badgeCls: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30", href: "/dashboard/admin/legalario" },
+              { condition: data.waitlistSize > 0, label: "Lista de Espera", count: data.waitlistSize, icon: Star, bg: "bg-orange-500/10 border-orange-500/20 hover:bg-orange-500/20", iconCls: "text-orange-600", badgeCls: "bg-orange-500/20 text-orange-700 border-orange-500/30", href: "/dashboard/admin/presale" },
             ].filter(item => item.condition).map((item) => (
               <Link key={item.label} href={item.href}>
-                <div className={`flex items-center justify-between p-3 rounded-xl bg-${item.color}-500/10 border border-${item.color}-500/20 hover:bg-${item.color}-500/20 transition-all cursor-pointer`}>
+                <div className={`flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer ${item.bg}`}>
                   <div className="flex items-center gap-2.5">
-                    <item.icon className={`h-4 w-4 text-${item.color}-600`} />
+                    <item.icon className={`h-4 w-4 ${item.iconCls}`} />
                     <span className="text-sm font-medium text-slate-700">{item.label}</span>
                   </div>
-                  <Badge className={`bg-${item.color}-500/20 text-${item.color}-700 border-${item.color}-500/30`}>{item.count}</Badge>
+                  <Badge className={item.badgeCls}>{item.count}</Badge>
                 </div>
               </Link>
             ))}
