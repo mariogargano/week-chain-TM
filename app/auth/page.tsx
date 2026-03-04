@@ -10,8 +10,11 @@ import { toast } from "sonner"
 import { AlertCircle, Mail, Shield } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState, useEffect, Suspense } from "react"
+import { useState, useEffect, Suspense, useRef, useCallback } from "react"
 import Image from "next/image"
+import HCaptcha from "@hcaptcha/react-hcaptcha"
+
+const HCAPTCHA_SITEKEY = "1fdef23e-bc58-44a4-8cca-a4c29e604242"
 
 export default function AuthPage() {
   return (
@@ -45,12 +48,16 @@ function AuthPageContent() {
   const [referralCode, setReferralCode] = useState("")
   const [referrerName, setReferrerName] = useState<string | null>(null)
 
+  // hCaptcha
+  const captchaRef = useRef<HCaptcha | null>(null)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const pendingAuthAction = useRef<"login" | "register" | "magic" | null>(null)
+
   useEffect(() => {
     const ref = searchParams?.get("ref")
     if (ref) {
       setReferralCode(ref)
       fetchReferrerName(ref)
-      // Referral links should go directly to register
       setActiveTab("register")
     }
 
@@ -69,7 +76,6 @@ function AuthPageContent() {
     try {
       const supabase = createClient()
       const { data } = await supabase.from("users").select("full_name").eq("referral_code", code).single()
-
       if (data?.full_name) {
         setReferrerName(data.full_name)
       }
@@ -78,8 +84,45 @@ function AuthPageContent() {
     }
   }
 
+  // Execute captcha and then run the pending auth action
+  const executeCaptchaAndAuth = useCallback((action: "login" | "register" | "magic") => {
+    pendingAuthAction.current = action
+    setCaptchaToken(null)
+    if (captchaRef.current) {
+      captchaRef.current.resetCaptcha()
+      captchaRef.current.execute()
+    }
+  }, [])
+
+  // Called when captcha is verified
+  const onCaptchaVerify = useCallback(async (token: string) => {
+    setCaptchaToken(token)
+    const action = pendingAuthAction.current
+    if (!action) return
+
+    if (action === "login") {
+      await executeLogin(token)
+    } else if (action === "register") {
+      await executeRegister(token)
+    } else if (action === "magic") {
+      await executeMagicLink(token)
+    }
+    pendingAuthAction.current = null
+  }, [email, password, registerName, registerPhone, confirmPassword, referralCode, registerTermsAccepted, magicLinkEmail])
+
+  const onCaptchaError = useCallback(() => {
+    setError("Error de verificacion CAPTCHA. Intenta nuevamente.")
+    setIsLoading(false)
+    pendingAuthAction.current = null
+  }, [])
+
+  const onCaptchaExpire = useCallback(() => {
+    setCaptchaToken(null)
+  }, [])
+
+  // ===== GOOGLE LOGIN (no captcha needed, Supabase handles it) =====
   const handleGoogleLogin = async () => {
-    if (hasAccepted === false) {
+    if (!hasAccepted) {
       setPendingAction("google")
       setShowTermsDialog(true)
       return
@@ -90,7 +133,7 @@ function AuthPageContent() {
 
     try {
       const supabase = createClient()
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
@@ -100,12 +143,7 @@ function AuthPageContent() {
           },
         },
       })
-
-      if (error) {
-        throw error
-      }
-
-      // Supabase handles the redirect automatically
+      if (error) throw error
     } catch (error: any) {
       const msg = error?.message || ""
       if (msg.includes("provider is not enabled") || msg.includes("Unsupported provider")) {
@@ -119,29 +157,32 @@ function AuthPageContent() {
     }
   }
 
-  const handleLogin = async (e: React.FormEvent) => {
+  // ===== EMAIL LOGIN =====
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
+    executeCaptchaAndAuth("login")
+  }
 
+  const executeLogin = async (token: string) => {
     try {
       const supabase = createClient()
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
+        options: { captchaToken: token },
       })
 
       if (error) throw error
 
       if (data.user) {
-        // Check if admin email
         if (data.user.email?.toLowerCase() === "corporativo@morises.com") {
           router.push("/dashboard/admin")
           toast.success("Bienvenido, Administrador!")
           return
         }
 
-        // Fetch role from users table
         const { data: userData } = await supabase
           .from("users")
           .select("role")
@@ -149,7 +190,6 @@ function AuthPageContent() {
           .maybeSingle()
 
         const role = userData?.role || "user"
-
         const roleRouteMap: Record<string, string> = {
           admin: "/dashboard/admin",
           super_admin: "/dashboard/admin",
@@ -164,8 +204,7 @@ function AuthPageContent() {
           property_owner: "/dashboard/owner",
         }
 
-        const dashboardPath = roleRouteMap[role] || "/dashboard/member"
-        router.push(dashboardPath)
+        router.push(roleRouteMap[role] || "/dashboard/member")
         toast.success("Bienvenido de vuelta!")
       }
     } catch (error: any) {
@@ -176,36 +215,40 @@ function AuthPageContent() {
     }
   }
 
-  const handleRegister = async (e: React.FormEvent) => {
+  // ===== REGISTER =====
+  const handleRegister = (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
 
+    if (password !== confirmPassword) {
+      setError("Las contrasenas no coinciden")
+      setIsLoading(false)
+      return
+    }
+    if (!registerTermsAccepted) {
+      setError("Debes aceptar los terminos y condiciones para registrarte")
+      setIsLoading(false)
+      return
+    }
+
+    executeCaptchaAndAuth("register")
+  }
+
+  const executeRegister = async (token: string) => {
     try {
-      if (password !== confirmPassword) {
-        setError("Las contrasenas no coinciden")
-        setIsLoading(false)
-        return
-      }
-      if (!registerTermsAccepted) {
-        setError("Debes aceptar los terminos y condiciones para registrarte")
-        setIsLoading(false)
-        return
-      }
       const supabase = createClient()
 
       if (referralCode) {
         const { data: referrer } = await supabase.from("users").select("id").eq("referral_code", referralCode).single()
-
-        if (!referrer) {
-          throw new Error("Código de referido inválido")
-        }
+        if (!referrer) throw new Error("Codigo de referido invalido")
       }
 
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
+          captchaToken: token,
           data: {
             full_name: registerName,
             phone: registerPhone,
@@ -216,7 +259,7 @@ function AuthPageContent() {
       })
 
       if (error) throw error
-      toast.success("¡Registro exitoso! Revisa tu email para confirmar tu cuenta.")
+      toast.success("Registro exitoso! Revisa tu email para confirmar tu cuenta.")
       setActiveTab("login")
     } catch (error: any) {
       setError(error.message || "Error al registrarse")
@@ -226,48 +269,62 @@ function AuthPageContent() {
     }
   }
 
-  const handleTermsAcceptance = () => {
-    setHasAccepted(true)
-    setShowTermsDialog(false)
-
-    if (pendingAction === "google") {
-      handleGoogleLogin()
-    }
-  }
-
-  const handleMagicLink = async (e: React.FormEvent) => {
+  // ===== MAGIC LINK =====
+  const handleMagicLink = (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
+    executeCaptchaAndAuth("magic")
+  }
 
+  const executeMagicLink = async (token: string) => {
     try {
       const supabase = createClient()
-      const { data, error } = await supabase.auth.signInWithOtp({
+      const { error } = await supabase.auth.signInWithOtp({
         email: magicLinkEmail,
         options: {
+          captchaToken: token,
           emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       })
 
       if (error) throw error
       setMagicLinkSent(true)
-      toast.success("¡Revisa tu email! Te hemos enviado un enlace mágico para iniciar sesión.")
+      toast.success("Revisa tu email! Te hemos enviado un enlace magico para iniciar sesion.")
     } catch (error: any) {
       if (error.message?.includes("rate")) {
         setError("Demasiados intentos. Por favor espera un momento antes de intentar nuevamente.")
       } else if (error.message?.includes("invalid")) {
-        setError("Email inválido. Por favor verifica tu dirección de correo.")
+        setError("Email invalido. Por favor verifica tu direccion de correo.")
       } else {
-        setError(error.message || "Error al enviar el enlace mágico")
+        setError(error.message || "Error al enviar el enlace magico")
       }
-      toast.error("Error al enviar el enlace mágico")
+      toast.error("Error al enviar el enlace magico")
     } finally {
       setIsLoading(false)
     }
   }
 
+  const handleTermsAcceptance = () => {
+    setHasAccepted(true)
+    setShowTermsDialog(false)
+    if (pendingAction === "google") {
+      handleGoogleLogin()
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center justify-start sm:justify-center px-4 py-8 sm:p-4">
+      {/* Invisible hCaptcha */}
+      <HCaptcha
+        ref={captchaRef}
+        sitekey={HCAPTCHA_SITEKEY}
+        size="invisible"
+        onVerify={onCaptchaVerify}
+        onError={onCaptchaError}
+        onExpire={onCaptchaExpire}
+      />
+
       <div className="text-center mb-6 sm:mb-8">
         <div className="flex items-center justify-center gap-3 mb-2">
           <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-lg shadow-slate-400/30 ring-1 ring-slate-300/50 bg-white flex-shrink-0">
@@ -313,7 +370,6 @@ function AuthPageContent() {
                 <p className="text-sm text-muted-foreground">Accede o crea tu cuenta de certificados vacacionales</p>
               </div>
 
-              {/* Google SSO */}
               <button
                 onClick={handleGoogleLogin}
                 disabled={isLoading}
@@ -338,7 +394,6 @@ function AuthPageContent() {
                 </div>
               </div>
 
-              {/* Two option cards */}
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
@@ -461,7 +516,7 @@ function AuthPageContent() {
                 className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white text-base font-semibold shadow-md shadow-sky-200"
                 disabled={isLoading}
               >
-                {isLoading ? "Enviando..." : "Enviar Enlace Magico"}
+                {isLoading ? "Verificando..." : "Enviar Enlace Magico"}
               </Button>
             </form>
           )}
@@ -539,7 +594,7 @@ function AuthPageContent() {
                 className="w-full h-12 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white text-base font-semibold shadow-md shadow-sky-200"
                 disabled={isLoading}
               >
-                {isLoading ? "Iniciando sesion..." : "Iniciar Sesion"}
+                {isLoading ? "Verificando..." : "Iniciar Sesion"}
               </Button>
 
               <p className="text-center text-sm text-muted-foreground mt-4">
@@ -685,7 +740,7 @@ function AuthPageContent() {
                 className="w-full h-12 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white text-base font-semibold shadow-md shadow-cyan-200 disabled:opacity-50"
                 disabled={isLoading || !registerTermsAccepted || (confirmPassword !== "" && password !== confirmPassword)}
               >
-                {isLoading ? "Creando cuenta..." : "Crear cuenta"}
+                {isLoading ? "Verificando..." : "Crear cuenta"}
               </Button>
 
               <p className="text-center text-sm text-muted-foreground mt-4">
