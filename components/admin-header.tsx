@@ -59,7 +59,7 @@ export function AdminHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-10 flex h-14 sm:h-16 items-center gap-2 sm:gap-4 border-b border-slate-200 bg-background px-3 sm:px-6">
+    <header className="sticky top-0 z-10 flex h-14 sm:h-16 items-center gap-2 sm:gap-4 border-b border-sky-500/15 bg-white/70 backdrop-blur-xl px-3 sm:px-6">
       <SidebarTrigger className="min-h-[44px] min-w-[44px]" />
 
       <div className="flex flex-1 items-center justify-between min-w-0">
@@ -69,7 +69,7 @@ export function AdminHeader() {
             <input
               type="search"
               placeholder="Buscar..."
-              className="h-9 w-48 lg:w-64 rounded-lg border border-border bg-secondary pl-10 pr-4 text-sm outline-none transition-colors focus:border-blue-500 focus:bg-background"
+              className="h-9 w-48 lg:w-64 rounded-xl border border-sky-500/20 bg-sky-500/[0.05] backdrop-blur-lg pl-10 pr-4 text-sm outline-none transition-all focus:border-sky-500/40 focus:ring-2 focus:ring-sky-500/15 focus:bg-white placeholder:text-slate-400"
             />
           </div>
         </div>
