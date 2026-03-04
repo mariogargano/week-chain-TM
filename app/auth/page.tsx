@@ -107,8 +107,14 @@ function AuthPageContent() {
 
       // Supabase handles the redirect automatically
     } catch (error: any) {
-      setError("Error al conectar con Google. Intenta nuevamente o usa email y contraseña.")
-      toast.error("Error de autenticacion con Google")
+      const msg = error?.message || ""
+      if (msg.includes("provider is not enabled") || msg.includes("Unsupported provider")) {
+        setError("El inicio de sesion con Google no esta disponible en este momento. Por favor usa email y contrasena.")
+        toast.error("Google no esta habilitado. Usa email y contrasena.")
+      } else {
+        setError("Error al conectar con Google. Intenta nuevamente o usa email y contrasena.")
+        toast.error("Error de autenticacion con Google")
+      }
       setIsLoading(false)
     }
   }
