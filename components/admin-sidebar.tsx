@@ -33,6 +33,36 @@ import {
   Mail,
   Send,
   MessageSquare,
+  Shield,
+  Activity,
+  Globe,
+  DollarSign,
+  Scale,
+  Wallet,
+  Lock,
+  Database,
+  Webhook,
+  Star,
+  BookOpen,
+  Calculator,
+  MonitorDot,
+  BadgeCheck,
+  Briefcase,
+  PlaneTakeoff,
+  HousePlus,
+  Coins,
+  ArrowLeftRight,
+  RefreshCcw,
+  ClipboardCheck,
+  Inbox,
+  Landmark,
+  PiggyBank,
+  MapPin,
+  Package,
+  UsersRound,
+  FileSearch,
+  Layers,
+  ShieldAlert,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -42,134 +72,103 @@ const navigationItems = [
   {
     title: "General",
     items: [
-      {
-        title: "Dashboard",
-        icon: LayoutDashboard,
-        href: "/dashboard/admin",
-        description: "Panel principal",
-      },
-      {
-        title: "Analytics",
-        icon: BarChart3,
-        href: "/dashboard/admin/analytics",
-        description: "Métricas y estadísticas",
-      },
+      { title: "Dashboard", icon: LayoutDashboard, href: "/dashboard/admin" },
+      { title: "Analytics", icon: BarChart3, href: "/dashboard/admin/analytics" },
+      { title: "Monitor en Tiempo Real", icon: MonitorDot, href: "/dashboard/admin/real-time-monitor" },
+      { title: "Reportes", icon: TrendingUp, href: "/dashboard/admin/reports" },
     ],
   },
   {
-    title: "Gestión",
+    title: "Usuarios y Roles",
     items: [
-      {
-        title: "Usuarios",
-        icon: Users,
-        href: "/dashboard/admin/users",
-        description: "Cuentas y roles",
-      },
-      {
-        title: "Propiedades",
-        icon: Building2,
-        href: "/dashboard/admin/properties",
-        description: "Listado de propiedades",
-      },
-      {
-        title: "Vouchers",
-        icon: Ticket,
-        href: "/dashboard/admin/vouchers",
-        description: "Certificados de compra",
-      },
-      {
-        title: "Brokers",
-        icon: UserCheck,
-        href: "/dashboard/admin/users?role=broker",
-        description: "Red de afiliados",
-      },
-      {
-        title: "Documentos",
-        icon: FolderOpen,
-        href: "/dashboard/admin/certifications",
-        description: "Contratos y certificados",
-      },
+      { title: "Usuarios", icon: Users, href: "/dashboard/admin/users" },
+      { title: "Equipo Interno", icon: UsersRound, href: "/dashboard/admin/team" },
+      { title: "KYC / Verificacion", icon: BadgeCheck, href: "/dashboard/admin/kyc" },
+      { title: "Red de Brokers", icon: Briefcase, href: "/dashboard/admin/approvals" },
     ],
   },
   {
-    title: "Operaciones",
+    title: "Propiedades y Destinos",
     items: [
-      {
-        title: "Pagos",
-        icon: CreditCard,
-        href: "/dashboard/admin/payments",
-        description: "Transacciones Conekta",
-      },
-      {
-        title: "KYC",
-        icon: FileText,
-        href: "/dashboard/admin/kyc",
-        description: "Verificación de identidad",
-      },
-      {
-        title: "Reservas",
-        icon: Calendar,
-        href: "/dashboard/admin/bookings",
-        description: "Reservaciones",
-      },
-      {
-        title: "Servicios",
-        icon: ShoppingBag,
-        href: "/dashboard/admin/services",
-        description: "Marketplace de servicios",
-      },
+      { title: "Propiedades", icon: Building2, href: "/dashboard/admin/properties" },
+      { title: "Destinos", icon: MapPin, href: "/dashboard/admin/destinations" },
+      { title: "Aprobar Propiedades", icon: ClipboardCheck, href: "/dashboard/admin/property-approvals" },
+      { title: "Nueva Propiedad", icon: HousePlus, href: "/dashboard/admin/properties/new" },
+      { title: "Proveedores", icon: Package, href: "/dashboard/admin/providers" },
+    ],
+  },
+  {
+    title: "Certificados y WEEKS",
+    items: [
+      { title: "WEEK Certificates", icon: Ticket, href: "/dashboard/admin/certificates" },
+      { title: "Vouchers", icon: FileText, href: "/dashboard/admin/vouchers" },
+      { title: "WEEK Balance", icon: Coins, href: "/dashboard/admin/week-balance" },
+      { title: "Weeks Disponibles", icon: Layers, href: "/dashboard/admin/weeks" },
+      { title: "Preventa", icon: Star, href: "/dashboard/admin/presale" },
+      { title: "Supply / Capacidad", icon: Activity, href: "/dashboard/admin/supply" },
+      { title: "Riesgo Capacidad", icon: ShieldAlert, href: "/dashboard/admin/capacity-risk" },
+      { title: "Calculadora Pricing", icon: Calculator, href: "/dashboard/admin/pricing-calculator" },
+    ],
+  },
+  {
+    title: "Reservas y Rentas",
+    items: [
+      { title: "Reservaciones", icon: Calendar, href: "/dashboard/admin/reservations" },
+      { title: "Bookings", icon: BookOpen, href: "/dashboard/admin/bookings" },
+      { title: "Rentas Activas", icon: PlaneTakeoff, href: "/dashboard/admin/rentals" },
+      { title: "Sync OTA", icon: RefreshCcw, href: "/dashboard/admin/ota-sync" },
+      { title: "Servicios", icon: ShoppingBag, href: "/dashboard/admin/services" },
+    ],
+  },
+  {
+    title: "Finanzas",
+    items: [
+      { title: "Pagos y Cobros", icon: CreditCard, href: "/dashboard/admin/payments" },
+      { title: "Transacciones", icon: ArrowLeftRight, href: "/dashboard/admin/transactions" },
+      { title: "Escrow Contable", icon: PiggyBank, href: "/dashboard/admin/escrow-contable" },
+      { title: "Escrow Blockchain", icon: Lock, href: "/dashboard/admin/escrow" },
+      { title: "Wallets", icon: Wallet, href: "/dashboard/admin/wallets" },
+      { title: "VA-FI Tokenizacion", icon: Coins, href: "/dashboard/admin/vafi" },
+      { title: "Exit Strategy", icon: DollarSign, href: "/dashboard/admin/exit-strategy" },
+    ],
+  },
+  {
+    title: "Legal y Compliance",
+    items: [
+      { title: "Legalario / Firmas", icon: Scale, href: "/dashboard/admin/legalario" },
+      { title: "Documentos", icon: FolderOpen, href: "/dashboard/admin/certifications" },
+      { title: "Compliance", icon: Shield, href: "/dashboard/admin/compliance" },
+      { title: "Audit Logs", icon: FileSearch, href: "/dashboard/admin/audit-logs" },
+      { title: "DAO Governance", icon: Landmark, href: "/dashboard/admin/dao" },
+    ],
+  },
+  {
+    title: "Marketing y CRM",
+    items: [
+      { title: "Marketing", icon: Globe, href: "/dashboard/admin/marketing" },
+      { title: "Testimonios", icon: Star, href: "/dashboard/admin/testimonials" },
+      { title: "Contacto Inbox", icon: Inbox, href: "/dashboard/admin/contact-inbox" },
     ],
   },
   {
     title: "Email Automation",
     items: [
-      {
-        title: "Templates",
-        icon: Mail,
-        href: "/dashboard/admin/email-templates",
-        description: "Gestión de plantillas",
-      },
-      {
-        title: "Email Logs",
-        icon: MessageSquare,
-        href: "/dashboard/admin/email-logs",
-        description: "Historial y métricas",
-      },
-      {
-        title: "Test Email",
-        icon: Send,
-        href: "/dashboard/admin/email-test",
-        description: "Pruebas de envío",
-      },
+      { title: "Automatizacion", icon: Mail, href: "/dashboard/admin/email-automation" },
+      { title: "Templates", icon: MessageSquare, href: "/dashboard/admin/email-templates" },
+      { title: "Email Logs", icon: Send, href: "/dashboard/admin/email-logs" },
+      { title: "Test Email", icon: Send, href: "/dashboard/admin/email-test" },
+      { title: "Test Flow", icon: RefreshCcw, href: "/dashboard/admin/email-test-flow" },
     ],
   },
   {
     title: "Sistema",
     items: [
-      {
-        title: "Notificaciones",
-        icon: Bell,
-        href: "/dashboard/admin/notifications",
-        description: "Alertas del sistema",
-      },
-      {
-        title: "Reportes",
-        icon: TrendingUp,
-        href: "/dashboard/admin/reports",
-        description: "Generar informes",
-      },
-      {
-        title: "Diagnósticos",
-        icon: Wrench,
-        href: "/dashboard/admin/system-diagnostics",
-        description: "Estado del sistema",
-      },
-      {
-        title: "Configuración",
-        icon: Settings,
-        href: "/dashboard/admin/settings",
-        description: "Ajustes generales",
-      },
+      { title: "Notificaciones", icon: Bell, href: "/dashboard/admin/notifications" },
+      { title: "Seguridad", icon: Lock, href: "/dashboard/admin/security" },
+      { title: "Diagnosticos", icon: Wrench, href: "/dashboard/admin/system-diagnostics" },
+      { title: "Base de Datos", icon: Database, href: "/dashboard/admin/database" },
+      { title: "Webhooks", icon: Webhook, href: "/dashboard/admin/webhooks" },
+      { title: "Configuracion", icon: Settings, href: "/dashboard/admin/settings" },
     ],
   },
 ]
@@ -179,31 +178,31 @@ export function AdminSidebar() {
   const { state } = useSidebar()
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-blue-100 bg-white">
-      <SidebarHeader className="border-b border-blue-100 p-4 bg-gradient-to-r from-blue-600 to-indigo-600">
+    <Sidebar collapsible="icon" className="border-r border-slate-200 bg-white">
+      <SidebarHeader className="border-b border-slate-200 p-4 bg-slate-900">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 shadow-lg">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 shadow-lg">
             <Building2 className="h-5 w-5 text-white" />
           </div>
           {state === "expanded" && (
             <div className="flex flex-col">
-              <span className="text-sm font-bold text-white">WEEK-CHAIN</span>
-              <span className="text-xs font-medium text-blue-100">Admin Panel</span>
+              <span className="text-sm font-bold text-white tracking-wide">WEEK-CHAIN</span>
+              <span className="text-[10px] font-medium text-slate-400">Admin Panel</span>
             </div>
           )}
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="px-2 py-4 bg-white">
+      <SidebarContent className="px-2 py-3 bg-white overflow-y-auto">
         {navigationItems.map((section) => (
-          <SidebarGroup key={section.title}>
-            <SidebarGroupLabel className="text-[10px] font-bold uppercase text-blue-600 tracking-wider px-3 mb-1">
+          <SidebarGroup key={section.title} className="pb-1">
+            <SidebarGroupLabel className="text-[10px] font-bold uppercase text-slate-400 tracking-widest px-3 mb-0.5">
               {section.title}
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {section.items.map((item) => {
-                  const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
+                  const isActive = pathname === item.href || (item.href !== "/dashboard/admin" && pathname.startsWith(item.href + "/"))
                   return (
                     <SidebarMenuItem key={item.href}>
                       <SidebarMenuButton
@@ -214,27 +213,15 @@ export function AdminSidebar() {
                         <Link
                           href={item.href}
                           className={cn(
-                            "flex items-center gap-3 rounded-lg px-3 py-2.5 min-h-[44px] transition-all duration-200 active:scale-[0.98]",
+                            "flex items-center gap-2.5 rounded-lg px-3 py-2 min-h-[38px] transition-all duration-150 text-sm",
                             isActive
-                              ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold shadow-md"
-                              : "text-slate-700 hover:bg-blue-50 hover:text-blue-700",
+                              ? "bg-sky-50 text-sky-700 font-semibold border border-sky-200"
+                              : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
                           )}
                         >
-                          <item.icon className={cn("h-5 w-5", isActive ? "text-white" : "text-blue-500")} />
+                          <item.icon className={cn("h-4 w-4 shrink-0", isActive ? "text-sky-600" : "text-slate-400")} />
                           {state === "expanded" && (
-                            <div className="flex flex-col">
-                              <span className="text-sm">{item.title}</span>
-                              {item.description && (
-                                <span
-                                  className={cn(
-                                    "text-[10px] font-normal",
-                                    isActive ? "text-blue-100" : "text-slate-500",
-                                  )}
-                                >
-                                  {item.description}
-                                </span>
-                              )}
-                            </div>
+                            <span className="truncate">{item.title}</span>
                           )}
                         </Link>
                       </SidebarMenuButton>
@@ -247,16 +234,16 @@ export function AdminSidebar() {
         ))}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-blue-100 p-4 bg-white">
+      <SidebarFooter className="border-t border-slate-200 p-3 bg-white">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip={state === "collapsed" ? "Salir" : undefined}>
               <Link
                 href="/"
-                className="flex items-center gap-3 rounded-lg px-3 py-2.5 min-h-[44px] text-red-600 transition-all duration-200 hover:bg-red-50 font-medium active:scale-[0.98]"
+                className="flex items-center gap-2.5 rounded-lg px-3 py-2 min-h-[38px] text-red-600 transition-all duration-150 hover:bg-red-50 font-medium text-sm"
               >
-                <LogOut className="h-5 w-5" />
-                {state === "expanded" && <span>Salir</span>}
+                <LogOut className="h-4 w-4" />
+                {state === "expanded" && <span>Salir al Sitio</span>}
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
