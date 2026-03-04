@@ -101,12 +101,11 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-        <div className="text-center space-y-4 bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20">
-          <Loader2 className="h-12 w-12 animate-spin text-blue-400 mx-auto" />
-          <p className="text-white font-medium">Verificando acceso...</p>
-          {userEmail && <p className="text-sm text-blue-200">{userEmail}</p>}
-          <p className="text-xs text-blue-300">Autenticando de forma segura</p>
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
+        <div className="text-center space-y-4 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+          <Loader2 className="h-10 w-10 animate-spin text-sky-500 mx-auto" />
+          <p className="text-slate-800 font-medium">Verificando acceso...</p>
+          {userEmail && <p className="text-sm text-slate-500">{userEmail}</p>}
         </div>
       </div>
     )
@@ -114,26 +113,26 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center p-6 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-        <Card className="max-w-md border-red-400 bg-red-900/30 backdrop-blur-lg">
+      <div className="flex min-h-screen items-center justify-center p-6 bg-slate-50">
+        <Card className="max-w-md border-red-200 bg-white shadow-sm">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-red-200">
+            <CardTitle className="flex items-center gap-2 text-red-700">
               <AlertCircle className="h-5 w-5" />
               Acceso Denegado
             </CardTitle>
-            <CardDescription className="text-red-300">{error}</CardDescription>
+            <CardDescription className="text-red-600">{error}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <Button
               onClick={() => router.push("/dashboard")}
-              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-indigo-500"
+              className="w-full bg-sky-600 hover:bg-sky-700 text-white"
             >
               Ir al Dashboard
             </Button>
             <Button
               onClick={() => router.push("/auth")}
               variant="outline"
-              className="w-full border-blue-400/30 text-blue-200 hover:bg-white/10"
+              className="w-full border-slate-300 text-slate-700 hover:bg-slate-100"
             >
               Iniciar Sesion
             </Button>

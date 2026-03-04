@@ -23,22 +23,28 @@ export function AdminHeader() {
 
   useEffect(() => {
     const loadUserData = async () => {
-      const supabase = createClient()
-
-      // Get wallet from localStorage
-      const wallet = localStorage.getItem("walletAddress")
-      if (wallet) {
-        setUserWallet(wallet)
-
-        // Get user data from database
-        const { data } = await supabase.from("admin_wallets").select("name").eq("wallet_address", wallet).single()
-
-        if (data?.name) {
-          setUserName(data.name)
+      try {
+        const supabase = createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          const email = user.email || ""
+          setUserWallet(email)
+          // Try to get name from users table
+          const { data: userData } = await supabase
+            .from("users")
+            .select("full_name")
+            .eq("id", user.id)
+            .maybeSingle()
+          if (userData?.full_name) {
+            setUserName(userData.full_name)
+          } else {
+            setUserName(email.split("@")[0] || "Admin")
+          }
         }
+      } catch {
+        // Fallback silently
       }
     }
-
     loadUserData()
   }, [])
 
@@ -46,16 +52,14 @@ export function AdminHeader() {
     try {
       const supabase = createClient()
       await supabase.auth.signOut()
-    } catch (error) {
-      console.error("[v0] Error signing out from Supabase:", error)
+    } catch {
+      // Sign out failed silently
     }
-
-    localStorage.removeItem("walletAddress")
-    router.push("/")
+    router.push("/auth")
   }
 
   return (
-    <header className="sticky top-0 z-10 flex h-14 sm:h-16 items-center gap-2 sm:gap-4 border-b border-slate-200 bg-background px-3 sm:px-6">
+    <header className="sticky top-0 z-10 flex h-14 sm:h-16 items-center gap-2 sm:gap-4 border-b border-sky-500/15 bg-white/70 backdrop-blur-xl px-3 sm:px-6">
       <SidebarTrigger className="min-h-[44px] min-w-[44px]" />
 
       <div className="flex flex-1 items-center justify-between min-w-0">
@@ -65,7 +69,7 @@ export function AdminHeader() {
             <input
               type="search"
               placeholder="Buscar..."
-              className="h-9 w-48 lg:w-64 rounded-lg border border-border bg-secondary pl-10 pr-4 text-sm outline-none transition-colors focus:border-blue-500 focus:bg-background"
+              className="h-9 w-48 lg:w-64 rounded-xl border border-sky-500/20 bg-sky-500/[0.05] backdrop-blur-lg pl-10 pr-4 text-sm outline-none transition-all focus:border-sky-500/40 focus:ring-2 focus:ring-sky-500/15 focus:bg-white placeholder:text-slate-400"
             />
           </div>
         </div>
@@ -81,33 +85,33 @@ export function AdminHeader() {
               <Button variant="ghost" className="flex items-center gap-2 sm:gap-3 px-2 min-h-[44px]">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/admin-avatar.png" />
-                  <AvatarFallback className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white text-sm">
+                  <AvatarFallback className="bg-sky-100 text-sky-700 text-sm font-semibold">
                     {userName.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="hidden flex-col items-start md:flex">
                   <span className="text-sm font-medium text-foreground">{userName}</span>
-                  <span className="text-xs text-muted-foreground">
-                    {userWallet ? `${userWallet.slice(0, 6)}...${userWallet.slice(-4)}` : "Admin"}
+                  <span className="text-xs text-muted-foreground truncate max-w-32">
+                    {userWallet || "Admin"}
                   </span>
                 </div>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => router.push("/dashboard/admin/profile")}>
                 <User className="mr-2 h-4 w-4" />
-                Profile
+                Perfil
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => router.push("/dashboard/admin/settings")}>
                 <Settings className="mr-2 h-4 w-4" />
-                Settings
+                Configuracion
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
                 <LogOut className="mr-2 h-4 w-4" />
-                Sign Out
+                Cerrar Sesion
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
