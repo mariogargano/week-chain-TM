@@ -63,111 +63,192 @@ import {
   FileSearch,
   Layers,
   ShieldAlert,
+  QrCode,
+  AlertTriangle,
+  Clock,
+  CheckCircle,
+  FileSignature,
+  Percent,
+  Receipt,
+  CircleDollarSign,
+  Building,
+  UserCog,
+  Eye,
+  Handshake,
+  GanttChart,
+  Target,
+  Megaphone,
+  TrendingDown,
+  Gauge,
+  ServerCog,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 
 const navigationItems = [
+  // 1. RBAC - Identity, Roles and Permissions
   {
-    title: "General",
+    title: "1. Identidad y RBAC",
     items: [
       { title: "Dashboard", icon: LayoutDashboard, href: "/dashboard/admin" },
-      { title: "Analytics", icon: BarChart3, href: "/dashboard/admin/analytics" },
-      { title: "Monitor en Tiempo Real", icon: MonitorDot, href: "/dashboard/admin/real-time-monitor" },
-      { title: "Reportes", icon: TrendingUp, href: "/dashboard/admin/reports" },
+      { title: "Usuarios Internos", icon: UsersRound, href: "/dashboard/admin/team" },
+      { title: "WEEK-AGENTS", icon: Briefcase, href: "/dashboard/admin/broker-network" },
+      { title: "Owners / Partners", icon: Building, href: "/dashboard/admin/property-approvals" },
+      { title: "Holders (KYC)", icon: BadgeCheck, href: "/dashboard/admin/kyc" },
+      { title: "Matriz de Permisos", icon: Shield, href: "/dashboard/admin/security" },
+      { title: "Bitacora de Accesos", icon: FileSearch, href: "/dashboard/admin/audit-logs" },
     ],
   },
+  // 2. Product Governance (SVC)
   {
-    title: "Usuarios y Roles",
+    title: "2. Producto SVC",
     items: [
-      { title: "Usuarios", icon: Users, href: "/dashboard/admin/users" },
-      { title: "Equipo Interno", icon: UsersRound, href: "/dashboard/admin/team" },
-      { title: "KYC / Verificacion", icon: BadgeCheck, href: "/dashboard/admin/kyc" },
-      { title: "Red de Brokers", icon: Briefcase, href: "/dashboard/admin/broker-network" },
+      { title: "Configurador SVC", icon: Settings, href: "/dashboard/admin/certificates" },
+      { title: "Motor Capacidad (48+4)", icon: Activity, href: "/dashboard/admin/supply" },
+      { title: "Blackouts y Politicas", icon: Clock, href: "/dashboard/admin/capacity-risk" },
+      { title: "Upgrades/Downgrades", icon: ArrowLeftRight, href: "/dashboard/admin/pricing-calculator" },
+      { title: "Ciclo de Vida Cert", icon: RefreshCcw, href: "/dashboard/admin/week-balance" },
+      { title: "Inventario Certificados", icon: Layers, href: "/dashboard/admin/weeks" },
     ],
   },
+  // 3. Properties + SPV
   {
-    title: "Propiedades y Destinos",
+    title: "3. Propiedades + SPV",
     items: [
       { title: "Propiedades", icon: Building2, href: "/dashboard/admin/properties" },
       { title: "Destinos", icon: MapPin, href: "/dashboard/admin/destinations" },
-      { title: "Aprobar Propiedades", icon: ClipboardCheck, href: "/dashboard/admin/property-approvals" },
+      { title: "Aprobar Propiedades", icon: ClipboardCheck, href: "/dashboard/admin/approvals" },
       { title: "Nueva Propiedad", icon: HousePlus, href: "/dashboard/admin/properties/new" },
-      { title: "Proveedores", icon: Package, href: "/dashboard/admin/providers" },
+      { title: "Semanas por Propiedad", icon: Calendar, href: "/dashboard/admin/bookings" },
+      { title: "Proveedores / SLAs", icon: Package, href: "/dashboard/admin/providers" },
+      { title: "Indicadores por SPV", icon: BarChart3, href: "/dashboard/admin/analytics" },
     ],
   },
+  // 4. REQUEST → OFFER → CONFIRM
   {
-    title: "Certificados y WEEKS",
+    title: "4. REQUEST→OFFER→CONFIRM",
     items: [
-      { title: "WEEK Certificates", icon: Ticket, href: "/dashboard/admin/certificates" },
-      { title: "Vouchers", icon: FileText, href: "/dashboard/admin/vouchers" },
-      { title: "WEEK Balance", icon: Coins, href: "/dashboard/admin/week-balance" },
-      { title: "Weeks Disponibles", icon: Layers, href: "/dashboard/admin/weeks" },
-      { title: "Preventa", icon: Star, href: "/dashboard/admin/presale" },
-      { title: "Supply / Capacidad", icon: Activity, href: "/dashboard/admin/supply" },
-      { title: "Riesgo Capacidad", icon: ShieldAlert, href: "/dashboard/admin/capacity-risk" },
-      { title: "Calculadora Pricing", icon: Calculator, href: "/dashboard/admin/pricing-calculator" },
-    ],
-  },
-  {
-    title: "Reservas y Rentas",
-    items: [
-      { title: "Reservaciones", icon: Calendar, href: "/dashboard/admin/reservations" },
-      { title: "Bookings", icon: BookOpen, href: "/dashboard/admin/bookings" },
+      { title: "Bandeja Requests (SLA)", icon: Inbox, href: "/dashboard/admin/reservations" },
+      { title: "Generar Ofertas", icon: Send, href: "/dashboard/admin/reservations?tab=offer" },
+      { title: "Confirmaciones", icon: CheckCircle, href: "/dashboard/admin/reservations?tab=confirmed" },
       { title: "Rentas Activas", icon: PlaneTakeoff, href: "/dashboard/admin/rentals" },
-      { title: "Sync OTA", icon: RefreshCcw, href: "/dashboard/admin/ota-sync" },
-      { title: "Servicios", icon: ShoppingBag, href: "/dashboard/admin/services" },
+      { title: "Cambios/Cancelaciones", icon: RefreshCcw, href: "/dashboard/admin/reservations?tab=changes" },
+      { title: "Plantillas Operativas", icon: FileText, href: "/dashboard/admin/email-templates" },
     ],
   },
+  // 5. Payments, Escrow, Payouts (Stripe)
   {
-    title: "Finanzas",
+    title: "5. Cobranza y Escrow",
     items: [
-      { title: "Pagos y Cobros", icon: CreditCard, href: "/dashboard/admin/payments" },
-      { title: "Transacciones", icon: ArrowLeftRight, href: "/dashboard/admin/transactions" },
-      { title: "Escrow Contable", icon: PiggyBank, href: "/dashboard/admin/escrow-contable" },
-      { title: "Escrow Blockchain", icon: Lock, href: "/dashboard/admin/escrow" },
-      { title: "Wallets", icon: Wallet, href: "/dashboard/admin/wallets" },
-      { title: "VA-FI Tokenizacion", icon: Coins, href: "/dashboard/admin/vafi" },
-      { title: "Exit Strategy", icon: DollarSign, href: "/dashboard/admin/exit-strategy" },
+      { title: "Links de Pago", icon: CreditCard, href: "/dashboard/admin/payments" },
+      { title: "Estado Pagos (Hold)", icon: PiggyBank, href: "/dashboard/admin/escrow-contable" },
+      { title: "Liberacion y Payouts", icon: CircleDollarSign, href: "/dashboard/admin/transactions" },
+      { title: "Conciliacion Stripe", icon: ArrowLeftRight, href: "/dashboard/admin/wallets" },
+      { title: "Chargebacks/Disputas", icon: AlertTriangle, href: "/dashboard/admin/payments?tab=disputes" },
+      { title: "Facturacion", icon: Receipt, href: "/dashboard/admin/vouchers" },
     ],
   },
+  // 6. Margins and Splits
   {
-    title: "Legal y Compliance",
+    title: "6. Margenes y Splits",
     items: [
-      { title: "Legalario / Firmas", icon: Scale, href: "/dashboard/admin/legalario" },
-      { title: "Documentos", icon: FolderOpen, href: "/dashboard/admin/certifications" },
-      { title: "Compliance", icon: Shield, href: "/dashboard/admin/compliance" },
-      { title: "Audit Logs", icon: FileSearch, href: "/dashboard/admin/audit-logs" },
-      { title: "DAO Governance", icon: Landmark, href: "/dashboard/admin/dao" },
+      { title: "Config Splits (4%)", icon: Percent, href: "/dashboard/admin/broker-network?tab=config" },
+      { title: "Calculo por Transaccion", icon: Calculator, href: "/dashboard/admin/pricing-calculator" },
+      { title: "Simulador Rentabilidad", icon: TrendingUp, href: "/dashboard/admin/exit-strategy" },
+      { title: "Alertas de Margen", icon: TrendingDown, href: "/dashboard/admin/capacity-risk?tab=margins" },
+      { title: "Comisiones Agentes", icon: DollarSign, href: "/dashboard/admin/broker-network?tab=commissions" },
+      { title: "Reservas Notariales", icon: Landmark, href: "/dashboard/admin/escrow" },
     ],
   },
+  // 7. Legal Compliance
   {
-    title: "Marketing y CRM",
+    title: "7. Compliance Legal",
     items: [
-      { title: "Marketing", icon: Globe, href: "/dashboard/admin/marketing" },
-      { title: "Testimonios", icon: Star, href: "/dashboard/admin/testimonials" },
-      { title: "Contacto Inbox", icon: Inbox, href: "/dashboard/admin/contact-inbox" },
+      { title: "Contratos / Versiones", icon: FileSignature, href: "/dashboard/admin/legalario" },
+      { title: "Aceptacion T&Cs", icon: FileText, href: "/dashboard/admin/certifications" },
+      { title: "NOM-151 / Sellado", icon: QrCode, href: "/dashboard/admin/legalario?tab=nom151" },
+      { title: "KYC/KYB Estados", icon: UserCheck, href: "/dashboard/admin/kyc" },
+      { title: "AML / Monitoreo", icon: ShieldAlert, href: "/dashboard/admin/compliance" },
+      { title: "Centro Auditoria", icon: Eye, href: "/dashboard/admin/audit-logs" },
     ],
   },
+  // 8. Cryptographic Integrity
   {
-    title: "Email Automation",
+    title: "8. Integridad Cripto",
     items: [
-      { title: "Automatizacion", icon: Mail, href: "/dashboard/admin/email-automation" },
-      { title: "Templates", icon: MessageSquare, href: "/dashboard/admin/email-templates" },
-      { title: "Email Logs", icon: Send, href: "/dashboard/admin/email-logs" },
-      { title: "Test Email", icon: Send, href: "/dashboard/admin/email-test" },
-      { title: "Test Flow", icon: RefreshCcw, href: "/dashboard/admin/email-test-flow" },
+      { title: "Generador Hash+QR", icon: QrCode, href: "/dashboard/admin/certificates?tab=hash" },
+      { title: "Verificador Interno", icon: CheckCircle, href: "/dashboard/admin/certificates?tab=verify" },
+      { title: "Registro de Eventos", icon: Activity, href: "/dashboard/admin/audit-logs?tab=crypto" },
+      { title: "Incidencias QR", icon: AlertTriangle, href: "/dashboard/admin/system-diagnostics" },
     ],
   },
+  // 9. Service Operations (WEEK-SERVICE)
   {
-    title: "Sistema",
+    title: "9. Operacion Servicio",
     items: [
-      { title: "Notificaciones", icon: Bell, href: "/dashboard/admin/notifications" },
-      { title: "Seguridad", icon: Lock, href: "/dashboard/admin/security" },
-      { title: "Diagnosticos", icon: Wrench, href: "/dashboard/admin/system-diagnostics" },
-      { title: "Base de Datos", icon: Database, href: "/dashboard/admin/database" },
+      { title: "Checklists Pre/Post", icon: ClipboardCheck, href: "/dashboard/admin/services" },
+      { title: "Proveedores + SLAs", icon: Handshake, href: "/dashboard/admin/providers" },
+      { title: "Tickets/Incidencias", icon: MessageSquare, href: "/dashboard/admin/contact-inbox" },
+      { title: "NPS y Resenas", icon: Star, href: "/dashboard/admin/testimonials" },
+      { title: "Compensaciones", icon: Coins, href: "/dashboard/admin/vouchers?tab=credits" },
+    ],
+  },
+  // 10. CRM and Go-to-Market
+  {
+    title: "10. CRM y Marketing",
+    items: [
+      { title: "Embudo de Leads", icon: Target, href: "/dashboard/admin/marketing" },
+      { title: "Campanas y Tiers", icon: Megaphone, href: "/dashboard/admin/presale" },
+      { title: "Asignacion Agentes", icon: UserCog, href: "/dashboard/admin/broker-network?tab=assign" },
+      { title: "Lead → Holder", icon: TrendingUp, href: "/dashboard/admin/users" },
+      { title: "KPIs Comerciales", icon: BarChart3, href: "/dashboard/admin/reports" },
+    ],
+  },
+  // 11. Executive Reporting and KPIs
+  {
+    title: "11. Reportes y KPIs",
+    items: [
+      { title: "SLA Dashboard", icon: Gauge, href: "/dashboard/admin/real-time-monitor" },
+      { title: "Ocupacion", icon: Calendar, href: "/dashboard/admin/bookings?tab=occupancy" },
+      { title: "Ingresos por SPV", icon: DollarSign, href: "/dashboard/admin/analytics?tab=revenue" },
+      { title: "Riesgo Global", icon: ShieldAlert, href: "/dashboard/admin/capacity-risk" },
+      { title: "Calidad (NPS)", icon: Star, href: "/dashboard/admin/testimonials?tab=nps" },
+      { title: "Forecast", icon: TrendingUp, href: "/dashboard/admin/reports?tab=forecast" },
+    ],
+  },
+  // 12. Data Administration (Backoffice)
+  {
+    title: "12. Admin Datos",
+    items: [
+      { title: "Master Data", icon: Database, href: "/dashboard/admin/database" },
+      { title: "Import/Export CSV", icon: ArrowLeftRight, href: "/dashboard/admin/database?tab=import" },
+      { title: "Deduplicacion", icon: Layers, href: "/dashboard/admin/database?tab=dedup" },
+      { title: "Correccion Auditada", icon: Wrench, href: "/dashboard/admin/database?tab=edit" },
+      { title: "Respaldos", icon: ServerCog, href: "/dashboard/admin/database?tab=backup" },
+    ],
+  },
+  // 13. Alerts and Automations
+  {
+    title: "13. Alertas y Automatismos",
+    items: [
+      { title: "Alertas SLA", icon: Clock, href: "/dashboard/admin/notifications?tab=sla" },
+      { title: "Alertas Overbooking", icon: AlertTriangle, href: "/dashboard/admin/notifications?tab=booking" },
+      { title: "Alertas Margen", icon: TrendingDown, href: "/dashboard/admin/notifications?tab=margin" },
+      { title: "Alertas KYC/KYB", icon: UserCheck, href: "/dashboard/admin/notifications?tab=kyc" },
+      { title: "Alertas Disputas", icon: ShieldAlert, href: "/dashboard/admin/notifications?tab=disputes" },
+      { title: "Email Automation", icon: Mail, href: "/dashboard/admin/email-automation" },
+    ],
+  },
+  // 14. System Configuration
+  {
+    title: "14. Sistema",
+    items: [
       { title: "Webhooks", icon: Webhook, href: "/dashboard/admin/webhooks" },
+      { title: "Sync OTA", icon: RefreshCcw, href: "/dashboard/admin/ota-sync" },
+      { title: "VA-FI Tokenizacion", icon: Coins, href: "/dashboard/admin/vafi" },
+      { title: "DAO Governance", icon: Landmark, href: "/dashboard/admin/dao" },
+      { title: "Diagnosticos", icon: Wrench, href: "/dashboard/admin/system-diagnostics" },
       { title: "Configuracion", icon: Settings, href: "/dashboard/admin/settings" },
     ],
   },
@@ -187,7 +268,7 @@ export function AdminSidebar() {
           {state === "expanded" && (
             <div className="flex flex-col">
               <span className="text-sm font-bold text-slate-900 tracking-wide">WEEK-WORLD</span>
-              <span className="text-[10px] font-medium text-sky-600">Admin Panel</span>
+              <span className="text-[10px] font-medium text-sky-600">Control Center</span>
             </div>
           )}
         </div>
@@ -196,13 +277,14 @@ export function AdminSidebar() {
       <SidebarContent className="px-2 py-3 overflow-y-auto">
         {navigationItems.map((section) => (
           <SidebarGroup key={section.title} className="pb-1">
-            <SidebarGroupLabel className="text-[10px] font-bold uppercase text-slate-400 tracking-widest px-3 mb-0.5">
+            <SidebarGroupLabel className="text-[9px] font-bold uppercase text-slate-400 tracking-widest px-3 mb-0.5">
               {section.title}
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {section.items.map((item) => {
-                  const isActive = pathname === item.href || (item.href !== "/dashboard/admin" && pathname.startsWith(item.href + "/"))
+                  const baseHref = item.href.split("?")[0]
+                  const isActive = pathname === baseHref || (baseHref !== "/dashboard/admin" && pathname.startsWith(baseHref + "/"))
                   return (
                     <SidebarMenuItem key={item.href}>
                       <SidebarMenuButton
@@ -213,13 +295,13 @@ export function AdminSidebar() {
                         <Link
                           href={item.href}
                           className={cn(
-                            "flex items-center gap-2.5 rounded-xl px-3 py-2 min-h-[38px] transition-all duration-200 text-sm",
+                            "flex items-center gap-2 rounded-lg px-2.5 py-1.5 min-h-[32px] transition-all duration-200 text-xs",
                             isActive
                               ? "bg-gradient-to-r from-sky-500/15 to-blue-600/10 text-sky-700 font-semibold border border-sky-500/25 shadow-[0_2px_8px_rgba(14,165,233,0.1)]"
                               : "text-slate-600 hover:bg-sky-500/[0.06] hover:text-sky-700",
                           )}
                         >
-                          <item.icon className={cn("h-4 w-4 shrink-0", isActive ? "text-sky-600" : "text-slate-400")} />
+                          <item.icon className={cn("h-3.5 w-3.5 shrink-0", isActive ? "text-sky-600" : "text-slate-400")} />
                           {state === "expanded" && (
                             <span className="truncate">{item.title}</span>
                           )}
@@ -240,9 +322,9 @@ export function AdminSidebar() {
             <SidebarMenuButton asChild tooltip={state === "collapsed" ? "Salir" : undefined}>
               <Link
                 href="/"
-                className="flex items-center gap-2.5 rounded-lg px-3 py-2 min-h-[38px] text-red-600 transition-all duration-150 hover:bg-red-50 font-medium text-sm"
+                className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 min-h-[32px] text-red-600 transition-all duration-150 hover:bg-red-50 font-medium text-xs"
               >
-                <LogOut className="h-4 w-4" />
+                <LogOut className="h-3.5 w-3.5" />
                 {state === "expanded" && <span>Salir al Sitio</span>}
               </Link>
             </SidebarMenuButton>
