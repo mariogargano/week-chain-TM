@@ -389,7 +389,7 @@ export default function AdminDashboard() {
               { label: "Propiedades", icon: Building2, href: "/dashboard/admin/properties", iconBg: "bg-gradient-to-br from-emerald-500 to-green-600" },
               { label: "Pagos y Cobros", icon: CreditCard, href: "/dashboard/admin/payments", iconBg: "bg-gradient-to-br from-violet-500 to-purple-600" },
               { label: "KYC / Verificacion", icon: BadgeCheck, href: "/dashboard/admin/kyc", iconBg: "bg-gradient-to-br from-amber-500 to-orange-600" },
-              { label: "Red de Brokers", icon: Briefcase, href: "/dashboard/admin/approvals", iconBg: "bg-gradient-to-br from-pink-500 to-rose-600" },
+              { label: "Red de Brokers", icon: Briefcase, href: "/dashboard/admin/broker-network", iconBg: "bg-gradient-to-br from-pink-500 to-rose-600" },
               { label: "Destinos", icon: MapPin, href: "/dashboard/admin/destinations", iconBg: "bg-gradient-to-br from-teal-500 to-cyan-600" },
               { label: "Supply / Capacidad", icon: BarChart3, href: "/dashboard/admin/supply", iconBg: "bg-gradient-to-br from-red-500 to-rose-600" },
               { label: "Escrow Contable", icon: DollarSign, href: "/dashboard/admin/escrow-contable", iconBg: "bg-gradient-to-br from-emerald-500 to-green-600" },
@@ -418,7 +418,7 @@ export default function AdminDashboard() {
           {[
             { name: "WEEK-MANAGEMENT", desc: "Propiedades y administracion", icon: Building2, color: "from-sky-500 to-blue-600", status: "Operativo", stats: [{ l: "Propiedades", v: data.totalProperties }, { l: "Activas", v: data.activeProperties }], href: "/dashboard/admin/properties" },
             { name: "WEEK-BOOKING", desc: "Reservaciones y estancias", icon: Calendar, color: "from-violet-500 to-purple-600", status: "Operativo", stats: [{ l: "Solicitudes pendientes", v: data.pendingReservations }, { l: "Confirmadas", v: data.activeReservations }], href: "/dashboard/admin/reservations" },
-            { name: "WEEK-AGENT", desc: "Red de intermediarios", icon: Briefcase, color: "from-orange-500 to-red-600", status: "Operativo", stats: [{ l: "Brokers activos", v: data.brokerCount }, { l: "Certificados vendidos", v: data.totalCertificates }], href: "/dashboard/admin/approvals" },
+            { name: "WEEK-AGENT", desc: "Red de intermediarios", icon: Briefcase, color: "from-orange-500 to-red-600", status: "Operativo", stats: [{ l: "Brokers activos", v: data.brokerCount }, { l: "Comision fija", v: "4%" }], href: "/dashboard/admin/broker-network" },
             { name: "WEEK-FINANCE", desc: "VA-FI Tokenizacion y DeFi", icon: Coins, color: "from-emerald-500 to-green-600", status: "Testnet Q1 2027", stats: [{ l: "TVL", v: "$0" }, { l: "Status", v: "En desarrollo" }], href: "/dashboard/admin/vafi" },
             { name: "WEEK-LEGAL", desc: "Legalario y NOM-151", icon: Scale, color: "from-amber-500 to-yellow-600", status: "Operativo", stats: [{ l: "Contratos pendientes", v: data.pendingContracts }, { l: "KYC pendientes", v: data.pendingKYC }], href: "/dashboard/admin/legalario" },
             { name: "WEEK-CHAIN", desc: "Blockchain y certificados", icon: Lock, color: "from-cyan-500 to-sky-600", status: "Operativo", stats: [{ l: "Certificados totales", v: data.totalCertificates }, { l: "Activos", v: data.activeCertificates }], href: "/dashboard/admin/certificates" },
