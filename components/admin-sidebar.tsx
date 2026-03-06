@@ -84,7 +84,7 @@ const navigationItems = [
       { title: "Usuarios", icon: Users, href: "/dashboard/admin/users" },
       { title: "Equipo Interno", icon: UsersRound, href: "/dashboard/admin/team" },
       { title: "KYC / Verificacion", icon: BadgeCheck, href: "/dashboard/admin/kyc" },
-      { title: "Red de Brokers", icon: Briefcase, href: "/dashboard/admin/approvals" },
+      { title: "Red de Brokers", icon: Briefcase, href: "/dashboard/admin/broker-network" },
     ],
   },
   {
