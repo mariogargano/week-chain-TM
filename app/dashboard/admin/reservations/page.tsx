@@ -181,52 +181,52 @@ export default function AdminReservationsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-sky-900 to-slate-900">
-        <Loader2 className="h-8 w-8 animate-spin text-sky-400" />
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 via-sky-50/30 to-blue-50/20">
+        <Loader2 className="h-8 w-8 animate-spin text-sky-500" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-sky-900/50 to-slate-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50/30 to-blue-50/20">
       <div className="max-w-7xl mx-auto p-6 space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Link href="/dashboard/admin">
-              <Button variant="outline" size="icon" className="border-sky-400/30 text-sky-300 hover:bg-sky-500/10 bg-transparent">
+              <Button variant="outline" size="icon" className="border-sky-500/20 text-sky-700 hover:bg-sky-500/10">
                 <ArrowLeft className="h-4 w-4" />
               </Button>
             </Link>
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-sky-300 to-cyan-300 bg-clip-text text-transparent">
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
                 Control de Reservaciones
               </h1>
-              <p className="text-sky-300/70">Flujo REQUEST - OFFER - CONFIRM</p>
+              <p className="text-slate-500">Flujo REQUEST - OFFER - CONFIRM</p>
             </div>
           </div>
           <div className="flex gap-2">
-            <Badge className="bg-sky-500/20 text-sky-300 border border-sky-500/30 text-sm px-3 py-1.5">
+            <Badge className="bg-sky-500/10 text-sky-700 border border-sky-500/20 text-sm px-3 py-1.5">
               {requests.filter((r) => r.status === "requested").length} nuevas
             </Badge>
-            <Badge className="bg-teal-500/20 text-teal-300 border border-teal-500/30 text-sm px-3 py-1.5">
+            <Badge className="bg-emerald-500/10 text-emerald-700 border border-emerald-500/20 text-sm px-3 py-1.5">
               {requests.filter((r) => r.status === "offer_sent").length} ofertas pendientes
             </Badge>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-3 items-center">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-3 items-stretch sm:items-center">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-sky-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <Input
               placeholder="Buscar por destino..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-white/5 border-sky-400/30 text-white placeholder:text-sky-300/50"
+              className="pl-10 bg-white/80 backdrop-blur border-sky-500/20 text-slate-900 placeholder:text-slate-400"
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {[
               { key: "all", label: "Todos" },
               { key: "requested", label: "Nuevas" },
@@ -239,7 +239,7 @@ export default function AdminReservationsPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => setFilter(f.key)}
-                className={`border-sky-400/30 bg-transparent ${filter === f.key ? "bg-sky-500/20 text-sky-200 border-sky-400" : "text-sky-300/70 hover:bg-sky-500/10"}`}
+                className={`border-sky-500/20 ${filter === f.key ? "bg-sky-500 text-white border-sky-500" : "text-slate-600 hover:bg-sky-50"}`}
               >
                 {f.label}
               </Button>
@@ -247,16 +247,16 @@ export default function AdminReservationsPage() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-6">
+        <div className="grid lg:grid-cols-5 gap-4 sm:gap-6">
           {/* Requests List */}
           <div className="lg:col-span-2 space-y-3">
-            <h3 className="text-lg font-semibold text-sky-200 flex items-center gap-2">
-              <Filter className="h-4 w-4" /> Solicitudes ({filteredRequests.length})
+            <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+              <Filter className="h-4 w-4 text-sky-500" /> Solicitudes ({filteredRequests.length})
             </h3>
-            <div className="space-y-2 max-h-[calc(100vh-300px)] overflow-y-auto pr-2">
+            <div className="space-y-2 max-h-[50vh] lg:max-h-[calc(100vh-300px)] overflow-y-auto pr-2">
               {filteredRequests.length === 0 ? (
-                <Card className="border-sky-400/20 bg-white/5 backdrop-blur">
-                  <CardContent className="p-8 text-center text-sky-300/60">
+                <Card className="border-sky-500/20 bg-white/80 backdrop-blur-xl">
+                  <CardContent className="p-8 text-center text-slate-500">
                     No hay solicitudes con este filtro
                   </CardContent>
                 </Card>
@@ -265,17 +265,17 @@ export default function AdminReservationsPage() {
                   <Card
                     key={req.id}
                     onClick={() => selectRequest(req)}
-                    className={`cursor-pointer border transition-all backdrop-blur ${
+                    className={`cursor-pointer border transition-all backdrop-blur-xl ${
                       selectedRequest?.id === req.id
-                        ? "border-sky-400 bg-sky-500/20 shadow-lg shadow-sky-500/20"
-                        : "border-sky-400/20 bg-white/5 hover:border-sky-400/40 hover:bg-white/10"
+                        ? "border-sky-500 bg-sky-50 shadow-lg shadow-sky-500/10"
+                        : "border-sky-500/20 bg-white/80 hover:border-sky-500/40 hover:bg-white"
                     }`}
                   >
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-sky-400" />
-                          <span className="font-semibold text-white text-sm">
+                          <MapPin className="h-4 w-4 text-sky-500" />
+                          <span className="font-semibold text-slate-900 text-sm">
                             {req.destination_preference || "Destino flexible"}
                           </span>
                         </div>
@@ -283,7 +283,7 @@ export default function AdminReservationsPage() {
                           {statusConfig[req.status]?.label || req.status}
                         </Badge>
                       </div>
-                      <div className="flex flex-wrap gap-3 text-xs text-sky-300/70">
+                      <div className="flex flex-wrap gap-3 text-xs text-slate-500">
                         <span className="flex items-center gap-1">
                           <Users className="h-3 w-3" /> {req.pax_count} pax
                         </span>
@@ -297,7 +297,7 @@ export default function AdminReservationsPage() {
                         </span>
                       </div>
                       {req.profiles && (
-                        <p className="text-xs text-sky-300/50 mt-2">
+                        <p className="text-xs text-slate-400 mt-2">
                           {req.profiles.full_name || req.profiles.email}
                         </p>
                       )}
@@ -313,36 +313,36 @@ export default function AdminReservationsPage() {
             {selectedRequest ? (
               <>
                 {/* Request Detail */}
-                <Card className="border-sky-400/30 bg-white/5 backdrop-blur-lg">
-                  <CardHeader className="border-b border-sky-400/20">
+                <Card className="border-sky-500/20 bg-white/80 backdrop-blur-xl">
+                  <CardHeader className="border-b border-sky-500/10">
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-lg text-white">Detalle de Solicitud</CardTitle>
+                      <CardTitle className="text-lg text-slate-900">Detalle de Solicitud</CardTitle>
                       <Badge className={statusConfig[selectedRequest.status]?.color || "bg-slate-500 text-white"}>
                         {statusConfig[selectedRequest.status]?.label}
                       </Badge>
                     </div>
                   </CardHeader>
-                  <CardContent className="p-6 space-y-4">
+                  <CardContent className="p-4 sm:p-6 space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-xs text-sky-300/60 uppercase tracking-wider">Destino</p>
-                        <p className="font-semibold text-white">{selectedRequest.destination_preference || "Flexible"}</p>
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Destino</p>
+                        <p className="font-semibold text-slate-900">{selectedRequest.destination_preference || "Flexible"}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-sky-300/60 uppercase tracking-wider">PAX</p>
-                        <p className="font-semibold text-white">{selectedRequest.pax_count} personas</p>
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">PAX</p>
+                        <p className="font-semibold text-slate-900">{selectedRequest.pax_count} personas</p>
                       </div>
                       <div>
-                        <p className="text-xs text-sky-300/60 uppercase tracking-wider">Fecha Inicio</p>
-                        <p className="font-semibold text-white">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Fecha Inicio</p>
+                        <p className="font-semibold text-slate-900">
                           {selectedRequest.date_range_start
                             ? new Date(selectedRequest.date_range_start).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" })
                             : "Sin preferencia"}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-sky-300/60 uppercase tracking-wider">Fecha Fin</p>
-                        <p className="font-semibold text-white">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Fecha Fin</p>
+                        <p className="font-semibold text-slate-900">
                           {selectedRequest.date_range_end
                             ? new Date(selectedRequest.date_range_end).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" })
                             : "Sin preferencia"}
@@ -351,25 +351,25 @@ export default function AdminReservationsPage() {
                     </div>
                     {selectedRequest.special_requests && (
                       <div>
-                        <p className="text-xs text-sky-300/60 uppercase tracking-wider mb-1">Notas del Member</p>
-                        <p className="text-sm text-sky-200 bg-sky-500/10 p-3 rounded-lg border border-sky-400/20">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">Notas del Member</p>
+                        <p className="text-sm text-slate-700 bg-sky-50 p-3 rounded-lg border border-sky-500/20">
                           {selectedRequest.special_requests}
                         </p>
                       </div>
                     )}
-                    <div className="flex gap-2 pt-2">
+                    <div className="flex flex-col sm:flex-row gap-2 pt-2">
                       {(selectedRequest.status === "requested" || selectedRequest.status === "processing") && (
                         <>
                           <Button
                             onClick={() => setShowOfferForm(true)}
-                            className="flex-1 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white"
+                            className="flex-1 bg-sky-500 hover:bg-sky-600 text-white"
                           >
                             <Send className="h-4 w-4 mr-2" /> Enviar Oferta
                           </Button>
                           <Button
                             variant="outline"
                             onClick={() => rejectRequest(selectedRequest.id)}
-                            className="border-red-400/30 text-red-300 hover:bg-red-500/10 bg-transparent"
+                            className="border-red-500/30 text-red-600 hover:bg-red-50"
                           >
                             <XCircle className="h-4 w-4 mr-2" /> Rechazar
                           </Button>
@@ -381,89 +381,89 @@ export default function AdminReservationsPage() {
 
                 {/* Offer Form */}
                 {showOfferForm && (
-                  <Card className="border-sky-400/30 bg-sky-500/10 backdrop-blur-lg">
+                  <Card className="border-sky-500/30 bg-sky-50/50 backdrop-blur-xl">
                     <CardHeader>
-                      <CardTitle className="text-lg text-white flex items-center gap-2">
-                        <Send className="h-5 w-5 text-sky-400" /> Nueva Oferta
+                      <CardTitle className="text-lg text-slate-900 flex items-center gap-2">
+                        <Send className="h-5 w-5 text-sky-500" /> Nueva Oferta
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-xs text-sky-300/70 mb-1 block">Nombre Propiedad</label>
+                          <label className="text-xs text-slate-600 mb-1 block">Nombre Propiedad</label>
                           <Input
                             value={newOffer.property_name}
                             onChange={(e) => setNewOffer({ ...newOffer, property_name: e.target.value })}
-                            className="bg-white/10 border-sky-400/30 text-white placeholder:text-sky-300/40"
+                            className="bg-white border-sky-500/20 text-slate-900"
                             placeholder="Villa Cancun..."
                           />
                         </div>
                         <div>
-                          <label className="text-xs text-sky-300/70 mb-1 block">Destino</label>
+                          <label className="text-xs text-slate-600 mb-1 block">Destino</label>
                           <Input
                             value={newOffer.destination}
                             onChange={(e) => setNewOffer({ ...newOffer, destination: e.target.value })}
-                            className="bg-white/10 border-sky-400/30 text-white placeholder:text-sky-300/40"
+                            className="bg-white border-sky-500/20 text-slate-900"
                             placeholder="Cancun, Mexico"
                           />
                         </div>
                         <div>
-                          <label className="text-xs text-sky-300/70 mb-1 block">Check-in</label>
+                          <label className="text-xs text-slate-600 mb-1 block">Check-in</label>
                           <Input
                             type="date"
                             value={newOffer.check_in}
                             onChange={(e) => setNewOffer({ ...newOffer, check_in: e.target.value })}
-                            className="bg-white/10 border-sky-400/30 text-white"
+                            className="bg-white border-sky-500/20 text-slate-900"
                           />
                         </div>
                         <div>
-                          <label className="text-xs text-sky-300/70 mb-1 block">Check-out</label>
+                          <label className="text-xs text-slate-600 mb-1 block">Check-out</label>
                           <Input
                             type="date"
                             value={newOffer.check_out}
                             onChange={(e) => setNewOffer({ ...newOffer, check_out: e.target.value })}
-                            className="bg-white/10 border-sky-400/30 text-white"
+                            className="bg-white border-sky-500/20 text-slate-900"
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="text-xs text-sky-300/70 mb-1 block">Amenidades (separar con coma)</label>
+                        <label className="text-xs text-slate-600 mb-1 block">Amenidades (separar con coma)</label>
                         <Input
                           value={newOffer.amenities}
                           onChange={(e) => setNewOffer({ ...newOffer, amenities: e.target.value })}
-                          className="bg-white/10 border-sky-400/30 text-white placeholder:text-sky-300/40"
+                          className="bg-white border-sky-500/20 text-slate-900"
                           placeholder="Piscina, WiFi, Vista al mar, Cocina..."
                         />
                       </div>
                       <div>
-                        <label className="text-xs text-sky-300/70 mb-1 block">URL Imagen (opcional)</label>
+                        <label className="text-xs text-slate-600 mb-1 block">URL Imagen (opcional)</label>
                         <Input
                           value={newOffer.image_url}
                           onChange={(e) => setNewOffer({ ...newOffer, image_url: e.target.value })}
-                          className="bg-white/10 border-sky-400/30 text-white placeholder:text-sky-300/40"
+                          className="bg-white border-sky-500/20 text-slate-900"
                           placeholder="https://..."
                         />
                       </div>
                       <div>
-                        <label className="text-xs text-sky-300/70 mb-1 block">Notas para el member</label>
+                        <label className="text-xs text-slate-600 mb-1 block">Notas para el member</label>
                         <Textarea
                           value={newOffer.admin_notes}
                           onChange={(e) => setNewOffer({ ...newOffer, admin_notes: e.target.value })}
-                          className="bg-white/10 border-sky-400/30 text-white placeholder:text-sky-300/40"
+                          className="bg-white border-sky-500/20 text-slate-900"
                           placeholder="Detalles adicionales..."
                           rows={3}
                         />
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex flex-col sm:flex-row gap-2">
                         <Button
                           onClick={sendOffer}
                           disabled={sendingOffer || !newOffer.property_name || !newOffer.destination}
-                          className="flex-1 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white"
+                          className="flex-1 bg-sky-500 hover:bg-sky-600 text-white"
                         >
                           {sendingOffer ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Send className="h-4 w-4 mr-2" />}
                           Enviar Oferta al Member
                         </Button>
-                        <Button variant="outline" onClick={() => setShowOfferForm(false)} className="border-sky-400/30 text-sky-300 hover:bg-sky-500/10 bg-transparent">
+                        <Button variant="outline" onClick={() => setShowOfferForm(false)} className="border-slate-300 text-slate-600 hover:bg-slate-50">
                           Cancelar
                         </Button>
                       </div>
@@ -473,31 +473,31 @@ export default function AdminReservationsPage() {
 
                 {/* Existing Offers */}
                 {offers.length > 0 && (
-                  <Card className="border-sky-400/30 bg-white/5 backdrop-blur-lg">
-                    <CardHeader className="border-b border-sky-400/20">
-                      <CardTitle className="text-lg text-white flex items-center gap-2">
-                        <MessageSquare className="h-5 w-5 text-sky-400" /> Ofertas Enviadas ({offers.length})
+                  <Card className="border-sky-500/20 bg-white/80 backdrop-blur-xl">
+                    <CardHeader className="border-b border-sky-500/10">
+                      <CardTitle className="text-lg text-slate-900 flex items-center gap-2">
+                        <MessageSquare className="h-5 w-5 text-sky-500" /> Ofertas Enviadas ({offers.length})
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="p-4 space-y-3">
                       {offers.map((offer) => (
-                        <div key={offer.id} className="p-4 rounded-lg border border-sky-400/20 bg-white/5">
+                        <div key={offer.id} className="p-4 rounded-lg border border-sky-500/20 bg-sky-50/50">
                           <div className="flex items-start justify-between mb-2">
                             <div>
-                              <p className="font-semibold text-white">{offer.property_name}</p>
-                              <p className="text-sm text-sky-300">{offer.destination}</p>
+                              <p className="font-semibold text-slate-900">{offer.property_name}</p>
+                              <p className="text-sm text-slate-600">{offer.destination}</p>
                             </div>
-                            <Badge className={offer.status === "accepted" ? "bg-emerald-500 text-white" : offer.status === "rejected" ? "bg-red-500 text-white" : "bg-sky-500/30 text-sky-200"}>
+                            <Badge className={offer.status === "accepted" ? "bg-emerald-500 text-white" : offer.status === "rejected" ? "bg-red-500 text-white" : "bg-sky-100 text-sky-700 border border-sky-200"}>
                               {offer.status === "accepted" ? "Aceptada" : offer.status === "rejected" ? "Rechazada" : "Pendiente"}
                             </Badge>
                           </div>
-                          <div className="flex gap-4 text-xs text-sky-300/60">
+                          <div className="flex flex-wrap gap-4 text-xs text-slate-500">
                             <span>Check-in: {offer.check_in ? new Date(offer.check_in).toLocaleDateString("es-MX") : "-"}</span>
                             <span>Check-out: {offer.check_out ? new Date(offer.check_out).toLocaleDateString("es-MX") : "-"}</span>
                             <span>{offer.total_nights} noches</span>
                           </div>
                           {offer.admin_notes && (
-                            <p className="text-xs text-sky-200/60 mt-2 italic">Nota: {offer.admin_notes}</p>
+                            <p className="text-xs text-slate-500 mt-2 italic">Nota: {offer.admin_notes}</p>
                           )}
                         </div>
                       ))}
@@ -506,11 +506,11 @@ export default function AdminReservationsPage() {
                 )}
               </>
             ) : (
-              <Card className="border-sky-400/20 bg-white/5 backdrop-blur-lg">
-                <CardContent className="p-16 text-center">
-                  <Eye className="h-12 w-12 text-sky-400/40 mx-auto mb-4" />
-                  <p className="text-sky-300/60 text-lg">Selecciona una solicitud para ver los detalles</p>
-                  <p className="text-sky-300/40 text-sm mt-2">
+              <Card className="border-sky-500/20 bg-white/80 backdrop-blur-xl">
+                <CardContent className="p-8 sm:p-16 text-center">
+                  <Eye className="h-12 w-12 text-sky-300 mx-auto mb-4" />
+                  <p className="text-slate-600 text-lg">Selecciona una solicitud para ver los detalles</p>
+                  <p className="text-slate-400 text-sm mt-2">
                     Puedes enviar ofertas, rechazar solicitudes o ver el historial
                   </p>
                 </CardContent>
