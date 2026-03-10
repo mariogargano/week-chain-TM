@@ -15,11 +15,12 @@ import { Bell, Search, Settings, User, LogOut } from "lucide-react"
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 export function AdminHeader() {
   const router = useRouter()
   const [userName, setUserName] = useState("Admin")
-  const [userWallet, setUserWallet] = useState("")
+  const [userEmail, setUserEmail] = useState("")
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -28,8 +29,7 @@ export function AdminHeader() {
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
           const email = user.email || ""
-          setUserWallet(email)
-          // Try to get name from users table
+          setUserEmail(email)
           const { data: userData } = await supabase
             .from("users")
             .select("full_name")
@@ -59,63 +59,77 @@ export function AdminHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-10 flex h-14 sm:h-16 items-center gap-2 sm:gap-4 border-b border-sky-500/15 bg-white/70 backdrop-blur-xl px-3 sm:px-6">
-      <SidebarTrigger className="min-h-[44px] min-w-[44px]" />
+    <header className="sticky top-0 z-10 flex h-14 items-center gap-2 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl px-3">
+      <SidebarTrigger className="min-h-[44px] min-w-[44px] rounded-lg hover:bg-slate-100" />
 
-      <div className="flex flex-1 items-center justify-between min-w-0">
-        <div className="flex items-center gap-4">
-          <div className="relative hidden sm:block">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              type="search"
-              placeholder="Buscar..."
-              className="h-9 w-48 lg:w-64 rounded-xl border border-sky-500/20 bg-sky-500/[0.05] backdrop-blur-lg pl-10 pr-4 text-sm outline-none transition-all focus:border-sky-500/40 focus:ring-2 focus:ring-sky-500/15 focus:bg-white placeholder:text-slate-400"
-            />
-          </div>
+      {/* Logo on mobile only */}
+      <div className="flex items-center gap-2 sm:hidden">
+        <div className="h-7 w-7 rounded-lg bg-sky-500 flex items-center justify-center">
+          <span className="text-white font-bold text-xs">WW</span>
+        </div>
+        <span className="text-sm font-semibold text-slate-900">WEEK-WORLD</span>
+      </div>
+
+      <div className="flex flex-1 items-center justify-end gap-1">
+        {/* Search - hidden on mobile */}
+        <div className="relative hidden md:block">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <input
+            type="search"
+            placeholder="Buscar..."
+            className="h-9 w-48 lg:w-64 rounded-lg border border-slate-200 bg-slate-50 pl-10 pr-4 text-sm outline-none transition-all focus:border-sky-300 focus:ring-2 focus:ring-sky-100 focus:bg-white placeholder:text-slate-400"
+          />
         </div>
 
-        <div className="flex items-center gap-1 sm:gap-3">
-          <Button variant="ghost" size="icon" className="relative min-h-[44px] min-w-[44px]">
-            <Bell className="h-5 w-5 text-muted-foreground" />
-            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500" />
+        {/* Notifications */}
+        <Link href="/dashboard/admin/notifications">
+          <Button variant="ghost" size="icon" className="relative min-h-[44px] min-w-[44px] rounded-lg hover:bg-slate-100">
+            <Bell className="h-5 w-5 text-slate-600" />
+            <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500" />
           </Button>
+        </Link>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="flex items-center gap-2 sm:gap-3 px-2 min-h-[44px]">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="/admin-avatar.png" />
-                  <AvatarFallback className="bg-sky-100 text-sky-700 text-sm font-semibold">
-                    {userName.charAt(0).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="hidden flex-col items-start md:flex">
-                  <span className="text-sm font-medium text-foreground">{userName}</span>
-                  <span className="text-xs text-muted-foreground truncate max-w-32">
-                    {userWallet || "Admin"}
-                  </span>
-                </div>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => router.push("/dashboard/admin/profile")}>
-                <User className="mr-2 h-4 w-4" />
-                Perfil
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push("/dashboard/admin/settings")}>
-                <Settings className="mr-2 h-4 w-4" />
-                Configuracion
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
-                <LogOut className="mr-2 h-4 w-4" />
-                Cerrar Sesion
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        {/* User Menu */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="flex items-center gap-2 px-2 min-h-[44px] rounded-lg hover:bg-slate-100">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src="/admin-avatar.png" />
+                <AvatarFallback className="bg-sky-100 text-sky-700 text-sm font-semibold">
+                  {userName.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+              <div className="hidden flex-col items-start sm:flex">
+                <span className="text-sm font-medium text-slate-900">{userName}</span>
+                <span className="text-[11px] text-slate-500 truncate max-w-28">
+                  {userEmail || "Admin"}
+                </span>
+              </div>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel className="font-normal">
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm font-medium">{userName}</p>
+                <p className="text-xs text-slate-500 truncate">{userEmail}</p>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => router.push("/dashboard/admin/profile")} className="cursor-pointer">
+              <User className="mr-2 h-4 w-4" />
+              Perfil
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push("/dashboard/admin/settings")} className="cursor-pointer">
+              <Settings className="mr-2 h-4 w-4" />
+              Configuracion
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleSignOut} className="text-red-600 cursor-pointer">
+              <LogOut className="mr-2 h-4 w-4" />
+              Cerrar Sesion
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   )
