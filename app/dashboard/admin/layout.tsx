@@ -13,10 +13,10 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(true) // Default to mobile/collapsed
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024)
     checkMobile()
     window.addEventListener("resize", checkMobile)
     return () => window.removeEventListener("resize", checkMobile)
@@ -25,12 +25,12 @@ export default function AdminLayout({
   return (
     <RoleGuard allowedRoles={["admin"]}>
       <SidebarProvider defaultOpen={!isMobile}>
-        <div className="flex h-screen w-full overflow-hidden">
+        <div className="flex h-dvh w-full overflow-hidden bg-slate-50">
           <AdminSidebar />
-          <div className="flex flex-1 flex-col overflow-hidden">
+          <div className="flex flex-1 flex-col overflow-hidden min-w-0">
             <AdminHeader />
-            <main className="flex-1 overflow-y-auto overscroll-contain bg-gradient-to-br from-slate-50 via-sky-50/30 to-blue-50/20">
-              <div className="p-3 sm:p-4 lg:p-6">{children}</div>
+            <main className="flex-1 overflow-y-auto overscroll-contain bg-gradient-to-br from-slate-50 via-sky-50/20 to-white">
+              <div className="p-3 sm:p-4 lg:p-6 max-w-7xl mx-auto">{children}</div>
             </main>
           </div>
         </div>

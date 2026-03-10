@@ -1,23 +1,22 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
   Building2, Users, AlertCircle, ArrowUpRight, Loader2, Ticket, Calendar, Eye,
   RefreshCw, TrendingUp, DollarSign, ShieldCheck, BadgeCheck, BarChart3, MapPin,
   CreditCard, FileText, Clock, Activity, Briefcase, ArrowUp, Globe, Scale, Coins,
-  Lock, Star, PlaneTakeoff, Database, Bell, Shield, Webhook, BookOpen, Wrench,
+  Lock, Star, Wrench, Shield,
 } from "lucide-react"
 import { useEffect, useState, useRef } from "react"
 import { createClient } from "@/lib/supabase/client"
 import Link from "next/link"
 
 /* ---------- Glass utility classes ---------- */
-const glass = "bg-gradient-to-br from-sky-500/[0.08] to-blue-600/[0.04] backdrop-blur-xl border border-sky-500/20 rounded-2xl shadow-[0_4px_24px_rgba(14,165,233,0.1)]"
-const glassHover = "hover:shadow-[0_8px_32px_rgba(14,165,233,0.18)] hover:border-sky-400/30 transition-all duration-300"
+const glass = "bg-white/80 backdrop-blur-xl border border-sky-200/60 rounded-2xl shadow-sm"
+const glassHover = "hover:shadow-md hover:border-sky-300/60 transition-all duration-300"
 const glassCard = `${glass} ${glassHover}`
-const glassIcon = (bg: string) => `p-2.5 rounded-xl ${bg} flex items-center justify-center`
 
 /* ---------- Types ---------- */
 interface DashboardData {
@@ -212,10 +211,10 @@ export default function AdminDashboard() {
   /* ---------- Loading ---------- */
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className={`${glass} p-10 text-center`}>
-          <Loader2 className="mx-auto h-10 w-10 animate-spin text-sky-500" />
-          <p className="mt-4 text-sm text-slate-500 font-medium">Cargando panel de administracion...</p>
+      <div className="flex items-center justify-center min-h-[60vh] p-4">
+        <div className={`${glass} p-8 text-center max-w-xs w-full`}>
+          <Loader2 className="mx-auto h-8 w-8 animate-spin text-sky-500" />
+          <p className="mt-3 text-sm text-slate-500 font-medium">Cargando panel...</p>
         </div>
       </div>
     )
@@ -224,17 +223,17 @@ export default function AdminDashboard() {
   /* ---------- Error ---------- */
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh] p-6">
-        <div className={`${glass} max-w-md w-full p-8`}>
-          <AlertCircle className="h-10 w-10 text-red-500 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-slate-900 text-center mb-2">Error al cargar</h3>
-          <p className="text-sm text-red-600 mb-6 text-center">{error}</p>
-          <div className="flex gap-3">
-            <Button onClick={() => { fetchedRef.current = false; fetchDashboardData() }} className="flex-1 bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:from-sky-400 hover:to-blue-500 rounded-xl shadow-[0_4px_16px_rgba(14,165,233,0.3)]">
+      <div className="flex items-center justify-center min-h-[60vh] p-4">
+        <div className={`${glass} max-w-sm w-full p-6`}>
+          <AlertCircle className="h-10 w-10 text-red-500 mx-auto mb-3" />
+          <h3 className="text-base font-semibold text-slate-900 text-center mb-2">Error al cargar</h3>
+          <p className="text-sm text-red-600 mb-5 text-center">{error}</p>
+          <div className="flex flex-col gap-2">
+            <Button onClick={() => { fetchedRef.current = false; fetchDashboardData() }} className="w-full bg-sky-500 hover:bg-sky-600 text-white rounded-xl">
               Reintentar
             </Button>
-            <Link href="/auth?tab=login" className="flex-1">
-              <Button variant="outline" className="w-full border-sky-500/30 text-sky-700 hover:bg-sky-50 rounded-xl">
+            <Link href="/auth?tab=login" className="w-full">
+              <Button variant="outline" className="w-full border-sky-200 text-sky-700 hover:bg-sky-50 rounded-xl">
                 Iniciar Sesion
               </Button>
             </Link>
@@ -245,95 +244,94 @@ export default function AdminDashboard() {
   }
 
   const statusColor = data.systemStatus === "RED" ? "bg-red-500" : data.systemStatus === "ORANGE" ? "bg-orange-500" : data.systemStatus === "YELLOW" ? "bg-yellow-500" : "bg-emerald-500"
-  const statusGlass = data.systemStatus === "RED" ? "from-red-500/10 to-red-600/5 border-red-500/20" : data.systemStatus === "ORANGE" ? "from-orange-500/10 to-orange-600/5 border-orange-500/20" : data.systemStatus === "YELLOW" ? "from-yellow-500/10 to-yellow-600/5 border-yellow-500/20" : "from-emerald-500/10 to-emerald-600/5 border-emerald-500/20"
+  const statusBg = data.systemStatus === "RED" ? "bg-red-50 border-red-200" : data.systemStatus === "ORANGE" ? "bg-orange-50 border-orange-200" : data.systemStatus === "YELLOW" ? "bg-yellow-50 border-yellow-200" : "bg-emerald-50 border-emerald-200"
   const statusText = data.systemStatus === "RED" ? "text-red-700" : data.systemStatus === "ORANGE" ? "text-orange-700" : data.systemStatus === "YELLOW" ? "text-yellow-700" : "text-emerald-700"
   const pendingCount = data.pendingKYC + data.pendingReservations + data.pendingPropertySubmissions + data.pendingContracts
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 pb-6">
       {/* Header */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Panel de Control</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Centro de operaciones WEEK-WORLD</p>
+          <h1 className="text-xl font-bold text-slate-900">Panel de Control</h1>
+          <p className="text-xs text-slate-500 mt-0.5">Centro de operaciones WEEK-WORLD</p>
         </div>
         <Button
           onClick={() => fetchDashboardData()}
           disabled={refreshing}
-          className="self-start bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:from-sky-400 hover:to-blue-500 rounded-xl shadow-[0_4px_16px_rgba(14,165,233,0.3)] border border-sky-400/30 px-5"
+          size="sm"
+          className="bg-sky-500 hover:bg-sky-600 text-white rounded-xl text-xs px-3 min-h-[36px]"
         >
-          <RefreshCw className={`mr-2 h-4 w-4 ${refreshing ? "animate-spin" : ""}`} />
-          Actualizar
+          <RefreshCw className={`h-3.5 w-3.5 ${refreshing ? "animate-spin" : ""}`} />
+          <span className="hidden sm:inline ml-1.5">Actualizar</span>
         </Button>
       </div>
 
       {/* System Status Banner */}
-      <div className={`bg-gradient-to-br ${statusGlass} backdrop-blur-xl border rounded-2xl shadow-[0_4px_24px_rgba(14,165,233,0.08)] p-4 flex flex-col sm:flex-row sm:items-center gap-4`}>
-        <div className="flex items-center gap-3 flex-1">
-          <div className={`h-3.5 w-3.5 rounded-full ${statusColor} animate-pulse shadow-lg`} />
-          <div>
-            <p className={`font-semibold ${statusText}`}>
-              Sistema {data.systemStatus} &mdash; Utilizacion {data.currentUtilization.toFixed(1)}%
-            </p>
-            <p className="text-xs text-slate-500">
-              {data.totalSupplyWeeks} semanas supply | {data.safeCapacityWeeks} capacidad segura | {data.activeCountries} paises
-            </p>
-          </div>
+      <div className={`${statusBg} backdrop-blur-xl border rounded-xl p-3 flex items-center gap-3`}>
+        <div className={`h-3 w-3 rounded-full ${statusColor} animate-pulse shadow-sm flex-shrink-0`} />
+        <div className="flex-1 min-w-0">
+          <p className={`text-sm font-semibold ${statusText}`}>
+            Sistema {data.systemStatus} - {data.currentUtilization.toFixed(1)}%
+          </p>
+          <p className="text-[11px] text-slate-500 truncate">
+            {data.totalSupplyWeeks} semanas | {data.safeCapacityWeeks} seguras | {data.activeCountries} paises
+          </p>
         </div>
         {pendingCount > 0 && (
-          <Badge className="bg-amber-500/20 text-amber-700 border border-amber-500/30 backdrop-blur-sm self-start px-3 py-1">
-            <Clock className="h-3 w-3 mr-1.5" />
-            {pendingCount} acciones pendientes
+          <Badge className="bg-amber-100 text-amber-700 border-amber-200 text-[10px] px-2 py-0.5 flex-shrink-0">
+            <Clock className="h-3 w-3 mr-1" />
+            {pendingCount}
           </Badge>
         )}
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+      {/* KPI Cards - 2x2 grid on mobile, 4 columns on desktop */}
+      <div className="grid grid-cols-2 gap-3">
         {[
-          { label: "Usuarios", value: data.totalUsers, sub: `+${data.newUsersThisMonth} este mes`, icon: Users, iconBg: "bg-gradient-to-br from-sky-500 to-blue-600", href: "/dashboard/admin/users", trend: data.newUsersThisMonth },
-          { label: "Certificados", value: data.totalCertificates, sub: `${data.activeCertificates} activos`, icon: Ticket, iconBg: "bg-gradient-to-br from-amber-500 to-orange-600", href: "/dashboard/admin/certificates" },
-          { label: "Propiedades", value: data.totalProperties, sub: `${data.activeProperties} activas`, icon: Building2, iconBg: "bg-gradient-to-br from-emerald-500 to-green-600", href: "/dashboard/admin/properties" },
-          { label: "Revenue Total", value: formatCurrency(data.totalRevenue), sub: `${data.totalPayments} pagos`, icon: DollarSign, iconBg: "bg-gradient-to-br from-violet-500 to-purple-600", href: "/dashboard/admin/payments", isString: true },
+          { label: "Usuarios", value: data.totalUsers, sub: `+${data.newUsersThisMonth} mes`, icon: Users, color: "bg-sky-500", href: "/dashboard/admin/users", trend: data.newUsersThisMonth },
+          { label: "Certificados", value: data.totalCertificates, sub: `${data.activeCertificates} activos`, icon: Ticket, color: "bg-amber-500", href: "/dashboard/admin/certificates" },
+          { label: "Propiedades", value: data.totalProperties, sub: `${data.activeProperties} activas`, icon: Building2, color: "bg-emerald-500", href: "/dashboard/admin/properties" },
+          { label: "Revenue", value: formatCurrency(data.totalRevenue), sub: `${data.totalPayments} pagos`, icon: DollarSign, color: "bg-violet-500", href: "/dashboard/admin/payments", isString: true },
         ].map((kpi) => (
           <Link key={kpi.label} href={kpi.href}>
-            <div className={`${glassCard} p-5 cursor-pointer group h-full`}>
-              <div className="flex items-center justify-between mb-3">
-                <div className={`${kpi.iconBg} p-2.5 rounded-xl shadow-lg`}>
-                  <kpi.icon className="h-5 w-5 text-white" />
+            <div className={`${glassCard} p-4 cursor-pointer h-full`}>
+              <div className="flex items-center justify-between mb-2">
+                <div className={`${kpi.color} p-2 rounded-lg`}>
+                  <kpi.icon className="h-4 w-4 text-white" />
                 </div>
                 {kpi.trend && kpi.trend > 0 && (
-                  <span className="flex items-center text-xs text-emerald-600 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full">
-                    <ArrowUp className="h-3 w-3 mr-0.5" />+{kpi.trend}
+                  <span className="flex items-center text-[10px] text-emerald-600 font-medium bg-emerald-50 px-1.5 py-0.5 rounded-full">
+                    <ArrowUp className="h-2.5 w-2.5" />+{kpi.trend}
                   </span>
                 )}
               </div>
-              <p className="text-2xl font-bold text-sky-700">{kpi.isString ? kpi.value : (kpi.value as number).toLocaleString()}</p>
-              <p className="text-xs text-slate-500 mt-1">{kpi.sub}</p>
+              <p className="text-lg font-bold text-slate-900">{kpi.isString ? kpi.value : (kpi.value as number).toLocaleString()}</p>
+              <p className="text-[11px] text-slate-500">{kpi.sub}</p>
             </div>
           </Link>
         ))}
       </div>
 
-      {/* Certificate Tiers Status */}
+      {/* Certificate Tiers - 2x2 on mobile, 4 columns on desktop */}
       <div>
-        <h2 className="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">Certificados por Tier</h2>
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Certificados por Tier</h2>
+        <div className="grid grid-cols-2 gap-2">
           {(["silver", "gold", "platinum", "signature"] as const).map((tier) => {
             const stopped = data.stopSaleFlags[tier]
             const count = data.certificatesActive[tier]
-            const colors: Record<string, string> = { silver: "from-slate-400 to-slate-500", gold: "from-amber-400 to-yellow-500", platinum: "from-sky-400 to-blue-500", signature: "from-violet-400 to-purple-500" }
+            const colors: Record<string, string> = { silver: "bg-slate-400", gold: "bg-amber-400", platinum: "bg-sky-400", signature: "bg-violet-400" }
             return (
-              <div key={tier} className={`${glass} ${stopped ? "border-red-500/30" : ""} p-4`}>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-slate-700 capitalize">{tier}</span>
-                  <Badge className={stopped ? "bg-red-500/20 text-red-700 border-red-500/30 text-[10px]" : "bg-emerald-500/20 text-emerald-700 border-emerald-500/30 text-[10px]"}>
-                    {stopped ? "DETENIDO" : "ABIERTO"}
+              <div key={tier} className={`${glass} ${stopped ? "border-red-200" : ""} p-3`}>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-medium text-slate-600 capitalize">{tier}</span>
+                  <Badge className={`text-[9px] px-1.5 py-0 ${stopped ? "bg-red-50 text-red-600 border-red-200" : "bg-emerald-50 text-emerald-600 border-emerald-200"}`}>
+                    {stopped ? "STOP" : "OK"}
                   </Badge>
                 </div>
                 <div className="flex items-end gap-2">
-                  <p className="text-2xl font-bold text-slate-900">{count}</p>
-                  <div className={`h-1.5 flex-1 rounded-full bg-gradient-to-r ${colors[tier]} opacity-40 mb-1.5`} />
+                  <p className="text-xl font-bold text-slate-900">{count}</p>
+                  <div className={`h-1 flex-1 rounded-full ${colors[tier]} opacity-30 mb-1`} />
                 </div>
               </div>
             )
@@ -341,110 +339,105 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Pending Actions + Ecosystem Satellites */}
-      <div className="grid gap-5 lg:grid-cols-3">
-        {/* Pending Actions */}
-        <div className={`${glass} p-5 lg:col-span-1`}>
-          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2 mb-4">
-            <Clock className="h-4 w-4 text-amber-500" />
-            Pendientes de Accion
-          </h3>
-          <div className="space-y-2.5">
-            {[
-              { condition: data.pendingKYC > 0, label: "Verificaciones KYC", count: data.pendingKYC, icon: BadgeCheck, bg: "bg-amber-500/10 border-amber-500/20 hover:bg-amber-500/20", iconCls: "text-amber-600", badgeCls: "bg-amber-500/20 text-amber-700 border-amber-500/30", href: "/dashboard/admin/kyc" },
-              { condition: data.pendingReservations > 0, label: "Solicitudes de Reserva", count: data.pendingReservations, icon: Calendar, bg: "bg-sky-500/10 border-sky-500/20 hover:bg-sky-500/20", iconCls: "text-sky-600", badgeCls: "bg-sky-500/20 text-sky-700 border-sky-500/30", href: "/dashboard/admin/reservations" },
-              { condition: data.pendingPropertySubmissions > 0, label: "Propiedades por Aprobar", count: data.pendingPropertySubmissions, icon: Building2, bg: "bg-violet-500/10 border-violet-500/20 hover:bg-violet-500/20", iconCls: "text-violet-600", badgeCls: "bg-violet-500/20 text-violet-700 border-violet-500/30", href: "/dashboard/admin/property-approvals" },
-              { condition: data.pendingContracts > 0, label: "Contratos Pendientes", count: data.pendingContracts, icon: FileText, bg: "bg-emerald-500/10 border-emerald-500/20 hover:bg-emerald-500/20", iconCls: "text-emerald-600", badgeCls: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30", href: "/dashboard/admin/legalario" },
-              { condition: data.waitlistSize > 0, label: "Lista de Espera", count: data.waitlistSize, icon: Star, bg: "bg-orange-500/10 border-orange-500/20 hover:bg-orange-500/20", iconCls: "text-orange-600", badgeCls: "bg-orange-500/20 text-orange-700 border-orange-500/30", href: "/dashboard/admin/presale" },
-            ].filter(item => item.condition).map((item) => (
-              <Link key={item.label} href={item.href}>
-                <div className={`flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer ${item.bg}`}>
-                  <div className="flex items-center gap-2.5">
-                    <item.icon className={`h-4 w-4 ${item.iconCls}`} />
-                    <span className="text-sm font-medium text-slate-700">{item.label}</span>
-                  </div>
-                  <Badge className={item.badgeCls}>{item.count}</Badge>
+      {/* Pending Actions */}
+      <div className={`${glass} p-4`}>
+        <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2 mb-3">
+          <Clock className="h-4 w-4 text-amber-500" />
+          Pendientes
+        </h3>
+        <div className="space-y-2">
+          {[
+            { condition: data.pendingKYC > 0, label: "KYC", count: data.pendingKYC, icon: BadgeCheck, bg: "bg-amber-50 border-amber-200", iconCls: "text-amber-600", href: "/dashboard/admin/kyc" },
+            { condition: data.pendingReservations > 0, label: "Reservas", count: data.pendingReservations, icon: Calendar, bg: "bg-sky-50 border-sky-200", iconCls: "text-sky-600", href: "/dashboard/admin/reservations" },
+            { condition: data.pendingPropertySubmissions > 0, label: "Propiedades", count: data.pendingPropertySubmissions, icon: Building2, bg: "bg-violet-50 border-violet-200", iconCls: "text-violet-600", href: "/dashboard/admin/property-approvals" },
+            { condition: data.pendingContracts > 0, label: "Contratos", count: data.pendingContracts, icon: FileText, bg: "bg-emerald-50 border-emerald-200", iconCls: "text-emerald-600", href: "/dashboard/admin/legalario" },
+            { condition: data.waitlistSize > 0, label: "Waitlist", count: data.waitlistSize, icon: Star, bg: "bg-orange-50 border-orange-200", iconCls: "text-orange-600", href: "/dashboard/admin/presale" },
+          ].filter(item => item.condition).map((item) => (
+            <Link key={item.label} href={item.href}>
+              <div className={`flex items-center justify-between p-2.5 rounded-lg border ${item.bg} transition-all cursor-pointer active:scale-[0.98]`}>
+                <div className="flex items-center gap-2">
+                  <item.icon className={`h-4 w-4 ${item.iconCls}`} />
+                  <span className="text-sm font-medium text-slate-700">{item.label}</span>
                 </div>
-              </Link>
-            ))}
-            {pendingCount === 0 && (
-              <div className="text-center py-8">
-                <ShieldCheck className="h-10 w-10 mx-auto mb-3 text-emerald-500" />
-                <p className="text-sm font-semibold text-emerald-700">Todo al dia</p>
-                <p className="text-xs text-slate-400 mt-1">No hay acciones pendientes</p>
+                <Badge variant="secondary" className="text-xs">{item.count}</Badge>
               </div>
-            )}
-          </div>
-        </div>
-
-        {/* Quick Actions Grid */}
-        <div className={`${glass} p-5 lg:col-span-2`}>
-          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2 mb-4">
-            <Activity className="h-4 w-4 text-sky-500" />
-            Gestion del Negocio
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-            {[
-              { label: "Reservaciones", icon: Calendar, href: "/dashboard/admin/reservations", iconBg: "bg-gradient-to-br from-sky-500 to-blue-600" },
-              { label: "Propiedades", icon: Building2, href: "/dashboard/admin/properties", iconBg: "bg-gradient-to-br from-emerald-500 to-green-600" },
-              { label: "Pagos y Cobros", icon: CreditCard, href: "/dashboard/admin/payments", iconBg: "bg-gradient-to-br from-violet-500 to-purple-600" },
-              { label: "KYC / Verificacion", icon: BadgeCheck, href: "/dashboard/admin/kyc", iconBg: "bg-gradient-to-br from-amber-500 to-orange-600" },
-              { label: "Red de Brokers", icon: Briefcase, href: "/dashboard/admin/broker-network", iconBg: "bg-gradient-to-br from-pink-500 to-rose-600" },
-              { label: "Destinos", icon: MapPin, href: "/dashboard/admin/destinations", iconBg: "bg-gradient-to-br from-teal-500 to-cyan-600" },
-              { label: "Supply / Capacidad", icon: BarChart3, href: "/dashboard/admin/supply", iconBg: "bg-gradient-to-br from-red-500 to-rose-600" },
-              { label: "Escrow Contable", icon: DollarSign, href: "/dashboard/admin/escrow-contable", iconBg: "bg-gradient-to-br from-emerald-500 to-green-600" },
-              { label: "Legalario / Firmas", icon: Scale, href: "/dashboard/admin/legalario", iconBg: "bg-gradient-to-br from-amber-500 to-yellow-600" },
-              { label: "Compliance", icon: Shield, href: "/dashboard/admin/compliance", iconBg: "bg-gradient-to-br from-slate-500 to-gray-600" },
-              { label: "Analytics", icon: TrendingUp, href: "/dashboard/admin/analytics", iconBg: "bg-gradient-to-br from-sky-500 to-blue-600" },
-              { label: "Configuracion", icon: Wrench, href: "/dashboard/admin/settings", iconBg: "bg-gradient-to-br from-slate-400 to-slate-500" },
-            ].map((item) => (
-              <Link key={item.href} href={item.href}>
-                <div className="flex items-center gap-2.5 p-3 rounded-xl border border-sky-500/10 bg-white/40 hover:bg-sky-500/10 hover:border-sky-500/20 transition-all cursor-pointer group">
-                  <div className={`${item.iconBg} p-1.5 rounded-lg shadow-md`}>
-                    <item.icon className="h-3.5 w-3.5 text-white" />
-                  </div>
-                  <span className="text-sm text-slate-700 font-medium group-hover:text-sky-700 truncate">{item.label}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
+            </Link>
+          ))}
+          {pendingCount === 0 && (
+            <div className="text-center py-6">
+              <ShieldCheck className="h-8 w-8 mx-auto mb-2 text-emerald-500" />
+              <p className="text-sm font-medium text-emerald-700">Todo al dia</p>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Ecosystem Satellites Monitor */}
-      <div>
-        <h2 className="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">Ecosistema WEEK-WORLD</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Quick Actions Grid */}
+      <div className={`${glass} p-4`}>
+        <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2 mb-3">
+          <Activity className="h-4 w-4 text-sky-500" />
+          Acciones Rapidas
+        </h3>
+        <div className="grid grid-cols-3 gap-2">
           {[
-            { name: "WEEK-MANAGEMENT", desc: "Propiedades y administracion", icon: Building2, color: "from-sky-500 to-blue-600", status: "Operativo", stats: [{ l: "Propiedades", v: data.totalProperties }, { l: "Activas", v: data.activeProperties }], href: "/dashboard/admin/properties" },
-            { name: "WEEK-BOOKING", desc: "Reservaciones y estancias", icon: Calendar, color: "from-violet-500 to-purple-600", status: "Operativo", stats: [{ l: "Solicitudes pendientes", v: data.pendingReservations }, { l: "Confirmadas", v: data.activeReservations }], href: "/dashboard/admin/reservations" },
-            { name: "WEEK-AGENT", desc: "Red de intermediarios", icon: Briefcase, color: "from-orange-500 to-red-600", status: "Operativo", stats: [{ l: "Brokers activos", v: data.brokerCount }, { l: "Comision fija", v: "4%" }], href: "/dashboard/admin/broker-network" },
-            { name: "WEEK-FINANCE", desc: "VA-FI Tokenizacion y DeFi", icon: Coins, color: "from-emerald-500 to-green-600", status: "Testnet Q1 2027", stats: [{ l: "TVL", v: "$0" }, { l: "Status", v: "En desarrollo" }], href: "/dashboard/admin/vafi" },
-            { name: "WEEK-LEGAL", desc: "Legalario y NOM-151", icon: Scale, color: "from-amber-500 to-yellow-600", status: "Operativo", stats: [{ l: "Contratos pendientes", v: data.pendingContracts }, { l: "KYC pendientes", v: data.pendingKYC }], href: "/dashboard/admin/legalario" },
-            { name: "WEEK-CHAIN", desc: "Blockchain y certificados", icon: Lock, color: "from-cyan-500 to-sky-600", status: "Operativo", stats: [{ l: "Certificados totales", v: data.totalCertificates }, { l: "Activos", v: data.activeCertificates }], href: "/dashboard/admin/certificates" },
-            { name: "WEEK-EXPERIENCE", desc: "Servicios complementarios", icon: Star, color: "from-pink-500 to-rose-600", status: "Proximo", stats: [{ l: "Proveedores", v: 0 }, { l: "Status", v: "Pendiente" }], href: "/dashboard/admin/services" },
-            { name: "WEEK-COMMUNITY", desc: "Red social y DAO", icon: Globe, color: "from-teal-500 to-cyan-600", status: "Activo", stats: [{ l: "Usuarios", v: data.totalUsers }, { l: "Propuestas DAO", v: 0 }], href: "/dashboard/admin/dao" },
-            { name: "WEEK-FUNDACION", desc: "Impacto social y ambiental", icon: Shield, color: "from-green-500 to-emerald-600", status: "Activo", stats: [{ l: "Proyectos", v: 0 }, { l: "Donaciones", v: "$0" }], href: "/week-fundacion" },
+            { label: "Reservas", icon: Calendar, href: "/dashboard/admin/reservations", color: "bg-sky-500" },
+            { label: "Propiedades", icon: Building2, href: "/dashboard/admin/properties", color: "bg-emerald-500" },
+            { label: "Pagos", icon: CreditCard, href: "/dashboard/admin/payments", color: "bg-violet-500" },
+            { label: "KYC", icon: BadgeCheck, href: "/dashboard/admin/kyc", color: "bg-amber-500" },
+            { label: "Brokers", icon: Briefcase, href: "/dashboard/admin/broker-network", color: "bg-pink-500" },
+            { label: "Destinos", icon: MapPin, href: "/dashboard/admin/destinations", color: "bg-teal-500" },
+            { label: "Supply", icon: BarChart3, href: "/dashboard/admin/supply", color: "bg-red-500" },
+            { label: "Escrow", icon: DollarSign, href: "/dashboard/admin/escrow-contable", color: "bg-emerald-600" },
+            { label: "Legal", icon: Scale, href: "/dashboard/admin/legalario", color: "bg-amber-600" },
+            { label: "Compliance", icon: Shield, href: "/dashboard/admin/compliance", color: "bg-slate-500" },
+            { label: "Analytics", icon: TrendingUp, href: "/dashboard/admin/analytics", color: "bg-sky-600" },
+            { label: "Config", icon: Wrench, href: "/dashboard/admin/settings", color: "bg-slate-400" },
+          ].map((item) => (
+            <Link key={item.href} href={item.href}>
+              <div className="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-slate-100 bg-white/60 hover:bg-sky-50 hover:border-sky-200 transition-all cursor-pointer active:scale-95">
+                <div className={`${item.color} p-2 rounded-lg`}>
+                  <item.icon className="h-4 w-4 text-white" />
+                </div>
+                <span className="text-[11px] text-slate-600 font-medium text-center">{item.label}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Ecosystem Satellites - Scrollable on mobile */}
+      <div>
+        <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Ecosistema WEEK-WORLD</h2>
+        <div className="grid grid-cols-1 gap-3">
+          {[
+            { name: "WEEK-MANAGEMENT", desc: "Propiedades", icon: Building2, color: "bg-sky-500", status: "Operativo", stats: [{ l: "Props", v: data.totalProperties }, { l: "Activas", v: data.activeProperties }], href: "/dashboard/admin/properties" },
+            { name: "WEEK-BOOKING", desc: "Reservaciones", icon: Calendar, color: "bg-violet-500", status: "Operativo", stats: [{ l: "Pendientes", v: data.pendingReservations }, { l: "Confirmadas", v: data.activeReservations }], href: "/dashboard/admin/reservations" },
+            { name: "WEEK-AGENT", desc: "Red de brokers", icon: Briefcase, color: "bg-orange-500", status: "Operativo", stats: [{ l: "Brokers", v: data.brokerCount }, { l: "Comision", v: "4%" }], href: "/dashboard/admin/broker-network" },
+            { name: "WEEK-FINANCE", desc: "Tokenizacion", icon: Coins, color: "bg-emerald-500", status: "Q1 2027", stats: [{ l: "TVL", v: "$0" }, { l: "Status", v: "Dev" }], href: "/dashboard/admin/vafi" },
+            { name: "WEEK-LEGAL", desc: "NOM-151", icon: Scale, color: "bg-amber-500", status: "Operativo", stats: [{ l: "Contratos", v: data.pendingContracts }, { l: "KYC", v: data.pendingKYC }], href: "/dashboard/admin/legalario" },
+            { name: "WEEK-CHAIN", desc: "Blockchain", icon: Lock, color: "bg-cyan-500", status: "Operativo", stats: [{ l: "Certs", v: data.totalCertificates }, { l: "Activos", v: data.activeCertificates }], href: "/dashboard/admin/certificates" },
           ].map((satellite) => (
             <Link key={satellite.name} href={satellite.href}>
-              <div className={`${glassCard} p-5 cursor-pointer h-full`}>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className={`bg-gradient-to-br ${satellite.color} p-2.5 rounded-xl shadow-lg`}>
+              <div className={`${glassCard} p-4 cursor-pointer`}>
+                <div className="flex items-center gap-3">
+                  <div className={`${satellite.color} p-2.5 rounded-xl`}>
                     <satellite.icon className="h-5 w-5 text-white" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-bold text-slate-900 truncate">{satellite.name}</h4>
-                    <p className="text-[11px] text-slate-500 truncate">{satellite.desc}</p>
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm font-bold text-slate-900">{satellite.name}</h4>
+                      <Badge className={`text-[10px] ${satellite.status === "Operativo" ? "bg-emerald-50 text-emerald-600 border-emerald-200" : "bg-amber-50 text-amber-600 border-amber-200"}`}>
+                        {satellite.status}
+                      </Badge>
+                    </div>
+                    <p className="text-[11px] text-slate-500">{satellite.desc}</p>
                   </div>
-                  <Badge className={`text-[10px] ${satellite.status === "Operativo" || satellite.status === "Activo" ? "bg-emerald-500/20 text-emerald-700 border-emerald-500/30" : "bg-amber-500/20 text-amber-700 border-amber-500/30"}`}>
-                    {satellite.status}
-                  </Badge>
                 </div>
-                <div className="space-y-1.5">
+                <div className="flex gap-4 mt-3 pt-3 border-t border-slate-100">
                   {satellite.stats.map((stat) => (
-                    <div key={stat.l} className="flex justify-between text-xs">
-                      <span className="text-slate-500">{stat.l}</span>
-                      <span className="font-semibold text-slate-700">{typeof stat.v === "number" ? stat.v.toLocaleString() : stat.v}</span>
+                    <div key={stat.l} className="flex-1">
+                      <p className="text-[10px] text-slate-400 uppercase">{stat.l}</p>
+                      <p className="text-sm font-semibold text-slate-700">{typeof stat.v === "number" ? stat.v.toLocaleString() : stat.v}</p>
                     </div>
                   ))}
                 </div>
@@ -455,40 +448,40 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Activity */}
-      <div className={`${glass} p-5`}>
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
+      <div className={`${glass} p-4`}>
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
             <Eye className="h-4 w-4 text-sky-500" />
             Actividad Reciente
           </h3>
           <Link href="/dashboard/admin/audit-logs">
-            <Button variant="ghost" size="sm" className="text-xs text-sky-600 hover:text-sky-700 hover:bg-sky-500/10">
+            <Button variant="ghost" size="sm" className="text-[11px] text-sky-600 hover:text-sky-700 h-7 px-2">
               Ver todo <ArrowUpRight className="h-3 w-3 ml-1" />
             </Button>
           </Link>
         </div>
         {recentActivity.length > 0 ? (
           <div className="space-y-2">
-            {recentActivity.map((activity, i) => (
+            {recentActivity.slice(0, 5).map((activity, i) => (
               <Link key={i} href={activity.link}>
-                <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-sky-500/[0.06] transition-all cursor-pointer border border-sky-500/10">
-                  <div className={`h-2.5 w-2.5 rounded-full shrink-0 shadow-md ${
+                <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-slate-50 transition-all cursor-pointer border border-slate-100">
+                  <div className={`h-2 w-2 rounded-full flex-shrink-0 ${
                     activity.status === "success" ? "bg-emerald-500" :
                     activity.status === "warning" ? "bg-amber-500" : "bg-sky-500"
                   }`} />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm text-slate-700 truncate">{activity.action}</p>
-                    <p className="text-xs text-slate-400">{activity.time}</p>
+                    <p className="text-[10px] text-slate-400">{activity.time}</p>
                   </div>
-                  <ArrowUpRight className="h-3.5 w-3.5 text-sky-400 shrink-0" />
+                  <ArrowUpRight className="h-3 w-3 text-slate-300 flex-shrink-0" />
                 </div>
               </Link>
             ))}
           </div>
         ) : (
-          <div className="text-center py-10 text-slate-400">
-            <Activity className="h-10 w-10 mx-auto mb-3 text-sky-300" />
-            <p className="text-sm font-medium">Sin actividad reciente</p>
+          <div className="text-center py-8 text-slate-400">
+            <Activity className="h-8 w-8 mx-auto mb-2 text-slate-300" />
+            <p className="text-sm">Sin actividad reciente</p>
           </div>
         )}
       </div>

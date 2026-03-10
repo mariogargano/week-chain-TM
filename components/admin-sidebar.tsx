@@ -256,29 +256,34 @@ const navigationItems = [
 
 export function AdminSidebar() {
   const pathname = usePathname()
-  const { state } = useSidebar()
+  const { state, setOpenMobile } = useSidebar()
+
+  const handleLinkClick = () => {
+    // Close mobile sidebar on navigation
+    setOpenMobile(false)
+  }
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-sky-500/20 bg-gradient-to-b from-sky-500/[0.06] to-blue-600/[0.03] backdrop-blur-xl">
-      <SidebarHeader className="border-b border-sky-500/15 p-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 shadow-[0_4px_16px_rgba(14,165,233,0.3)]">
-            <Building2 className="h-5 w-5 text-white" />
+    <Sidebar collapsible="icon" className="border-r border-slate-200 bg-white">
+      <SidebarHeader className="border-b border-slate-100 p-3">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-500 shadow-sm">
+            <Building2 className="h-4.5 w-4.5 text-white" />
           </div>
           {state === "expanded" && (
             <div className="flex flex-col">
-              <span className="text-sm font-bold text-slate-900 tracking-wide">WEEK-WORLD</span>
-              <span className="text-[10px] font-medium text-sky-600">Control Center</span>
+              <span className="text-sm font-bold text-slate-900">WEEK-WORLD</span>
+              <span className="text-[10px] font-medium text-slate-500">Control Center</span>
             </div>
           )}
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="px-2 py-3 overflow-y-auto">
+      <SidebarContent className="px-2 py-2 overflow-y-auto">
         {navigationItems.map((section) => (
-          <SidebarGroup key={section.title} className="pb-1">
-            <SidebarGroupLabel className="text-[9px] font-bold uppercase text-slate-400 tracking-widest px-3 mb-0.5">
-              {section.title}
+          <SidebarGroup key={section.title} className="pb-0.5">
+            <SidebarGroupLabel className="text-[9px] font-semibold uppercase text-slate-400 tracking-wider px-2 mb-0.5">
+              {state === "expanded" ? section.title : ""}
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
@@ -294,14 +299,15 @@ export function AdminSidebar() {
                       >
                         <Link
                           href={item.href}
+                          onClick={handleLinkClick}
                           className={cn(
-                            "flex items-center gap-2 rounded-lg px-2.5 py-1.5 min-h-[32px] transition-all duration-200 text-xs",
+                            "flex items-center gap-2 rounded-lg px-2 py-1.5 min-h-[36px] transition-all duration-150 text-xs",
                             isActive
-                              ? "bg-gradient-to-r from-sky-500/15 to-blue-600/10 text-sky-700 font-semibold border border-sky-500/25 shadow-[0_2px_8px_rgba(14,165,233,0.1)]"
-                              : "text-slate-600 hover:bg-sky-500/[0.06] hover:text-sky-700",
+                              ? "bg-sky-50 text-sky-700 font-semibold border border-sky-200"
+                              : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
                           )}
                         >
-                          <item.icon className={cn("h-3.5 w-3.5 shrink-0", isActive ? "text-sky-600" : "text-slate-400")} />
+                          <item.icon className={cn("h-4 w-4 shrink-0", isActive ? "text-sky-600" : "text-slate-400")} />
                           {state === "expanded" && (
                             <span className="truncate">{item.title}</span>
                           )}
@@ -316,15 +322,16 @@ export function AdminSidebar() {
         ))}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-sky-500/15 p-3">
+      <SidebarFooter className="border-t border-slate-100 p-2">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip={state === "collapsed" ? "Salir" : undefined}>
               <Link
                 href="/"
-                className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 min-h-[32px] text-red-600 transition-all duration-150 hover:bg-red-50 font-medium text-xs"
+                onClick={handleLinkClick}
+                className="flex items-center gap-2 rounded-lg px-2 py-1.5 min-h-[36px] text-red-600 transition-all duration-150 hover:bg-red-50 font-medium text-xs"
               >
-                <LogOut className="h-3.5 w-3.5" />
+                <LogOut className="h-4 w-4" />
                 {state === "expanded" && <span>Salir al Sitio</span>}
               </Link>
             </SidebarMenuButton>
