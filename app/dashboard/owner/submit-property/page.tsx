@@ -28,6 +28,10 @@ function SubmitPropertyContent() {
   const { toast } = useToast()
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
+  // Modelo WEEK-CHAIN: 48 semanas vendibles + 4 reservadas = 52 total
+  const SELLABLE_WEEKS = 48
+  const RESERVED_WEEKS = 4
+
   const [formData, setFormData] = useState({
     property_name: "",
     property_description: "",
@@ -37,9 +41,10 @@ function SubmitPropertyContent() {
     total_area_sqm: "",
     bedrooms: "",
     bathrooms: "",
+    max_pax: "6",
     amenities: [] as string[],
     total_value_usd: "",
-    weeks_to_tokenize: "52",
+    weeks_to_tokenize: "48", // Solo las 48 semanas vendibles
     price_per_week_usd: "",
     images: [] as string[],
     property_documents: [] as string[],
@@ -49,14 +54,12 @@ function SubmitPropertyContent() {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
 
-    // Auto-calculate price per week
-    if (name === "total_value_usd" || name === "weeks_to_tokenize") {
-      const totalValue =
-        name === "total_value_usd" ? Number.parseFloat(value) : Number.parseFloat(formData.total_value_usd)
-      const weeks =
-        name === "weeks_to_tokenize" ? Number.parseFloat(value) : Number.parseFloat(formData.weeks_to_tokenize)
-      if (totalValue && weeks) {
-        setFormData((prev) => ({ ...prev, price_per_week_usd: (totalValue / weeks).toFixed(2) }))
+    // Auto-calculate price per week (based on 48 sellable weeks - modelo WEEK-CHAIN)
+    if (name === "total_value_usd") {
+      const totalValue = Number.parseFloat(value)
+      if (totalValue) {
+        // Precio uniforme: valor total / 48 semanas vendibles
+        setFormData((prev) => ({ ...prev, price_per_week_usd: (totalValue / SELLABLE_WEEKS).toFixed(2) }))
       }
     }
   }
@@ -394,13 +397,26 @@ function SubmitPropertyContent() {
             </Card>
           )}
 
-          {/* Step 3: Financial */}
+          {/* Step 3: Financial - Modelo WEEK-CHAIN (48+4) */}
           {step === 3 && (
             <Card className="border-purple-200/50 bg-white/90 backdrop-blur-xl shadow-lg">
               <CardHeader>
-                <CardTitle>Información Financiera</CardTitle>
+                <CardTitle>Informacion Financiera - Modelo SVC</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
+                {/* Info Banner */}
+                <div className="bg-sky-50 border border-sky-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-sky-900 mb-2">Modelo de Capacidad WEEK-CHAIN</h4>
+                  <div className="grid grid-cols-3 gap-2 text-sm text-sky-700">
+                    <div>52 semanas/año</div>
+                    <div><strong>48 vendibles</strong> (SVC)</div>
+                    <div>4 reservadas</div>
+                  </div>
+                  <p className="text-xs text-sky-600 mt-2">
+                    Precio uniforme por semana. Las 4 semanas reservadas son para mantenimiento y uso de la empresa.
+                  </p>
+                </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="total_value_usd">Valor Total de la Propiedad (USD) *</Label>
                   <Input
@@ -409,56 +425,61 @@ function SubmitPropertyContent() {
                     type="number"
                     value={formData.total_value_usd}
                     onChange={handleInputChange}
-                    placeholder="500000"
+                    placeholder="480000"
                     required
                   />
+                  <p className="text-xs text-slate-500">El valor total se divide entre las 48 semanas vendibles</p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="weeks_to_tokenize">Número de Semanas a Certificar *</Label>
-                  <Input
-                    id="weeks_to_tokenize"
-                    name="weeks_to_tokenize"
-                    type="number"
-                    value={formData.weeks_to_tokenize}
-                    onChange={handleInputChange}
-                    placeholder="52"
-                    required
-                  />
-                  <p className="text-xs text-slate-500">Típicamente 52 semanas (1 año completo)</p>
+                  <Label>Semanas a Certificar (SVC)</Label>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-center">
+                      <p className="text-2xl font-bold text-emerald-700">{SELLABLE_WEEKS}</p>
+                      <p className="text-xs text-emerald-600">Semanas Vendibles</p>
+                    </div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-center">
+                      <p className="text-2xl font-bold text-slate-600">{RESERVED_WEEKS}</p>
+                      <p className="text-xs text-slate-500">Reservadas (Mant/Emp)</p>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="price_per_week_usd">Precio por Semana (USD)</Label>
+                  <Label htmlFor="price_per_week_usd">Precio por Semana SVC (USD)</Label>
                   <Input
                     id="price_per_week_usd"
                     name="price_per_week_usd"
                     type="number"
                     value={formData.price_per_week_usd}
                     onChange={handleInputChange}
-                    placeholder="9615"
+                    placeholder="10000"
                     disabled
                   />
-                  <p className="text-xs text-slate-500">Calculado automáticamente</p>
+                  <p className="text-xs text-slate-500">Calculado automaticamente: Valor Total / 48 semanas</p>
                 </div>
 
                 <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
                   <h4 className="font-semibold text-purple-900 mb-2">Resumen Financiero</h4>
-                  <div className="space-y-1 text-sm">
+                  <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-slate-600">Valor Total:</span>
                       <span className="font-semibold">
-                        ${Number.parseFloat(formData.total_value_usd || "0").toLocaleString()}
+                        ${Number.parseFloat(formData.total_value_usd || "0").toLocaleString()} USD
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-600">Semanas:</span>
-                      <span className="font-semibold">{formData.weeks_to_tokenize}</span>
+                      <span className="text-slate-600">Semanas Vendibles (SVC):</span>
+                      <span className="font-semibold">{SELLABLE_WEEKS} semanas</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-600">Precio/Semana:</span>
-                      <span className="font-semibold">
-                        ${Number.parseFloat(formData.price_per_week_usd || "0").toLocaleString()}
+                      <span className="text-slate-600">Semanas Reservadas:</span>
+                      <span className="font-semibold">{RESERVED_WEEKS} semanas</span>
+                    </div>
+                    <div className="flex justify-between border-t border-purple-200 pt-2 mt-2">
+                      <span className="text-purple-700 font-medium">Precio por Semana SVC:</span>
+                      <span className="font-bold text-purple-900">
+                        ${Number.parseFloat(formData.price_per_week_usd || "0").toLocaleString()} USD
                       </span>
                     </div>
                   </div>
