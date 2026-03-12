@@ -79,7 +79,14 @@ export function createBrowserClient(url?: string, key?: string) {
   const effectiveUrl = url && !url.includes("!") ? url : supabaseUrl
   const effectiveKey = key && !key.includes("!") ? key : supabaseAnonKey
 
-  if (!effectiveUrl || !effectiveKey || effectiveUrl.startsWith("http://localhost") === false && effectiveUrl.includes("supabase.co") === false) {
+  // Validate that we have proper Supabase credentials
+  const isValidUrl = effectiveUrl && (
+    effectiveUrl.includes("supabase.co") || 
+    effectiveUrl.startsWith("http://localhost") ||
+    effectiveUrl.startsWith("http://127.0.0.1")
+  )
+  
+  if (!effectiveUrl || !effectiveKey || !isValidUrl) {
     // Supabase credentials missing or invalid - using mock client
     if (!browserClient) {
       browserClient = createMockClient()
