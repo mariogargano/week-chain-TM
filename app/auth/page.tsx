@@ -314,7 +314,7 @@ function AuthPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center justify-start sm:justify-center px-4 py-8 sm:p-4">
+    <div className="min-h-screen min-h-dvh bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center px-4 py-6 pb-12 overflow-y-auto">
       {/* Invisible hCaptcha */}
       <HCaptcha
         ref={captchaRef}
@@ -325,27 +325,27 @@ function AuthPageContent() {
         onExpire={onCaptchaExpire}
       />
 
-      <div className="text-center mb-6 sm:mb-8">
+      <div className="text-center mb-4 sm:mb-6 flex-shrink-0">
         <div className="flex items-center justify-center gap-3 mb-2">
-          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-lg shadow-slate-400/30 ring-1 ring-slate-300/50 bg-white flex-shrink-0">
+          <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-lg shadow-slate-400/30 ring-1 ring-slate-300/50 bg-white flex-shrink-0">
             <Image
               src="/logo-wc.png"
               alt="WEEK-CHAIN Logo"
-              width={64}
-              height={64}
+              width={56}
+              height={56}
               className="w-full h-full object-contain p-0.5"
               priority
             />
           </div>
           <div className="text-left">
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">WEEK-CHAIN</h1>
-            <p className="text-xs sm:text-sm text-muted-foreground">Smart Vacational Certificate</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground">WEEK-CHAIN</h1>
+            <p className="text-xs text-muted-foreground">Smart Vacational Certificate</p>
           </div>
         </div>
       </div>
 
-      <Card className="w-full max-w-md shadow-2xl bg-card/80 backdrop-blur-xl border-sky-200/50">
-        <CardContent className="pt-6 pb-6 px-4 sm:pt-8 sm:pb-8 sm:px-8">
+      <Card className="w-full max-w-md shadow-2xl bg-card/80 backdrop-blur-xl border-sky-200/50 flex-shrink-0">
+        <CardContent className="pt-5 pb-6 px-4 sm:pt-6 sm:pb-8 sm:px-6">
 
           {error && (
             <Alert variant="destructive" className="mb-5">
@@ -721,17 +721,17 @@ function AuthPageContent() {
                 />
                 <label htmlFor="register-terms" className="text-xs text-muted-foreground leading-relaxed cursor-pointer">
                   Acepto los{" "}
-                  <button type="button" onClick={() => setShowTermsDialog(true)} className="text-sky-600 underline hover:text-sky-700 font-medium">
+                  <a href="/legal/terms" target="_blank" rel="noopener noreferrer" className="text-sky-600 underline hover:text-sky-700 font-medium">
                     Terminos y Condiciones
-                  </button>
+                  </a>
                   ,{" "}
-                  <button type="button" onClick={() => setShowTermsDialog(true)} className="text-sky-600 underline hover:text-sky-700 font-medium">
+                  <a href="/legal/privacy" target="_blank" rel="noopener noreferrer" className="text-sky-600 underline hover:text-sky-700 font-medium">
                     Politica de Privacidad
-                  </button>{" "}
+                  </a>{" "}
                   y el{" "}
-                  <button type="button" onClick={() => setShowTermsDialog(true)} className="text-sky-600 underline hover:text-sky-700 font-medium">
+                  <a href="/legal/nom-029" target="_blank" rel="noopener noreferrer" className="text-sky-600 underline hover:text-sky-700 font-medium">
                     Contrato de Adhesion NOM-029
-                  </button>
+                  </a>
                 </label>
               </div>
 
@@ -740,10 +740,10 @@ function AuthPageContent() {
                 className="w-full h-12 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white text-base font-semibold shadow-md shadow-cyan-200 disabled:opacity-50"
                 disabled={isLoading || !registerTermsAccepted || (confirmPassword !== "" && password !== confirmPassword)}
               >
-                {isLoading ? "Verificando..." : "Crear cuenta"}
+                {isLoading ? "Creando cuenta..." : "Crear Cuenta"}
               </Button>
 
-              <p className="text-center text-sm text-muted-foreground mt-4">
+              <p className="text-center text-sm text-muted-foreground">
                 {"Ya tienes cuenta? "}
                 <button type="button" onClick={() => setActiveTab("login")} className="text-sky-600 font-semibold hover:text-sky-700 underline underline-offset-2">
                   Iniciar sesion
