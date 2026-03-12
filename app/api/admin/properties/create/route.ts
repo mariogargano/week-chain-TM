@@ -2,145 +2,86 @@ import { createClient } from "@/lib/supabase/server"
 import { NextResponse } from "next/server"
 import { isDemoMode } from "@/lib/config/environment"
 
+// Modelo de negocio WEEK-CHAIN:
+// - 52 semanas por propiedad al año
+// - 48 semanas vendibles como SVC
+// - 4 semanas reservadas (mantenimiento/empresa)
+// - Precio UNIFORME por semana (sin temporadas)
+
+const TOTAL_WEEKS = 52
+const SELLABLE_WEEKS = 48
+const RESERVED_WEEKS = 4
+
+// Las semanas reservadas son: 1 (Año Nuevo), 26 (mitad de año), 52 (Navidad), y una de mantenimiento
+const RESERVED_WEEK_NUMBERS = [1, 26, 51, 52]
+
 export async function POST(request: Request) {
   try {
     const supabase = await createClient()
 
-    console.log("[v0] Attempting to get user...")
     const {
       data: { user },
       error: authError,
     } = await supabase.auth.getUser()
 
-    console.log("[v0] User:", user ? { id: user.id, email: user.email } : null)
-    console.log("[v0] Auth error:", authError)
+    // Get property data from request
+    const propertyData = await request.json()
 
-    if (isDemoMode()) {
-      console.log("[v0] Demo mode active - relaxing authentication requirements")
-
-      if (!user) {
-        console.log("[v0] No user found in demo mode, using demo user")
-        // In demo mode, if no user is authenticated, use a demo user ID
-        const demoUserId = "00000000-0000-0000-0000-000000000000"
-
-        const propertyData = await request.json()
-        console.log("[v0] Creating property with data:", propertyData)
-
-        const { data: property, error: propertyError } = await supabase
-          .from("properties")
-          .insert({
-            name: propertyData.name,
-            location: propertyData.location,
-            description: propertyData.description,
-            image_url: propertyData.image_url || null,
-            valor_total_usd: propertyData.valor_total_usd,
-            price: propertyData.valor_total_usd / 52,
-            recaudado_actual: 0,
-            weeks_target: 52,
-            weeks_sold: 0,
-            status: "active",
-            property_type: propertyData.property_type || "vacation_home",
-            bedrooms: propertyData.bedrooms || null,
-            bathrooms: propertyData.bathrooms || null,
-            square_meters: propertyData.square_meters || null,
-            amenities: propertyData.amenities || [],
-            owner_id: demoUserId,
-          })
-          .select()
-          .single()
-
-        if (propertyError) {
-          console.error("[v0] Error creating property:", propertyError)
-          throw propertyError
-        }
-
-        console.log("[v0] Property created in demo mode:", property)
-
-        // Create weeks
-        const seasonalPricing = propertyData.seasonal_pricing || []
-        const basePricePerWeek = propertyData.valor_total_usd / 52
-
-        const weekMultipliers: Record<number, number> = {}
-        seasonalPricing.forEach((season: any) => {
-          season.weeks.forEach((weekNum: number) => {
-            weekMultipliers[weekNum] = season.multiplier
-          })
-        })
-
-        const weeks = Array.from({ length: 52 }, (_, i) => {
-          const weekNumber = i + 1
-          const multiplier = weekMultipliers[weekNumber] || 1.0
-          const price = basePricePerWeek * multiplier
-
-          let season = "mid"
-          if (multiplier >= 2.0) season = "ultra-high"
-          else if (multiplier >= 1.5) season = "high"
-          else if (multiplier <= 0.7) season = "low"
-
-          return {
-            property_id: property.id,
-            week_number: weekNumber,
-            price: price,
-            status: "available",
-            season: season,
-            year: new Date().getFullYear(),
-          }
-        })
-
-        const { error: weeksError } = await supabase.from("weeks").insert(weeks)
-
-        if (weeksError) {
-          console.error("[v0] Error creating weeks:", weeksError)
-          await supabase.from("properties").delete().eq("id", property.id)
-          throw weeksError
-        }
-
-        console.log("[v0] Created 52 weeks for property in demo mode")
-
-        return NextResponse.json({
-          success: true,
-          data: property,
-          message: "Propiedad creada exitosamente en modo demo con 52 semanas tokenizadas",
-        })
-      }
-    }
-
-    if (authError || !user) {
-      return NextResponse.json({ error: "No autorizado. Debes iniciar sesión." }, { status: 401 })
-    }
-
-    const { data: profile } = await supabase.from("users").select("role").eq("id", user.id).single()
-
-    if (!profile || profile.role !== "admin") {
+    // Validate required fields
+    if (!propertyData.name || !propertyData.location || !propertyData.valor_total_usd) {
       return NextResponse.json(
-        { error: "No autorizado. Solo los administradores pueden crear propiedades." },
-        { status: 403 },
+        { error: "Faltan campos requeridos: nombre, ubicacion y valor total" },
+        { status: 400 }
       )
     }
 
-    const propertyData = await request.json()
+    // Calculate uniform price per week (based on 48 sellable weeks)
+    const pricePerWeek = propertyData.valor_total_usd / SELLABLE_WEEKS
 
-    console.log("[v0] Creating property with data:", propertyData)
+    let ownerId = user?.id
 
+    // Demo mode handling
+    if (isDemoMode() && !user) {
+      ownerId = "00000000-0000-0000-0000-000000000000"
+    } else if (!user) {
+      return NextResponse.json({ error: "No autorizado. Debes iniciar sesion." }, { status: 401 })
+    } else {
+      // Verify admin role in production
+      const { data: profile } = await supabase.from("users").select("role").eq("id", user.id).single()
+      if (!profile || profile.role !== "admin") {
+        return NextResponse.json(
+          { error: "No autorizado. Solo los administradores pueden crear propiedades." },
+          { status: 403 }
+        )
+      }
+    }
+
+    // Create property
     const { data: property, error: propertyError } = await supabase
       .from("properties")
       .insert({
         name: propertyData.name,
         location: propertyData.location,
-        description: propertyData.description,
+        description: propertyData.description || null,
         image_url: propertyData.image_url || null,
         valor_total_usd: propertyData.valor_total_usd,
-        price: propertyData.valor_total_usd / 52,
+        price: pricePerWeek, // Precio uniforme por semana
         recaudado_actual: 0,
-        weeks_target: 52,
+        weeks_target: SELLABLE_WEEKS, // 48 semanas vendibles
         weeks_sold: 0,
         status: "active",
-        property_type: propertyData.property_type || "vacation_home",
+        property_type: propertyData.property_type || "villa",
         bedrooms: propertyData.bedrooms || null,
         bathrooms: propertyData.bathrooms || null,
+        max_pax: propertyData.max_pax || 6,
         square_meters: propertyData.square_meters || null,
         amenities: propertyData.amenities || [],
-        owner_id: user.id,
+        owner_id: ownerId,
+        // Metadata del modelo de capacidad
+        pricing_strategy: "uniform", // Sin temporadas
+        total_weeks: TOTAL_WEEKS,
+        sellable_weeks: SELLABLE_WEEKS,
+        reserved_weeks: RESERVED_WEEKS,
       })
       .select()
       .single()
@@ -150,35 +91,21 @@ export async function POST(request: Request) {
       throw propertyError
     }
 
-    console.log("[v0] Property created:", property)
-
-    const seasonalPricing = propertyData.seasonal_pricing || []
-    const basePricePerWeek = propertyData.valor_total_usd / 52
-
-    const weekMultipliers: Record<number, number> = {}
-    seasonalPricing.forEach((season: any) => {
-      season.weeks.forEach((weekNum: number) => {
-        weekMultipliers[weekNum] = season.multiplier
-      })
-    })
-
-    const weeks = Array.from({ length: 52 }, (_, i) => {
+    // Create 52 weeks with uniform pricing
+    const currentYear = new Date().getFullYear()
+    const weeks = Array.from({ length: TOTAL_WEEKS }, (_, i) => {
       const weekNumber = i + 1
-      const multiplier = weekMultipliers[weekNumber] || 1.0
-      const price = basePricePerWeek * multiplier
-
-      let season = "mid"
-      if (multiplier >= 2.0) season = "ultra-high"
-      else if (multiplier >= 1.5) season = "high"
-      else if (multiplier <= 0.7) season = "low"
+      const isReserved = RESERVED_WEEK_NUMBERS.includes(weekNumber)
 
       return {
         property_id: property.id,
         week_number: weekNumber,
-        price: price,
-        status: "available",
-        season: season,
-        year: new Date().getFullYear(),
+        price: pricePerWeek, // Precio uniforme para todas las semanas
+        status: isReserved ? "reserved" : "available", // 4 reservadas, 48 disponibles
+        season: null, // SIN temporadas en el modelo WEEK-CHAIN
+        year: currentYear,
+        is_sellable: !isReserved,
+        reserved_reason: isReserved ? "maintenance_company" : null,
       }
     })
 
@@ -186,19 +113,27 @@ export async function POST(request: Request) {
 
     if (weeksError) {
       console.error("[v0] Error creating weeks:", weeksError)
+      // Rollback: delete property if weeks creation failed
       await supabase.from("properties").delete().eq("id", property.id)
       throw weeksError
     }
 
-    console.log("[v0] Created 52 weeks for property")
-
     return NextResponse.json({
       success: true,
-      data: property,
-      message: "Propiedad creada exitosamente con 52 semanas tokenizadas",
+      data: {
+        ...property,
+        weeks_created: {
+          total: TOTAL_WEEKS,
+          sellable: SELLABLE_WEEKS,
+          reserved: RESERVED_WEEKS,
+          price_per_week: pricePerWeek,
+        },
+      },
+      message: `Propiedad creada exitosamente con ${SELLABLE_WEEKS} semanas SVC vendibles y ${RESERVED_WEEKS} semanas reservadas`,
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Error al crear la propiedad"
     console.error("[v0] Error in property creation:", error)
-    return NextResponse.json({ error: error.message || "Error al crear la propiedad" }, { status: 500 })
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }
