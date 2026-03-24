@@ -76,7 +76,7 @@ CREATE POLICY "Guests can view their own pre-stay reminders"
   USING (
     booking_id IN (
       SELECT id FROM confirmed_reservations 
-      WHERE guest_id = auth.uid()
+      WHERE user_id = auth.uid()
     )
   );
 
@@ -85,7 +85,7 @@ CREATE POLICY "Guests can view their own checklists"
   USING (
     booking_id IN (
       SELECT id FROM confirmed_reservations 
-      WHERE guest_id = auth.uid()
+      WHERE user_id = auth.uid()
     )
   );
 
@@ -94,7 +94,7 @@ CREATE POLICY "Guests can update their own checklists"
   USING (
     booking_id IN (
       SELECT id FROM confirmed_reservations 
-      WHERE guest_id = auth.uid()
+      WHERE user_id = auth.uid()
     )
   );
 
@@ -118,7 +118,7 @@ BEGIN
   IF NEW.status = 'confirmed' AND OLD.status != 'confirmed' THEN
     -- Schedule reminders will be created by application logic
     INSERT INTO audit_log_immutable (user_id, action, metadata)
-    VALUES (NEW.guest_id, 'booking_confirmed_reminders_queued', jsonb_build_object('booking_id', NEW.id));
+    VALUES (NEW.user_id, 'booking_confirmed_reminders_queued', jsonb_build_object('booking_id', NEW.id));
   END IF;
   RETURN NEW;
 END;
