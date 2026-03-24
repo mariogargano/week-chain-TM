@@ -1,12 +1,17 @@
 {
-  "name": "WEEK-CHAIN - Certificados de Servicios Vacacionales",
+  "name": "WEEK-CHAIN - Smart Vacational Certificates",
   "short_name": "WEEK-CHAIN",
-  "description": "Sistema innovador de certificados vacacionales en destinos premium de Mexico. 15 anos de experiencias unicas.",
+  "description": "Plataforma global de certificados de vacaciones inteligentes. Tokenización de propiedades, reservas verificadas y experiencias premium.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0ea5e9",
   "orientation": "portrait-primary",
+  "theme_color": "#0ea5e9",
+  "background_color": "#ffffff",
+  "categories": ["travel", "lifestyle", "business"],
+  "lang": "es-MX",
+  "dir": "ltr",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/favicon.jpg",
@@ -33,9 +38,66 @@
       "purpose": "any"
     }
   ],
-  "categories": ["travel", "lifestyle", "business"],
-  "lang": "es-MX",
-  "dir": "ltr",
-  "prefer_related_applications": false,
-  "scope": "/"
+  "shortcuts": [
+    {
+      "name": "Mis Reservas",
+      "short_name": "Reservas",
+      "description": "Ver tus reservas activas",
+      "url": "/dashboard/member/bookings?utm_source=pwa_shortcut",
+      "icons": [
+        {
+          "src": "/icon-192.jpg",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Explorar Propiedades",
+      "short_name": "Explorar",
+      "description": "Buscar nuevas propiedades",
+      "url": "/properties?utm_source=pwa_shortcut",
+      "icons": [
+        {
+          "src": "/icon-192.jpg",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Mi Perfil",
+      "short_name": "Perfil",
+      "description": "Gestionar tu perfil",
+      "url": "/dashboard/member/profile?utm_source=pwa_shortcut",
+      "icons": [
+        {
+          "src": "/icon-192.jpg",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/pwa-screenshot-540x720.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/pwa-screenshot-1280x720.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "share_target": {
+    "action": "/api/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }
