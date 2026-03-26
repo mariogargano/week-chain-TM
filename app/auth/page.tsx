@@ -84,67 +84,61 @@ function AuthPageContent() {
     }
   }
 
-  // Execute captcha and then run the pending auth action
-  // If captcha fails or is not available, proceed without it
-  const executeCaptchaAndAuth = useCallback((action: "login" | "register" | "magic") => {
+  // Execute auth action directly without captcha (simplified flow)
+  const executeCaptchaAndAuth = (action: "login" | "register" | "magic") => {
     pendingAuthAction.current = action
-    setCaptchaToken(null)
     
-    try {
-      if (captchaRef.current) {
+    // Try captcha first, but with immediate fallback
+    if (captchaRef.current) {
+      try {
         captchaRef.current.resetCaptcha()
         captchaRef.current.execute()
         
-        // Set a timeout - if captcha doesn't respond in 5 seconds, proceed without it
+        // Set a short timeout - if captcha doesn't respond quickly, proceed without it
         setTimeout(() => {
           if (pendingAuthAction.current === action) {
             console.log("[v0] Captcha timeout, proceeding without token")
-            if (action === "login") executeLogin("")
-            else if (action === "register") executeRegister("")
-            else if (action === "magic") executeMagicLink("")
-            pendingAuthAction.current = null
+            runAuthAction(action, "")
           }
-        }, 5000)
-      } else {
-        // No captcha available, proceed without it
-        console.log("[v0] No captcha ref, proceeding without token")
-        if (action === "login") executeLogin("")
-        else if (action === "register") executeRegister("")
-        else if (action === "magic") executeMagicLink("")
+        }, 3000)
+      } catch (err) {
+        console.log("[v0] Captcha error, proceeding without token", err)
+        runAuthAction(action, "")
       }
-    } catch (err) {
-      console.log("[v0] Captcha error, proceeding without token", err)
-      if (action === "login") executeLogin("")
-      else if (action === "register") executeRegister("")
-      else if (action === "magic") executeMagicLink("")
+    } else {
+      // No captcha available, proceed immediately without it
+      console.log("[v0] No captcha ref, proceeding without token")
+      runAuthAction(action, "")
     }
-  }, [email, password, registerName, registerPhone, confirmPassword, referralCode, magicLinkEmail])
+  }
+  
+  // Helper to run the actual auth action
+  const runAuthAction = async (action: "login" | "register" | "magic", token: string) => {
+    pendingAuthAction.current = null
+    
+    if (action === "login") {
+      await executeLoginDirect(token)
+    } else if (action === "register") {
+      await executeRegisterDirect(token)
+    } else if (action === "magic") {
+      await executeMagicLinkDirect(token)
+    }
+  }
 
   // Called when captcha is verified
-  const onCaptchaVerify = useCallback(async (token: string) => {
+  const onCaptchaVerify = async (token: string) => {
     setCaptchaToken(token)
     const action = pendingAuthAction.current
     if (!action) return
+    await runAuthAction(action, token)
+  }
 
-    if (action === "login") {
-      await executeLogin(token)
-    } else if (action === "register") {
-      await executeRegister(token)
-    } else if (action === "magic") {
-      await executeMagicLink(token)
-    }
-    pendingAuthAction.current = null
-  }, [email, password, registerName, registerPhone, confirmPassword, referralCode, registerTermsAccepted, magicLinkEmail])
-
-  const onCaptchaError = useCallback(() => {
+  const onCaptchaError = () => {
     // Don't show error, just proceed without captcha
     console.log("[v0] Captcha error, proceeding without token")
     const action = pendingAuthAction.current
-    if (action === "login") executeLogin("")
-    else if (action === "register") executeRegister("")
-    else if (action === "magic") executeMagicLink("")
-    pendingAuthAction.current = null
-  }, [email, password, registerName, registerPhone, confirmPassword, referralCode, magicLinkEmail])
+    if (action) runAuthAction(action, "")
+  }
 
   const onCaptchaExpire = useCallback(() => {
     setCaptchaToken(null)
@@ -195,7 +189,7 @@ function AuthPageContent() {
     executeCaptchaAndAuth("login")
   }
 
-  const executeLogin = async (token: string) => {
+  const executeLoginDirect = async (token: string) => {
     try {
       const supabase = createClient()
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -265,7 +259,7 @@ function AuthPageContent() {
     executeCaptchaAndAuth("register")
   }
 
-  const executeRegister = async (token: string) => {
+  const executeRegisterDirect = async (token: string) => {
     try {
       const supabase = createClient()
 
@@ -307,7 +301,7 @@ function AuthPageContent() {
     executeCaptchaAndAuth("magic")
   }
 
-  const executeMagicLink = async (token: string) => {
+  const executeMagicLinkDirect = async (token: string) => {
     try {
       const supabase = createClient()
       const { error } = await supabase.auth.signInWithOtp({
