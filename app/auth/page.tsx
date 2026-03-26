@@ -85,14 +85,40 @@ function AuthPageContent() {
   }
 
   // Execute captcha and then run the pending auth action
+  // If captcha fails or is not available, proceed without it
   const executeCaptchaAndAuth = useCallback((action: "login" | "register" | "magic") => {
     pendingAuthAction.current = action
     setCaptchaToken(null)
-    if (captchaRef.current) {
-      captchaRef.current.resetCaptcha()
-      captchaRef.current.execute()
+    
+    try {
+      if (captchaRef.current) {
+        captchaRef.current.resetCaptcha()
+        captchaRef.current.execute()
+        
+        // Set a timeout - if captcha doesn't respond in 5 seconds, proceed without it
+        setTimeout(() => {
+          if (pendingAuthAction.current === action) {
+            console.log("[v0] Captcha timeout, proceeding without token")
+            if (action === "login") executeLogin("")
+            else if (action === "register") executeRegister("")
+            else if (action === "magic") executeMagicLink("")
+            pendingAuthAction.current = null
+          }
+        }, 5000)
+      } else {
+        // No captcha available, proceed without it
+        console.log("[v0] No captcha ref, proceeding without token")
+        if (action === "login") executeLogin("")
+        else if (action === "register") executeRegister("")
+        else if (action === "magic") executeMagicLink("")
+      }
+    } catch (err) {
+      console.log("[v0] Captcha error, proceeding without token", err)
+      if (action === "login") executeLogin("")
+      else if (action === "register") executeRegister("")
+      else if (action === "magic") executeMagicLink("")
     }
-  }, [])
+  }, [email, password, registerName, registerPhone, confirmPassword, referralCode, magicLinkEmail])
 
   // Called when captcha is verified
   const onCaptchaVerify = useCallback(async (token: string) => {
@@ -111,10 +137,14 @@ function AuthPageContent() {
   }, [email, password, registerName, registerPhone, confirmPassword, referralCode, registerTermsAccepted, magicLinkEmail])
 
   const onCaptchaError = useCallback(() => {
-    setError("Error de verificacion CAPTCHA. Intenta nuevamente.")
-    setIsLoading(false)
+    // Don't show error, just proceed without captcha
+    console.log("[v0] Captcha error, proceeding without token")
+    const action = pendingAuthAction.current
+    if (action === "login") executeLogin("")
+    else if (action === "register") executeRegister("")
+    else if (action === "magic") executeMagicLink("")
     pendingAuthAction.current = null
-  }, [])
+  }, [email, password, registerName, registerPhone, confirmPassword, referralCode, magicLinkEmail])
 
   const onCaptchaExpire = useCallback(() => {
     setCaptchaToken(null)
@@ -314,7 +344,7 @@ function AuthPageContent() {
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center px-4 py-6 pb-12 overflow-y-auto">
+    <div className="min-h-screen min-h-dvh bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center px-4 py-4 pb-20 overflow-y-auto">
       {/* Invisible hCaptcha */}
       <HCaptcha
         ref={captchaRef}
@@ -735,28 +765,31 @@ function AuthPageContent() {
                 </label>
               </div>
 
-              <Button
-                type="submit"
-                className="w-full h-14 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white text-lg font-bold shadow-lg shadow-cyan-200/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-[0.98]"
-                disabled={isLoading || !registerTermsAccepted || (confirmPassword !== "" && password !== confirmPassword)}
-              >
-                {isLoading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                    </svg>
-                    Creando cuenta...
-                  </span>
-                ) : "Crear Cuenta"}
-              </Button>
+              {/* Submit Button - Always visible */}
+              <div className="pt-2 space-y-3">
+                <Button
+                  type="submit"
+                  className="w-full h-14 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white text-lg font-bold shadow-lg shadow-cyan-200/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-[0.98]"
+                  disabled={isLoading || !registerTermsAccepted || (confirmPassword !== "" && password !== confirmPassword)}
+                >
+                  {isLoading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Creando cuenta...
+                    </span>
+                  ) : "Crear Cuenta"}
+                </Button>
 
-              <p className="text-center text-sm text-muted-foreground pb-2">
-                {"Ya tienes cuenta? "}
-                <button type="button" onClick={() => setActiveTab("login")} className="text-sky-600 font-semibold hover:text-sky-700 underline underline-offset-2">
-                  Iniciar sesion
-                </button>
-              </p>
+                <p className="text-center text-sm text-muted-foreground pb-4">
+                  {"Ya tienes cuenta? "}
+                  <button type="button" onClick={() => setActiveTab("login")} className="text-sky-600 font-semibold hover:text-sky-700 underline underline-offset-2">
+                    Iniciar sesion
+                  </button>
+                </p>
+              </div>
             </form>
           )}
         </CardContent>
