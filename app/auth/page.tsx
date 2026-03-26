@@ -10,11 +10,8 @@ import { toast } from "sonner"
 import { AlertCircle, Mail, Shield } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState, useEffect, Suspense, useRef, useCallback } from "react"
+import { useState, useEffect, Suspense } from "react"
 import Image from "next/image"
-import HCaptcha from "@hcaptcha/react-hcaptcha"
-
-const HCAPTCHA_SITEKEY = "1fdef23e-bc58-44a4-8cca-a4c29e604242"
 
 export default function AuthPage() {
   return (
@@ -48,11 +45,6 @@ function AuthPageContent() {
   const [referralCode, setReferralCode] = useState("")
   const [referrerName, setReferrerName] = useState<string | null>(null)
 
-  // hCaptcha
-  const captchaRef = useRef<HCaptcha | null>(null)
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
-  const pendingAuthAction = useRef<"login" | "register" | "magic" | null>(null)
-
   useEffect(() => {
     const ref = searchParams?.get("ref")
     if (ref) {
@@ -84,65 +76,7 @@ function AuthPageContent() {
     }
   }
 
-  // Execute auth action directly without captcha (simplified flow)
-  const executeCaptchaAndAuth = (action: "login" | "register" | "magic") => {
-    pendingAuthAction.current = action
-    
-    // Try captcha first, but with immediate fallback
-    if (captchaRef.current) {
-      try {
-        captchaRef.current.resetCaptcha()
-        captchaRef.current.execute()
-        
-        // Set a short timeout - if captcha doesn't respond quickly, proceed without it
-        setTimeout(() => {
-          if (pendingAuthAction.current === action) {
-            console.log("[v0] Captcha timeout, proceeding without token")
-            runAuthAction(action, "")
-          }
-        }, 3000)
-      } catch (err) {
-        console.log("[v0] Captcha error, proceeding without token", err)
-        runAuthAction(action, "")
-      }
-    } else {
-      // No captcha available, proceed immediately without it
-      console.log("[v0] No captcha ref, proceeding without token")
-      runAuthAction(action, "")
-    }
-  }
-  
-  // Helper to run the actual auth action
-  const runAuthAction = async (action: "login" | "register" | "magic", token: string) => {
-    pendingAuthAction.current = null
-    
-    if (action === "login") {
-      await executeLoginDirect(token)
-    } else if (action === "register") {
-      await executeRegisterDirect(token)
-    } else if (action === "magic") {
-      await executeMagicLinkDirect(token)
-    }
-  }
 
-  // Called when captcha is verified
-  const onCaptchaVerify = async (token: string) => {
-    setCaptchaToken(token)
-    const action = pendingAuthAction.current
-    if (!action) return
-    await runAuthAction(action, token)
-  }
-
-  const onCaptchaError = () => {
-    // Don't show error, just proceed without captcha
-    console.log("[v0] Captcha error, proceeding without token")
-    const action = pendingAuthAction.current
-    if (action) runAuthAction(action, "")
-  }
-
-  const onCaptchaExpire = useCallback(() => {
-    setCaptchaToken(null)
-  }, [])
 
   // ===== GOOGLE LOGIN (no captcha needed, Supabase handles it) =====
   const handleGoogleLogin = async () => {
@@ -182,20 +116,16 @@ function AuthPageContent() {
   }
 
   // ===== EMAIL LOGIN =====
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
-    executeCaptchaAndAuth("login")
-  }
 
-  const executeLoginDirect = async (token: string) => {
     try {
       const supabase = createClient()
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
-        options: { captchaToken: token },
       })
 
       if (error) throw error
@@ -256,10 +186,6 @@ function AuthPageContent() {
       return
     }
 
-    executeCaptchaAndAuth("register")
-  }
-
-  const executeRegisterDirect = async (token: string) => {
     try {
       const supabase = createClient()
 
@@ -272,7 +198,6 @@ function AuthPageContent() {
         email,
         password,
         options: {
-          captchaToken: token,
           data: {
             full_name: registerName,
             phone: registerPhone,
@@ -294,20 +219,16 @@ function AuthPageContent() {
   }
 
   // ===== MAGIC LINK =====
-  const handleMagicLink = (e: React.FormEvent) => {
+  const handleMagicLink = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
-    executeCaptchaAndAuth("magic")
-  }
 
-  const executeMagicLinkDirect = async (token: string) => {
     try {
       const supabase = createClient()
       const { error } = await supabase.auth.signInWithOtp({
         email: magicLinkEmail,
         options: {
-          captchaToken: token,
           emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       })
@@ -339,16 +260,6 @@ function AuthPageContent() {
 
   return (
     <div className="min-h-screen min-h-dvh bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex flex-col items-center px-4 py-4 pb-20 overflow-y-auto">
-      {/* Invisible hCaptcha */}
-      <HCaptcha
-        ref={captchaRef}
-        sitekey={HCAPTCHA_SITEKEY}
-        size="invisible"
-        onVerify={onCaptchaVerify}
-        onError={onCaptchaError}
-        onExpire={onCaptchaExpire}
-      />
-
       <div className="text-center mb-4 sm:mb-6 flex-shrink-0">
         <div className="flex items-center justify-center gap-3 mb-2">
           <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-lg shadow-slate-400/30 ring-1 ring-slate-300/50 bg-white flex-shrink-0">
