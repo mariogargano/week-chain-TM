@@ -199,7 +199,7 @@ export function PlatformShowcase() {
         </div>
 
         {/* CTA Button */}
-        <div className="text-center space-y-4">
+        <div className="text-center">
           <Button
             asChild
             size="lg"
@@ -210,10 +210,6 @@ export function PlatformShowcase() {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
-          <p className="text-xs text-slate-500 max-w-2xl mx-auto">
-            * Los alojamientos mostrados son ejemplos de referencia del sistema. No constituyen asignación ni garantía
-            de destinos específicos. Acceso sujeto a disponibilidad y aprobación.
-          </p>
         </div>
       </div>
     </section>
