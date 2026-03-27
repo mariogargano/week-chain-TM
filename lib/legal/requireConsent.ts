@@ -79,11 +79,6 @@ async function hasAcceptedLatestContract(userId: string, requiredVersion: string
       .maybeSingle()
 
     if (!termsError && termsData) {
-      console.log("[requireConsent] User has accepted latest terms:", {
-        userId,
-        version: termsData.terms_version,
-        acceptedAt: termsData.accepted_at,
-      })
       return true
     }
 
@@ -99,11 +94,6 @@ async function hasAcceptedLatestContract(userId: string, requiredVersion: string
       .maybeSingle()
 
     if (!legalError && legalData) {
-      console.log("[requireConsent] User has accepted latest terms (legal_acceptances):", {
-        userId,
-        version: legalData.terms_version,
-        acceptedAt: legalData.accepted_at,
-      })
       return true
     }
 
@@ -180,7 +170,6 @@ export async function requireConsent(request: NextRequest, action: ProtectedActi
     }
 
     // 4. All checks passed
-    console.log(`[requireConsent] ALLOWING ${action} for user ${user.id} - consent verified`)
     return {
       allowed: true,
       currentVersion: latestVersion,

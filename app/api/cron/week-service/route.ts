@@ -13,13 +13,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    console.log('[WEEK-SERVICE Cron] Starting scheduled tasks...')
-
     // Send overdue reminders
-    console.log('[WEEK-SERVICE Cron] Sending pre-stay reminders...')
     await weekService.sendOverdueReminders()
-
-    console.log('[WEEK-SERVICE Cron] Completed successfully')
 
     return NextResponse.json({
       success: true,

@@ -6,9 +6,8 @@ export const analytics = {
     // PostHog disabled - no-op
   },
 
-  track: (eventName: string, properties?: Record<string, any>) => {
+  track: (_eventName: string, _properties?: Record<string, any>) => {
     // PostHog disabled - no-op
-    console.log("[Analytics]", eventName, properties)
   },
 
   page: (pageName?: string, properties?: Record<string, any>) => {

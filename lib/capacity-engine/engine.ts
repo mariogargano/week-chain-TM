@@ -296,7 +296,6 @@ export async function getLatestCapacityStatus(): Promise<CapacityEngineStatus | 
  */
 export async function isTierAvailable(tier: CertificateTier): Promise<boolean> {
   if (typeof window === "undefined" && !process.env.STRIPE_SECRET_KEY) {
-    console.log("[v0] Build-time check: defaulting to tier available")
     return true
   }
 

@@ -37,8 +37,6 @@ export function SumsubKYCWidget({ userId, onComplete, onError }: SumsubKYCWidget
   }, [userId, onError])
 
   const handleMessage = (type: string, payload: any) => {
-    console.log("[v0] Sumsub message:", type, payload)
-
     if (type === "idCheck.onApplicantSubmitted") {
       analytics.events.completeKYC()
       onComplete?.()

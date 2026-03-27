@@ -45,7 +45,6 @@ export const generateCertificate = inngest.createFunction(
     // Send certificate email
     await step.run("send-certificate-email", async () => {
       // TODO: Integrate with email service
-      console.log(`[v0] Sending certificate ${certificateId} to user ${userId}`)
     })
 
     return { message: "Certificate generated", certificateId }

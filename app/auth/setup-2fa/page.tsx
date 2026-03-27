@@ -46,28 +46,21 @@ function Setup2FAContent() {
       setLoading(true)
       setError("")
 
-      console.log("[v0] 2FA Setup: Checking user session...")
       const {
         data: { user },
       } = await supabase.auth.getUser()
 
       if (!user) {
-        console.log("[v0] 2FA Setup: No user found, redirecting to login")
         router.push("/auth")
         return
       }
-
-      console.log("[v0] 2FA Setup: User found:", user.email, "Generating secret...")
 
       const response = await fetch("/api/auth/2fa/generate", {
         method: "POST",
         credentials: "include",
       })
 
-      console.log("[v0] 2FA Setup: API response status:", response.status)
-
       const data = await response.json()
-      console.log("[v0] 2FA Setup: API response data:", data.error || "Success")
 
       if (!response.ok) {
         throw new Error(data.details || data.error || "Failed to generate 2FA secret")
@@ -76,7 +69,6 @@ function Setup2FAContent() {
       setSecret(data.secret)
       setQrCode(data.qrCode)
       setBackupCodes(data.backupCodes)
-      console.log("[v0] 2FA Setup: Secret generated successfully")
     } catch (err) {
       console.error("[v0] 2FA Setup: Error:", err)
       setError(err instanceof Error ? err.message : "Failed to generate 2FA secret")

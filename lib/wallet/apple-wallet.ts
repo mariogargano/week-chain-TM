@@ -15,8 +15,6 @@ export async function generateAppleWalletPass(data: WeddingPassData): Promise<Bl
   // 4. Assets (logo, icon, background images)
   // 5. Signature with private key
 
-  console.log("[v0] Generating Apple Wallet pass for:", data)
-
   // Placeholder implementation
   throw new Error("Apple Wallet generation not yet implemented")
 }

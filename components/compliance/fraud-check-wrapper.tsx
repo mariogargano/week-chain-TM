@@ -30,9 +30,7 @@ export function FraudCheckWrapper({ children }: { children: React.ReactNode }) {
 
         const result = await response.json()
 
-        if (result.requiresReview) {
-          console.log("[v0] Fraud check: Requiere revisión manual")
-        }
+        // result.requiresReview se maneja en el backend
       } catch (error) {
         console.error("[v0] Error en fraud check:", error)
       }

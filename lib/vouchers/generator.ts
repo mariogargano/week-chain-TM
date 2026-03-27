@@ -64,8 +64,6 @@ export async function generateVoucher(data: VoucherData): Promise<{ voucherCode:
     throw new Error("Failed to generate voucher")
   }
 
-  console.log("[v0] Voucher generated successfully:", voucherCode)
-
   return {
     voucherCode,
     voucherId: voucher.id,

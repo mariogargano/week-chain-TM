@@ -32,7 +32,6 @@ export function getSumsubConfig(accessToken: string, userId: string) {
       },
     },
     onMessage: (type: string, payload: any) => {
-      console.log("[v0] Sumsub WebSDK message:", type, payload)
     },
     onError: (error: any) => {
       console.error("[v0] Sumsub WebSDK error:", error)

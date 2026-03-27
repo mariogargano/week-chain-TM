@@ -14,8 +14,6 @@ export async function generateGoogleWalletPass(data: WeddingPassData): Promise<s
   // 3. Generic pass class and object creation
   // 4. JWT signing for save URL
 
-  console.log("[v0] Generating Google Wallet pass for:", data)
-
   // Placeholder implementation
   throw new Error("Google Wallet generation not yet implemented")
 }

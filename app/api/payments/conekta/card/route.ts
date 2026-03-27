@@ -9,23 +9,10 @@ function getSupabase() {
 
 export async function POST(request: NextRequest) {
   const env = getEnvironment()
-  console.log("[v0] Card payment API called", {
-    conektaConfigured: !!env.conekta.secretKey,
-    conektaDemoMode: env.conekta.isDemoMode,
-    keyPrefix: env.conekta.secretKey ? env.conekta.secretKey.substring(0, 10) : "none",
-  })
 
   try {
     const body = await request.json()
     const { amount, currency, customer, card, metadata } = body
-
-    console.log("[v0] Card payment request:", {
-      amount,
-      currency,
-      customerEmail: customer?.email,
-      hasCard: !!card,
-      metadata,
-    })
 
     // Validate required fields
     if (!amount || !customer?.email || !card?.number) {
@@ -61,9 +48,7 @@ export async function POST(request: NextRequest) {
       },
     }
 
-    console.log("[v0] Creating Conekta order...")
     const order = await createConektaOrder(orderData)
-    console.log("[v0] Conekta order created:", order.id, "status:", order.payment_status)
 
     if (order.payment_status === "paid") {
       const supabase = getSupabase()

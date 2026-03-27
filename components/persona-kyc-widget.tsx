@@ -65,15 +65,14 @@ export function PersonaKYCWidget({ userId, userEmail, onComplete, onError }: Per
       sessionToken,
       environment: process.env.NEXT_PUBLIC_PERSONA_ENVIRONMENT || "sandbox",
       onReady: () => {
-        console.log("[v0] Persona widget ready")
         client.open()
       },
       onComplete: ({ status }: { inquiryId: string; status: string }) => {
-        console.log("[v0] Persona KYC completed:", status)
+        void status
         onComplete?.()
       },
       onCancel: () => {
-        console.log("[v0] Persona KYC cancelled")
+        // Widget cancelado por el usuario
       },
       onError: (err: any) => {
         console.error("[v0] Persona widget error:", err)

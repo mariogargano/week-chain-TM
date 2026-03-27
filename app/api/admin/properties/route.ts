@@ -22,7 +22,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Forbidden - Admin access required" }, { status: 403 })
     }
 
-    console.log("[v0] Admin access verified for wallet:", walletAddress)
 
     const body = await request.json()
 
@@ -44,8 +43,6 @@ export async function POST(request: Request) {
       console.error("[v0] Property creation error:", error)
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
-
-    console.log("[v0] Property created:", property.id)
 
     // Create 52 weeks for the property
     const weeks = []
@@ -69,8 +66,6 @@ export async function POST(request: Request) {
       console.error("[v0] Weeks creation error:", weeksError)
       return NextResponse.json({ error: "Property created but weeks failed: " + weeksError.message }, { status: 500 })
     }
-
-    console.log("[v0] Created 52 weeks for property:", property.id)
 
     return NextResponse.json({ success: true, property })
   } catch (error) {

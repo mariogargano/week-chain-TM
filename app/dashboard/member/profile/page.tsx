@@ -141,25 +141,18 @@ export default function ProfilePage() {
       // Use user's ID as folder for proper RLS
       const fileName = `${profile.id}/${field}-${Date.now()}.${fileExt}`
 
-      console.log("[v0] Uploading file:", fileName, "to bucket: images")
-
-      const { error: uploadError, data: uploadData } = await supabase.storage.from("images").upload(fileName, file, {
+      const { error: uploadError } = await supabase.storage.from("images").upload(fileName, file, {
         upsert: true,
         contentType: file.type,
       })
 
       if (uploadError) {
-        console.error("[v0] Upload error:", uploadError)
         throw uploadError
       }
-
-      console.log("[v0] Upload success:", uploadData)
 
       const {
         data: { publicUrl },
       } = supabase.storage.from("images").getPublicUrl(fileName)
-
-      console.log("[v0] Public URL:", publicUrl)
 
       // Update profile with new URL
       setProfile((prev) => (prev ? { ...prev, [field]: publicUrl } : null))

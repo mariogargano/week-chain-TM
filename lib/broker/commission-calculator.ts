@@ -33,7 +33,6 @@ export async function calculateCommissions(input: CommissionInput): Promise<Comm
     .single()
 
   if (referralError) {
-    console.log("[v0] No direct referral found for user:", input.buyerUserId)
     return results
   }
 
@@ -78,11 +77,6 @@ export async function recordCommissions(input: CommissionInput, commissions: Com
       throw error
     }
 
-    console.log("[v0] Commission recorded:", {
-      brokerId: commission.brokerId,
-      rate: commission.rate,
-      amount: commission.amount,
-    })
   }
 }
 
@@ -95,7 +89,6 @@ export async function processCommissionsForSale(input: CommissionInput): Promise
   const commissions = await calculateCommissions(input)
 
   if (commissions.length === 0) {
-    console.log("[v0] No commissions to process for reservation:", input.reservationId)
     return []
   }
 

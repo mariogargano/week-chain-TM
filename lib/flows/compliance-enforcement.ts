@@ -53,8 +53,6 @@ export async function issueComplianceStrike(params: {
     action_taken: params.actionTaken,
   })
 
-  console.log(`[Compliance] Issued ${params.actionTaken} for intermediary ${params.intermediaryId}`)
-
   return strike
 }
 

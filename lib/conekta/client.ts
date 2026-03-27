@@ -75,27 +75,12 @@ class ConektaClient {
     this.baseUrl = "https://api.conekta.io"
     this.isDemoMode = !config.apiKey || config.apiKey === "demo_mode"
 
-    console.log("[v0] Conekta client initialized", {
-      isDemoMode: this.isDemoMode,
-      hasApiKey: !!config.apiKey,
-      apiKeyLength: config.apiKey ? config.apiKey.length : 0,
-      apiKeyPrefix: config.apiKey ? config.apiKey.substring(0, 10) + "..." : "none",
-    })
   }
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    console.log("[v0] Conekta request", {
-      endpoint,
-      isDemoMode: this.isDemoMode,
-      method: options.method || "GET",
-    })
-
     if (this.isDemoMode) {
-      console.log("[v0] Using Conekta DEMO mode - returning mock response")
       return this.getMockResponse<T>(endpoint, options)
     }
-
-    console.log("[v0] Making REAL Conekta API call to:", `${this.baseUrl}${endpoint}`)
 
     const url = `${this.baseUrl}${endpoint}`
     const headers = {
@@ -111,20 +96,15 @@ class ConektaClient {
         headers,
       })
 
-      console.log("[v0] Conekta API response status:", response.status)
-
       if (!response.ok) {
         const error = await response.json().catch(() => ({}))
-        console.log("[v0] Conekta API error:", JSON.stringify(error))
         logger.error("Conekta API error", { status: response.status, error })
         throw new Error(error.details?.[0]?.message || error.message || `Conekta API error: ${response.status}`)
       }
 
       const data = await response.json()
-      console.log("[v0] Conekta API success, order id:", data.id)
       return data
     } catch (error) {
-      console.log("[v0] Conekta fetch error:", error)
       throw error
     }
   }

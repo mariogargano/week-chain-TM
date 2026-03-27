@@ -6,22 +6,17 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const eventType = body.event_type
 
-    console.log("[v0] PayPal webhook received:", eventType)
-
     const supabase = await createClient()
 
     switch (eventType) {
       case "CHECKOUT.ORDER.APPROVED":
         // Order approved by customer
-        console.log("[v0] PayPal order approved:", body.resource?.id)
         break
 
       case "PAYMENT.CAPTURE.COMPLETED":
         // Payment captured successfully
         const captureId = body.resource?.id
         const orderId = body.resource?.supplementary_data?.related_ids?.order_id
-
-        console.log("[v0] PayPal payment captured:", { captureId, orderId })
 
         if (orderId) {
           await supabase
@@ -45,7 +40,6 @@ export async function POST(request: NextRequest) {
         break
 
       default:
-        console.log("[v0] Unhandled PayPal webhook event:", eventType)
     }
 
     return NextResponse.json({ received: true })

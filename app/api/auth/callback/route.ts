@@ -9,10 +9,6 @@ export async function GET(request: NextRequest) {
   const error = requestUrl.searchParams.get("error")
   const errorDescription = requestUrl.searchParams.get("error_description")
 
-  console.log("[v0] Auth Callback: Starting")
-  console.log("[v0] Code present:", !!code)
-  console.log("[v0] Error:", error)
-
   // Handle error from auth provider
   if (error) {
     console.error("[v0] Auth callback error:", error, errorDescription)
@@ -30,8 +26,6 @@ export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient()
 
-    // Exchange code for session
-    console.log("[v0] Exchanging code for session...")
     const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
 
     if (exchangeError) {
@@ -44,8 +38,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(new URL("/auth?error=no_user", request.url))
     }
 
-    console.log("[v0] Code exchange successful, user:", data.user.email)
-
     // Ensure profile exists
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
@@ -53,11 +45,8 @@ export async function GET(request: NextRequest) {
       .eq("id", data.user.id)
       .maybeSingle()
 
-    console.log("[v0] Profile check:", profile ? "exists" : "missing")
-
     // Create profile if it doesn't exist (shouldn't happen with trigger, but safety check)
     if (!profile) {
-      console.log("[v0] Creating missing profile...")
       const { error: insertError } = await supabase.from("profiles").insert({
         id: data.user.id,
         user_id: data.user.id,
@@ -87,14 +76,12 @@ export async function GET(request: NextRequest) {
           user_agent: request.headers.get("user-agent") || "unknown",
         },
       })
-      console.log("[v0] Audit log created for magic link login")
     } catch (auditError) {
       console.error("[v0] Audit log error:", auditError)
     }
 
     // Get role-appropriate dashboard
     const dashboardUrl = await getDashboardUrlServer(data.user.email!)
-    console.log("[v0] Redirecting to:", dashboardUrl)
 
     return NextResponse.redirect(new URL(dashboardUrl, request.url))
   } catch (error: any) {

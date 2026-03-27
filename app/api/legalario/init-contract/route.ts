@@ -48,8 +48,8 @@ export async function POST(req: NextRequest) {
       {
         maxRetries: 3,
         baseDelay: 2000,
-        onRetry: (attempt, error) => {
-          console.log(`[v0] Retrying Legalario contract creation (attempt ${attempt}): ${error.message}`)
+        onRetry: (_attempt, _error) => {
+          // Retry silently
         },
       },
     )

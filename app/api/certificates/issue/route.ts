@@ -32,13 +32,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Certificate product not found" }, { status: 404 })
     }
 
-    console.log(`[v0] Issuing certificate: ${product.display_name} for user ${userId}`)
-
     if (!adminOverride) {
       const availability = await isProductAvailable(product.id)
 
       if (!availability.available) {
-        console.log(`[v0] BLOCKED: Cannot issue ${product.display_name} - ${availability.reason}`)
         return NextResponse.json(
           {
             error: "CAPACITY_BLOCKED",
@@ -47,8 +44,6 @@ export async function POST(req: Request) {
           { status: 403 },
         )
       }
-    } else {
-      console.log(`[v0] Admin override - skipping capacity check`)
     }
 
     const startDate = new Date()

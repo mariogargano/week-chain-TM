@@ -25,8 +25,6 @@ export async function POST(req: NextRequest) {
   let rawBody = ""
   let payloadDigest = ""
 
-  console.log("[v0] Legalario webhook received from IP:", ipAddress)
-
   try {
     const env = getEnv()
 
@@ -131,10 +129,6 @@ export async function POST(req: NextRequest) {
 
     const payload = verification.payload!
 
-    console.log("[v0] Webhook signature verified. Event:", payload.event)
-    console.log("[v0] Contract ID:", payload.data.contract_id)
-    console.log("[v0] NOM-151 Folio:", payload.data.folio)
-
     // 6. Process webhook event
     const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY, {
       auth: { persistSession: false },
@@ -157,8 +151,6 @@ export async function POST(req: NextRequest) {
         console.error("[v0] Failed to update legal_contracts:", updateError)
         return NextResponse.json({ error: "Database update failed" }, { status: 500 })
       }
-
-      console.log("[v0] Contract certified successfully:", payload.data.contract_id)
 
       await WebhookLogger.log({
         source: "legalario",

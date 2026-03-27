@@ -1,14 +1,14 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 
-// Contraseña de acceso al sitio - cambiar por una segura
-const SITE_PASSWORD = process.env.SITE_ACCESS_PASSWORD || "weekchain2024"
+// Contraseña de acceso al sitio - requiere SITE_ACCESS_PASSWORD en env
+const SITE_PASSWORD = process.env.SITE_ACCESS_PASSWORD
 
 export async function POST(request: NextRequest) {
   try {
     const { password } = await request.json()
 
-    if (password === SITE_PASSWORD) {
+    if (SITE_PASSWORD && password === SITE_PASSWORD) {
       const cookieStore = await cookies()
 
       // Cookie de acceso válida por 7 días

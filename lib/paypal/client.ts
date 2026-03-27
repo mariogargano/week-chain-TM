@@ -41,7 +41,6 @@ export async function getPayPalAccessToken(): Promise<string> {
   const clientSecret = process.env.PAYPAL_CLIENT_SECRET
 
   if (!clientId || !clientSecret) {
-    console.log("[v0] PayPal credentials not configured, using demo mode")
     return "demo_access_token"
   }
 
@@ -82,7 +81,6 @@ export async function createPayPalOrder(params: {
   // Demo mode
   const clientId = process.env.PAYPAL_CLIENT_ID || process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID
   if (!clientId) {
-    console.log("[v0] PayPal in demo mode - returning mock order")
     return {
       id: `DEMO-${Date.now()}`,
       status: "CREATED",
@@ -133,7 +131,6 @@ export async function createPayPalOrder(params: {
   }
 
   const order = await response.json()
-  console.log("[v0] PayPal order created:", order.id)
   return order
 }
 
@@ -144,7 +141,6 @@ export async function capturePayPalOrder(orderId: string): Promise<PayPalCapture
   // Demo mode
   const clientId = process.env.PAYPAL_CLIENT_ID || process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID
   if (!clientId || orderId.startsWith("DEMO-")) {
-    console.log("[v0] PayPal in demo mode - returning mock capture")
     return {
       id: orderId,
       status: "COMPLETED",
@@ -184,7 +180,6 @@ export async function capturePayPalOrder(orderId: string): Promise<PayPalCapture
   }
 
   const result = await response.json()
-  console.log("[v0] PayPal order captured:", result.id, result.status)
   return result
 }
 

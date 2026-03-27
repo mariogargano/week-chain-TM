@@ -28,8 +28,6 @@ export async function reverseCommission(orderId: string, reason: string) {
 
   if (error) throw error
 
-  console.log(`[Anti-Fraud] Reversed commission for order ${orderId}: ${reason}`)
-
   return true
 }
 
@@ -44,7 +42,6 @@ export async function approveDueCommissions() {
     .lt("hold_until", new Date().toISOString())
 
   if (!dueCommissions || dueCommissions.length === 0) {
-    console.log("[Anti-Fraud] No commissions due for approval")
     return []
   }
 
@@ -60,8 +57,6 @@ export async function approveDueCommissions() {
     .in("id", approvedIds)
 
   if (error) throw error
-
-  console.log(`[Anti-Fraud] Auto-approved ${dueCommissions.length} commissions`)
 
   return dueCommissions
 }

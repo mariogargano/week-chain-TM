@@ -60,7 +60,5 @@ For verification, visit: https://week-chain.com/verify/${contractId}
     throw new Error(`Failed to upload evidence ZIP: ${error.message}`)
   }
 
-  console.log("[v0] Evidence ZIP generated and uploaded:", storagePath)
-
   return { zipBuffer, storagePath }
 }

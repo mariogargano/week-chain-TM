@@ -5,7 +5,6 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { Lock, Mail, Send, Eye, EyeOff, Shield, Calendar, Users } from "lucide-react"
 
-const CORRECT_PASSWORD = "WEEK2025"
 const STORAGE_KEY = "week-chain-access-granted"
 
 export function PasswordProtectionOverlay() {
@@ -17,23 +16,49 @@ export function PasswordProtectionOverlay() {
   const [emailSent, setEmailSent] = useState(false)
 
   useEffect(() => {
-    // Check if already unlocked
-    const accessGranted = localStorage.getItem(STORAGE_KEY)
-    if (accessGranted === "true") {
-      setIsUnlocked(true)
-    } else {
-      setIsUnlocked(false)
+    // Si no hay endpoint de contraseña configurado en el servidor, no mostrar overlay
+    const checkProtection = async () => {
+      try {
+        const res = await fetch("/api/auth/site-access-status")
+        const data = await res.json()
+        if (!data.enabled) {
+          setIsUnlocked(true)
+          return
+        }
+      } catch {
+        // Si el endpoint no existe, no bloquear el acceso
+        setIsUnlocked(true)
+        return
+      }
+
+      const accessGranted = localStorage.getItem(STORAGE_KEY)
+      if (accessGranted === "true") {
+        setIsUnlocked(true)
+      } else {
+        setIsUnlocked(false)
+      }
     }
+    checkProtection()
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (password === CORRECT_PASSWORD) {
-      localStorage.setItem(STORAGE_KEY, "true")
-      setIsUnlocked(true)
-      setError("")
-    } else {
-      setError("Contraseña incorrecta. Contacta a info@week-chain.com para obtener acceso.")
+    try {
+      const res = await fetch("/api/auth/site-access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      })
+      if (res.ok) {
+        localStorage.setItem(STORAGE_KEY, "true")
+        setIsUnlocked(true)
+        setError("")
+      } else {
+        setError("Contraseña incorrecta. Contacta a info@week-chain.com para obtener acceso.")
+        setPassword("")
+      }
+    } catch {
+      setError("Error al verificar acceso. Intenta de nuevo.")
       setPassword("")
     }
   }
@@ -41,8 +66,6 @@ export function PasswordProtectionOverlay() {
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (email) {
-      // In production, this would send to an API
-      console.log("[v0] Interest email submitted:", email)
       setEmailSent(true)
       setEmail("")
     }

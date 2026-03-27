@@ -94,7 +94,6 @@ export async function logEvidenceEvent(params: LogEvidenceParams): Promise<strin
       return null
     }
 
-    console.log(`[v0] Evidence logged: ${params.eventType} for ${params.entityType}:${params.entityId}`)
     return data.id
   } catch (error) {
     console.error("[v0] Evidence logging exception:", error)

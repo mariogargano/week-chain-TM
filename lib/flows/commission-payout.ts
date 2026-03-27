@@ -41,7 +41,5 @@ export async function executeCommissionPayout(params: {
     total_amount: commissions?.reduce((sum, c) => sum + c.commission_amount, 0),
   })
 
-  console.log(`[Payout] Executed payout for ${params.commissionIds.length} commissions`)
-
   return commissions
 }

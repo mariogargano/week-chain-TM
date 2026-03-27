@@ -22,14 +22,6 @@ export async function createTransferProposal(params: TransferProposalParams): Pr
 
   const { vault, fromAta, toAta, amount, memo } = params
 
-  console.log("[squads] Creating transfer proposal:", {
-    vault: vault.toBase58(),
-    from: fromAta.toBase58(),
-    to: toAta.toBase58(),
-    amount,
-    memo,
-  })
-
   // Mock proposal ID (in production, this comes from Squads SDK)
   const proposalId = `proposal_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 

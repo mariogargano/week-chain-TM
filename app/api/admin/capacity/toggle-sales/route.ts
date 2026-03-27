@@ -28,8 +28,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid parameters" }, { status: 400 })
     }
 
-    console.log(`[v0] Admin ${adminUser.role} toggling ${tier} sales to ${enabled}`)
-
     // Get latest capacity status and update the specific tier flag
     const { data: latest } = await supabase
       .from("capacity_engine_status")
@@ -62,8 +60,6 @@ export async function POST(req: Request) {
       console.error("[v0] Error updating capacity status:", updateError)
       return NextResponse.json({ error: "Failed to update status" }, { status: 500 })
     }
-
-    console.log(`[v0] ${tier} sales ${enabled ? "enabled" : "disabled"}`)
 
     return NextResponse.json({
       success: true,

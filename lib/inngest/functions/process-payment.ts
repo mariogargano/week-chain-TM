@@ -13,7 +13,6 @@ export const processPayment = inngest.createFunction(
     // Verify payment with payment provider
     const paymentStatus = await step.run("verify-payment", async () => {
       // TODO: Integrate with Conekta/Stripe API
-      console.log(`[v0] Verifying payment ${paymentId}`)
       return { status: "completed", transactionId: paymentId }
     })
 

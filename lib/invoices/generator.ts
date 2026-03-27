@@ -52,8 +52,6 @@ export async function generateInvoice(
     throw new Error("Failed to generate invoice request")
   }
 
-  console.log("[v0] Invoice request created successfully:", invoiceRequest.id)
-
   // En producción, aquí se llamaría a la API del PAC (Proveedor Autorizado de Certificación)
   // Por ahora, retornamos el ID de la solicitud
   return {

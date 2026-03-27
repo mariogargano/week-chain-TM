@@ -10,8 +10,6 @@ export async function GET(request: NextRequest) {
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://week-chain.vercel.app"
 
-  console.log("[v0] PayPal capture callback:", { success, token, payerId })
-
   if (success === "false" || !token) {
     // User cancelled or error
     return NextResponse.redirect(`${baseUrl}/properties/aflora-tulum/reservar?payment=cancelled`)
@@ -33,8 +31,6 @@ export async function GET(request: NextRequest) {
           tx_hash: captureResult.purchase_units?.[0]?.payments?.captures?.[0]?.id,
         })
         .eq("payment_reference", token)
-
-      console.log("[v0] PayPal payment captured successfully:", token)
 
       // Redirect to success page
       return NextResponse.redirect(
@@ -58,8 +54,6 @@ export async function POST(request: NextRequest) {
     if (!order_id) {
       return NextResponse.json({ success: false, error: "Order ID requerido" }, { status: 400 })
     }
-
-    console.log("[v0] PayPal capture POST request:", order_id)
 
     const captureResult = await capturePayPalOrder(order_id)
 

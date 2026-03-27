@@ -68,7 +68,6 @@ export async function POST(req: Request) {
     const availability = await isProductAvailable(product.id)
 
     if (!availability.available) {
-      console.log(`[v0] BLOCKED: ${product.display_name} - ${availability.reason}`)
       return NextResponse.json(
         {
           error: "CAPACITY_BLOCKED",
@@ -81,10 +80,6 @@ export async function POST(req: Request) {
         { status: 403 },
       )
     }
-
-    console.log(
-      `[v0] Availability check passed. Remaining: ${availability.remainingForProduct} for product, ${availability.remainingTotal} total`,
-    )
 
     const { data: profile } = await supabase
       .from("users")
@@ -120,8 +115,6 @@ export async function POST(req: Request) {
         capacity_check: "passed",
       },
     })
-
-    console.log(`[v0] Checkout session created: ${session.id}`)
 
     return NextResponse.json({
       sessionId: session.id,

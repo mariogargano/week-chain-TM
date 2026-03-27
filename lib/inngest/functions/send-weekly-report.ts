@@ -32,8 +32,6 @@ export const sendWeeklyReport = inngest.createFunction(
 
     // Send report
     await step.run("send-report-emails", async () => {
-      console.log(`[v0] Sending weekly report to ${admins?.length} admins`)
-      console.log(`[v0] Stats:`, stats)
       // TODO: Integrate with email service
     })
 

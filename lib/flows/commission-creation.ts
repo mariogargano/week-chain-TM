@@ -22,7 +22,6 @@ export async function createCommissionFromOrder(params: {
   })
 
   if (!attribution) {
-    console.log("[Commission] No active attribution found for this buyer")
     return null
   }
 
@@ -69,8 +68,6 @@ export async function createCommissionFromOrder(params: {
     console.error("[Commission] Error creating commission:", error)
     throw error
   }
-
-  console.log("[Commission] Created commission record:", commission.id)
 
   return commission
 }

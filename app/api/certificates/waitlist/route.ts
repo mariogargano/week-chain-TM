@@ -29,8 +29,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 })
     }
 
-    console.log(`[v0] Adding ${email} to waitlist for ${product.display_name}`)
-
     // Check if already on waitlist for this product
     const { data: existing } = await supabase
       .from("certificate_waitlist_v2")
@@ -66,8 +64,6 @@ export async function POST(req: Request) {
       console.error("[v0] Error adding to waitlist:", waitlistError)
       return NextResponse.json({ error: "Failed to add to waitlist" }, { status: 500 })
     }
-
-    console.log(`[v0] Successfully added to waitlist: ${waitlistEntry.id}`)
 
     return NextResponse.json({
       success: true,

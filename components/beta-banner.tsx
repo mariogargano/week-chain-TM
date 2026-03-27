@@ -13,6 +13,8 @@ export function BetaBanner() {
     setIsMounted(true)
     const dismissed = localStorage.getItem("week-chain-beta-banner-dismissed")
 
+    // Solo mostrar en modo beta explícitamente habilitado (NEXT_PUBLIC_BETA_MODE=true)
+    // En producción, no definir esta variable para ocultar el banner
     const isBetaMode = process.env.NEXT_PUBLIC_BETA_MODE === "true"
     if (isBetaMode && !dismissed) {
       setIsVisible(true)
@@ -30,8 +32,8 @@ export function BetaBanner() {
         const percentage = (sold / 68) * 100
         setBetaStats({ sold, remaining, percentage })
       }
-    } catch (error) {
-      console.error("[v0] Error fetching beta stats:", error)
+    } catch {
+      // Error silencioso - el banner mostrará valores por defecto
     }
   }
 

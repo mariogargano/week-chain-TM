@@ -7,8 +7,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { amount, currency = "MXN", customer, metadata } = body
 
-    console.log("[v0] PayPal create order request:", { amount, currency, customer: customer?.email })
-
     // Validate required fields
     if (!amount || amount < 100) {
       return NextResponse.json({ success: false, error: "Monto inválido (mínimo 100)" }, { status: 400 })
@@ -49,8 +47,6 @@ export async function POST(request: NextRequest) {
       payment_method: "paypal",
       payment_reference: order.id,
     })
-
-    console.log("[v0] PayPal order created successfully:", order.id)
 
     return NextResponse.json({
       success: true,

@@ -7,8 +7,6 @@ import { createClient } from "@/lib/supabase/server"
 export async function resetAnnualWeeks() {
   const supabase = await createClient()
 
-  console.log("[v0] Running annual weeks reset...")
-
   // Find all active certificates where year_start_date anniversary has passed
   const today = new Date()
   const oneYearAgo = new Date()
@@ -21,11 +19,8 @@ export async function resetAnnualWeeks() {
     .lte("year_start_date", oneYearAgo.toISOString())
 
   if (error || !certificates || certificates.length === 0) {
-    console.log("[v0] No certificates to reset")
     return
   }
-
-  console.log(`[v0] Resetting ${certificates.length} certificates`)
 
   // Reset each certificate
   for (const cert of certificates) {
@@ -41,7 +36,6 @@ export async function resetAnnualWeeks() {
       .eq("id", cert.id)
   }
 
-  console.log("[v0] Annual reset complete")
 }
 
 /**
@@ -50,8 +44,6 @@ export async function resetAnnualWeeks() {
  */
 export async function enforceExpirations() {
   const supabase = await createClient()
-
-  console.log("[v0] Checking for expired certificates...")
 
   const today = new Date().toISOString()
 
@@ -67,11 +59,7 @@ export async function enforceExpirations() {
     return
   }
 
-  if (data && data.length > 0) {
-    console.log(`[v0] Expired ${data.length} certificates`)
-  } else {
-    console.log("[v0] No certificates to expire")
-  }
+  // Expirations processed silently
 }
 
 /**

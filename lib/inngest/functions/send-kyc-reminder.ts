@@ -26,7 +26,6 @@ export const sendKYCReminder = inngest.createFunction(
       return Promise.all(
         users.map(async (user) => {
           // TODO: Integrate with email service (Resend)
-          console.log(`[v0] Sending KYC reminder to ${user.email}`)
           return { userId: user.id, sent: true }
         }),
       )

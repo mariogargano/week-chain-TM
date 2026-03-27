@@ -24,7 +24,6 @@ export async function sendEmail(request: SendEmailRequest): Promise<SendEmailRes
     const isUnsubscribed = await checkUnsubscribed(Array.isArray(request.to) ? request.to[0] : request.to)
 
     if (isUnsubscribed) {
-      console.log(`[Email] Skipping - recipient unsubscribed: ${request.to}`)
       return {
         success: false,
         error: "Recipient has unsubscribed",
@@ -60,8 +59,6 @@ export async function sendEmail(request: SendEmailRequest): Promise<SendEmailRes
       ...request,
       provider_message_id: response.data?.id,
     })
-
-    console.log(`[Email] Sent successfully to ${request.to}. ID: ${response.data?.id}`)
 
     return {
       success: true,

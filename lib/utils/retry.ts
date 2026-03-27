@@ -54,8 +54,6 @@ export async function retryWithBackoff<T>(fn: () => Promise<T>, options: RetryOp
         onRetry(attempt + 1, lastError)
       }
 
-      console.log(`[v0] Retry attempt ${attempt + 1}/${maxRetries} after ${Math.round(finalDelay)}ms`)
-
       // Wait before retrying
       await new Promise((resolve) => setTimeout(resolve, finalDelay))
     }

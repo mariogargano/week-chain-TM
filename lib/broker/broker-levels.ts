@@ -114,12 +114,6 @@ export async function updateBrokerLevel(brokerId: string): Promise<BrokerLevelUp
 
   const result = Array.isArray(data) ? data[0] : data
 
-  console.log("[v0] Broker level updated:", {
-    brokerId,
-    oldLevel: result.old_level_tag,
-    newLevel: result.new_level_tag,
-  })
-
   return result
 }
 
