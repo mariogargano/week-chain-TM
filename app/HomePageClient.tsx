@@ -24,7 +24,6 @@ import {
   Scale,
   ChevronDown,
   Briefcase,
-  X,
 } from "lucide-react"
 import { GlobalInfrastructureSection } from "@/components/global-infrastructure-section"
 import { PartnersSection } from "@/components/partners-section"
@@ -63,43 +62,43 @@ const fallback = {
     benefits: {
       years: {
         title: "15 Años de Vigencia",
-        desc: "Derecho temporal de solicitar estancias anuales, sujeto a disponibilidad",
+        desc: "Estancias vacacionales anuales durante 15 años",
       },
       savings: {
-        title: "Sistema sin Cuotas Anuales",
-        desc: "Pago único sin cuotas de mantenimiento. No constituye inversión ni ahorro",
+        title: "Sin Cuotas Anuales",
+        desc: "Pago único sin cargos de mantenimiento adicionales",
       },
       income: {
-        title: "Solicitudes por Demanda",
-        desc: "Envía solicitudes cuando desees vacacionar, sin asignación previa de fechas",
+        title: "Uso Flexible",
+        desc: "Solicita tus vacaciones cuando mejor te convenga",
       },
       destinations: {
-        title: "Red de Destinos Participantes",
-        desc: "Acceso a alojamientos según disponibilidad. No asigna propiedades específicas",
+        title: "Red Global de Destinos",
+        desc: "Acceso a alojamientos premium en destinos seleccionados",
       },
       notarized: {
         title: "Documentación Formal",
-        desc: "Contrato de prestación de servicios conforme a legislación mexicana",
+        desc: "Contrato digital con validez legal completa",
       },
       escrow: {
         title: "Transacciones Seguras",
-        desc: "Procesamiento de pagos con protocolos de seguridad operativos",
+        desc: "Pagos procesados con máxima seguridad",
       },
       nom: {
         title: "Certificación NOM-151",
-        desc: "Documentos digitales con validez legal y trazabilidad verificable",
+        desc: "Documentos digitales con validez legal y trazabilidad",
       },
       kyc: {
         title: "Verificación de Identidad",
-        desc: "Proceso KYC para seguridad del titular y del sistema",
+        desc: "Proceso KYC para la seguridad de todos los titulares",
       },
       diligence: {
-        title: "Alojamientos Evaluados",
-        desc: "Destinos participantes verificados operativamente por el sistema",
+        title: "Alojamientos Verificados",
+        desc: "Propiedades seleccionadas y evaluadas por nuestro equipo",
       },
       contracts: {
         title: "Marco Legal Transparente",
-        desc: "Términos contractuales que rigen el derecho temporal de uso",
+        desc: "Términos claros y condiciones bien definidas",
       },
     },
   },
@@ -151,29 +150,25 @@ export function HomePageClient() {
       step: 1,
       icon: Calendar,
       title: "Envía tu Solicitud",
-      description:
-        "Indica tus preferencias de destino, fechas deseadas y número de personas. No seleccionas propiedades específicas.",
+      description: "Indica tus preferencias de destino, fechas y número de personas.",
     },
     {
       step: 2,
       icon: Shield,
       title: "Revisión del Sistema",
-      description:
-        "Nuestro equipo revisa tu solicitud, verifica disponibilidad en la red de destinos participantes y busca la mejor coincidencia.",
+      description: "Nuestro equipo revisa tu solicitud y busca la mejor coincidencia disponible.",
     },
     {
       step: 3,
       icon: CheckCircle2,
-      title: "Recibe Oferta",
-      description:
-        "Te enviamos una oferta con el destino disponible, fechas y detalles del alojamiento. Tienes 48 horas para aceptar o declinar.",
+      title: "Recibe tu Oferta",
+      description: "Te enviamos una oferta con el destino, fechas y detalles del alojamiento.",
     },
     {
       step: 4,
       icon: Plane,
       title: "Confirma y Viaja",
-      description:
-        "Acepta la oferta, recibe tu confirmación de reservación y prepara tu equipaje. Tu semana vacacional está lista.",
+      description: "Acepta la oferta, recibe tu confirmación y prepara tu equipaje.",
     },
   ]
 
@@ -202,29 +197,6 @@ export function HomePageClient() {
             {/* Características del Certificado - Integradas */}
             <div className="container mx-auto max-w-6xl relative z-10 px-4 sm:px-6 pb-12 sm:pb-16 md:pb-24">
               <div className="space-y-6">
-                <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-sky-50 via-cyan-50 to-sky-50 rounded-2xl border-2 border-sky-200">
-                  <div className="flex-shrink-0">
-                    <Image
-                      src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=029"
-                      alt="Solana Blockchain"
-                      width={40}
-                      height={40}
-                      className="w-10 h-10"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                      Registro Blockchain Solana
-                      <Award className="w-4 h-4 text-purple-600" />
-                    </h4>
-                    <p className="text-xs text-slate-600 mt-1">
-                      Cada certificado registrado en blockchain Solana para trazabilidad inmutable y verificación
-                      transparente.
-                      <span className="font-semibold text-purple-700"> NO es NFT comercializable.</span>
-                    </p>
-                  </div>
-                </div>
-
                 {/* Service Features */}
                 <div>
                   <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
@@ -236,25 +208,21 @@ export function HomePageClient() {
                       <Shield className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                       <div>
                         <p className="text-sm font-semibold text-white">Vigencia de 15 Años</p>
-                        <p className="text-xs text-slate-300">Derecho temporal de solicitar estancias anuales</p>
+                        <p className="text-xs text-slate-300">Estancias anuales garantizadas</p>
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <Lock className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-sm font-semibold text-white">Registro Blockchain Inmutable</p>
-                        <p className="text-xs text-slate-300">
-                          Solana blockchain para trazabilidad y verificación transparente
-                        </p>
+                        <p className="text-sm font-semibold text-white">Registro Blockchain Solana</p>
+                        <p className="text-xs text-slate-300">Trazabilidad y verificación transparente</p>
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <FileCheck className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
                       <div>
                         <p className="text-sm font-semibold text-white">Certificación Digital NOM-151</p>
-                        <p className="text-xs text-slate-300">
-                          Documentos con validez legal y firma electrónica avanzada
-                        </p>
+                        <p className="text-xs text-slate-300">Documentos con firma electrónica avanzada</p>
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
@@ -267,8 +235,8 @@ export function HomePageClient() {
                     <li className="flex items-start gap-3">
                       <Scale className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-sm font-semibold text-white">Cumplimiento Legal Total</p>
-                        <p className="text-xs text-slate-300">Conforme NOM-029, PROFECO y legislación mexicana</p>
+                        <p className="text-sm font-semibold text-white">Marco Legal Transparente</p>
+                        <p className="text-xs text-slate-300">Conforme a legislación mexicana</p>
                       </div>
                     </li>
                   </ul>
