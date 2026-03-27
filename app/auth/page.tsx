@@ -170,7 +170,7 @@ function AuthPageContent() {
   }
 
   // ===== REGISTER =====
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
@@ -189,25 +189,43 @@ function AuthPageContent() {
     try {
       const supabase = createClient()
 
-      if (referralCode) {
-        const { data: referrer } = await supabase.from("users").select("id").eq("referral_code", referralCode).single()
-        if (!referrer) throw new Error("Codigo de referido invalido")
+      // Validate referral code if provided
+      if (referralCode && referralCode.trim() !== "") {
+        const { data: referrer } = await supabase
+          .from("users")
+          .select("id")
+          .eq("referral_code", referralCode.trim())
+          .maybeSingle()
+        
+        if (!referrer) {
+          setError("Codigo de referido invalido")
+          setIsLoading(false)
+          return
+        }
       }
 
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
             full_name: registerName,
             phone: registerPhone,
-            referral_code: referralCode,
+            referral_code: referralCode || null,
           },
           emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       })
 
       if (error) throw error
+
+      // Check if user was created or already exists
+      if (data.user && !data.user.identities?.length) {
+        setError("Este email ya esta registrado. Por favor inicia sesion.")
+        setIsLoading(false)
+        return
+      }
+
       toast.success("Registro exitoso! Revisa tu email para confirmar tu cuenta.")
       setActiveTab("login")
     } catch (error: any) {
