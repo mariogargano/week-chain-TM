@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { CheckCircle } from 'lucide-react'
 import Link from 'next/link'
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
   const [loading, setLoading] = useState(true)
@@ -15,11 +15,12 @@ export default function SuccessPage() {
 
   useEffect(() => {
     if (sessionId) {
-      // Verify payment with backend
       fetch(`/api/pre-holder/verify?session_id=${sessionId}`)
         .then(() => setVerified(true))
         .catch(console.error)
         .finally(() => setLoading(false))
+    } else {
+      setLoading(false)
     }
   }, [sessionId])
 
@@ -53,5 +54,17 @@ export default function SuccessPage() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-slate-600">Cargando...</p>
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
   )
 }
