@@ -27,6 +27,7 @@ import {
   X,
 } from "lucide-react"
 import { GlobalInfrastructureSection } from "@/components/global-infrastructure-section"
+import { PartnersSection } from "@/components/partners-section"
 import Image from "next/image"
 
 const homepageFaqs = [
@@ -284,6 +285,9 @@ export function HomePageClient() {
 
           {/* Global Infrastructure Section */}
           <GlobalInfrastructureSection />
+
+          {/* Partners Section */}
+          <PartnersSection />
 
           {/* How It Works Section */}
           <section
