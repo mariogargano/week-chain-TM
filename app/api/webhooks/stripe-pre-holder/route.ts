@@ -1,12 +1,11 @@
 import { createClient } from '@/lib/supabase/server'
-import Stripe from 'stripe'
+import { getStripe } from '@/lib/stripe'
+import type Stripe from 'stripe'
 import { NextRequest, NextResponse } from 'next/server'
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET_PRE_HOLDER!
 
 export async function POST(req: NextRequest) {
   try {
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET_PRE_HOLDER
     const body = await req.text()
     const signature = req.headers.get('stripe-signature')
 
@@ -17,6 +16,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    const stripe = getStripe()
     const event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
 
     if (event.type === 'checkout.session.completed') {
@@ -38,9 +38,6 @@ export async function POST(req: NextRequest) {
         console.error('Error updating pre-holder:', error)
         return NextResponse.json({ error: 'Update failed' }, { status: 500 })
       }
-
-      // TODO: Send email confirmation
-      // TODO: Create holder account
     }
 
     return NextResponse.json({ received: true })
