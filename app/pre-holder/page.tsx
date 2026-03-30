@@ -1,242 +1,205 @@
 'use client'
 
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { toast } from 'sonner'
-import { AlertCircle, CheckCircle, Users, Zap } from 'lucide-react'
+import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-
-const TIERS = [
-  {
-    id: 'holder-bronze',
-    name: 'Bronze Pre-Holder',
-    price: 99,
-    benefits: ['Acceso anticipado al sistema', '1 Certificado de vacaciones', 'Comisión del 2%'],
-  },
-  {
-    id: 'holder-silver',
-    name: 'Silver Pre-Holder',
-    price: 299,
-    benefits: ['Acceso anticipado al sistema', '3 Certificados de vacaciones', 'Comisión del 3%'],
-    popular: true,
-  },
-  {
-    id: 'holder-gold',
-    name: 'Gold Pre-Holder',
-    price: 799,
-    benefits: ['Acceso anticipado al sistema', '5 Certificados de vacaciones', 'Comisión del 4%'],
-  },
-]
+import { toast } from 'sonner'
+import { AlertCircle, Check, Lock } from 'lucide-react'
+import Link from 'next/link'
 
 export default function PreHolderPage() {
-  const [email, setEmail] = useState('')
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [selectedTier, setSelectedTier] = useState('holder-silver')
-  const [loading, setLoading] = useState(false)
-  const [referralCode, setReferralCode] = useState('')
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
-  const handleCheckout = async () => {
-    if (!email || !name || !phone) {
-      toast.error('Por favor completa todos los campos')
-      return
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
 
-    setLoading(true)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
 
     try {
-      const response = await fetch('/api/pre-holder/checkout', {
+      const response = await fetch('/api/pre-holder/deposit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email,
-          name,
-          phone,
-          tier: selectedTier,
-          referralCode: referralCode || null,
-        }),
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          depositAmount: 100, // USD
+        })
       })
 
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || 'Error creating checkout session')
+        throw new Error(data.error || 'Error processing deposit')
       }
 
       // Redirect to Stripe checkout
-      if (data.url) {
-        window.location.href = data.url
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl
       }
     } catch (error: any) {
-      toast.error(error.message || 'Error al procesar el pago')
+      toast.error(error.message || 'Error al procesar el depósito')
     } finally {
-      setLoading(false)
+      setIsLoading(false)
     }
   }
 
-  const tier = TIERS.find(t => t.id === selectedTier)
-  const priceUSD = tier?.price || 0
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 py-12 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 text-slate-900">
-            Pre-Holders Program
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 px-4 py-8">
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-sky-600 to-cyan-600 bg-clip-text text-transparent mb-3">
+            Pre-Holder Early Access
           </h1>
-          <p className="text-xl text-slate-600">
-            Acceso anticipado a WEEK-CHAIN con beneficios exclusivos
+          <p className="text-lg text-slate-600">
+            Depósito de $100 USD reembolsable • 5% descuento • 14 días de acceso exclusivo
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
-          {TIERS.map((t) => (
-            <Card
-              key={t.id}
-              className={`cursor-pointer transition-all ${
-                selectedTier === t.id
-                  ? 'ring-2 ring-cyan-500 shadow-lg'
-                  : 'hover:shadow-md'
-              }`}
-              onClick={() => setSelectedTier(t.id)}
-            >
-              <CardHeader>
-                {t.popular && (
-                  <div className="bg-cyan-500 text-white text-xs font-bold px-3 py-1 rounded-full w-fit mb-2">
-                    MÁS POPULAR
-                  </div>
-                )}
-                <CardTitle>{t.name}</CardTitle>
-                <div className="text-3xl font-bold text-cyan-600 mt-2">
-                  ${t.price}
-                  <span className="text-sm text-slate-600">/USD</span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2">
-                  {t.benefits.map((benefit, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-green-500 mt-1 flex-shrink-0" />
-                      <span className="text-sm text-slate-700">{benefit}</span>
-                    </li>
-                  ))}
+        <div className="grid md:grid-cols-2 gap-8 mb-8">
+          {/* Left: Benefits */}
+          <div className="space-y-4">
+            <Card className="border-2 border-emerald-200 bg-emerald-50">
+              <CardContent className="pt-6">
+                <h3 className="font-bold text-emerald-900 mb-4">Beneficios Pre-Holder</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-emerald-900">
+                      <strong>5% descuento</strong> en la compra del certificado
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-emerald-900">
+                      <strong>Crédito de $100 USD</strong> aplicable a tu compra
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-emerald-900">
+                      <strong>14 días</strong> de acceso exclusivo antes del público
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-emerald-900">
+                      <strong>100% reembolsable</strong> si no compras en 72h
+                    </span>
+                  </li>
                 </ul>
               </CardContent>
             </Card>
-          ))}
+
+            {/* Formula */}
+            <Card className="border-2 border-blue-200 bg-blue-50">
+              <CardContent className="pt-6">
+                <h3 className="font-bold text-blue-900 mb-3">Cálculo en Checkout</h3>
+                <div className="space-y-2 text-sm text-blue-900">
+                  <div>Precio Público: <strong>P</strong></div>
+                  <div>Descuento 5%: <strong>-P × 0.05</strong></div>
+                  <div>Subtotal: <strong>P × 0.95</strong></div>
+                  <div className="border-t-2 border-blue-300 pt-2 font-bold">
+                    Total Hoy: <strong>(P × 0.95) - 100</strong>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Right: Form */}
+          <Card className="border-2 border-sky-200">
+            <CardContent className="pt-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <Label htmlFor="fullName">Nombre Completo</Label>
+                  <Input
+                    id="fullName"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    placeholder="Juan Pérez"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="juan@example.com"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="phone">Teléfono</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="+52 123 456 7890"
+                    required
+                  />
+                </div>
+
+                <Alert>
+                  <Lock className="w-4 h-4" />
+                  <AlertDescription>
+                    Tu depósito de $100 USD es 100% reembolsable si no completas la compra en 72 horas.
+                  </AlertDescription>
+                </Alert>
+
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full h-12 bg-gradient-to-r from-sky-600 to-cyan-600 hover:from-sky-700 hover:to-cyan-700 text-white font-bold"
+                >
+                  {isLoading ? 'Procesando...' : 'Depositar $100 USD'}
+                </Button>
+
+                <p className="text-xs text-center text-slate-500">
+                  Serás redirigido a Stripe para completar el pago seguro
+                </p>
+              </form>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Registration Form */}
-        <Card className="max-w-2xl mx-auto">
-          <CardHeader>
-            <CardTitle>Completar Registro</CardTitle>
-            <CardDescription>
-              Proporciona tu información para acceso anticipado
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Alert className="border-blue-200 bg-blue-50">
-              <Zap className="h-4 w-4 text-blue-600" />
-              <AlertDescription className="text-blue-700">
-                Al completar el pago, recibirás acceso inmediato a WEEK-CHAIN
-              </AlertDescription>
-            </Alert>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Nombre</label>
-                <Input
-                  placeholder="Tu nombre completo"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1">Email</label>
-                <Input
-                  type="email"
-                  placeholder="tu@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1">Teléfono</label>
-                <Input
-                  type="tel"
-                  placeholder="+52 1234567890"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Código de Referido (opcional)
-                </label>
-                <Input
-                  placeholder="Si tienes código de referido"
-                  value={referralCode}
-                  onChange={(e) => setReferralCode(e.target.value)}
-                />
-              </div>
-
-              <div className="bg-slate-50 p-4 rounded-lg">
-                <div className="flex justify-between mb-2">
-                  <span className="text-sm text-slate-600">Tier seleccionado:</span>
-                  <span className="font-semibold text-slate-900">{tier?.name}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-slate-600">Monto a pagar:</span>
-                  <span className="text-lg font-bold text-cyan-600">${priceUSD} USD</span>
-                </div>
-              </div>
-
-              <Button
-                onClick={handleCheckout}
-                disabled={loading || !email || !name || !phone}
-                className="w-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white text-lg font-bold h-12"
-              >
-                {loading ? 'Procesando...' : `Pagar $${priceUSD} USD`}
-              </Button>
-
-              <p className="text-xs text-slate-500 text-center">
-                Tu pago será procesado seguramente por Stripe
-              </p>
-            </div>
+        {/* Terms */}
+        <Card className="bg-slate-50">
+          <CardContent className="pt-6">
+            <h3 className="font-bold mb-3">Términos Importantes</h3>
+            <ul className="text-sm text-slate-600 space-y-2">
+              <li>• El depósito es válido por 72 horas desde el pago</li>
+              <li>• Refund automático si no compras en este período</li>
+              <li>• El descuento se aplica solo durante la ventana de 14 días</li>
+              <li>• Una vez aplicado a una compra, el depósito NO es reembolsable</li>
+              <li>• Máximo 500 pre-holders disponibles</li>
+            </ul>
           </CardContent>
         </Card>
-
-        {/* Info Section */}
-        <div className="grid md:grid-cols-2 gap-8 mt-16">
-          <Card>
-            <CardHeader>
-              <Users className="h-5 w-5 text-cyan-600 mb-2" />
-              <CardTitle>¿Qué es un Pre-Holder?</CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm text-slate-600">
-              Un Pre-Holder es un usuario que accede anticipadamente a WEEK-CHAIN antes del lanzamiento público. 
-              Obtienes certificados de vacaciones y comisiones por cada referido.
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <Zap className="h-5 w-5 text-cyan-600 mb-2" />
-              <CardTitle>Beneficios Exclusivos</CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm text-slate-600">
-              Como Pre-Holder obtienes acceso anticipado, certificados digitales y comisiones por referidos. 
-              Sé parte de la comunidad más temprana de WEEK-CHAIN.
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </div>
   )
