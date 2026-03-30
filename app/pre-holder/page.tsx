@@ -64,13 +64,13 @@ export default function PreHolderPage() {
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-100 text-amber-800 rounded-full text-sm font-semibold mb-4">
-            Solo 500 lugares disponibles
+            473 lugares aun disponibles
           </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-sky-600 to-cyan-600 bg-clip-text text-transparent mb-3">
             Pre-Holder Early Access
           </h1>
           <p className="text-lg text-slate-600">
-            Deposito de $100 USD reembolsable - 5% descuento - 14 dias de acceso exclusivo
+            Deposito de $100 USD reembolsable - 5% descuento - Acceso exclusivo antes del lanzamiento
           </p>
         </div>
 
@@ -96,13 +96,13 @@ export default function PreHolderPage() {
                   <li className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
                     <span className="text-sm text-emerald-900">
-                      <strong>14 días</strong> de acceso exclusivo antes del público
+                      <strong>Acceso exclusivo</strong> antes del lanzamiento publico
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
                     <span className="text-sm text-emerald-900">
-                      <strong>100% reembolsable</strong> si no compras en 72h
+                      <strong>100% reembolsable</strong> hasta 2 meses si decides no comprar
                     </span>
                   </li>
                 </ul>
@@ -170,7 +170,7 @@ export default function PreHolderPage() {
                 <Alert>
                   <Lock className="w-4 h-4" />
                   <AlertDescription>
-                    Tu depósito de $100 USD es 100% reembolsable si no completas la compra en 72 horas.
+                    Tu deposito de $100 USD es 100% reembolsable hasta 2 meses si decides no completar la compra.
                   </AlertDescription>
                 </Alert>
 
@@ -195,11 +195,11 @@ export default function PreHolderPage() {
           <CardContent className="pt-6">
             <h3 className="font-bold mb-3">Términos Importantes</h3>
             <ul className="text-sm text-slate-600 space-y-2">
-              <li>• El depósito es válido por 72 horas desde el pago</li>
-              <li>• Refund automático si no compras en este período</li>
-              <li>• El descuento se aplica solo durante la ventana de 14 días</li>
-              <li>• Una vez aplicado a una compra, el depósito NO es reembolsable</li>
-              <li>• Máximo 500 pre-holders disponibles</li>
+              <li>• El deposito es reembolsable hasta 2 meses desde el pago</li>
+              <li>• Solicita tu reembolso en cualquier momento antes del lanzamiento</li>
+              <li>• El descuento del 5% se aplica al momento de tu compra</li>
+              <li>• Una vez aplicado a una compra, el deposito NO es reembolsable</li>
+              <li>• Solo 473 lugares disponibles de 500 totales</li>
             </ul>
           </CardContent>
         </Card>
