@@ -63,11 +63,14 @@ export default function PreHolderPage() {
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 px-4 py-8">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-100 text-amber-800 rounded-full text-sm font-semibold mb-4">
+            Solo 500 lugares disponibles
+          </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-sky-600 to-cyan-600 bg-clip-text text-transparent mb-3">
             Pre-Holder Early Access
           </h1>
           <p className="text-lg text-slate-600">
-            Depósito de $100 USD reembolsable • 5% descuento • 14 días de acceso exclusivo
+            Deposito de $100 USD reembolsable - 5% descuento - 14 dias de acceso exclusivo
           </p>
         </div>
 
