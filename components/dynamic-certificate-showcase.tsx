@@ -482,44 +482,7 @@ export function DynamicCertificateShowcase() {
           </div>
         </div>
 
-        {/* Features list */}
-        <div className="space-y-4 mb-8">
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-500/20 flex items-center justify-center">
-              <Shield className="h-6 w-6 text-sky-500" />
-            </div>
-            <div className="text-left">
-              <h3 className="text-lg font-semibold text-white mb-1">Certificación NOM-151</h3>
-              <p className="text-slate-400 text-sm">
-                Cada certificado cumple con la Norma Oficial Mexicana para documentos digitales con validez legal
-              </p>
-            </div>
-          </div>
 
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center">
-              <Verified className="h-6 w-6 text-emerald-500" />
-            </div>
-            <div className="text-left">
-              <h3 className="text-lg font-semibold text-white mb-1">Verificable al Instante</h3>
-              <p className="text-slate-400 text-sm">
-                Escanea el código QR para verificar la autenticidad y vigencia de cualquier certificado
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center">
-              <Calendar className="h-6 w-6 text-blue-500" />
-            </div>
-            <div className="text-left">
-              <h3 className="text-lg font-semibold text-white mb-1">15 Años de Derechos de Solicitud</h3>
-              <p className="text-slate-400 text-sm">
-                Tu certificado te permite solicitar estancias cada año durante 15 años, sujeto a disponibilidad
-              </p>
-            </div>
-          </div>
-        </div>
 
         {/* Confirmation Dialog */}
         <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
