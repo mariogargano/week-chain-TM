@@ -13,6 +13,7 @@ import { GoogleAnalytics } from "@/components/analytics/google-analytics"
 import { MicrosoftClarity } from "@/components/analytics/microsoft-clarity"
 import { BetaBanner } from "@/components/beta-banner"
 import { PasswordProtectionOverlay } from "@/components/password-protection-overlay"
+import { PWAInstall } from "@/components/pwa-install"
 import { usePathname } from "next/navigation"
 
 interface RootLayoutClientProps {
@@ -54,6 +55,7 @@ export function RootLayoutClient({ children, interVariable }: RootLayoutClientPr
             </main>
             {!isDashboardRoute && <SiteFooter />}
             {!isDashboardRoute && <SupportChatbot />}
+            <PWAInstall />
           </LanguageProvider>
         </PostHogProvider>
       </body>
