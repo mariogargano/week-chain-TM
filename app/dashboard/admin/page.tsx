@@ -267,6 +267,22 @@ export default function AdminDashboard() {
         </Button>
       </div>
 
+      {/* Stripe Test Mode Warning */}
+      {process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.startsWith('pk_test') && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-center gap-3">
+          <div className="h-8 w-8 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
+            <CreditCard className="h-4 w-4 text-amber-600" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-amber-800">Stripe en Modo Test</p>
+            <p className="text-[11px] text-amber-600">Los pagos no son reales. Cambia a claves live en produccion.</p>
+          </div>
+          <Badge className="bg-amber-200 text-amber-800 border-0 text-[10px] px-2 py-0.5 flex-shrink-0">
+            TEST
+          </Badge>
+        </div>
+      )}
+
       {/* System Status Banner */}
       <div className={`${statusBg} backdrop-blur-xl border rounded-xl p-3 flex items-center gap-3`}>
         <div className={`h-3 w-3 rounded-full ${statusColor} animate-pulse shadow-sm flex-shrink-0`} />
