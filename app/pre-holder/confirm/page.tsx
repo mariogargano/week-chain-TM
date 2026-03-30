@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 import { CheckCircle, AlertCircle, Clock } from 'lucide-react'
 import Link from 'next/link'
 
-export default function ConfirmPage() {
+function ConfirmContent() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
@@ -102,14 +102,14 @@ export default function ConfirmPage() {
             <Alert className="border-blue-200 bg-blue-50">
               <Clock className="w-4 h-4 text-blue-600" />
               <AlertDescription className="text-blue-900">
-                Tu depósito es válido por <strong>14 días</strong>. En ese período tendrás acceso exclusivo a comprar nuestros certificados con 5% descuento.
+                Tu deposito te da <strong>acceso exclusivo</strong> antes del lanzamiento publico para comprar certificados con 5% de descuento.
               </AlertDescription>
             </Alert>
 
             <Alert className="border-orange-200 bg-orange-50">
               <AlertCircle className="w-4 h-4 text-orange-600" />
               <AlertDescription className="text-orange-900">
-                <strong>Importante:</strong> Si no completas tu compra de certificado en 72 horas, tu depósito será reembolsado automáticamente.
+                <strong>100% Reembolsable:</strong> Puedes solicitar el reembolso de tu deposito en cualquier momento hasta 2 meses si decides no comprar.
               </AlertDescription>
             </Alert>
 
@@ -146,7 +146,7 @@ export default function ConfirmPage() {
             <CardContent className="pt-12 pb-12 text-center">
               <AlertCircle className="w-12 h-12 text-red-600 mx-auto mb-4" />
               <h2 className="text-xl font-bold text-red-900 mb-2">Error</h2>
-              <p className="text-red-800 mb-4">Hubo un problema al verificar tu depósito</p>
+              <p className="text-red-800 mb-4">Hubo un problema al verificar tu deposito</p>
               <Link href="/pre-holder">
                 <Button>Intentar de Nuevo</Button>
               </Link>
@@ -155,5 +155,30 @@ export default function ConfirmPage() {
         )}
       </div>
     </div>
+  )
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 px-4 py-8">
+      <div className="max-w-2xl mx-auto">
+        <Card>
+          <CardContent className="pt-12 pb-12 text-center">
+            <div className="animate-spin mx-auto mb-4">
+              <Clock className="w-12 h-12 text-sky-600" />
+            </div>
+            <p className="text-lg text-slate-600">Cargando...</p>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
+
+export default function ConfirmPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <ConfirmContent />
+    </Suspense>
   )
 }
