@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Store pre-holder metadata in Supabase (optional - for admin tracking)
-    const supabase = createClient()
+    const supabase = await createClient()
     await supabase.from('pre_holders').insert({
       email,
       full_name: fullName,
