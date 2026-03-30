@@ -1,56 +1,14 @@
 "use client"
 
-import Image from "next/image"
-
 const partners = [
-  {
-    name: "Solana",
-    logo: "https://cryptologos.cc/logos/solana-sol-logo.svg?v=040",
-    bg: "bg-gradient-to-br from-purple-600 to-violet-800",
-    textColor: "text-white",
-  },
-  {
-    name: "Stripe",
-    logo: "https://cdn.brandfetch.io/idxAg10C0L/theme/dark/logo.svg?c=1id_Mf5_83D",
-    bg: "bg-white",
-    textColor: "text-indigo-600",
-  },
-  {
-    name: "Conekta",
-    logo: "https://cdn.brandfetch.io/id9w5hR8pR/theme/dark/logo.svg?c=1id64Mup7ac",
-    bg: "bg-white",
-    textColor: "text-sky-600",
-  },
-  {
-    name: "Supabase",
-    logo: "https://cdn.brandfetch.io/idB6Y0Gxdz/theme/dark/logo.svg?c=1id64Mup7ac",
-    bg: "bg-emerald-950",
-    textColor: "text-emerald-400",
-  },
-  {
-    name: "Persona",
-    logo: "https://cdn.brandfetch.io/idLvMkCR0Y/theme/dark/logo.svg?c=1id64Mup7ac",
-    bg: "bg-white",
-    textColor: "text-rose-600",
-  },
-  {
-    name: "Resend",
-    logo: "https://cdn.brandfetch.io/idYaGKU3N0/theme/dark/logo.svg?c=1id64Mup7ac",
-    bg: "bg-slate-900",
-    textColor: "text-white",
-  },
-  {
-    name: "Vercel",
-    logo: "https://cdn.brandfetch.io/idD7JNfqYd/theme/dark/logo.svg?c=1id64Mup7ac",
-    bg: "bg-black",
-    textColor: "text-white",
-  },
-  {
-    name: "EasyLex",
-    logo: null,
-    bg: "bg-gradient-to-br from-amber-500 to-orange-600",
-    textColor: "text-white",
-  },
+  { name: "Solana", initials: "SOL", bg: "bg-gradient-to-br from-purple-600 to-violet-700", text: "text-white" },
+  { name: "Stripe", initials: "STR", bg: "bg-gradient-to-br from-indigo-600 to-blue-700", text: "text-white" },
+  { name: "Conekta", initials: "CNK", bg: "bg-gradient-to-br from-sky-600 to-cyan-700", text: "text-white" },
+  { name: "Supabase", initials: "SUP", bg: "bg-gradient-to-br from-emerald-600 to-green-700", text: "text-white" },
+  { name: "Persona", initials: "KYC", bg: "bg-gradient-to-br from-rose-600 to-pink-700", text: "text-white" },
+  { name: "Resend", initials: "RSD", bg: "bg-gradient-to-br from-slate-700 to-slate-900", text: "text-white" },
+  { name: "Vercel", initials: "VCL", bg: "bg-gradient-to-br from-slate-900 to-black", text: "text-white" },
+  { name: "EasyLex", initials: "LEX", bg: "bg-gradient-to-br from-amber-600 to-orange-700", text: "text-white" },
 ]
 
 // Duplicate for seamless loop
@@ -78,27 +36,15 @@ export function PartnersSection() {
         <div className="absolute left-0 top-0 bottom-0 w-28 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-28 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
         <div className="flex overflow-hidden mb-4">
-          <div className="flex gap-8 animate-marquee-forward">
+          <div className="flex gap-6 animate-marquee-forward">
             {allPartners.map((p, i) => (
               <div
                 key={i}
-                className={`flex-shrink-0 flex items-center justify-center w-40 h-14 rounded-xl px-4 border border-slate-200/50 shadow-sm ${p.bg} transition-transform duration-300 hover:scale-105`}
+                className={`flex-shrink-0 flex flex-col items-center justify-center w-28 h-28 rounded-2xl ${p.bg} shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer`}
                 title={p.name}
               >
-                {p.logo ? (
-                  <div className="relative w-full h-8">
-                    <Image
-                      src={p.logo}
-                      alt={p.name}
-                      fill
-                      sizes="160px"
-                      className="object-contain"
-                      unoptimized
-                    />
-                  </div>
-                ) : (
-                  <span className={`font-bold text-base ${p.textColor}`}>{p.name}</span>
-                )}
+                <div className={`text-2xl font-bold ${p.text} mb-1`}>{p.initials}</div>
+                <div className={`text-xs font-semibold ${p.text} text-center px-2`}>{p.name}</div>
               </div>
             ))}
           </div>
@@ -106,27 +52,15 @@ export function PartnersSection() {
 
         {/* Marquee - row 2 reverse (offset) */}
         <div className="flex overflow-hidden">
-          <div className="flex gap-8 animate-marquee-reverse">
+          <div className="flex gap-6 animate-marquee-reverse">
             {[...allPartners].reverse().map((p, i) => (
               <div
                 key={i}
-                className={`flex-shrink-0 flex items-center justify-center w-40 h-14 rounded-xl px-4 border border-slate-200/50 shadow-sm ${p.bg} transition-transform duration-300 hover:scale-105`}
+                className={`flex-shrink-0 flex flex-col items-center justify-center w-28 h-28 rounded-2xl ${p.bg} shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer`}
                 title={p.name}
               >
-                {p.logo ? (
-                  <div className="relative w-full h-8">
-                    <Image
-                      src={p.logo}
-                      alt={p.name}
-                      fill
-                      sizes="160px"
-                      className="object-contain"
-                      unoptimized
-                    />
-                  </div>
-                ) : (
-                  <span className={`font-bold text-base ${p.textColor}`}>{p.name}</span>
-                )}
+                <div className={`text-2xl font-bold ${p.text} mb-1`}>{p.initials}</div>
+                <div className={`text-xs font-semibold ${p.text} text-center px-2`}>{p.name}</div>
               </div>
             ))}
           </div>
