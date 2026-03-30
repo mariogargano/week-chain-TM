@@ -33,8 +33,8 @@ export function PreHolderBanner() {
             <div className="flex items-start gap-3">
               <Clock className="w-5 h-5 flex-shrink-0 mt-1" />
               <div>
-                <p className="font-bold">14 Días Exclusivos</p>
-                <p className="text-sm text-white/90">Antes del público</p>
+                <p className="font-bold">Acceso Exclusivo</p>
+                <p className="text-sm text-white/90">Antes del lanzamiento</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -57,7 +57,7 @@ export function PreHolderBanner() {
               </Button>
             </Link>
             <p className="text-white text-sm mt-3">
-              500 lugares disponibles
+              473 lugares aun disponibles
             </p>
           </div>
         </div>
