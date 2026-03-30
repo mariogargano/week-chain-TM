@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { stripe } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 import { NextRequest, NextResponse } from 'next/server'
 
 const DEPOSIT_AMOUNT_USD = 100 // Fixed deposit in USD
@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create Stripe checkout session for deposit
+    const stripe = getStripe()
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
