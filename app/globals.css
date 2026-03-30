@@ -490,4 +490,30 @@ html {
   .bg-metallic-shine {
     background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
   }
+
+  /* Partners marquee animations */
+  @keyframes marquee-forward {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  
+  @keyframes marquee-reverse {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+  
+  .animate-marquee-forward {
+    animation: marquee-forward 28s linear infinite;
+    min-width: max-content;
+  }
+  
+  .animate-marquee-reverse {
+    animation: marquee-reverse 32s linear infinite;
+    min-width: max-content;
+  }
+  
+  .animate-marquee-forward:hover,
+  .animate-marquee-reverse:hover {
+    animation-play-state: paused;
+  }
 }
