@@ -6,42 +6,50 @@ const partners = [
   {
     name: "Solana",
     logo: "https://cryptologos.cc/logos/solana-sol-logo.svg?v=040",
-    bg: "bg-black",
+    bg: "bg-gradient-to-br from-purple-600 to-violet-800",
+    textColor: "text-white",
   },
   {
     name: "Stripe",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg",
+    logo: "https://cdn.brandfetch.io/idxAg10C0L/theme/dark/logo.svg?c=1id_Mf5_83D",
     bg: "bg-white",
+    textColor: "text-indigo-600",
   },
   {
     name: "Conekta",
-    logo: "https://cdn.conekta.com/assets/images/documentation/logo-conekta.svg",
+    logo: "https://cdn.brandfetch.io/id9w5hR8pR/theme/dark/logo.svg?c=1id64Mup7ac",
     bg: "bg-white",
+    textColor: "text-sky-600",
   },
   {
     name: "Supabase",
-    logo: "https://supabase.com/dashboard/img/supabase-logo.svg",
-    bg: "bg-black",
+    logo: "https://cdn.brandfetch.io/idB6Y0Gxdz/theme/dark/logo.svg?c=1id64Mup7ac",
+    bg: "bg-emerald-950",
+    textColor: "text-emerald-400",
   },
   {
     name: "Persona",
-    logo: "https://withpersona.com/images/persona-logo-dark.svg",
+    logo: "https://cdn.brandfetch.io/idLvMkCR0Y/theme/dark/logo.svg?c=1id64Mup7ac",
     bg: "bg-white",
+    textColor: "text-rose-600",
   },
   {
     name: "Resend",
-    logo: "https://resend.com/static/brand/resend-logotype-wordmark-black.svg",
-    bg: "bg-white",
+    logo: "https://cdn.brandfetch.io/idYaGKU3N0/theme/dark/logo.svg?c=1id64Mup7ac",
+    bg: "bg-slate-900",
+    textColor: "text-white",
   },
   {
     name: "Vercel",
-    logo: "https://assets.vercel.com/image/upload/front/favicon/vercel/180x180.png",
+    logo: "https://cdn.brandfetch.io/idD7JNfqYd/theme/dark/logo.svg?c=1id64Mup7ac",
     bg: "bg-black",
+    textColor: "text-white",
   },
   {
-    name: "Legalario",
-    logo: "https://legalario.com/wp-content/uploads/2022/09/Legalario_logo.svg",
-    bg: "bg-white",
+    name: "EasyLex",
+    logo: null,
+    bg: "bg-gradient-to-br from-amber-500 to-orange-600",
+    textColor: "text-white",
   },
 ]
 
@@ -74,19 +82,23 @@ export function PartnersSection() {
             {allPartners.map((p, i) => (
               <div
                 key={i}
-                className={`flex-shrink-0 flex items-center justify-center w-36 h-14 rounded-xl px-4 border border-slate-200 shadow-sm ${p.bg} transition-transform duration-300 hover:scale-105`}
+                className={`flex-shrink-0 flex items-center justify-center w-40 h-14 rounded-xl px-4 border border-slate-200/50 shadow-sm ${p.bg} transition-transform duration-300 hover:scale-105`}
                 title={p.name}
               >
-                <div className="relative w-full h-8">
-                  <Image
-                    src={p.logo}
-                    alt={p.name}
-                    fill
-                    sizes="144px"
-                    className="object-contain"
-                    crossOrigin="anonymous"
-                  />
-                </div>
+                {p.logo ? (
+                  <div className="relative w-full h-8">
+                    <Image
+                      src={p.logo}
+                      alt={p.name}
+                      fill
+                      sizes="160px"
+                      className="object-contain"
+                      unoptimized
+                    />
+                  </div>
+                ) : (
+                  <span className={`font-bold text-base ${p.textColor}`}>{p.name}</span>
+                )}
               </div>
             ))}
           </div>
@@ -98,19 +110,23 @@ export function PartnersSection() {
             {[...allPartners].reverse().map((p, i) => (
               <div
                 key={i}
-                className={`flex-shrink-0 flex items-center justify-center w-36 h-14 rounded-xl px-4 border border-slate-200 shadow-sm ${p.bg} transition-transform duration-300 hover:scale-105`}
+                className={`flex-shrink-0 flex items-center justify-center w-40 h-14 rounded-xl px-4 border border-slate-200/50 shadow-sm ${p.bg} transition-transform duration-300 hover:scale-105`}
                 title={p.name}
               >
-                <div className="relative w-full h-8">
-                  <Image
-                    src={p.logo}
-                    alt={p.name}
-                    fill
-                    sizes="144px"
-                    className="object-contain"
-                    crossOrigin="anonymous"
-                  />
-                </div>
+                {p.logo ? (
+                  <div className="relative w-full h-8">
+                    <Image
+                      src={p.logo}
+                      alt={p.name}
+                      fill
+                      sizes="160px"
+                      className="object-contain"
+                      unoptimized
+                    />
+                  </div>
+                ) : (
+                  <span className={`font-bold text-base ${p.textColor}`}>{p.name}</span>
+                )}
               </div>
             ))}
           </div>
