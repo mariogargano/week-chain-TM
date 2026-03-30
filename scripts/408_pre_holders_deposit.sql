@@ -4,6 +4,9 @@
 -- 5% discount + deposit credit on certificate purchase
 -- =====================================================
 
+-- Create sequence for priority numbers
+CREATE SEQUENCE IF NOT EXISTS pre_holders_priority_seq START 1;
+
 -- Drop old table if exists and recreate with correct schema
 DROP TABLE IF EXISTS pre_holders CASCADE;
 
@@ -46,7 +49,7 @@ CREATE TABLE pre_holders (
   referred_by_code TEXT,
   
   -- Priority (position in queue)
-  priority_number SERIAL,
+  priority_number INTEGER DEFAULT nextval('pre_holders_priority_seq'),
   
   -- Status
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'paid', 'applied', 'refunded', 'expired')),
@@ -126,6 +129,7 @@ CREATE POLICY "Users can view own pre_holder record"
 GRANT SELECT, INSERT ON pre_holders TO anon;
 GRANT ALL ON pre_holders TO authenticated;
 GRANT ALL ON pre_holders TO service_role;
+GRANT USAGE, SELECT ON SEQUENCE pre_holders_priority_seq TO anon, authenticated, service_role;
 
 -- Add comment
 COMMENT ON TABLE pre_holders IS 'Pre-holder deposits: $100 USD refundable. Benefits: 5% discount + deposit credit. Formula: Total = (P * 0.95) - 100';
