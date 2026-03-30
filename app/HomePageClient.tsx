@@ -27,6 +27,7 @@ import {
 } from "lucide-react"
 import { GlobalInfrastructureSection } from "@/components/global-infrastructure-section"
 import { PartnersSection } from "@/components/partners-section"
+import { PreHolderBanner } from "@/components/pre-holder-banner"
 import Image from "next/image"
 
 const homepageFaqs = [
@@ -184,6 +185,9 @@ export function HomePageClient() {
               <AnimatedHero />
             </section>
           </article>
+
+          {/* Pre-Holder CTA Banner */}
+          <PreHolderBanner />
 
           {/* DynamicCertificateShowcase con Características integradas */}
           <section className="relative bg-gradient-to-br from-slate-900 via-sky-950 to-slate-900 overflow-hidden">
