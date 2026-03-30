@@ -106,11 +106,7 @@ export function SiteFooter() {
                   WEEK Review
                 </Link>
               </li>
-              <li>
-                <Link href="/onboarding" className="text-gray-400 hover:text-white transition-colors">
-                  Tutorial
-                </Link>
-              </li>
+
               <li>
                 <Link href="/help" className="text-gray-400 hover:text-white transition-colors">
                   Centro de Ayuda
@@ -220,17 +216,17 @@ export function SiteFooter() {
               </li>
               <li>
                 <a
-                  href="tel:+529981234567"
+                  href="tel:+529844589506"
                   className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
                 >
                   <Phone className="h-4 w-4 text-cyan-400" />
-                  +52 998 XXX XXXX
+                  +52 984 458 9506
                 </a>
               </li>
               <li>
                 <span className="text-gray-400 flex items-start gap-2">
                   <MapPin className="h-4 w-4 text-amber-400 mt-0.5" />
-                  <span>Cancun, Q. Roo, Mexico</span>
+                  <span>Playa del Carmen, Quintana Roo, Mexico</span>
                 </span>
               </li>
               <li className="pt-2">
@@ -272,11 +268,11 @@ export function SiteFooter() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-400">
             <div>
-              <p className="font-semibold text-white mb-2">Operaciones en México</p>
+              <p className="font-semibold text-white mb-2">Operaciones en Mexico</p>
               <p className="leading-relaxed">
                 <span className="text-white">WEEK-CHAIN SAPI de CV</span>
                 <br />
-                Cancún, Quintana Roo, México
+                Playa del Carmen, Quintana Roo, Mexico
               </p>
             </div>
           </div>
