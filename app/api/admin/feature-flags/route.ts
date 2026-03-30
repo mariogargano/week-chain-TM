@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 export async function GET() {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     
     // Check if user is admin
     const { data: { user }, error: userError } = await supabase.auth.getUser()
@@ -37,7 +37,7 @@ export async function GET() {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     
     // Check if user is admin
     const { data: { user }, error: userError } = await supabase.auth.getUser()
