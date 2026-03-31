@@ -97,6 +97,17 @@ const navigationItems = [
     ],
   },
   {
+    title: "Certificados",
+    description: "Productos SVC, precios, capacidad",
+    icon: UserCheck,
+    href: "/dashboard/admin/certificates",
+    subItems: [
+      { title: "Configurador SVC", href: "/dashboard/admin/certificates" },
+      { title: "Motor 48+4", href: "/dashboard/admin/capacity-risk" },
+      { title: "Ventas Activas", href: "/dashboard/admin/certificates?tab=active" },
+    ],
+  },
+  {
     title: "Reportes",
     description: "Analiticas, KPIs y metricas",
     icon: BarChart3,
