@@ -6,7 +6,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -17,240 +16,116 @@ import {
   LayoutDashboard,
   Users,
   Building2,
-  FileText,
-  TrendingUp,
-  Settings,
   Calendar,
-  Bell,
-  BarChart3,
   LogOut,
-  Ticket,
   CreditCard,
   UserCheck,
-  ShoppingBag,
-  Wrench,
-  FolderOpen,
-  Mail,
-  Send,
-  MessageSquare,
-  Shield,
-  Activity,
-  Globe,
-  DollarSign,
-  Scale,
-  Wallet,
-  Lock,
-  Database,
-  Webhook,
-  Star,
-  BookOpen,
-  Calculator,
-  MonitorDot,
-  BadgeCheck,
   Briefcase,
-  PlaneTakeoff,
-  HousePlus,
-  Coins,
-  ArrowLeftRight,
-  RefreshCcw,
-  ClipboardCheck,
-  Inbox,
-  Landmark,
-  PiggyBank,
-  MapPin,
-  Package,
-  UsersRound,
-  FileSearch,
-  Layers,
-  ShieldAlert,
-  QrCode,
-  AlertTriangle,
-  Clock,
-  CheckCircle,
-  FileSignature,
-  Percent,
-  Receipt,
-  CircleDollarSign,
-  Building,
-  UserCog,
-  Eye,
-  Handshake,
-  GanttChart,
-  Target,
-  Megaphone,
-  TrendingDown,
-  Gauge,
-  ServerCog,
+  BarChart3,
+  Settings,
+  ChevronRight,
+  Home,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 
+// Simplified navigation with descriptions - 6 main sections
 const navigationItems = [
-  // 1. RBAC - Identity, Roles and Permissions
   {
-    title: "1. Identidad y RBAC",
-    items: [
-      { title: "Dashboard", icon: LayoutDashboard, href: "/dashboard/admin" },
-      { title: "Usuarios Internos", icon: UsersRound, href: "/dashboard/admin/team" },
-      { title: "WEEK-AGENTS", icon: Briefcase, href: "/dashboard/admin/broker-network" },
-      { title: "Owners / Partners", icon: Building, href: "/dashboard/admin/property-approvals" },
-      { title: "Holders (KYC)", icon: BadgeCheck, href: "/dashboard/admin/kyc" },
-      { title: "Matriz de Permisos", icon: Shield, href: "/dashboard/admin/security" },
-      { title: "Bitacora de Accesos", icon: FileSearch, href: "/dashboard/admin/audit-logs" },
+    title: "Dashboard",
+    description: "Vista general del ecosistema",
+    icon: LayoutDashboard,
+    href: "/dashboard/admin",
+  },
+  {
+    title: "Usuarios y KYC",
+    description: "Gestionar holders, verificacion de identidad",
+    icon: Users,
+    href: "/dashboard/admin/users",
+    subItems: [
+      { title: "Todos los Usuarios", href: "/dashboard/admin/users" },
+      { title: "Verificacion KYC", href: "/dashboard/admin/kyc" },
+      { title: "Pre-Holders", href: "/dashboard/admin/pre-holders" },
     ],
   },
-  // 2. Product Governance (SVC)
   {
-    title: "2. Producto SVC",
-    items: [
-      { title: "Configurador SVC", icon: Settings, href: "/dashboard/admin/certificates" },
-      { title: "Motor Capacidad (48+4)", icon: Activity, href: "/dashboard/admin/supply" },
-      { title: "Blackouts y Politicas", icon: Clock, href: "/dashboard/admin/capacity-risk" },
-      { title: "Upgrades/Downgrades", icon: ArrowLeftRight, href: "/dashboard/admin/pricing-calculator" },
-      { title: "Ciclo de Vida Cert", icon: RefreshCcw, href: "/dashboard/admin/week-balance" },
-      { title: "Inventario Certificados", icon: Layers, href: "/dashboard/admin/weeks" },
+    title: "Reservaciones",
+    description: "Solicitudes, ofertas y confirmaciones",
+    icon: Calendar,
+    href: "/dashboard/admin/reservations",
+    subItems: [
+      { title: "Todas las Reservas", href: "/dashboard/admin/reservations" },
+      { title: "Pendientes (SLA)", href: "/dashboard/admin/reservations?tab=pending" },
+      { title: "Confirmadas", href: "/dashboard/admin/reservations?tab=confirmed" },
+      { title: "Rentas Activas", href: "/dashboard/admin/rentals" },
     ],
   },
-  // 3. Properties + SPV
   {
-    title: "3. Propiedades + SPV",
-    items: [
-      { title: "Propiedades", icon: Building2, href: "/dashboard/admin/properties" },
-      { title: "Destinos", icon: MapPin, href: "/dashboard/admin/destinations" },
-      { title: "Aprobar Propiedades", icon: ClipboardCheck, href: "/dashboard/admin/approvals" },
-      { title: "Nueva Propiedad", icon: HousePlus, href: "/dashboard/admin/properties/new" },
-      { title: "Semanas por Propiedad", icon: Calendar, href: "/dashboard/admin/bookings" },
-      { title: "Proveedores / SLAs", icon: Package, href: "/dashboard/admin/providers" },
-      { title: "Indicadores por SPV", icon: BarChart3, href: "/dashboard/admin/analytics" },
+    title: "Pagos y Escrow",
+    description: "Cobros, liberaciones y facturacion",
+    icon: CreditCard,
+    href: "/dashboard/admin/payments",
+    subItems: [
+      { title: "Estado de Pagos", href: "/dashboard/admin/payments" },
+      { title: "Escrow Pendiente", href: "/dashboard/admin/escrow" },
+      { title: "Transacciones", href: "/dashboard/admin/transactions" },
+      { title: "Facturacion", href: "/dashboard/admin/vouchers" },
     ],
   },
-  // 4. REQUEST → OFFER → CONFIRM
   {
-    title: "4. REQUEST→OFFER→CONFIRM",
-    items: [
-      { title: "Bandeja Requests (SLA)", icon: Inbox, href: "/dashboard/admin/reservations" },
-      { title: "Generar Ofertas", icon: Send, href: "/dashboard/admin/reservations?tab=offer" },
-      { title: "Confirmaciones", icon: CheckCircle, href: "/dashboard/admin/reservations?tab=confirmed" },
-      { title: "Rentas Activas", icon: PlaneTakeoff, href: "/dashboard/admin/rentals" },
-      { title: "Cambios/Cancelaciones", icon: RefreshCcw, href: "/dashboard/admin/reservations?tab=changes" },
-      { title: "Plantillas Operativas", icon: FileText, href: "/dashboard/admin/email-templates" },
+    title: "Propiedades",
+    description: "Inventario, destinos y disponibilidad",
+    icon: Building2,
+    href: "/dashboard/admin/properties",
+    subItems: [
+      { title: "Todas las Propiedades", href: "/dashboard/admin/properties" },
+      { title: "Destinos", href: "/dashboard/admin/destinations" },
+      { title: "Aprobaciones", href: "/dashboard/admin/approvals" },
+      { title: "Disponibilidad", href: "/dashboard/admin/bookings" },
     ],
   },
-  // 5. Payments, Escrow, Payouts (Stripe)
   {
-    title: "5. Cobranza y Escrow",
-    items: [
-      { title: "Links de Pago", icon: CreditCard, href: "/dashboard/admin/payments" },
-      { title: "Estado Pagos (Hold)", icon: PiggyBank, href: "/dashboard/admin/escrow-contable" },
-      { title: "Liberacion y Payouts", icon: CircleDollarSign, href: "/dashboard/admin/transactions" },
-      { title: "Conciliacion Stripe", icon: ArrowLeftRight, href: "/dashboard/admin/wallets" },
-      { title: "Chargebacks/Disputas", icon: AlertTriangle, href: "/dashboard/admin/payments?tab=disputes" },
-      { title: "Facturacion", icon: Receipt, href: "/dashboard/admin/vouchers" },
+    title: "WEEK-AGENTS",
+    description: "Red de agentes, comision fija 4%",
+    icon: Briefcase,
+    href: "/dashboard/admin/broker-network",
+    subItems: [
+      { title: "Todos los Agentes", href: "/dashboard/admin/broker-network" },
+      { title: "Comisiones (4%)", href: "/dashboard/admin/broker-network?tab=commissions" },
+      { title: "Solicitudes", href: "/dashboard/admin/broker-network?tab=pending" },
     ],
   },
-  // 6. Margins and Splits
   {
-    title: "6. Margenes y Splits",
-    items: [
-      { title: "Config Splits (4%)", icon: Percent, href: "/dashboard/admin/broker-network?tab=config" },
-      { title: "Calculo por Transaccion", icon: Calculator, href: "/dashboard/admin/pricing-calculator" },
-      { title: "Simulador Rentabilidad", icon: TrendingUp, href: "/dashboard/admin/exit-strategy" },
-      { title: "Alertas de Margen", icon: TrendingDown, href: "/dashboard/admin/capacity-risk?tab=margins" },
-      { title: "Comisiones Agentes", icon: DollarSign, href: "/dashboard/admin/broker-network?tab=commissions" },
-      { title: "Reservas Notariales", icon: Landmark, href: "/dashboard/admin/escrow" },
+    title: "Certificados",
+    description: "Productos SVC, precios, capacidad",
+    icon: UserCheck,
+    href: "/dashboard/admin/certificates",
+    subItems: [
+      { title: "Configurador SVC", href: "/dashboard/admin/certificates" },
+      { title: "Motor 48+4", href: "/dashboard/admin/capacity-risk" },
+      { title: "Ventas Activas", href: "/dashboard/admin/certificates?tab=active" },
     ],
   },
-  // 7. Legal Compliance
   {
-    title: "7. Compliance Legal",
-    items: [
-      { title: "Contratos / Versiones", icon: FileSignature, href: "/dashboard/admin/legalario" },
-      { title: "Aceptacion T&Cs", icon: FileText, href: "/dashboard/admin/certifications" },
-      { title: "NOM-151 / Sellado", icon: QrCode, href: "/dashboard/admin/legalario?tab=nom151" },
-      { title: "KYC/KYB Estados", icon: UserCheck, href: "/dashboard/admin/kyc" },
-      { title: "AML / Monitoreo", icon: ShieldAlert, href: "/dashboard/admin/compliance" },
-      { title: "Centro Auditoria", icon: Eye, href: "/dashboard/admin/audit-logs" },
+    title: "Reportes",
+    description: "Analiticas, KPIs y metricas",
+    icon: BarChart3,
+    href: "/dashboard/admin/reports",
+    subItems: [
+      { title: "Dashboard KPIs", href: "/dashboard/admin/analytics" },
+      { title: "Ingresos", href: "/dashboard/admin/reports?tab=revenue" },
+      { title: "Ocupacion", href: "/dashboard/admin/bookings?tab=occupancy" },
     ],
   },
-  // 8. Cryptographic Integrity
+]
+
+const secondaryItems = [
   {
-    title: "8. Integridad Cripto",
-    items: [
-      { title: "Generador Hash+QR", icon: QrCode, href: "/dashboard/admin/certificates?tab=hash" },
-      { title: "Verificador Interno", icon: CheckCircle, href: "/dashboard/admin/certificates?tab=verify" },
-      { title: "Registro de Eventos", icon: Activity, href: "/dashboard/admin/audit-logs?tab=crypto" },
-      { title: "Incidencias QR", icon: AlertTriangle, href: "/dashboard/admin/system-diagnostics" },
-    ],
-  },
-  // 9. Service Operations (WEEK-SERVICE)
-  {
-    title: "9. Operacion Servicio",
-    items: [
-      { title: "Checklists Pre/Post", icon: ClipboardCheck, href: "/dashboard/admin/services" },
-      { title: "Proveedores + SLAs", icon: Handshake, href: "/dashboard/admin/providers" },
-      { title: "Tickets/Incidencias", icon: MessageSquare, href: "/dashboard/admin/contact-inbox" },
-      { title: "NPS y Resenas", icon: Star, href: "/dashboard/admin/testimonials" },
-      { title: "Compensaciones", icon: Coins, href: "/dashboard/admin/vouchers?tab=credits" },
-    ],
-  },
-  // 10. CRM and Go-to-Market
-  {
-    title: "10. CRM y Marketing",
-    items: [
-      { title: "Embudo de Leads", icon: Target, href: "/dashboard/admin/marketing" },
-      { title: "Campanas y Tiers", icon: Megaphone, href: "/dashboard/admin/presale" },
-      { title: "Asignacion Agentes", icon: UserCog, href: "/dashboard/admin/broker-network?tab=assign" },
-      { title: "Lead → Holder", icon: TrendingUp, href: "/dashboard/admin/users" },
-      { title: "KPIs Comerciales", icon: BarChart3, href: "/dashboard/admin/reports" },
-    ],
-  },
-  // 11. Executive Reporting and KPIs
-  {
-    title: "11. Reportes y KPIs",
-    items: [
-      { title: "SLA Dashboard", icon: Gauge, href: "/dashboard/admin/real-time-monitor" },
-      { title: "Ocupacion", icon: Calendar, href: "/dashboard/admin/bookings?tab=occupancy" },
-      { title: "Ingresos por SPV", icon: DollarSign, href: "/dashboard/admin/analytics?tab=revenue" },
-      { title: "Riesgo Global", icon: ShieldAlert, href: "/dashboard/admin/capacity-risk" },
-      { title: "Calidad (NPS)", icon: Star, href: "/dashboard/admin/testimonials?tab=nps" },
-      { title: "Forecast", icon: TrendingUp, href: "/dashboard/admin/reports?tab=forecast" },
-    ],
-  },
-  // 12. Data Administration (Backoffice)
-  {
-    title: "12. Admin Datos",
-    items: [
-      { title: "Master Data", icon: Database, href: "/dashboard/admin/database" },
-      { title: "Import/Export CSV", icon: ArrowLeftRight, href: "/dashboard/admin/database?tab=import" },
-      { title: "Deduplicacion", icon: Layers, href: "/dashboard/admin/database?tab=dedup" },
-      { title: "Correccion Auditada", icon: Wrench, href: "/dashboard/admin/database?tab=edit" },
-      { title: "Respaldos", icon: ServerCog, href: "/dashboard/admin/database?tab=backup" },
-    ],
-  },
-  // 13. Alerts and Automations
-  {
-    title: "13. Alertas y Automatismos",
-    items: [
-      { title: "Alertas SLA", icon: Clock, href: "/dashboard/admin/notifications?tab=sla" },
-      { title: "Alertas Overbooking", icon: AlertTriangle, href: "/dashboard/admin/notifications?tab=booking" },
-      { title: "Alertas Margen", icon: TrendingDown, href: "/dashboard/admin/notifications?tab=margin" },
-      { title: "Alertas KYC/KYB", icon: UserCheck, href: "/dashboard/admin/notifications?tab=kyc" },
-      { title: "Alertas Disputas", icon: ShieldAlert, href: "/dashboard/admin/notifications?tab=disputes" },
-      { title: "Email Automation", icon: Mail, href: "/dashboard/admin/email-automation" },
-    ],
-  },
-  // 14. System Configuration
-  {
-    title: "14. Sistema",
-    items: [
-      { title: "Webhooks", icon: Webhook, href: "/dashboard/admin/webhooks" },
-      { title: "Sync OTA", icon: RefreshCcw, href: "/dashboard/admin/ota-sync" },
-      { title: "VA-FI Tokenizacion", icon: Coins, href: "/dashboard/admin/vafi" },
-      { title: "DAO Governance", icon: Landmark, href: "/dashboard/admin/dao" },
-      { title: "Diagnosticos", icon: Wrench, href: "/dashboard/admin/system-diagnostics" },
-      { title: "Configuracion", icon: Settings, href: "/dashboard/admin/settings" },
-    ],
+    title: "Configuracion",
+    description: "Sistema, integraciones y ajustes",
+    icon: Settings,
+    href: "/dashboard/admin/settings",
   },
 ]
 
@@ -259,80 +134,183 @@ export function AdminSidebar() {
   const { state, setOpenMobile } = useSidebar()
 
   const handleLinkClick = () => {
-    // Close mobile sidebar on navigation
     setOpenMobile(false)
+  }
+
+  const isItemActive = (item: typeof navigationItems[0]) => {
+    const baseHref = item.href.split("?")[0]
+    if (pathname === baseHref) return true
+    if (baseHref !== "/dashboard/admin" && pathname.startsWith(baseHref)) return true
+    if (item.subItems) {
+      return item.subItems.some((sub) => {
+        const subBase = sub.href.split("?")[0]
+        return pathname === subBase || pathname.startsWith(subBase + "/")
+      })
+    }
+    return false
   }
 
   return (
     <Sidebar collapsible="icon" className="border-r border-slate-200 bg-white">
-      <SidebarHeader className="border-b border-slate-100 p-3">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-500 shadow-sm">
-            <Building2 className="h-4.5 w-4.5 text-white" />
+      <SidebarHeader className="border-b border-slate-100 p-4">
+        <Link href="/dashboard/admin" onClick={handleLinkClick} className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-cyan-600 shadow-md">
+            <Building2 className="h-5 w-5 text-white" />
           </div>
           {state === "expanded" && (
             <div className="flex flex-col">
-              <span className="text-sm font-bold text-slate-900">WEEK-WORLD</span>
-              <span className="text-[10px] font-medium text-slate-500">Control Center</span>
+              <span className="text-base font-bold text-slate-900">WEEK-CHAIN</span>
+              <span className="text-xs font-medium text-slate-500">Panel Admin</span>
             </div>
           )}
-        </div>
+        </Link>
       </SidebarHeader>
 
-      <SidebarContent className="px-2 py-2 overflow-y-auto">
-        {navigationItems.map((section) => (
-          <SidebarGroup key={section.title} className="pb-0.5">
-            <SidebarGroupLabel className="text-[9px] font-semibold uppercase text-slate-400 tracking-wider px-2 mb-0.5">
-              {state === "expanded" ? section.title : ""}
-            </SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {section.items.map((item) => {
-                  const baseHref = item.href.split("?")[0]
-                  const isActive = pathname === baseHref || (baseHref !== "/dashboard/admin" && pathname.startsWith(baseHref + "/"))
-                  return (
-                    <SidebarMenuItem key={item.href}>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={isActive}
-                        tooltip={state === "collapsed" ? item.title : undefined}
+      <SidebarContent className="px-3 py-4 overflow-y-auto">
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              {navigationItems.map((item) => {
+                const isActive = isItemActive(item)
+                return (
+                  <SidebarMenuItem key={item.href}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive}
+                      tooltip={state === "collapsed" ? item.title : undefined}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={handleLinkClick}
+                        className={cn(
+                          "flex items-start gap-3 rounded-xl px-3 py-3 min-h-[56px] transition-all duration-200",
+                          isActive
+                            ? "bg-sky-50 border border-sky-200 shadow-sm"
+                            : "hover:bg-slate-50 border border-transparent",
+                        )}
                       >
-                        <Link
-                          href={item.href}
-                          onClick={handleLinkClick}
+                        <div
                           className={cn(
-                            "flex items-center gap-2 rounded-lg px-2 py-1.5 min-h-[36px] transition-all duration-150 text-xs",
+                            "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
                             isActive
-                              ? "bg-sky-50 text-sky-700 font-semibold border border-sky-200"
-                              : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+                              ? "bg-sky-500 text-white shadow-sm"
+                              : "bg-slate-100 text-slate-500",
                           )}
                         >
-                          <item.icon className={cn("h-4 w-4 shrink-0", isActive ? "text-sky-600" : "text-slate-400")} />
-                          {state === "expanded" && (
-                            <span className="truncate">{item.title}</span>
+                          <item.icon className="h-5 w-5" />
+                        </div>
+                        {state === "expanded" && (
+                          <div className="flex flex-col flex-1 min-w-0">
+                            <div className="flex items-center justify-between">
+                              <span
+                                className={cn(
+                                  "text-sm font-semibold truncate",
+                                  isActive ? "text-sky-900" : "text-slate-800",
+                                )}
+                              >
+                                {item.title}
+                              </span>
+                              {item.subItems && (
+                                <ChevronRight
+                                  className={cn(
+                                    "h-4 w-4 shrink-0",
+                                    isActive ? "text-sky-500" : "text-slate-400",
+                                  )}
+                                />
+                              )}
+                            </div>
+                            <span
+                              className={cn(
+                                "text-xs leading-tight mt-0.5",
+                                isActive ? "text-sky-700" : "text-slate-500",
+                              )}
+                            >
+                              {item.description}
+                            </span>
+                          </div>
+                        )}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Secondary items */}
+        <SidebarGroup className="mt-4 pt-4 border-t border-slate-100">
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              {secondaryItems.map((item) => {
+                const isActive = pathname.startsWith(item.href.split("?")[0])
+                return (
+                  <SidebarMenuItem key={item.href}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive}
+                      tooltip={state === "collapsed" ? item.title : undefined}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={handleLinkClick}
+                        className={cn(
+                          "flex items-start gap-3 rounded-xl px-3 py-3 min-h-[56px] transition-all duration-200",
+                          isActive
+                            ? "bg-slate-100 border border-slate-200"
+                            : "hover:bg-slate-50 border border-transparent",
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
+                            isActive
+                              ? "bg-slate-600 text-white"
+                              : "bg-slate-100 text-slate-500",
                           )}
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  )
-                })}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+                        >
+                          <item.icon className="h-5 w-5" />
+                        </div>
+                        {state === "expanded" && (
+                          <div className="flex flex-col flex-1 min-w-0">
+                            <span
+                              className={cn(
+                                "text-sm font-semibold truncate",
+                                isActive ? "text-slate-900" : "text-slate-800",
+                              )}
+                            >
+                              {item.title}
+                            </span>
+                            <span className="text-xs text-slate-500 leading-tight mt-0.5">
+                              {item.description}
+                            </span>
+                          </div>
+                        )}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-slate-100 p-2">
+      <SidebarFooter className="border-t border-slate-100 p-3">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip={state === "collapsed" ? "Salir" : undefined}>
+            <SidebarMenuButton asChild tooltip={state === "collapsed" ? "Ir al Sitio" : undefined}>
               <Link
                 href="/"
                 onClick={handleLinkClick}
-                className="flex items-center gap-2 rounded-lg px-2 py-1.5 min-h-[36px] text-red-600 transition-all duration-150 hover:bg-red-50 font-medium text-xs"
+                className="flex items-center gap-3 rounded-xl px-3 py-3 text-slate-600 transition-all duration-200 hover:bg-slate-50"
               >
-                <LogOut className="h-4 w-4" />
-                {state === "expanded" && <span>Salir al Sitio</span>}
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100">
+                  <Home className="h-5 w-5 text-slate-500" />
+                </div>
+                {state === "expanded" && (
+                  <span className="text-sm font-medium">Ir al Sitio</span>
+                )}
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
