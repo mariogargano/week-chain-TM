@@ -32,24 +32,24 @@ import Image from "next/image"
 
 const homepageFaqs = [
   {
-    question: "¿Qué es WEEK-CHAIN?",
+    question: "¿Que es WEEK-CHAIN?",
     answer:
-      "WEEK-CHAIN es una plataforma digital de Smart Vacational Certificates (SVC). Ofrecemos certificados personales que otorgan el derecho de solicitar uso vacacional por 15 años en destinos participantes, sujeto a disponibilidad del sistema. No constituye propiedad inmobiliaria, inversión ni asigna propiedades específicas.",
+      "WEEK-CHAIN es una plataforma digital que ofrece Smart Vacational Certificates (SVC). El SVC es un derecho personal y temporal para solicitar uso vacacional durante hasta 15 anos en destinos participantes, siempre sujeto a disponibilidad. NO constituye propiedad inmobiliaria, tiempo compartido tradicional, inversion financiera, ni garantiza destinos o fechas especificas. Consulta terminos completos antes de contratar.",
   },
   {
-    question: "¿Cuánto cuesta un certificado?",
+    question: "¿Cuanto cuesta un certificado?",
     answer:
-      "Los precios representan el tier del certificado, la duración del derecho y el nivel de flexibilidad. Los certificados van desde $3,500 USD hasta $9,500 USD según el tier seleccionado. El precio NO representa fechas específicas, temporadas ni asignación de destinos concretos.",
+      "Los precios varian segun capacidad de personas y duracion del certificado, desde $6,500 USD. El precio corresponde al derecho de solicitud de uso vacacional y NO representa fechas especificas, temporadas preferenciales ni asignacion de destinos concretos. Consulta el catalogo y terminos completos.",
   },
   {
-    question: "¿Cómo funciona el Smart Vacational Certificate?",
+    question: "¿Como funciona el Smart Vacational Certificate?",
     answer:
-      "El Smart Vacational Certificate (SVC) te otorga un derecho personal, temporal y revocable de solicitar uso vacacional anual durante 15 años, sujeto a disponibilidad del sistema WEEK-CHAIN. NO constituye propiedad inmobiliaria, inversión, ni asigna propiedades, fechas o destinos específicos. Es un derecho de solicitud conforme a normativa mexicana NOM-151.",
+      "El SVC te otorga un derecho personal de solicitar uso vacacional anual durante hasta 15 anos mediante el proceso REQUEST (solicitas) → OFFER (recibes oferta si hay disponibilidad) → CONFIRM (aceptas o declinas). NO hay garantia de aprobacion. El certificado NO constituye propiedad, inversion ni asigna propiedades o destinos especificos.",
   },
   {
-    question: "¿Puedo solicitar renta de mi certificado?",
+    question: "¿Puedo solicitar que gestionen la renta de mi certificado?",
     answer:
-      "Puedes solicitar la gestión operativa de renta de tu derecho de uso a través de WEEK Management, sujeto a disponibilidad, aprobación y reglas del sistema. Nosotros gestionamos la operación en plataformas externas. Los ingresos generados están sujetos a comisiones operativas, disponibilidad de demanda y no constituyen rendimiento de inversión ni están garantizados.",
+      "WEEK-Management es un servicio opcional de coordinacion operativa. Puedes solicitar la gestion de tu derecho de uso cuando no lo utilices, sujeto a disponibilidad, aprobacion y reglas del sistema. Los ingresos, si los hubiera, estan sujetos a comisiones operativas, demanda del mercado y NO estan garantizados. No constituye rendimiento de inversion.",
   },
 ]
 
@@ -211,22 +211,22 @@ export function HomePageClient() {
                     <li className="flex items-start gap-3">
                       <Shield className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-sm font-semibold text-white">Vigencia de 15 Años</p>
-                        <p className="text-xs text-slate-300">Estancias anuales garantizadas</p>
+                        <p className="text-sm font-semibold text-white">Vigencia de hasta 15 Años</p>
+                        <p className="text-xs text-slate-300">Derecho de solicitud anual, sujeto a disponibilidad</p>
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <Lock className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-sm font-semibold text-white">Registro Blockchain Solana</p>
-                        <p className="text-xs text-slate-300">Trazabilidad y verificación transparente</p>
+                        <p className="text-sm font-semibold text-white">Registro Digital Verificable</p>
+                        <p className="text-xs text-slate-300">Trazabilidad y autenticidad del certificado</p>
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <FileCheck className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-sm font-semibold text-white">Certificación Digital NOM-151</p>
-                        <p className="text-xs text-slate-300">Documentos con firma electrónica avanzada</p>
+                        <p className="text-sm font-semibold text-white">Conforme a NOM-151</p>
+                        <p className="text-xs text-slate-300">Documentos digitales con validez legal en Mexico</p>
                       </div>
                     </li>
                     <li className="flex items-start gap-3">

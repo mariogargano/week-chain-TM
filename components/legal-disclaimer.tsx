@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import { AlertTriangle, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { LEGAL_COPY } from "@/lib/constants/legal-copy"
+import Link from "next/link"
 
 export function LegalDisclaimer() {
   const [isVisible, setIsVisible] = useState(true)
@@ -19,7 +19,10 @@ export function LegalDisclaimer() {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm text-white font-medium mb-1">Aviso Legal Importante</p>
-            <p className="text-xs text-slate-300 leading-relaxed">{LEGAL_COPY.SVC_FULL}</p>
+            <p className="text-xs text-slate-300 leading-relaxed mb-2">{LEGAL_COPY.SVC_SHORT}</p>
+            <Link href="/terms" className="text-xs text-blue-400 underline hover:text-blue-300">
+              Consulta terminos y condiciones completos
+            </Link>
           </div>
           <button
             onClick={() => setIsVisible(false)}
