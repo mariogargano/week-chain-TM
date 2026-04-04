@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef } from "react"
+import React, { useRef, useLayoutEffect, useState } from "react"
 import { useScroll, useTransform, motion, type MotionValue } from "framer-motion"
 
 export const ContainerScroll = ({
@@ -10,9 +10,16 @@ export const ContainerScroll = ({
   children: React.ReactNode
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useLayoutEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: isMounted ? containerRef : undefined,
   })
+
   const [isMobile, setIsMobile] = React.useState(false)
 
   React.useEffect(() => {
