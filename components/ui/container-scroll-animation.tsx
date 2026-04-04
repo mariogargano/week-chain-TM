@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef, useLayoutEffect, useState } from "react"
+import React, { useRef } from "react"
 import { useScroll, useTransform, motion, type MotionValue } from "framer-motion"
 
 export const ContainerScroll = ({
@@ -10,32 +10,20 @@ export const ContainerScroll = ({
   children: React.ReactNode
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [isMounted, setIsMounted] = useState(false)
 
-  useLayoutEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  const { scrollYProgress } = useScroll({
-    target: isMounted ? containerRef : undefined,
-  })
+  // Track window scroll (no target ref) — avoids Framer Motion SSR hydration warning
+  const { scrollYProgress } = useScroll()
 
   const [isMobile, setIsMobile] = React.useState(false)
 
   React.useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
     checkMobile()
     window.addEventListener("resize", checkMobile)
-    return () => {
-      window.removeEventListener("resize", checkMobile)
-    }
+    return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
-  const scaleDimensions = () => {
-    return isMobile ? [0.7, 0.9] : [1.05, 1]
-  }
+  const scaleDimensions = () => (isMobile ? [0.7, 0.9] : [1.05, 1])
 
   const rotate = useTransform(scrollYProgress, [0, 1], [20, 0])
   const scale = useTransform(scrollYProgress, [0, 1], scaleDimensions())
