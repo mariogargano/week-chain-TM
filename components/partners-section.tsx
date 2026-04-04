@@ -1,117 +1,67 @@
 "use client"
 
-import Image from "next/image"
-
-type Partner = {
-  name: string
-  category: string
-  logo: string
-  href: string
-  description: string
-}
-
-const partners: Partner[] = [
-  {
-    name: "Solana",
-    category: "Blockchain",
-    logo: "https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png",
-    href: "https://solana.com",
-    description: "Red blockchain de alta velocidad",
-  },
-  {
-    name: "Stripe",
-    category: "Pagos",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg",
-    href: "https://stripe.com",
-    description: "Procesamiento de pagos global",
-  },
-  {
-    name: "Supabase",
-    category: "Infraestructura",
-    logo: "https://seeklogo.com/images/S/supabase-logo-DCC676FFE2-seeklogo.com.png",
-    href: "https://supabase.com",
-    description: "Base de datos y autenticación",
-  },
-  {
-    name: "Vercel",
-    category: "Deploy",
-    logo: "https://assets.vercel.com/image/upload/front/favicon/vercel/57x57.png",
-    href: "https://vercel.com",
-    description: "Plataforma de despliegue Next.js",
-  },
-  {
-    name: "Conekta",
-    category: "Pagos MX",
-    logo: "https://seeklogo.com/images/C/conekta-logo-E5793E9699-seeklogo.com.png",
-    href: "https://conekta.com",
-    description: "Pagos locales en México",
-  },
-  {
-    name: "Resend",
-    category: "Email",
-    logo: "https://avatars.githubusercontent.com/u/109168940",
-    href: "https://resend.com",
-    description: "Infraestructura de correo transaccional",
-  },
+const partners = [
+  { name: "Solana", initials: "SOL", bg: "bg-gradient-to-br from-purple-600 to-violet-700", text: "text-white" },
+  { name: "Stripe", initials: "STR", bg: "bg-gradient-to-br from-indigo-600 to-blue-700", text: "text-white" },
+  { name: "Conekta", initials: "CNK", bg: "bg-gradient-to-br from-sky-600 to-cyan-700", text: "text-white" },
+  { name: "Supabase", initials: "SUP", bg: "bg-gradient-to-br from-emerald-600 to-green-700", text: "text-white" },
+  { name: "Persona", initials: "KYC", bg: "bg-gradient-to-br from-rose-600 to-pink-700", text: "text-white" },
+  { name: "Resend", initials: "RSD", bg: "bg-gradient-to-br from-slate-700 to-slate-900", text: "text-white" },
+  { name: "Vercel", initials: "VCL", bg: "bg-gradient-to-br from-slate-900 to-black", text: "text-white" },
+  { name: "EasyLex", initials: "LEX", bg: "bg-gradient-to-br from-amber-600 to-orange-700", text: "text-white" },
 ]
+
+const allPartners = [...partners, ...partners]
 
 export function PartnersSection() {
   return (
     <section
-      className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-16 px-4 sm:px-6 overflow-hidden"
-      aria-label="Socios tecnológicos de WEEK-CHAIN"
+      className="bg-slate-50 border-t border-slate-100 py-14 overflow-hidden"
+      aria-label="Empresas que respaldan nuestra plataforma"
     >
-      {/* Background glow */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="h-72 w-72 rounded-full bg-sky-500/10 blur-3xl" />
+      <div className="container mx-auto max-w-6xl px-4 sm:px-6 mb-10">
+        <div className="text-center">
+          <p className="text-xs font-semibold tracking-widest text-slate-400 uppercase mb-3">
+            Infraestructura y Alianzas Tecnologicas
+          </p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 text-balance">
+            Empresas que respaldan nuestra plataforma
+          </h2>
+        </div>
       </div>
 
-      <div className="relative mx-auto max-w-6xl">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold tracking-widest text-sky-400 uppercase mb-3">
-            Infraestructura y Alianzas
-          </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
-            Tecnología de clase mundial
-          </h2>
-          <p className="mt-3 text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-            WEEK-CHAIN opera sobre infraestructura probada, segura y de nivel enterprise.
-          </p>
+      <div className="relative">
+        <div className="absolute left-0 top-0 bottom-0 w-28 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-28 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
+        <div className="flex overflow-hidden mb-4">
+          <div className="flex gap-6 animate-marquee-forward">
+            {allPartners.map((p, i) => (
+              <div
+                key={i}
+                className={`flex-shrink-0 flex flex-col items-center justify-center w-28 h-28 rounded-2xl ${p.bg} shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer`}
+                title={p.name}
+              >
+                <div className={`text-2xl font-bold ${p.text} mb-1`}>{p.initials}</div>
+                <div className={`text-xs font-semibold ${p.text} text-center px-2`}>{p.name}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Partner grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {partners.map((p) => (
-            <a
-              key={p.name}
-              href={p.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col items-center gap-3 rounded-2xl bg-white/5 border border-white/10 p-5 hover:bg-white/10 hover:border-sky-400/40 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-sky-900/30 text-center"
-              title={p.description}
-            >
-              <div className="relative h-10 w-10">
-                <Image
-                  src={p.logo}
-                  alt={p.name}
-                  fill
-                  className="object-contain"
-                  unoptimized
-                />
+        <div className="flex overflow-hidden">
+          <div className="flex gap-6 animate-marquee-reverse">
+            {[...allPartners].reverse().map((p, i) => (
+              <div
+                key={i}
+                className={`flex-shrink-0 flex flex-col items-center justify-center w-28 h-28 rounded-2xl ${p.bg} shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer`}
+                title={p.name}
+              >
+                <div className={`text-2xl font-bold ${p.text} mb-1`}>{p.initials}</div>
+                <div className={`text-xs font-semibold ${p.text} text-center px-2`}>{p.name}</div>
               </div>
-              <div>
-                <p className="font-semibold text-white text-sm">{p.name}</p>
-                <p className="text-[10px] text-sky-400 font-medium uppercase tracking-wider">{p.category}</p>
-              </div>
-            </a>
-          ))}
+            ))}
+          </div>
         </div>
-
-        {/* Bottom disclaimer */}
-        <p className="text-center text-xs text-slate-600 mt-10">
-          Marcas y logos son propiedad de sus respectivos titulares. WEEK-CHAIN no está afiliada ni patrocinada por estas empresas salvo que se indique expresamente.
-        </p>
       </div>
     </section>
   )

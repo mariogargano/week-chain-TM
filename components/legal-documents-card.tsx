@@ -193,12 +193,10 @@ export function LegalDocumentsCard({ userId }: LegalDocumentsCardProps) {
           </div>
         ))}
 
-        <div className="pt-4 border-t space-y-2">
+        <div className="pt-4 border-t">
           <p className="text-xs text-muted-foreground">
-            Arquitectura diseñada para soporte de evidencia digital conforme al marco aplicable (incluida NOM‑151 cuando proceda).
-          </p>
-          <p className="text-[10px] text-muted-foreground/80 leading-tight">
-            La constancia y conservación de evidencia digital puede gestionarse mediante Prestadores de Servicios de Certificación autorizados, cuando aplique.
+            Todos los documentos están certificados conforme a NOM-151-SCFI-2016 y cumplen con la regulación mexicana de
+            tiempo compartido NOM-029-SE-2021.
           </p>
         </div>
       </CardContent>
