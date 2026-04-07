@@ -25,6 +25,7 @@ import {
   Settings,
   ChevronRight,
   Home,
+  Bot,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -105,6 +106,19 @@ const navigationItems = [
       { title: "Configurador SVC", href: "/dashboard/admin/certificates" },
       { title: "Motor 48+4", href: "/dashboard/admin/capacity-risk" },
       { title: "Ventas Activas", href: "/dashboard/admin/certificates?tab=active" },
+    ],
+  },
+  {
+    title: "Oficina Virtual",
+    description: "Equipo de agentes IA especializados",
+    icon: Bot,
+    href: "/dashboard/admin/virtual-office",
+    subItems: [
+      { title: "Agentes en Vivo", href: "/dashboard/admin/virtual-office" },
+      { title: "Conversaciones", href: "/dashboard/admin/virtual-office?tab=conversations" },
+      { title: "Notificaciones", href: "/dashboard/admin/virtual-office?tab=notifications" },
+      { title: "Escalaciones", href: "/dashboard/admin/virtual-office?tab=escalations" },
+      { title: "Reportes", href: "/dashboard/admin/virtual-office?tab=reports" },
     ],
   },
   {
