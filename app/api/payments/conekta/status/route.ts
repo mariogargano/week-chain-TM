@@ -1,7 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
-import { createConektaClient } from "@/lib/conekta/client"
-import { logger } from "@/lib/config/logger"
+import { type NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { createConektaClient } from "@/lib/conekta/client";
+import { logger } from "@/lib/config/logger";
 
 export async function GET(request: NextRequest) {
   try {

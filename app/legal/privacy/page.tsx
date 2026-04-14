@@ -1,8 +1,8 @@
-import { Suspense } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Shield, Download, ChevronLeft } from "lucide-react"
-import Link from "next/link"
+import { Suspense } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Shield, Download, ChevronLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function PrivacyPage() {
   return (

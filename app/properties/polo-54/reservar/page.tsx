@@ -1,12 +1,11 @@
-"use client"
+"use client";
+import { Suspense } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { AlertTriangle, Lock, ShieldCheck } from "lucide-react";
 
-import { Suspense } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { AlertTriangle, Lock, ShieldCheck } from "lucide-react"
-import { Navbar } from "@/components/navbar"
 
 function ReservarContent() {
   const router = useRouter()
@@ -66,7 +65,7 @@ function ReservarContent() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
-            onClick={() => router.push("/auth")}
+            onClick={() => router?.push("/auth")}
             size="lg"
             className="bg-[#FF9AA2] hover:bg-[#FF9AA2]/90 text-lg px-8"
           >
@@ -83,7 +82,7 @@ function ReservarContent() {
         </p>
       </div>
     </div>
-  )
+  );
 }
 
 export default function ReservarPage() {

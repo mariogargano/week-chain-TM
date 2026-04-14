@@ -1,7 +1,6 @@
-"use client"
-
-import Link from "next/link"
-import Image from "next/image"
+"use client";
+import Link from "next/link";
+import Image from "next/image";
 import {
   Facebook,
   Twitter,
@@ -19,19 +18,19 @@ import {
   ArrowRight,
   TrendingUp,
   Star,
-} from "lucide-react"
-import { useTranslations } from "@/lib/i18n/use-translations"
+} from "lucide-react";
+import { useTranslations } from "@/lib/i18n/use-translations";
 
 export function Footer() {
   const t = useTranslations()
 
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date()?.getFullYear()
 
   const quickLinks = [
-    { label: t.nav.home, href: "/" },
-    { label: t.nav.properties, href: "/properties" },
-    { label: t.nav.brokerProgram, href: "/broker-programa" },
-    { label: t.nav.contact, href: "/contact" },
+    { label: t?.nav?.home, href: "/" },
+    { label: t?.nav?.properties, href: "/properties" },
+    { label: t?.nav?.brokerProgram, href: "/broker-programa" },
+    { label: t?.nav?.contact, href: "/contact" },
   ]
 
   const complianceLinks = [
@@ -43,11 +42,11 @@ export function Footer() {
   ]
 
   const legalLinks = [
-    { label: t.footer.terms, href: "/legal/terms" },
-    { label: t.footer.privacy, href: "/legal/privacy" },
+    { label: t?.footer?.terms, href: "/legal/terms" },
+    { label: t?.footer?.privacy, href: "/legal/privacy" },
     { label: "Cancelaciones", href: "/legal/cancellations" },
     { label: "Disclaimer", href: "/disclaimer" },
-    { label: t.footer.cookies, href: "/cookies" },
+    { label: t?.footer?.cookies, href: "/cookies" },
   ]
 
   const socialLinks = [
@@ -88,7 +87,6 @@ export function Footer() {
           </Link>
         </div>
       </div>
-
       {/* WEEK Review Section */}
       <div className="bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600 py-6 sm:py-8 border-b-4 border-blue-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,7 +121,6 @@ export function Footer() {
           </Link>
         </div>
       </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand Column */}
@@ -139,16 +136,16 @@ export function Footer() {
                 <span className="text-xs text-slate-400 font-medium">Smart Vacational Certificate</span>
               </div>
             </Link>
-            <p className="text-slate-400 text-sm mb-6">{t.footer.description}</p>
+            <p className="text-slate-400 text-sm mb-6">{t?.footer?.description}</p>
             <div className="flex gap-4">
-              {socialLinks.map((social) => (
+              {socialLinks?.map((social) => (
                 <a
-                  key={social.label}
-                  href={social.href}
+                  key={social?.label}
+                  href={social?.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-slate-400 hover:text-sky-400 transition-colors"
-                  aria-label={`Síguenos en ${social.label}`}
+                  aria-label={`Síguenos en ${social?.label}`}
                 >
                   <social.icon className="h-5 w-5" />
                 </a>
@@ -158,12 +155,12 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">{t.footer.quickLinks}</h3>
+            <h3 className="text-lg font-semibold mb-4">{t?.footer?.quickLinks}</h3>
             <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
-                    {link.label}
+              {quickLinks?.map((link) => (
+                <li key={link?.href}>
+                  <Link href={link?.href} className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
+                    {link?.label}
                   </Link>
                 </li>
               ))}
@@ -174,14 +171,14 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Compliance & Docs</h3>
             <ul className="space-y-3">
-              {complianceLinks.map((link) => (
-                <li key={link.href}>
+              {complianceLinks?.map((link) => (
+                <li key={link?.href}>
                   <Link
-                    href={link.href}
+                    href={link?.href}
                     className="flex items-center gap-2 text-slate-400 hover:text-sky-400 transition-colors text-sm"
                   >
                     <link.icon className="h-4 w-4" />
-                    {link.label}
+                    {link?.label}
                   </Link>
                 </li>
               ))}
@@ -190,12 +187,12 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">{t.footer.legal}</h3>
+            <h3 className="text-lg font-semibold mb-4">{t?.footer?.legal}</h3>
             <ul className="space-y-3">
-              {legalLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
-                    {link.label}
+              {legalLinks?.map((link) => (
+                <li key={link?.href}>
+                  <Link href={link?.href} className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
+                    {link?.label}
                   </Link>
                 </li>
               ))}
@@ -204,7 +201,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">{t.footer.contact}</h3>
+            <h3 className="text-lg font-semibold mb-4">{t?.footer?.contact}</h3>
             <ul className="space-y-3">
               <li>
                 <a
@@ -243,7 +240,7 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-slate-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-slate-500 text-sm">
-              © {currentYear} WEEK-CHAIN™. {t.footer.rights}.
+              © {currentYear} WEEK-CHAIN™. {t?.footer?.rights}.
             </p>
             <div className="flex items-center gap-4">
               <span className="text-blue-500 text-xs font-mono bg-blue-950 px-2 py-1 rounded">
@@ -257,7 +254,7 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
 
 export default Footer

@@ -3,8 +3,8 @@
  * Automatically creates commission records when a certificate is purchased
  */
 
-import { createClient } from "@/lib/supabase/server"
-import { getActiveAttribution } from "./referral-attribution"
+import { createClient } from "@/lib/supabase/server";
+import { getActiveAttribution } from "./referral-attribution";
 
 export async function createCommissionFromOrder(params: {
   orderId: string

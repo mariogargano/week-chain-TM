@@ -1,8 +1,8 @@
 // Squads multisig client (v0 mock implementation)
 // TODO: Replace with actual @sqds/sdk when available
 
-import { PublicKey, Keypair } from "@solana/web3.js"
-import { env } from "@/lib/config/env"
+import { PublicKey, Keypair } from "@solana/web3.js";
+import { env } from "@/lib/config/env";
 
 export type TransferProposalParams = {
   vault: PublicKey

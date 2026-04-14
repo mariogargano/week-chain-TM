@@ -1,12 +1,11 @@
-"use client"
-
-import { useState, useRef, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { MessageCircle, X, Send, Bot, User, Sparkles } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+"use client";
+import { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { MessageCircle, X, Send, Bot, User, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Message {
   id: string
@@ -261,9 +260,7 @@ export function SupportChatbot() {
                         <div className={`flex flex-col gap-2 max-w-[80%]`}>
                           <div
                             className={`rounded-2xl px-4 py-2 ${
-                              message.sender === "user"
-                                ? "bg-gradient-to-br from-purple-500 to-pink-500 text-white"
-                                : "bg-slate-100 text-slate-900"
+                              message.sender === "user" ?"bg-gradient-to-br from-purple-500 to-pink-500 text-white" :"bg-slate-100 text-slate-900"
                             }`}
                           >
                             <p className="text-sm whitespace-pre-wrap">{message.text}</p>

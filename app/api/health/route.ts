@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server"
-import { getEnv } from "@/lib/config/env-schema"
-import { createClient } from "@supabase/supabase-js"
+import { NextResponse } from "next/server";
+import { getEnv } from "@/lib/config/env-schema";
+import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic"
 
@@ -13,11 +13,11 @@ export async function GET() {
       auth: { persistSession: false },
     })
 
-    const { error: dbError } = await supabase.from("legal_contracts").select("count").limit(1)
+    const { error: dbError } = await supabase?.from("legal_contracts")?.select("count")?.limit(1)
 
     const health = {
       status: "healthy",
-      timestamp: new Date().toISOString(),
+      timestamp: new Date()?.toISOString(),
       environment: env.NODE_ENV,
       solana_network: env.SOLANA_NETWORK,
       checks: {
@@ -28,14 +28,14 @@ export async function GET() {
       },
     }
 
-    return NextResponse.json(health)
+    return NextResponse?.json(health);
   } catch (error) {
-    return NextResponse.json(
+    return NextResponse?.json(
       {
         status: "unhealthy",
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error?.message : "Unknown error",
       },
       { status: 500 },
-    )
+    );
   }
 }

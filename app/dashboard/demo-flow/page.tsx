@@ -1,18 +1,18 @@
-import { createClient } from "@/lib/supabase/server"
-import { redirect } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import Link from "next/link"
-import { ArrowLeft, Play, BookOpen } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import Link from "next/link";
+import { ArrowLeft, Play, BookOpen } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default async function DemoFlowPage() {
   const supabase = await createClient()
 
   const {
     data: { user },
-  } = await supabase.auth.getUser()
+  } = await supabase?.auth?.getUser()
 
   if (!user) {
     redirect("/auth")
@@ -82,7 +82,6 @@ export default async function DemoFlowPage() {
           </Button>
         </div>
       </header>
-
       <div className="container mx-auto max-w-5xl px-6 py-8">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
@@ -105,27 +104,27 @@ export default async function DemoFlowPage() {
         </Alert>
 
         <div className="grid gap-6 mb-8">
-          {flowSteps.map((item, index) => (
-            <Card key={item.step} className="overflow-hidden">
+          {flowSteps?.map((item, index) => (
+            <Card key={item?.step} className="overflow-hidden">
               <CardHeader className="bg-gradient-to-r from-slate-50 to-slate-100">
                 <div className="flex items-start justify-between">
                   <div className="flex gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-purple-600 text-white font-bold text-lg">
-                      {item.step}
+                      {item?.step}
                     </div>
                     <div>
-                      <CardTitle className="text-xl">{item.title}</CardTitle>
-                      <CardDescription className="mt-1">{item.description}</CardDescription>
+                      <CardTitle className="text-xl">{item?.title}</CardTitle>
+                      <CardDescription className="mt-1">{item?.description}</CardDescription>
                     </div>
                   </div>
                   <Badge variant="outline" className="shrink-0">
-                    {item.duration}
+                    {item?.duration}
                   </Badge>
                 </div>
               </CardHeader>
               <CardContent className="pt-4">
                 <Button asChild variant="outline" size="sm">
-                  <Link href={item.href}>{item.action}</Link>
+                  <Link href={item?.href}>{item?.action}</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -158,5 +157,5 @@ export default async function DemoFlowPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

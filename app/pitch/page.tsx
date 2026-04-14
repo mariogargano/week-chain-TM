@@ -1,8 +1,7 @@
-"use client"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   ChevronLeft,
   ChevronRight,
@@ -17,7 +16,7 @@ import {
   Globe,
   Award,
   CheckCircle2,
-} from "lucide-react"
+} from "lucide-react";
 
 const slides = [
   {
@@ -1148,7 +1147,7 @@ export default function PitchDeckPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const nextSlide = () => {
-    if (currentSlide < slides.length - 1) {
+    if (currentSlide < slides?.length - 1) {
       setCurrentSlide(currentSlide + 1)
     }
   }
@@ -1159,8 +1158,8 @@ export default function PitchDeckPage() {
     }
   }
 
-  const slide = slides[currentSlide]
-  const Icon = slide.icon
+  const slide = slides?.[currentSlide]
+  const Icon = slide?.icon
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
@@ -1179,7 +1178,7 @@ export default function PitchDeckPage() {
             </div>
           </div>
           <div className="text-sm text-muted-foreground">
-            Slide {currentSlide + 1} / {slides.length}
+            Slide {currentSlide + 1} / {slides?.length}
           </div>
         </div>
 
@@ -1188,11 +1187,11 @@ export default function PitchDeckPage() {
           <div className="mb-6">
             <div className="flex items-center gap-3 mb-2">
               {Icon && <Icon className="w-6 h-6 text-primary" />}
-              <h2 className="text-3xl font-bold">{slide.title}</h2>
+              <h2 className="text-3xl font-bold">{slide?.title}</h2>
             </div>
-            <p className="text-lg text-muted-foreground">{slide.subtitle}</p>
+            <p className="text-lg text-muted-foreground">{slide?.subtitle}</p>
           </div>
-          <div className="mt-8">{slide.content}</div>
+          <div className="mt-8">{slide?.content}</div>
         </Card>
 
         {/* Navigation */}
@@ -1204,7 +1203,7 @@ export default function PitchDeckPage() {
 
           {/* Slide Indicators */}
           <div className="flex gap-2">
-            {slides.map((_, index) => (
+            {slides?.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
@@ -1215,7 +1214,7 @@ export default function PitchDeckPage() {
             ))}
           </div>
 
-          <Button onClick={nextSlide} disabled={currentSlide === slides.length - 1} size="lg">
+          <Button onClick={nextSlide} disabled={currentSlide === slides?.length - 1} size="lg">
             Next
             <ChevronRight className="w-5 h-5 ml-2" />
           </Button>
@@ -1225,5 +1224,5 @@ export default function PitchDeckPage() {
         <div className="text-center mt-4 text-sm text-muted-foreground">Use arrow keys to navigate</div>
       </div>
     </div>
-  )
+  );
 }

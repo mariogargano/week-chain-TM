@@ -1,15 +1,15 @@
-"use client"
-import { useState } from "react"
-import { Separator } from "@/components/ui/separator"
+"use client";
+import { useState } from "react";
+import { Separator } from "@/components/ui/separator";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CreditCard, Store, CheckCircle2, AlertCircle, Copy, Clock, Shield, Loader2 } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
-import { createClient } from "@/lib/supabase/client"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CreditCard, Store, CheckCircle2, AlertCircle, Copy, Clock, Shield, Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { createClient } from "@/lib/supabase/client";
 
 interface ConektaCheckoutProps {
   amount?: number

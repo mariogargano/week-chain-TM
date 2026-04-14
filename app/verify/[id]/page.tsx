@@ -1,23 +1,10 @@
-import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import {
-  CheckCircle,
-  XCircle,
-  Shield,
-  Calendar,
-  MapPin,
-  User,
-  FileText,
-  Hash,
-  Building,
-  Clock,
-  ExternalLink,
-  AlertTriangle,
-} from "lucide-react"
-import Link from "next/link"
+import { createClient } from "@/lib/supabase/server";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { CheckCircle, XCircle, Shield, Calendar, MapPin, User, FileText, Hash, Building, ExternalLink, AlertTriangle,  } from "lucide-react";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic"
 

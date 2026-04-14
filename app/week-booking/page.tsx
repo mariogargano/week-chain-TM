@@ -1,9 +1,9 @@
-import type { Metadata } from "next"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card } from "@/components/ui/card"
-import Link from "next/link"
+import type { Metadata } from "next";
+
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import Link from "next/link";
 import {
   MapPin,
   Building2,
@@ -15,7 +15,7 @@ import {
   Info,
   FileText,
   Sparkles,
-} from "lucide-react"
+} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "WEEK-BOOKING | Sistema de Solicitud de Uso Vacacional",

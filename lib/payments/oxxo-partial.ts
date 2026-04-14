@@ -1,4 +1,4 @@
-import { logger } from "@/lib/config/logger"
+import { logger } from "@/lib/config/logger";
 
 export const OXXO_LIMIT_MXN = 10000
 export const OXXO_MIN_MXN = 20
@@ -85,7 +85,7 @@ export function calculatePaymentProgress(
   message: string
 } {
   const percentage = Math.round((completed / total) * 100)
-  const remaining = total - completed
+  let remaining = total - completed
 
   let message = ""
   if (completed === 0) {

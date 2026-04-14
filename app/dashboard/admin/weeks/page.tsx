@@ -1,14 +1,12 @@
-import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, Building2, DollarSign } from "lucide-react"
+import { createClient } from "@/lib/supabase/server";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, Building2, DollarSign } from "lucide-react";
 
 export default async function WeeksPage() {
   const supabase = await createClient()
 
-  const { data: weeks } = await supabase
-    .from("weeks")
-    .select(`
+  const { data: weeks } = await supabase?.from("weeks")?.select(`
       *,
       properties (
         name,
@@ -18,12 +16,11 @@ export default async function WeeksPage() {
         email,
         full_name
       )
-    `)
-    .order("week_number", { ascending: true })
+    `)?.order("week_number", { ascending: true })
 
   const totalWeeks = weeks?.length || 0
-  const soldWeeks = weeks?.filter((w) => w.status === "sold").length || 0
-  const availableWeeks = weeks?.filter((w) => w.status === "available").length || 0
+  const soldWeeks = weeks?.filter((w) => w?.status === "sold")?.length || 0
+  const availableWeeks = weeks?.filter((w) => w?.status === "available")?.length || 0
 
   return (
     <div className="space-y-8">
@@ -31,7 +28,6 @@ export default async function WeeksPage() {
         <h1 className="text-3xl font-bold text-slate-800">Gestión de Semanas - Certificados Digitales</h1>
         <p className="text-slate-600 mt-2">Administra semanas certificadas NOM-151 (15 años de uso)</p>
       </div>
-
       <div className="grid gap-6 md:grid-cols-3">
         <Card className="border-purple-200 bg-gradient-to-br from-purple-50 to-purple-100">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -66,7 +62,6 @@ export default async function WeeksPage() {
           </CardContent>
         </Card>
       </div>
-
       <Card>
         <CardHeader>
           <CardTitle>Semanas - Certificados Digitales</CardTitle>
@@ -87,19 +82,19 @@ export default async function WeeksPage() {
               </thead>
               <tbody>
                 {weeks?.map((week) => (
-                  <tr key={week.id} className="border-b hover:bg-slate-50">
-                    <td className="py-3 px-4 font-semibold text-purple-600">Semana {week.week_number}</td>
+                  <tr key={week?.id} className="border-b hover:bg-slate-50">
+                    <td className="py-3 px-4 font-semibold text-purple-600">Semana {week?.week_number}</td>
                     <td className="py-3 px-4">
                       <div>
-                        <div className="font-medium text-slate-800">{week.properties?.name}</div>
-                        <div className="text-sm text-slate-600">{week.properties?.location}</div>
+                        <div className="font-medium text-slate-800">{week?.properties?.name}</div>
+                        <div className="text-sm text-slate-600">{week?.properties?.location}</div>
                       </div>
                     </td>
                     <td className="py-3 px-4">
-                      {week.owner_id ? (
+                      {week?.owner_id ? (
                         <div>
-                          <div className="text-sm text-slate-800">{week.users?.full_name || "N/A"}</div>
-                          <div className="text-xs text-slate-600">{week.users?.email}</div>
+                          <div className="text-sm text-slate-800">{week?.users?.full_name || "N/A"}</div>
+                          <div className="text-xs text-slate-600">{week?.users?.email}</div>
                         </div>
                       ) : (
                         <span className="text-slate-400">Sin propietario</span>
@@ -107,19 +102,19 @@ export default async function WeeksPage() {
                     </td>
                     <td className="py-3 px-4">
                       <Badge
-                        variant={week.status === "sold" ? "default" : "secondary"}
-                        className={week.status === "sold" ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"}
+                        variant={week?.status === "sold" ? "default" : "secondary"}
+                        className={week?.status === "sold" ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"}
                       >
-                        {week.status}
+                        {week?.status}
                       </Badge>
                     </td>
                     <td className="py-3 px-4 font-semibold text-slate-800">
-                      ${Number.parseFloat(week.price || "0").toLocaleString()}
+                      ${Number.parseFloat(week?.price || "0")?.toLocaleString()}
                     </td>
                     <td className="py-3 px-4">
-                      {week.nft_mint_address ? (
+                      {week?.nft_mint_address ? (
                         <code className="text-xs bg-slate-100 px-2 py-1 rounded">
-                          {week.nft_mint_address.slice(0, 8)}...
+                          {week?.nft_mint_address?.slice(0, 8)}...
                         </code>
                       ) : (
                         <span className="text-slate-400 text-sm">No emitido</span>
@@ -133,5 +128,5 @@ export default async function WeeksPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-import Link from "next/link"
-import { Cookie, Shield, Settings, Eye } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import Link from "next/link";
+import { Cookie, Shield, Settings, Eye } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export default function CookiesPage() {
   return (
@@ -216,7 +216,7 @@ export default function CookiesPage() {
                 </p>
                 <p className="text-sm text-slate-500 mt-2">
                   Última actualización:{" "}
-                  {new Date().toLocaleDateString("es-MX", {
+                  {new Date()?.toLocaleDateString("es-MX", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -228,5 +228,5 @@ export default function CookiesPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

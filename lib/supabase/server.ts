@@ -1,6 +1,6 @@
-import { createServerClient as createSupabaseServerClient } from "@supabase/ssr"
-import { createClient as createSupabaseJsClient } from "@supabase/supabase-js"
-import { cookies } from "next/headers"
+import { createServerClient as createSupabaseServerClient } from "@supabase/ssr";
+import { createClient as createSupabaseJsClient } from "@supabase/supabase-js";
+import { cookies } from "next/headers";
 
 async function createSupabaseServerClientWithCookies() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL

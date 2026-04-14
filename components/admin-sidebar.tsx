@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 import {
   Sidebar,
   SidebarContent,
@@ -11,25 +10,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
-import {
-  LayoutDashboard,
-  Users,
-  Building2,
-  Calendar,
-  LogOut,
-  CreditCard,
-  UserCheck,
-  Briefcase,
-  BarChart3,
-  Settings,
-  ChevronRight,
-  Home,
-  Bot,
-} from "lucide-react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/sidebar";
+import { LayoutDashboard, Users, Building2, Calendar, CreditCard, UserCheck, Briefcase, BarChart3, Settings, ChevronRight, Home, Bot,  } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 // Simplified navigation with descriptions - 6 main sections
 const navigationItems = [
@@ -271,16 +256,14 @@ export function AdminSidebar() {
                         className={cn(
                           "flex items-start gap-3 rounded-xl px-3 py-3 min-h-[56px] transition-all duration-200",
                           isActive
-                            ? "bg-slate-100 border border-slate-200"
-                            : "hover:bg-slate-50 border border-transparent",
+                            ? "bg-slate-100 border border-slate-200" :"hover:bg-slate-50 border border-transparent",
                         )}
                       >
                         <div
                           className={cn(
                             "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
                             isActive
-                              ? "bg-slate-600 text-white"
-                              : "bg-slate-100 text-slate-500",
+                              ? "bg-slate-600 text-white" :"bg-slate-100 text-slate-500",
                           )}
                         >
                           <item.icon className="h-5 w-5" />

@@ -3,9 +3,9 @@
 
 /// <reference lib="deno.ns" />
 
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { Deno } from "https://deno.land/std@0.168.0/_util/deps.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { Deno } from "https://deno.land/std@0.168.0/_util/deps.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -14,14 +14,14 @@ const corsHeaders = {
 
 serve(async (req) => {
   // Handle CORS preflight
-  if (req.method === "OPTIONS") {
+  if (req?.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders })
   }
 
   try {
     const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+      Deno?.env?.get("SUPABASE_URL") ?? "",
+      Deno?.env?.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
       {
         auth: {
           autoRefreshToken: false,
@@ -33,11 +33,7 @@ serve(async (req) => {
     console.log("[v0] Iniciando reset mensual de contadores de referidos...")
 
     // Resetear contador mensual para todos los usuarios
-    const { data: updated, error } = await supabaseClient
-      .from("users")
-      .update({ referrals_this_month: 0 })
-      .neq("referrals_this_month", 0)
-      .select("id, full_name, referrals_this_month")
+    const { data: updated, error } = await supabaseClient?.from("users")?.update({ referrals_this_month: 0 })?.neq("referrals_this_month", 0)?.select("id, full_name, referrals_this_month")
 
     if (error) {
       console.error("[v0] Error reseteando contadores:", error)
@@ -47,13 +43,13 @@ serve(async (req) => {
     console.log(`[v0] Reset completado. ${updated?.length || 0} usuarios actualizados`)
 
     // Crear registro de auditoría
-    const { error: auditError } = await supabaseClient.from("audit_logs").insert({
+    const { error: auditError } = await supabaseClient?.from("audit_logs")?.insert({
       action: "reset_referral_counters",
       details: {
         users_updated: updated?.length || 0,
-        reset_date: new Date().toISOString(),
+        reset_date: new Date()?.toISOString(),
       },
-      created_at: new Date().toISOString(),
+      created_at: new Date()?.toISOString(),
     })
 
     if (auditError) {

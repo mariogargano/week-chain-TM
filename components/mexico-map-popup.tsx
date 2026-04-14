@@ -1,11 +1,10 @@
-"use client"
-
-import { useState, useCallback, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { motion, AnimatePresence } from "framer-motion"
-import { MapPin, Building2, Palmtree, X, Plane, Globe } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+"use client";
+import { useState, useCallback, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { MapPin, Building2, Palmtree, X, Plane, Globe } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 const regionColors: Record<string, { fill: string; shadow: string }> = {
   // Mexico States

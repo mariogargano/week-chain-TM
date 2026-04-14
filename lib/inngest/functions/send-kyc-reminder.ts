@@ -1,5 +1,5 @@
-import { inngest } from "@/lib/inngest/client"
-import { createClient } from "@supabase/supabase-js"
+import { inngest } from "@/lib/inngest/client";
+import { createClient } from "@supabase/supabase-js";
 
 // Send KYC reminder to users who haven't completed verification
 export const sendKYCReminder = inngest.createFunction(

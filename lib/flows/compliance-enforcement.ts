@@ -3,8 +3,8 @@
  * Manages strikes, suspensions, and bans for intermediaries
  */
 
-import { createClient } from "@/lib/supabase/server"
-import { logAdminAction } from "@/lib/rls/helpers"
+import { createClient } from "@/lib/supabase/server";
+import { logAdminAction } from "@/lib/rls/helpers";
 
 export async function issueComplianceStrike(params: {
   intermediaryId: string

@@ -1,5 +1,5 @@
 // lib/flags/client.ts
-import { createClient } from "@/lib/supabase/client"
+import { createClient } from "@/lib/supabase/client";
 
 export interface FeatureFlags {
   PAYMENTS_ENABLED: boolean

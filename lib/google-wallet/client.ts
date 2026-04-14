@@ -1,4 +1,4 @@
-import { logger } from "@/lib/config/logger"
+import { logger } from "@/lib/config/logger";
 
 interface GoogleWalletConfig {
   issuerId: string

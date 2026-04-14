@@ -1,6 +1,6 @@
-import { createClient } from "@/lib/supabase/server"
-import { NextResponse } from "next/server"
-import { isDemoMode } from "@/lib/config/environment"
+import { createClient } from "@/lib/supabase/server";
+import { NextResponse } from "next/server";
+import { isDemoMode } from "@/lib/config/environment";
 
 // Modelo de negocio WEEK-CHAIN:
 // - 52 semanas por propiedad al año

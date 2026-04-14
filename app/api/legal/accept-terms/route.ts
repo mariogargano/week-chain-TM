@@ -1,9 +1,9 @@
-import { createServerClient } from "@supabase/ssr"
-import { cookies } from "next/headers"
-import { NextResponse } from "next/server"
-import crypto from "crypto"
-import { logger } from "@/lib/config/logger"
-import { CURRENT_TERMS_VERSION } from "@/lib/legal/terms-versions"
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+import crypto from "crypto";
+import { logger } from "@/lib/config/logger";
+import { CURRENT_TERMS_VERSION } from "@/lib/legal/terms-versions";
 
 export async function POST(request: Request) {
   try {

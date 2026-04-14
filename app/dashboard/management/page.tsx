@@ -1,14 +1,13 @@
-"use client"
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Calendar, CheckCircle, Clock, TrendingUp, Package, Download, Plus, Search, Filter } from "lucide-react"
-import { useEffect, useState } from "react"
-import { RoleGuard } from "@/components/role-guard"
-import { Navbar } from "@/components/navbar"
-import { createClient } from "@/lib/supabase/client"
+"use client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar, CheckCircle, Clock, TrendingUp, Package, Download, Plus, Search, Filter } from "lucide-react";
+import { useEffect, useState } from "react";
+import { RoleGuard } from "@/components/role-guard";
+import { Navbar } from "@/components/navbar";
+import { createClient } from "@/lib/supabase/client";
 import {
   BarChart,
   Bar,
@@ -22,8 +21,8 @@ import {
   PieChart,
   Pie,
   Cell,
-} from "recharts"
-import { ChartContainer } from "@/components/ui/chart"
+} from "recharts";
+import { ChartContainer } from "@/components/ui/chart";
 
 const SIMONETTA_WALLET = "EZ2xgEBYyJNegSAjyf29VUNYG1Y3Hqj7JmPsRg4HS6Hp"
 
@@ -426,11 +425,8 @@ function ManagementDashboardContent() {
                           <div className="flex items-center gap-3">
                             <div
                               className={`h-2 w-2 rounded-full ${
-                                service.priority === "high"
-                                  ? "bg-red-500"
-                                  : service.priority === "medium"
-                                    ? "bg-orange-500"
-                                    : "bg-green-500"
+                                service.priority === "high" ?"bg-red-500"
+                                  : service.priority === "medium" ?"bg-orange-500" :"bg-green-500"
                               }`}
                             />
                             <div>

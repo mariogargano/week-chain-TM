@@ -1,14 +1,13 @@
-"use client"
-
-import { useState } from "react"
-import { AdminSidebar } from "@/components/admin-sidebar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Send, CheckCircle2, XCircle, Loader2 } from "lucide-react"
+"use client";
+import { useState } from "react";
+import { AdminSidebar } from "@/components/admin-sidebar";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Send, CheckCircle2, XCircle, Loader2 } from "lucide-react";
 
 const EMAIL_TYPES = [
   { value: "welcome", label: "Welcome Email" },
@@ -87,9 +86,7 @@ export default function EmailTestPage() {
           amount_usd: "1,499",
           payment_date: new Date().toLocaleDateString(),
         }
-      case "reservation_request_submitted":
-      case "reservation_offer_available":
-      case "reservation_confirmed":
+      case "reservation_request_submitted": case"reservation_offer_available": case"reservation_confirmed":
         return {
           ...baseContext,
           property_name: "Villa Paradise Cancún",

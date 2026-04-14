@@ -1,9 +1,8 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { createBrowserClient } from "@/lib/supabase/client"
-import { MessageSquare, Facebook, Twitter, Linkedin, Copy, Check, Share2, X, Send, Sparkles } from "lucide-react"
-import { toast } from "sonner"
+"use client";
+import { useState, useEffect } from "react";
+import { createBrowserClient } from "@/lib/supabase/client";
+import { MessageSquare, Facebook, Twitter, Linkedin, Copy, Check, Share2, X, Send, Sparkles } from "lucide-react";
+import { toast } from "sonner";
 
 interface MarketingMessage {
   id: string
@@ -269,13 +268,9 @@ export function SocialShareSidebar({ referralCode, referralUrl, userName }: Soci
                     {msg.title}
                     <span
                       className={`w-2 h-2 rounded-full ${
-                        msg.category === "urgencia"
-                          ? "bg-red-500"
-                          : msg.category === "beneficios"
-                            ? "bg-emerald-500"
-                            : msg.category === "promocion"
-                              ? "bg-purple-500"
-                              : "bg-blue-500"
+                        msg.category === "urgencia" ?"bg-red-500"
+                          : msg.category === "beneficios" ?"bg-emerald-500"
+                            : msg.category === "promocion" ?"bg-purple-500" :"bg-blue-500"
                       }`}
                     />
                   </h4>

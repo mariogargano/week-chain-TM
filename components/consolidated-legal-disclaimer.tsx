@@ -1,7 +1,6 @@
-"use client"
-
-import { AlertTriangle } from "lucide-react"
-import { LEGAL_COPY } from "@/lib/constants/legal-copy"
+"use client";
+import { AlertTriangle } from "lucide-react";
+import { LEGAL_COPY } from "@/lib/constants/legal-copy";
 
 export function ConsolidatedLegalDisclaimer({ variant = "default" }: { variant?: "default" | "compact" | "inline" }) {
   if (variant === "compact") {

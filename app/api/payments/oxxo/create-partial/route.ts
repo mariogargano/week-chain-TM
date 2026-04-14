@@ -1,9 +1,9 @@
-import { createClient } from "@/lib/supabase/server"
-import { NextResponse } from "next/server"
-import { createConektaClient } from "@/lib/conekta/client"
-import { logger } from "@/lib/config/logger"
-import { calculateOxxoPartialPayments, getPartialPaymentMessage } from "@/lib/payments/oxxo-partial"
-import { randomUUID } from "crypto"
+import { createClient } from "@/lib/supabase/server";
+import { NextResponse } from "next/server";
+import { createConektaClient } from "@/lib/conekta/client";
+import { logger } from "@/lib/config/logger";
+import { calculateOxxoPartialPayments, getPartialPaymentMessage } from "@/lib/payments/oxxo-partial";
+import { randomUUID } from "crypto";
 
 export async function POST(request: Request) {
   try {

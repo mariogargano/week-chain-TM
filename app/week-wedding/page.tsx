@@ -1,11 +1,10 @@
-"use client"
-
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Heart, Gift, Calendar, Sparkles, Download, Apple, Smartphone, Check } from "lucide-react"
-import { useState } from "react"
-import Image from "next/image"
+"use client";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Heart, Gift, Calendar, Sparkles, Download, Apple, Smartphone, Check } from "lucide-react";
+import { useState } from "react";
+import Image from "next/image";
 
 export default function WeekWeddingPage() {
   const [selectedCard, setSelectedCard] = useState<"classic" | "premium" | "luxury">("premium")
@@ -80,7 +79,6 @@ export default function WeekWeddingPage() {
           </div>
         </div>
       </section>
-
       <section className="py-20 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
@@ -188,12 +186,12 @@ export default function WeekWeddingPage() {
                       { icon: Heart, text: "No transferible*" },
                       { icon: Sparkles, text: "Sin fechas fijas" },
                       { icon: Gift, text: "Uso personal" },
-                    ].map((item, idx) => (
+                    ]?.map((item, idx) => (
                       <div key={idx} className="flex items-center gap-2">
                         <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center">
                           <item.icon className="w-3.5 h-3.5 text-green-400" />
                         </div>
-                        <span className="text-slate-300 text-sm">{item.text}</span>
+                        <span className="text-slate-300 text-sm">{item?.text}</span>
                       </div>
                     ))}
                   </div>
@@ -203,7 +201,7 @@ export default function WeekWeddingPage() {
                 <div className="text-center border-t border-slate-700 pt-4">
                   <p className="text-slate-500 text-xs mb-1">Card ID</p>
                   <p className="text-white font-mono tracking-wider">
-                    WW-2025-{Math.random().toString(36).substring(2, 8).toUpperCase()}
+                    WW-2025-{Math.random()?.toString(36)?.substring(2, 8)?.toUpperCase()}
                   </p>
                 </div>
               </CardContent>
@@ -232,7 +230,6 @@ export default function WeekWeddingPage() {
           </div>
         </div>
       </section>
-
       {/* ¿Cómo Funciona? */}
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
@@ -264,27 +261,26 @@ export default function WeekWeddingPage() {
                 description:
                   "Cada año puedes solicitar 1 semana en alojamientos participantes según disponibilidad operativa. Sin fechas ni destinos garantizados",
               },
-            ].map((item) => (
+            ]?.map((item) => (
               <Card
-                key={item.step}
+                key={item?.step}
                 className="border-2 border-slate-200 hover:border-[#FF9AA2] hover:shadow-xl transition-all"
               >
                 <CardContent className="pt-8 text-center">
                   <div className="mb-6">
-                    <div className="text-[#FF9AA2] text-6xl font-bold mb-4 opacity-20">{item.step}</div>
+                    <div className="text-[#FF9AA2] text-6xl font-bold mb-4 opacity-20">{item?.step}</div>
                     <div className="w-16 h-16 bg-gradient-to-br from-[#FF9AA2] to-[#FFB7B2] rounded-2xl flex items-center justify-center mx-auto shadow-lg">
                       <item.icon className="w-8 h-8 text-white" />
                     </div>
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3">{item.title}</h3>
-                  <p className="text-slate-600 leading-relaxed">{item.description}</p>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-3">{item?.title}</h3>
+                  <p className="text-slate-600 leading-relaxed">{item?.description}</p>
                 </CardContent>
               </Card>
             ))}
           </div>
         </div>
       </section>
-
       {/* Beneficios */}
       <section className="py-20 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
@@ -312,21 +308,20 @@ export default function WeekWeddingPage() {
                 title: "Identificador Digital",
                 description: "Certificado consultable, no reserva confirmada",
               },
-            ].map((benefit, idx) => (
+            ]?.map((benefit, idx) => (
               <Card key={idx} className="border-2 border-slate-200 hover:shadow-lg transition-shadow text-center">
                 <CardContent className="pt-8 pb-6">
                   <div className="w-14 h-14 bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <benefit.icon className="w-7 h-7 text-[#FF9AA2]" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">{benefit.title}</h3>
-                  <p className="text-slate-600 text-sm">{benefit.description}</p>
+                  <h3 className="text-lg font-bold text-slate-900 mb-2">{benefit?.title}</h3>
+                  <p className="text-slate-600 text-sm">{benefit?.description}</p>
                 </CardContent>
               </Card>
             ))}
           </div>
         </div>
       </section>
-
       {/* Lo Que Incluye */}
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
@@ -347,7 +342,7 @@ export default function WeekWeddingPage() {
                   "Upgrades sujetos a costo adicional",
                   "Derecho renovable anualmente",
                   "Transferencia sujeta a aprobación",
-                ].map((item, idx) => (
+                ]?.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-3">
                     <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shrink-0">
                       <Check className="w-4 h-4 text-white" />
@@ -373,7 +368,6 @@ export default function WeekWeddingPage() {
           </Card>
         </div>
       </section>
-
       {/* CTA Final */}
       <section className="py-20 px-4 bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2]">
         <div className="container mx-auto max-w-4xl text-center text-white">
@@ -399,5 +393,5 @@ export default function WeekWeddingPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }

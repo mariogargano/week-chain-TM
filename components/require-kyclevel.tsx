@@ -1,15 +1,14 @@
-"use client"
+"use client";
+import type React from "react";
 
-import type React from "react"
-
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { createBrowserClient } from "@/lib/supabase/client"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { Shield, AlertCircle, Clock, CheckCircle2, FileText } from "lucide-react"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createBrowserClient } from "@/lib/supabase/client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Shield, AlertCircle, Clock, CheckCircle2, FileText } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 type KYCLevel = "none" | "basic" | "verified" | "full"
 
@@ -165,11 +164,8 @@ export function RequireKYCLevel({
               className={
                 kycStatus?.verification_status === "verified"
                   ? "border-green-200 bg-green-50"
-                  : kycStatus?.verification_status === "in_review"
-                    ? "border-yellow-200 bg-yellow-50"
-                    : kycStatus?.verification_status === "rejected"
-                      ? "border-red-200 bg-red-50"
-                      : "border-blue-200 bg-blue-50"
+                  : kycStatus?.verification_status === "in_review" ?"border-yellow-200 bg-yellow-50"
+                    : kycStatus?.verification_status === "rejected" ?"border-red-200 bg-red-50" :"border-blue-200 bg-blue-50"
               }
             >
               {kycStatus?.verification_status === "verified" && <CheckCircle2 className="h-4 w-4 text-green-600" />}
@@ -182,10 +178,8 @@ export function RequireKYCLevel({
               </AlertTitle>
               <AlertDescription>
                 {kycStatus?.verification_status === "verified" && "Tu identidad ha sido verificada correctamente."}
-                {kycStatus?.verification_status === "in_review" &&
-                  "Tus documentos están siendo revisados por nuestro equipo."}
-                {kycStatus?.verification_status === "rejected" &&
-                  "Tu verificación fue rechazada. Por favor actualiza tus documentos."}
+                {kycStatus?.verification_status === "in_review"&& "Tus documentos están siendo revisados por nuestro equipo."}
+                {kycStatus?.verification_status === "rejected"&& "Tu verificación fue rechazada. Por favor actualiza tus documentos."}
                 {kycStatus?.verification_status === "pending" && "Completa tu perfil y sube los documentos requeridos."}
               </AlertDescription>
             </Alert>

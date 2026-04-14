@@ -1,19 +1,18 @@
-"use client"
+"use client";
+import type React from "react";
 
-import type React from "react"
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Navbar } from "@/components/navbar"
-import { RoleGuard } from "@/components/role-guard"
-import { createClient } from "@/lib/supabase/client"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { ArrowLeft, Upload, FileText, CheckCircle, Building2, DollarSign, Home, ImageIcon } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Navbar } from "@/components/navbar";
+import { RoleGuard } from "@/components/role-guard";
+import { createClient } from "@/lib/supabase/client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Upload, FileText, CheckCircle, Building2, DollarSign, Home, ImageIcon } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SubmitPropertyPage() {
   return (
@@ -202,8 +201,7 @@ function SubmitPropertyContent() {
                       <div
                         className={`h-12 w-12 rounded-full flex items-center justify-center ${
                           step >= s.num
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white"
-                            : "bg-slate-200 text-slate-400"
+                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white" :"bg-slate-200 text-slate-400"
                         }`}
                       >
                         {step > s.num ? <CheckCircle className="h-6 w-6" /> : <s.icon className="h-6 w-6" />}
@@ -367,8 +365,7 @@ function SubmitPropertyContent() {
                         onClick={() => handleAmenityToggle(amenity)}
                         className={`p-3 rounded-lg border-2 text-sm transition-all ${
                           formData.amenities.includes(amenity)
-                            ? "border-purple-500 bg-purple-50 text-purple-700"
-                            : "border-slate-200 hover:border-slate-300"
+                            ? "border-purple-500 bg-purple-50 text-purple-700" :"border-slate-200 hover:border-slate-300"
                         }`}
                       >
                         {amenity}

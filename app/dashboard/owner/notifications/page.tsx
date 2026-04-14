@@ -1,15 +1,14 @@
-"use client"
-
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Navbar } from "@/components/navbar"
-import { RoleGuard } from "@/components/role-guard"
-import { createClient } from "@/lib/supabase/client"
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { Bell, CheckCircle, ArrowLeft, Trash2, Eye } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+"use client";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Navbar } from "@/components/navbar";
+import { RoleGuard } from "@/components/role-guard";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Bell, CheckCircle, ArrowLeft, Trash2, Eye } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function OwnerNotificationsPage() {
   return (

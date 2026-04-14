@@ -1,9 +1,9 @@
-import { Suspense } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
-import { Shield, FileText, Calendar, CreditCard, Lock, Scale, Globe } from "lucide-react"
-import { TermsActions } from "./terms-actions"
+import { Suspense } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { Shield, FileText, Calendar, CreditCard, Lock, Scale, Globe } from "lucide-react";
+import { TermsActions } from "./terms-actions";
 
 const termsContent = {
   title: "Términos y Condiciones",
@@ -105,9 +105,9 @@ export default function TermsPage() {
                 <FileText className="h-8 w-8 text-blue-600" />
               </div>
             </div>
-            <CardTitle className="text-3xl font-bold">{termsContent.title}</CardTitle>
-            <CardDescription className="text-base">{termsContent.company}</CardDescription>
-            <p className="text-sm text-muted-foreground">{termsContent.subtitle}</p>
+            <CardTitle className="text-3xl font-bold">{termsContent?.title}</CardTitle>
+            <CardDescription className="text-base">{termsContent?.company}</CardDescription>
+            <p className="text-sm text-muted-foreground">{termsContent?.subtitle}</p>
           </CardHeader>
 
           <CardContent className="space-y-6">
@@ -116,9 +116,9 @@ export default function TermsPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Shield className="h-5 w-5 text-blue-600" />
-                    <h3 className="text-xl font-semibold">{termsContent.sections.object.title}</h3>
+                    <h3 className="text-xl font-semibold">{termsContent?.sections?.object?.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{termsContent.sections.object.content}</p>
+                  <p className="text-muted-foreground leading-relaxed">{termsContent?.sections?.object?.content}</p>
                 </section>
 
                 <Separator />
@@ -126,15 +126,15 @@ export default function TermsPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Lock className="h-5 w-5 text-purple-600" />
-                    <h3 className="text-xl font-semibold">{termsContent.sections.nature.title}</h3>
+                    <h3 className="text-xl font-semibold">{termsContent?.sections?.nature?.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{termsContent.sections.nature.content}</p>
+                  <p className="text-muted-foreground leading-relaxed">{termsContent?.sections?.nature?.content}</p>
                   <ul className="list-disc list-inside mt-2 space-y-1 text-muted-foreground ml-4">
-                    {termsContent.sections.nature.items.map((item, i) => (
+                    {termsContent?.sections?.nature?.items?.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
                   </ul>
-                  <p className="text-muted-foreground leading-relaxed mt-2">{termsContent.sections.nature.footer}</p>
+                  <p className="text-muted-foreground leading-relaxed mt-2">{termsContent?.sections?.nature?.footer}</p>
                 </section>
 
                 <Separator />
@@ -142,12 +142,12 @@ export default function TermsPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Calendar className="h-5 w-5 text-green-600" />
-                    <h3 className="text-xl font-semibold">{termsContent.sections.duration.title}</h3>
+                    <h3 className="text-xl font-semibold">{termsContent?.sections?.duration?.title}</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
-                    <strong>{termsContent.sections.duration.duration}</strong>
+                    <strong>{termsContent?.sections?.duration?.duration}</strong>
                   </p>
-                  <p className="text-muted-foreground leading-relaxed mt-2">{termsContent.sections.duration.weeks}</p>
+                  <p className="text-muted-foreground leading-relaxed mt-2">{termsContent?.sections?.duration?.weeks}</p>
                 </section>
 
                 <Separator />
@@ -155,11 +155,11 @@ export default function TermsPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Globe className="h-5 w-5 text-blue-600" />
-                    <h3 className="text-xl font-semibold">{termsContent.sections.availability.title}</h3>
+                    <h3 className="text-xl font-semibold">{termsContent?.sections?.availability?.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{termsContent.sections.availability.content}</p>
+                  <p className="text-muted-foreground leading-relaxed">{termsContent?.sections?.availability?.content}</p>
                   <p className="text-muted-foreground leading-relaxed mt-2">
-                    {termsContent.sections.availability.footer}
+                    {termsContent?.sections?.availability?.footer}
                   </p>
                 </section>
 
@@ -168,11 +168,11 @@ export default function TermsPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Shield className="h-5 w-5 text-orange-600" />
-                    <h3 className="text-xl font-semibold">{termsContent.sections.reflection.title}</h3>
+                    <h3 className="text-xl font-semibold">{termsContent?.sections?.reflection?.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{termsContent.sections.reflection.content}</p>
+                  <p className="text-muted-foreground leading-relaxed">{termsContent?.sections?.reflection?.content}</p>
                   <p className="text-muted-foreground leading-relaxed mt-2">
-                    {termsContent.sections.reflection.footer}
+                    {termsContent?.sections?.reflection?.footer}
                   </p>
                 </section>
 
@@ -181,17 +181,17 @@ export default function TermsPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <CreditCard className="h-5 w-5 text-blue-600" />
-                    <h3 className="text-xl font-semibold">{termsContent.sections.payment.title}</h3>
+                    <h3 className="text-xl font-semibold">{termsContent?.sections?.payment?.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{termsContent.sections.payment.intro}</p>
+                  <p className="text-muted-foreground leading-relaxed">{termsContent?.sections?.payment?.intro}</p>
                   <ul className="list-disc list-inside mt-2 space-y-1 text-muted-foreground ml-4">
                     <li>
-                      <strong>Tarjeta:</strong> {termsContent.sections.payment.methods.card}
+                      <strong>Tarjeta:</strong> {termsContent?.sections?.payment?.methods?.card}
                     </li>
-                    <li>{termsContent.sections.payment.methods.spei}</li>
-                    <li>{termsContent.sections.payment.methods.oxxo}</li>
+                    <li>{termsContent?.sections?.payment?.methods?.spei}</li>
+                    <li>{termsContent?.sections?.payment?.methods?.oxxo}</li>
                   </ul>
-                  <p className="text-muted-foreground leading-relaxed mt-2">{termsContent.sections.payment.footer}</p>
+                  <p className="text-muted-foreground leading-relaxed mt-2">{termsContent?.sections?.payment?.footer}</p>
                 </section>
 
                 <Separator />
@@ -199,15 +199,15 @@ export default function TermsPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <FileText className="h-5 w-5 text-purple-600" />
-                    <h3 className="text-xl font-semibold">{termsContent.sections.delivery.title}</h3>
+                    <h3 className="text-xl font-semibold">{termsContent?.sections?.delivery?.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{termsContent.sections.delivery.intro}</p>
+                  <p className="text-muted-foreground leading-relaxed">{termsContent?.sections?.delivery?.intro}</p>
                   <ul className="list-disc list-inside mt-2 space-y-1 text-muted-foreground ml-4">
-                    {termsContent.sections.delivery.items.map((item, i) => (
+                    {termsContent?.sections?.delivery?.items?.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
                   </ul>
-                  <p className="text-muted-foreground leading-relaxed mt-2">{termsContent.sections.delivery.footer}</p>
+                  <p className="text-muted-foreground leading-relaxed mt-2">{termsContent?.sections?.delivery?.footer}</p>
                 </section>
 
                 <Separator />
@@ -215,9 +215,9 @@ export default function TermsPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Scale className="h-5 w-5 text-green-600" />
-                    <h3 className="text-xl font-semibold">{termsContent.sections.jurisdiction.title}</h3>
+                    <h3 className="text-xl font-semibold">{termsContent?.sections?.jurisdiction?.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{termsContent.sections.jurisdiction.content}</p>
+                  <p className="text-muted-foreground leading-relaxed">{termsContent?.sections?.jurisdiction?.content}</p>
                 </section>
 
                 <Separator />
@@ -225,28 +225,28 @@ export default function TermsPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Lock className="h-5 w-5 text-blue-600" />
-                    <h3 className="text-xl font-semibold">{termsContent.sections.acceptance.title}</h3>
+                    <h3 className="text-xl font-semibold">{termsContent?.sections?.acceptance?.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{termsContent.sections.acceptance.content}</p>
+                  <p className="text-muted-foreground leading-relaxed">{termsContent?.sections?.acceptance?.content}</p>
                   <p className="text-muted-foreground leading-relaxed mt-2">
-                    {termsContent.sections.acceptance.footer}
+                    {termsContent?.sections?.acceptance?.footer}
                   </p>
                 </section>
 
                 <Separator />
 
                 <section className="bg-muted/50 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">{termsContent.companyInfo.title}</h4>
+                  <h4 className="font-semibold mb-2">{termsContent?.companyInfo?.title}</h4>
                   <p className="text-sm text-muted-foreground">
-                    {termsContent.companyInfo.rfc}
+                    {termsContent?.companyInfo?.rfc}
                     <br />
-                    {termsContent.companyInfo.address}
+                    {termsContent?.companyInfo?.address}
                     <br />
-                    {termsContent.companyInfo.contact}
+                    {termsContent?.companyInfo?.contact}
                     <br />
-                    {termsContent.companyInfo.version}
+                    {termsContent?.companyInfo?.version}
                     <br />
-                    Última actualización: {new Date().toLocaleDateString()}
+                    Última actualización: {new Date()?.toLocaleDateString()}
                   </p>
                 </section>
               </div>
@@ -254,16 +254,16 @@ export default function TermsPage() {
 
             <Suspense fallback={<div className="h-32 animate-pulse bg-muted rounded-lg" />}>
               <TermsActions
-                acceptLabel={termsContent.acceptLabel}
-                backButton={termsContent.backButton}
-                acceptButton={termsContent.acceptButton}
-                processing={termsContent.processing}
-                digitalSignature={termsContent.digitalSignature}
+                acceptLabel={termsContent?.acceptLabel}
+                backButton={termsContent?.backButton}
+                acceptButton={termsContent?.acceptButton}
+                processing={termsContent?.processing}
+                digitalSignature={termsContent?.digitalSignature}
               />
             </Suspense>
           </CardContent>
         </Card>
       </div>
     </div>
-  )
+  );
 }

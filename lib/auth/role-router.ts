@@ -1,4 +1,4 @@
-import type { UserRole } from "./roles"
+import type { UserRole } from "./roles";
 
 /**
  * WEEK-CHAIN Role-Based Routing System

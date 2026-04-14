@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/server"
-import { sha256 } from "@/lib/utils/crypto"
+import { createClient } from "@/lib/supabase/server";
+import { sha256 } from "@/lib/utils/crypto";
 
 /**
  * NOM-151 Evidence Event Logger
@@ -7,17 +7,7 @@ import { sha256 } from "@/lib/utils/crypto"
  */
 
 export type EvidenceEventType =
-  | "consent_accepted"
-  | "certificate_activated"
-  | "certificate_issued"
-  | "reservation_requested"
-  | "reservation_offered"
-  | "offer_accepted"
-  | "offer_rejected"
-  | "reservation_confirmed"
-  | "reservation_cancelled"
-  | "payment_processed"
-  | "document_signed"
+  | "consent_accepted" |"certificate_activated" |"certificate_issued" |"reservation_requested" |"reservation_offered" |"offer_accepted" |"offer_rejected" |"reservation_confirmed" |"reservation_cancelled" |"payment_processed" |"document_signed"
 
 export type EntityType = "certificate" | "reservation" | "offer" | "consent" | "payment" | "document"
 

@@ -1,8 +1,7 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { X, Sparkles, TrendingUp } from "lucide-react"
-import { Button } from "@/components/ui/button"
+"use client";
+import { useState, useEffect } from "react";
+import { X, Sparkles, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function BetaBanner() {
   const [isVisible, setIsVisible] = useState(false)
@@ -25,9 +24,9 @@ export function BetaBanner() {
   const fetchBetaStats = async () => {
     try {
       const response = await fetch("/api/certificates/beta-stats")
-      const data = await response.json()
-      if (data.sold !== undefined) {
-        const sold = data.sold
+      const data = await response?.json()
+      if (data?.sold !== undefined) {
+        const sold = data?.sold
         const remaining = 68 - sold
         const percentage = (sold / 68) * 100
         setBetaStats({ sold, remaining, percentage })
@@ -45,8 +44,8 @@ export function BetaBanner() {
   if (!isMounted || !isVisible) return null
 
   const getBannerColor = () => {
-    if (betaStats.remaining <= 10) return "from-red-600 via-rose-600 to-pink-600"
-    if (betaStats.remaining <= 25) return "from-orange-600 via-amber-600 to-yellow-600"
+    if (betaStats?.remaining <= 10) return "from-red-600 via-rose-600 to-pink-600"
+    if (betaStats?.remaining <= 25) return "from-orange-600 via-amber-600 to-yellow-600"
     return "from-blue-600 via-indigo-600 to-purple-600"
   }
 
@@ -60,12 +59,12 @@ export function BetaBanner() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs sm:text-base font-semibold mb-0.5 flex items-center gap-2 truncate">
-                <span className="sm:hidden">Beta - {betaStats.remaining} disponibles</span>
-                <span className="hidden sm:inline">Beta Controlada - Solo {betaStats.remaining} Certificados Disponibles</span>
-                {betaStats.remaining <= 10 && <TrendingUp className="h-4 w-4 animate-bounce flex-shrink-0" />}
+                <span className="sm:hidden">Beta - {betaStats?.remaining} disponibles</span>
+                <span className="hidden sm:inline">Beta Controlada - Solo {betaStats?.remaining} Certificados Disponibles</span>
+                {betaStats?.remaining <= 10 && <TrendingUp className="h-4 w-4 animate-bounce flex-shrink-0" />}
               </p>
               <p className="text-[10px] sm:text-sm text-blue-100 truncate">
-                {betaStats.sold}/68 activados ({betaStats.percentage.toFixed(0)}%)
+                {betaStats?.sold}/68 activados ({betaStats?.percentage?.toFixed(0)}%)
               </p>
             </div>
           </div>
@@ -89,5 +88,5 @@ export function BetaBanner() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,7 +1,6 @@
-"use client"
-
-import Link from "next/link"
-import { useState } from "react"
+"use client";
+import Link from "next/link";
+import { useState } from "react";
 import {
   Twitter,
   Instagram,
@@ -19,12 +18,12 @@ import {
   Phone,
   MapPin,
   Star,
-} from "lucide-react"
-import { Logo } from "@/components/logo"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { VirtualOfficeModal } from "@/components/virtual-office-modal"
-import { FooterTrustSignal } from "@/components/footer-trust-signal"
+} from "lucide-react";
+import { Logo } from "@/components/logo";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { VirtualOfficeModal } from "@/components/virtual-office-modal";
+import { FooterTrustSignal } from "@/components/footer-trust-signal";
 
 export function SiteFooter() {
   const [isVirtualOfficeModalOpen, setIsVirtualOfficeModalOpen] = useState(false)
@@ -70,11 +69,11 @@ export function SiteFooter() {
                 { icon: Github, label: "GitHub" },
                 { icon: Linkedin, label: "LinkedIn" },
                 { icon: Instagram, label: "Instagram" },
-              ].map((s) => (
+              ]?.map((s) => (
                 <Link
-                  key={s.label}
+                  key={s?.label}
                   href="#"
-                  aria-label={s.label}
+                  aria-label={s?.label}
                   className="flex h-11 w-11 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors active:scale-95"
                 >
                   <s.icon className="h-5 w-5" />
@@ -278,7 +277,7 @@ export function SiteFooter() {
           </div>
 
           <div className="border-t border-white/10 pt-6 text-center space-y-3">
-            <p className="text-sm text-gray-400">© {new Date().getFullYear()} WEEK-CHAIN™ — All Rights Reserved</p>
+            <p className="text-sm text-gray-400">© {new Date()?.getFullYear()} WEEK-CHAIN™ — All Rights Reserved</p>
             <p className="text-sm text-gray-400">Operated by WEEK-CHAIN S.A.P.I. de C.V. (Mexico)</p>
             <p className="text-xs text-gray-500 max-w-3xl mx-auto">
               WEEK-CHAIN™ opera un sistema de certificados digitales vacacionales. Los derechos otorgados son
@@ -301,8 +300,7 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
-
       <VirtualOfficeModal isOpen={isVirtualOfficeModalOpen} onClose={() => setIsVirtualOfficeModalOpen(false)} />
     </footer>
-  )
+  );
 }

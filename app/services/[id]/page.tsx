@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   MapPin,
   Users,
@@ -21,12 +20,12 @@ import {
   Waves,
   Ticket,
   Building2,
-} from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
-import { useParams } from "next/navigation"
-import { SiteFooter } from "@/components/site-footer"
-import { useState } from "react"
+} from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { useParams } from "next/navigation";
+
+import { useState } from "react";
 
 const ecoParksServicesData: Record<string, any> = {
   "parque-eco-arqueologico-riviera": {

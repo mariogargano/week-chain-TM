@@ -1,6 +1,6 @@
-import Image from "next/image"
-import { MapPin, Home, Bed, Bath } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import Image from "next/image";
+import { MapPin, Home, Bed, Bath } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface PropertyHeaderProps {
   property: {

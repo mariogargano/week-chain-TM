@@ -1,13 +1,12 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Download, FileText, QrCode } from "lucide-react"
-import Link from "next/link"
-import { InvoiceRequestDialog } from "@/components/invoice-request-dialog"
+"use client";
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Download, FileText, QrCode } from "lucide-react";
+import Link from "next/link";
+import { InvoiceRequestDialog } from "@/components/invoice-request-dialog";
 
 export default function MyCertificatesPage() {
   const [certificates, setCertificates] = useState<any[]>([])

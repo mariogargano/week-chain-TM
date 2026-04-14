@@ -1,13 +1,12 @@
-"use client"
-
-import type React from "react"
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { ADMIN_EMAIL, type UserRole } from "@/lib/auth/roles"
-import { createClient } from "@/lib/supabase/client"
-import { Loader2, AlertCircle } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+"use client";
+import type React from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ADMIN_EMAIL, type UserRole } from "@/lib/auth/roles";
+import { createClient } from "@/lib/supabase/client";
+import { Loader2, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface RoleGuardProps {
   children: React.ReactNode

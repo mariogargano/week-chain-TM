@@ -1,9 +1,9 @@
-import Link from "next/link"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ContainerScroll } from "@/components/ui/container-scroll-animation"
-import Image from "next/image"
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import Image from "next/image";
 import {
   Award,
   Star,
@@ -15,7 +15,7 @@ import {
   Network,
   DollarSign,
   Briefcase,
-} from "lucide-react"
+} from "lucide-react";
 
 export default function BrokerElitePage() {
   return (

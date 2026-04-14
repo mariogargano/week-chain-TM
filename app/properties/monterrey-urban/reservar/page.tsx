@@ -1,13 +1,12 @@
-"use client"
+"use client";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { Calendar, CreditCard, Shield, Check, Briefcase } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { AlertTriangle, Lock, ShieldCheck } from "lucide-react";
 
-import { useState, Suspense } from "react"
-import { useSearchParams } from "next/navigation"
-import Link from "next/link"
-import { Calendar, CreditCard, Shield, Check, Briefcase } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { AlertTriangle, Lock, ShieldCheck } from "lucide-react"
-import { Navbar } from "@/components/navbar"
 
 function ReservarContent() {
   const searchParams = useSearchParams()

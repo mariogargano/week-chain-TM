@@ -1,17 +1,16 @@
-"use client"
-
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { LegalDisclaimer } from "@/components/legal-disclaimer"
-import { MobileAppSection } from "@/components/mobile-app-section"
-import { PlatformShowcase } from "@/components/platform-showcase"
-import { AnimatedHero } from "@/components/ui/animated-hero"
-import { FAQJsonLd } from "@/components/seo/json-ld"
-import { useTranslations } from "@/lib/i18n/use-translations"
-import { DynamicCertificateShowcase } from "@/components/dynamic-certificate-showcase"
-import { BrokerDashboardPreview } from "@/components/broker-dashboard-preview"
-import { NoMaintenanceBanner } from "@/components/no-maintenance-banner"
-import { useState, useEffect } from "react"
+"use client";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { LegalDisclaimer } from "@/components/legal-disclaimer";
+import { MobileAppSection } from "@/components/mobile-app-section";
+import { PlatformShowcase } from "@/components/platform-showcase";
+import { AnimatedHero } from "@/components/ui/animated-hero";
+import { FAQJsonLd } from "@/components/seo/json-ld";
+import { useTranslations } from "@/lib/i18n/use-translations";
+import { DynamicCertificateShowcase } from "@/components/dynamic-certificate-showcase";
+import { BrokerDashboardPreview } from "@/components/broker-dashboard-preview";
+import { NoMaintenanceBanner } from "@/components/no-maintenance-banner";
+import { useState } from "react";
 import {
   ArrowRight,
   Calendar,
@@ -24,11 +23,11 @@ import {
   Scale,
   ChevronDown,
   Briefcase,
-} from "lucide-react"
-import { GlobalInfrastructureSection } from "@/components/global-infrastructure-section"
-import { PartnersSection } from "@/components/partners-section"
-import { PreHolderBanner } from "@/components/pre-holder-banner"
-import Image from "next/image"
+} from "lucide-react";
+import { GlobalInfrastructureSection } from "@/components/global-infrastructure-section";
+import { PartnersSection } from "@/components/partners-section";
+import { PreHolderBanner } from "@/components/pre-holder-banner";
+
 
 const homepageFaqs = [
   {
@@ -141,10 +140,10 @@ export function HomePageClient() {
   const [showBrokerSection, setShowBrokerSection] = useState(false)
   const [showLegalNotice, setShowLegalNotice] = useState(true)
 
-  const hero = t?.hero || fallback.hero
-  const buyerBenefits = t?.buyerBenefits || fallback.buyerBenefits
-  const howItWorks = t?.howItWorks || fallback.howItWorks
-  const cta = t?.cta || fallback.cta
+  const hero = t?.hero || fallback?.hero
+  const buyerBenefits = t?.buyerBenefits || fallback?.buyerBenefits
+  const howItWorks = t?.howItWorks || fallback?.howItWorks
+  const cta = t?.cta || fallback?.cta
 
   const steps = [
     {
@@ -180,7 +179,7 @@ export function HomePageClient() {
 
         <div className="flex flex-col bg-white">
           {/* Hero Section */}
-          <article aria-label={hero.badge || "Smart Vacational Certificates"}>
+          <article aria-label={hero?.badge || "Smart Vacational Certificates"}>
             <section className="relative overflow-hidden">
               <AnimatedHero />
             </section>
@@ -273,27 +272,27 @@ export function HomePageClient() {
                   id="how-it-works-title"
                   className="mb-4 text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight"
                 >
-                  {howItWorks.title || fallback.howItWorks.title}
+                  {howItWorks?.title || fallback?.howItWorks?.title}
                 </h2>
                 <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                  {howItWorks.subtitle || fallback.howItWorks.subtitle}
+                  {howItWorks?.subtitle || fallback?.howItWorks?.subtitle}
                 </p>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-                {steps.map((step) => (
+                {steps?.map((step) => (
                   <div
-                    key={step.step}
+                    key={step?.step}
                     className="relative bg-white p-6 rounded-2xl border-2 border-slate-200 hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
                   >
                     <div className="absolute -top-4 left-6 bg-gradient-to-br from-sky-500 to-cyan-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg shadow-sky-200">
-                      {step.step}
+                      {step?.step}
                     </div>
                     <div className="mb-4 mt-4">
                       <step.icon className="w-12 h-12 text-blue-500 group-hover:scale-110 transition-transform duration-300" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-3">{step.title}</h3>
-                    <p className="text-sm text-slate-600 leading-relaxed">{step.description}</p>
+                    <h3 className="text-xl font-bold text-slate-900 mb-3">{step?.title}</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">{step?.description}</p>
                   </div>
                 ))}
               </div>
@@ -307,10 +306,10 @@ export function HomePageClient() {
           >
             <div className="container mx-auto max-w-4xl text-center px-4">
               <h2 className="mb-4 md:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight">
-                {cta.title || fallback.cta.title}
+                {cta?.title || fallback?.cta?.title}
               </h2>
               <p className="mb-8 md:mb-12 text-base sm:text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
-                {cta.description || fallback.cta.description}
+                {cta?.description || fallback?.cta?.description}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
                 <Button
@@ -319,7 +318,7 @@ export function HomePageClient() {
                   className="w-full sm:w-auto sm:min-w-[240px] bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white text-sm md:text-base font-semibold h-12 md:h-14 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-sky-200"
                 >
                   <Link href="/auth">
-                    {cta.startButton || fallback.cta.startButton}
+                    {cta?.startButton || fallback?.cta?.startButton}
                     <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" aria-hidden="true" />
                   </Link>
                 </Button>
@@ -329,7 +328,7 @@ export function HomePageClient() {
                   variant="outline"
                   className="w-full sm:w-auto sm:min-w-[240px] border-2 border-sky-200 text-sky-700 hover:bg-sky-50 text-sm md:text-base font-semibold h-12 md:h-14 rounded-xl transition-all duration-300 bg-transparent"
                 >
-                  <Link href="/properties">{cta.viewPropertiesButton || fallback.cta.viewPropertiesButton}</Link>
+                  <Link href="/properties">{cta?.viewPropertiesButton || fallback?.cta?.viewPropertiesButton}</Link>
                 </Button>
               </div>
             </div>
@@ -367,7 +366,7 @@ export function HomePageClient() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default HomePageClient

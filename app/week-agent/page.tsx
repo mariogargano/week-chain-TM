@@ -1,8 +1,7 @@
-"use client"
-
-import { Badge } from "@/components/ui/badge"
-import { Card } from "@/components/ui/card"
-import { Users, Globe, DollarSign, CheckCircle2, Shield, Clock, Award, Sparkles, ArrowRight } from "lucide-react"
+"use client";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Users, Globe, DollarSign, CheckCircle2, Shield, Clock, Award, Sparkles, ArrowRight } from "lucide-react";
 
 export default function WeekAgentPage() {
   return (
@@ -59,7 +58,6 @@ export default function WeekAgentPage() {
           </div>
         </div>
       </section>
-
       {/* Benefits Section */}
       <section className="px-4 py-20 md:py-28">
         <div className="container mx-auto max-w-6xl">
@@ -108,20 +106,19 @@ export default function WeekAgentPage() {
                 description: "Equipo profesional disponible 24/7",
                 color: "text-cyan-500",
               },
-            ].map((benefit, index) => (
+            ]?.map((benefit, index) => (
               <Card
                 key={index}
                 className="p-6 hover:shadow-xl transition-all duration-300 border-2 hover:border-amber-400"
               >
-                <benefit.icon className={`w-12 h-12 ${benefit.color} mb-4`} />
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{benefit.title}</h3>
-                <p className="text-slate-600">{benefit.description}</p>
+                <benefit.icon className={`w-12 h-12 ${benefit?.color} mb-4`} />
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{benefit?.title}</h3>
+                <p className="text-slate-600">{benefit?.description}</p>
               </Card>
             ))}
           </div>
         </div>
       </section>
-
       {/* How it Works */}
       <section className="px-4 py-20 bg-slate-50">
         <div className="container mx-auto max-w-6xl">
@@ -135,19 +132,18 @@ export default function WeekAgentPage() {
               { step: "1", title: "Regístrate", description: "Completa tu aplicación y verifica tu identidad" },
               { step: "2", title: "Recibe Capacitación", description: "Accede a materiales y herramientas de venta" },
               { step: "3", title: "Comienza a Ganar", description: "Facilita ventas y recibe tu 4% de honorarios" },
-            ].map((step, index) => (
+            ]?.map((step, index) => (
               <div key={index} className="text-center">
                 <div className="w-20 h-20 bg-amber-500 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6">
-                  {step.step}
+                  {step?.step}
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-3">{step.title}</h3>
-                <p className="text-slate-600">{step.description}</p>
+                <h3 className="text-2xl font-bold text-slate-900 mb-3">{step?.title}</h3>
+                <p className="text-slate-600">{step?.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
-
       {/* Requirements */}
       <section className="px-4 py-20">
         <div className="container mx-auto max-w-4xl">
@@ -163,7 +159,7 @@ export default function WeekAgentPage() {
                 "Completar proceso KYC (Know Your Customer)",
                 "Aceptar términos y condiciones del programa",
                 "Contar con disponibilidad para atención a clientes",
-              ].map((req, index) => (
+              ]?.map((req, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <CheckCircle2 className="w-6 h-6 text-emerald-500 flex-shrink-0 mt-1" />
                   <span className="text-lg text-slate-700">{req}</span>
@@ -173,7 +169,6 @@ export default function WeekAgentPage() {
           </Card>
         </div>
       </section>
-
       {/* Final CTA */}
       <section className="px-4 py-20 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white">
         <div className="container mx-auto max-w-3xl text-center">
@@ -190,5 +185,5 @@ export default function WeekAgentPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }

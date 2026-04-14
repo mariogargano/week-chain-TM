@@ -1,6 +1,6 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { resend, MANAGEMENT_EMAIL } from "@/lib/email/resend-client"
-import { KYCStatusEmail } from "@/lib/email/templates/kyc-status"
+import { type NextRequest, NextResponse } from "next/server";
+import { resend, MANAGEMENT_EMAIL } from "@/lib/email/resend-client";
+import { KYCStatusEmail } from "@/lib/email/templates/kyc-status";
 
 export async function POST(request: NextRequest) {
   try {

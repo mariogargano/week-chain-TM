@@ -1,30 +1,14 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { 
-  Users, 
-  Vote, 
-  MessageSquare, 
-  FileText, 
-  Settings, 
-  TrendingUp,
-  Calendar,
-  CheckCircle2,
-  Clock,
-  ArrowRight,
-  Shield,
-  Briefcase,
-  BarChart3,
-  Lock
-} from "lucide-react"
-import { toast } from "sonner"
-import Link from "next/link"
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Users, Vote, FileText, TrendingUp, Calendar, CheckCircle2, Clock, ArrowRight, Shield, BarChart3, Lock } from "lucide-react";
+import { toast } from "sonner";
+import Link from "next/link";
 
 const TEAM_ROLES = ["admin", "super_admin", "broker", "staff", "notaria", "service_provider", "owner"]
 
@@ -42,23 +26,19 @@ export default function TeamVirtualOfficePage() {
   }, [])
 
   async function checkAccess() {
-    const { data: { user } } = await supabase.auth.getUser()
+    const { data: { user } } = await supabase?.auth?.getUser()
 
     if (!user) {
-      toast.error("Inicia sesion para acceder")
-      router.push("/auth?redirect=/team")
+      toast?.error("Inicia sesion para acceder")
+      router?.push("/auth?redirect=/team")
       return
     }
 
     setUser(user)
 
-    const { data: profileData } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", user.id)
-      .single()
+    const { data: profileData } = await supabase?.from("profiles")?.select("*")?.eq("id", user?.id)?.single()
 
-    if (!profileData || !TEAM_ROLES.includes(profileData.role)) {
+    if (!profileData || !TEAM_ROLES?.includes(profileData?.role)) {
       setHasAccess(false)
       setLoading(false)
       return
@@ -90,13 +70,13 @@ export default function TeamVirtualOfficePage() {
             <p className="text-red-300 mb-4">
               Esta area es exclusiva para miembros del equipo WEEK-CHAIN.
             </p>
-            <Button onClick={() => router.push("/")} variant="outline">
+            <Button onClick={() => router?.push("/")} variant="outline">
               Volver al Inicio
             </Button>
           </CardContent>
         </Card>
       </div>
-    )
+    );
   }
 
   return (
@@ -223,23 +203,23 @@ export default function TeamVirtualOfficePage() {
                     { title: "Expansion a nuevos destinos (Costa Rica)", votes: 18, total: 24, ends: "2 dias" },
                     { title: "Actualizacion de comisiones brokers", votes: 12, total: 24, ends: "5 dias" },
                     { title: "Nuevo partner de pagos", votes: 8, total: 24, ends: "7 dias" },
-                  ].map((vote, i) => (
+                  ]?.map((vote, i) => (
                     <div key={i} className="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
                       <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-medium text-white text-sm">{vote.title}</h4>
+                        <h4 className="font-medium text-white text-sm">{vote?.title}</h4>
                         <Badge variant="outline" className="text-amber-400 border-amber-500/30 text-xs">
                           <Clock className="h-3 w-3 mr-1" />
-                          {vote.ends}
+                          {vote?.ends}
                         </Badge>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="flex-1 h-2 bg-slate-700 rounded-full overflow-hidden">
                           <div 
                             className="h-full bg-emerald-500 rounded-full"
-                            style={{ width: `${(vote.votes / vote.total) * 100}%` }}
+                            style={{ width: `${(vote?.votes / vote?.total) * 100}%` }}
                           />
                         </div>
-                        <span className="text-xs text-slate-400">{vote.votes}/{vote.total}</span>
+                        <span className="text-xs text-slate-400">{vote?.votes}/{vote?.total}</span>
                       </div>
                       <Button size="sm" className="mt-3 w-full bg-sky-500 hover:bg-sky-600">
                         Votar
@@ -316,20 +296,19 @@ export default function TeamVirtualOfficePage() {
                     { title: "Implementar sistema de bonos trimestrales", author: "Mario G.", status: "En votacion", date: "Hace 2 dias" },
                     { title: "Agregar destinos en Europa", author: "Ana L.", status: "Aprobada", date: "Hace 1 semana" },
                     { title: "Actualizar terminos de servicio", author: "Carlos M.", status: "Pendiente", date: "Hace 3 dias" },
-                  ].map((proposal, i) => (
+                  ]?.map((proposal, i) => (
                     <div key={i} className="p-4 bg-slate-900/50 rounded-lg border border-slate-700 flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium text-white">{proposal.title}</h4>
-                        <p className="text-sm text-slate-400">Por {proposal.author} - {proposal.date}</p>
+                        <h4 className="font-medium text-white">{proposal?.title}</h4>
+                        <p className="text-sm text-slate-400">Por {proposal?.author} - {proposal?.date}</p>
                       </div>
                       <Badge 
                         className={
-                          proposal.status === "Aprobada" ? "bg-emerald-500/20 text-emerald-400" :
-                          proposal.status === "En votacion" ? "bg-amber-500/20 text-amber-400" :
-                          "bg-slate-500/20 text-slate-400"
+                          proposal?.status === "Aprobada" ? "bg-emerald-500/20 text-emerald-400" :
+                          proposal?.status === "En votacion"? "bg-amber-500/20 text-amber-400" : "bg-slate-500/20 text-slate-400"
                         }
                       >
-                        {proposal.status}
+                        {proposal?.status}
                       </Badge>
                     </div>
                   ))}
@@ -356,20 +335,20 @@ export default function TeamVirtualOfficePage() {
                     { name: "Maria Garcia", role: "Notaria", status: "offline" },
                     { name: "Juan Perez", role: "Broker", status: "online" },
                     { name: "Sofia Ruiz", role: "Service Provider", status: "online" },
-                  ].map((member, i) => (
+                  ]?.map((member, i) => (
                     <div key={i} className="p-4 bg-slate-900/50 rounded-lg border border-slate-700 flex items-center gap-3">
                       <div className="relative">
                         <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
-                          {member.name.split(" ").map(n => n[0]).join("")}
+                          {member?.name?.split(" ")?.map(n => n?.[0])?.join("")}
                         </div>
                         <div className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-slate-800 ${
-                          member.status === "online" ? "bg-emerald-500" :
-                          member.status === "away" ? "bg-amber-500" : "bg-slate-500"
+                          member?.status === "online" ? "bg-emerald-500" :
+                          member?.status === "away" ? "bg-amber-500" : "bg-slate-500"
                         }`} />
                       </div>
                       <div>
-                        <p className="font-medium text-white text-sm">{member.name}</p>
-                        <p className="text-xs text-slate-400">{member.role}</p>
+                        <p className="font-medium text-white text-sm">{member?.name}</p>
+                        <p className="text-xs text-slate-400">{member?.role}</p>
                       </div>
                     </div>
                   ))}
@@ -420,20 +399,20 @@ export default function TeamVirtualOfficePage() {
                     { title: "Reunion semanal equipo", date: "Lunes 10:00 AM", type: "meeting" },
                     { title: "Cierre votacion destinos", date: "Miercoles", type: "deadline" },
                     { title: "Capacitacion brokers", date: "Viernes 3:00 PM", type: "training" },
-                  ].map((event, i) => (
+                  ]?.map((event, i) => (
                     <div key={i} className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-lg">
                       <div className={`p-2 rounded-lg ${
-                        event.type === "meeting" ? "bg-sky-500/10" :
-                        event.type === "deadline" ? "bg-red-500/10" : "bg-purple-500/10"
+                        event?.type === "meeting" ? "bg-sky-500/10" :
+                        event?.type === "deadline" ? "bg-red-500/10" : "bg-purple-500/10"
                       }`}>
                         <Calendar className={`h-4 w-4 ${
-                          event.type === "meeting" ? "text-sky-400" :
-                          event.type === "deadline" ? "text-red-400" : "text-purple-400"
+                          event?.type === "meeting" ? "text-sky-400" :
+                          event?.type === "deadline" ? "text-red-400" : "text-purple-400"
                         }`} />
                       </div>
                       <div>
-                        <p className="font-medium text-white text-sm">{event.title}</p>
-                        <p className="text-xs text-slate-400">{event.date}</p>
+                        <p className="font-medium text-white text-sm">{event?.title}</p>
+                        <p className="text-xs text-slate-400">{event?.date}</p>
                       </div>
                     </div>
                   ))}
@@ -444,5 +423,5 @@ export default function TeamVirtualOfficePage() {
         </Tabs>
       </div>
     </div>
-  )
+  );
 }

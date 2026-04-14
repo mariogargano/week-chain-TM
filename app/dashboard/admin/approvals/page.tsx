@@ -1,17 +1,13 @@
-import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Shield, CheckCircle, XCircle, Clock, Building2 } from "lucide-react"
+import { createClient } from "@/lib/supabase/server";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Shield, CheckCircle, XCircle, Clock, Building2 } from "lucide-react";
 
 export default async function ApprovalsPage() {
   const supabase = await createClient()
 
-  const { data: properties } = await supabase
-    .from("properties")
-    .select("*")
-    .eq("status", "pending")
-    .order("created_at", { ascending: false })
+  const { data: properties } = await supabase?.from("properties")?.select("*")?.eq("status", "pending")?.order("created_at", { ascending: false })
 
   const pendingCount = properties?.length || 0
 
@@ -23,7 +19,6 @@ export default async function ApprovalsPage() {
           <p className="text-slate-600 mt-2">Revisar y aprobar propiedades enviadas</p>
         </div>
       </div>
-
       <div className="grid gap-6 md:grid-cols-3">
         <Card className="border-yellow-200 bg-gradient-to-br from-yellow-50 to-yellow-100">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -58,25 +53,24 @@ export default async function ApprovalsPage() {
           </CardContent>
         </Card>
       </div>
-
       <Card>
         <CardHeader>
           <CardTitle>Propiedades Pendientes</CardTitle>
           <CardDescription>Propiedades esperando aprobación</CardDescription>
         </CardHeader>
         <CardContent>
-          {properties && properties.length > 0 ? (
+          {properties && properties?.length > 0 ? (
             <div className="space-y-4">
-              {properties.map((property) => (
-                <div key={property.id} className="p-6 rounded-lg border bg-slate-50 space-y-4">
+              {properties?.map((property) => (
+                <div key={property?.id} className="p-6 rounded-lg border bg-slate-50 space-y-4">
                   <div className="flex items-start justify-between">
                     <div className="flex gap-4">
                       <div className="h-20 w-20 rounded-lg bg-slate-200 flex items-center justify-center">
                         <Building2 className="h-8 w-8 text-slate-400" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-lg text-slate-800">{property.name}</h3>
-                        <p className="text-slate-600 text-sm mt-1">{property.location}</p>
+                        <h3 className="font-semibold text-lg text-slate-800">{property?.name}</h3>
+                        <p className="text-slate-600 text-sm mt-1">{property?.location}</p>
                         <div className="flex gap-2 mt-2">
                           <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">
                             <Clock className="h-3 w-3 mr-1" />
@@ -111,5 +105,5 @@ export default async function ApprovalsPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

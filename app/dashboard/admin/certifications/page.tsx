@@ -1,12 +1,11 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { createClient } from "@supabase/supabase-js"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { CheckCircle2, XCircle, Clock, Download, RefreshCw } from "lucide-react"
+"use client";
+import { useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { CheckCircle2, XCircle, Clock, Download, RefreshCw } from "lucide-react";
 
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 

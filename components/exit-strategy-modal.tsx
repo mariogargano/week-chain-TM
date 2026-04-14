@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -7,10 +6,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { TrendingUp, Users, Building2, Heart, Shield, Briefcase } from "lucide-react"
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { TrendingUp, Users, Building2, Heart, Shield, Briefcase } from "lucide-react";
 
 export function ExitStrategyModal() {
   return (

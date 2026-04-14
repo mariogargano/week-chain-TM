@@ -1,10 +1,9 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+"use client";
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   CheckCircle,
   XCircle,
@@ -16,7 +15,7 @@ import {
   Shield,
   FileText,
   Wallet,
-} from "lucide-react"
+} from "lucide-react";
 
 interface DiagnosticCheck {
   name: string

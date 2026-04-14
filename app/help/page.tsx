@@ -1,10 +1,9 @@
-"use client"
+"use client";
 
-import { Navbar } from "@/components/navbar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { HelpCircle, MessageSquare, Mail, Phone, FileText, Shield } from "lucide-react"
-import { SiteFooter } from "@/components/site-footer"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { HelpCircle, MessageSquare, Mail, Phone, FileText, Shield } from "lucide-react";
+
 
 export default function HelpPage() {
   return (

@@ -1,7 +1,7 @@
-import { createClient } from "@/lib/supabase/server"
-import { type NextRequest, NextResponse } from "next/server"
-import { jsPDF } from "jspdf"
-import type { NOM151Data } from "@/lib/types"
+import { createClient } from "@/lib/supabase/server";
+import { type NextRequest, NextResponse } from "next/server";
+import { jsPDF } from "jspdf";
+import type { NOM151Data } from "@/lib/types";
 
 export async function GET(request: NextRequest) {
   try {

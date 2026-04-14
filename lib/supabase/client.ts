@@ -1,4 +1,4 @@
-import { createBrowserClient as createSupabaseBrowserClient } from "@supabase/ssr"
+import { createBrowserClient as createSupabaseBrowserClient } from "@supabase/ssr";
 
 const createMockClient = () => {
   const mockQueryBuilder: any = {

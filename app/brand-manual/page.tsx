@@ -1,14 +1,14 @@
-import { Navbar } from "@/components/navbar"
-import { SiteFooter } from "@/components/site-footer"
-import { createClient } from "@/lib/supabase/server"
-import { Button } from "@/components/ui/button"
-import { Download, FileText } from "lucide-react"
+
+
+import { createClient } from "@/lib/supabase/server";
+import { Button } from "@/components/ui/button";
+import { Download, FileText } from "lucide-react";
 
 export default async function BrandManualPage() {
   const supabase = await createClient()
   const {
     data: { user },
-  } = await supabase.auth.getUser()
+  } = await supabase?.auth?.getUser()
 
   return (
     <div className="flex min-h-screen flex-col">

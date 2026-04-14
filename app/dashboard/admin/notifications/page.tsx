@@ -1,10 +1,9 @@
-"use client"
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Bell, Send, Users, CheckCircle } from "lucide-react"
-import { useState } from "react"
+"use client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Bell, Send, Users, CheckCircle } from "lucide-react";
+import { useState } from "react";
 
 export default function NotificationsPage() {
   const [notifications] = useState([
@@ -15,7 +14,7 @@ export default function NotificationsPage() {
       type: "success",
       sent: true,
       recipients: 150,
-      date: new Date().toISOString(),
+      date: new Date()?.toISOString(),
     },
     {
       id: 2,
@@ -24,7 +23,7 @@ export default function NotificationsPage() {
       type: "warning",
       sent: false,
       recipients: 0,
-      date: new Date().toISOString(),
+      date: new Date()?.toISOString(),
     },
   ])
 
@@ -40,7 +39,6 @@ export default function NotificationsPage() {
           Nueva Notificación
         </Button>
       </div>
-
       <div className="grid gap-6 md:grid-cols-3">
         <Card className="border-blue-200 bg-gradient-to-br from-blue-50 to-blue-100">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -48,7 +46,7 @@ export default function NotificationsPage() {
             <CheckCircle className="h-5 w-5 text-blue-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-slate-800">{notifications.filter((n) => n.sent).length}</div>
+            <div className="text-3xl font-bold text-slate-800">{notifications?.filter((n) => n?.sent)?.length}</div>
             <p className="text-xs text-slate-600 mt-1">Este mes</p>
           </CardContent>
         </Card>
@@ -59,7 +57,7 @@ export default function NotificationsPage() {
             <Bell className="h-5 w-5 text-yellow-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-slate-800">{notifications.filter((n) => !n.sent).length}</div>
+            <div className="text-3xl font-bold text-slate-800">{notifications?.filter((n) => !n?.sent)?.length}</div>
             <p className="text-xs text-slate-600 mt-1">Por enviar</p>
           </CardContent>
         </Card>
@@ -71,13 +69,12 @@ export default function NotificationsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-slate-800">
-              {notifications.reduce((sum, n) => sum + n.recipients, 0)}
+              {notifications?.reduce((sum, n) => sum + n?.recipients, 0)}
             </div>
             <p className="text-xs text-slate-600 mt-1">Usuarios alcanzados</p>
           </CardContent>
         </Card>
       </div>
-
       <Card>
         <CardHeader>
           <CardTitle>Historial de Notificaciones</CardTitle>
@@ -85,26 +82,26 @@ export default function NotificationsPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {notifications.map((notification) => (
-              <div key={notification.id} className="p-6 rounded-lg border bg-slate-50 space-y-3">
+            {notifications?.map((notification) => (
+              <div key={notification?.id} className="p-6 rounded-lg border bg-slate-50 space-y-3">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="font-semibold text-lg text-slate-800">{notification.title}</h3>
+                      <h3 className="font-semibold text-lg text-slate-800">{notification?.title}</h3>
                       <Badge
-                        variant={notification.sent ? "default" : "secondary"}
-                        className={notification.sent ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}
+                        variant={notification?.sent ? "default" : "secondary"}
+                        className={notification?.sent ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}
                       >
-                        {notification.sent ? "Enviada" : "Pendiente"}
+                        {notification?.sent ? "Enviada" : "Pendiente"}
                       </Badge>
                     </div>
-                    <p className="text-slate-600">{notification.message}</p>
+                    <p className="text-slate-600">{notification?.message}</p>
                     <div className="text-sm text-slate-500 mt-2">
-                      {notification.sent ? `Enviada a ${notification.recipients} usuarios` : "Programada para envío"}
+                      {notification?.sent ? `Enviada a ${notification?.recipients} usuarios` : "Programada para envío"}
                     </div>
                   </div>
                 </div>
-                {!notification.sent && (
+                {!notification?.sent && (
                   <Button size="sm" className="bg-blue-500 hover:bg-blue-600">
                     <Send className="h-4 w-4 mr-1" />
                     Enviar Ahora
@@ -116,5 +113,5 @@ export default function NotificationsPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

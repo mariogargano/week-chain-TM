@@ -1,8 +1,7 @@
-"use client"
-
-import SphereImageGrid, { type ImageData } from "@/components/ui/img-sphere"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+"use client";
+import SphereImageGrid, { type ImageData } from "@/components/ui/img-sphere";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,10 +9,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Users, TrendingUp, Building2 } from "lucide-react"
-import Link from "next/link"
-import { FaXTwitter, FaFacebook, FaLinkedin, FaInstagram, FaTelegram, FaDiscord } from "react-icons/fa6"
+} from "@/components/ui/dialog";
+import { Users, TrendingUp, Building2 } from "lucide-react";
+import Link from "next/link";
+import { FaXTwitter, FaFacebook, FaLinkedin, FaInstagram, FaTelegram, FaDiscord } from "react-icons/fa6";
 
 const COMMUNITY_MEMBERS: ImageData[] = [
   // Brokers Elite

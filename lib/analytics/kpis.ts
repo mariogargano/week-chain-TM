@@ -4,7 +4,7 @@
  * Based on the architecture document KPIs
  */
 
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server";
 
 // ============================================================================
 // TYPES
@@ -128,7 +128,7 @@ export async function calculateARPU(months = 12): Promise<KPIMetric> {
     .eq('status', 'completed')
     .gte('created_at', startDate.toISOString())
   
-  const totalRevenue = payments?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0
+  let totalRevenue = payments?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0
   const uniqueUsers = new Set(payments?.map(p => p.user_id) || []).size
   const arpu = uniqueUsers > 0 ? totalRevenue / uniqueUsers : 0
   
@@ -264,7 +264,7 @@ export async function calculateSVCSales(days = 30): Promise<KPIMetric[]> {
     .gte('purchased_at', startDate.toISOString())
   
   const totalSales = count || 0
-  const totalRevenue = sales?.reduce((sum, s) => sum + (s.price_paid || 0), 0) || 0
+  let totalRevenue = sales?.reduce((sum, s) => sum + (s.price_paid || 0), 0) || 0
   const avgTicket = totalSales > 0 ? totalRevenue / totalSales : 0
   
   // Sales by tier
@@ -524,8 +524,7 @@ export async function getKPIsForRole(role: string): Promise<RoleKPIs> {
   const kpis: KPIMetric[] = []
   
   switch (role) {
-    case 'admin':
-    case 'super_admin':
+    case 'admin': case'super_admin':
       // Executive dashboard - all KPIs
       const gbv = await calculateGBV()
       const mrr = await calculateMRR()
@@ -536,8 +535,7 @@ export async function getKPIsForRole(role: string): Promise<RoleKPIs> {
       kpis.push(gbv, mrr, occupancy, nps, slaCompliance, conversion)
       break
       
-    case 'finance':
-    case 'treasury':
+    case 'finance': case'treasury':
       // Financial KPIs
       const finGbv = await calculateGBV()
       const finMrr = await calculateMRR()
@@ -555,8 +553,7 @@ export async function getKPIsForRole(role: string): Promise<RoleKPIs> {
       kpis.push(opOccupancy, revpar, adr, opSla)
       break
       
-    case 'sales':
-    case 'broker':
+    case 'sales': case'broker':
       // Sales KPIs
       const salesMetrics = await calculateSVCSales()
       const salesConversion = await calculateConversionRate()
@@ -572,8 +569,7 @@ export async function getKPIsForRole(role: string): Promise<RoleKPIs> {
       kpis.push(serviceNps, csat, responseTime, serviceSla)
       break
       
-    case 'compliance':
-    case 'legal':
+    case 'compliance': case'legal':
       // Compliance KPIs
       const kyc = await calculateKYCCompletion()
       const contracts = await calculateContractSignatureRate()

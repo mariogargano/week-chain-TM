@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/server"
-import { addDays } from "date-fns"
+import { createClient } from "@/lib/supabase/server";
+import { addDays } from "date-fns";
 
 export interface MatchOptions {
   desired_start_date: string

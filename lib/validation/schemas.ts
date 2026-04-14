@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 // Mifiel NOM-151 Certification Schemas
 export const MifielHashSchema = z.object({

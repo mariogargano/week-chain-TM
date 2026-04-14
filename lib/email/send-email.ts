@@ -1,6 +1,6 @@
-import { Resend } from "resend"
-import { createClient } from "@/lib/supabase/server"
-import type { EmailTemplateType, SendEmailRequest, SendEmailResponse, TemplateVariables } from "@/types/email"
+import { Resend } from "resend";
+import { createClient } from "@/lib/supabase/server";
+import type { EmailTemplateType, SendEmailRequest, SendEmailResponse, TemplateVariables } from "@/types/email";
 
 const resend = new Resend(process.env.RESEND_API_KEY || "re_placeholder_for_build")
 

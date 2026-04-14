@@ -1,8 +1,8 @@
 // lib/broker/commission-calculator.ts
 // Calcula y registra comisiones de broker con el nuevo sistema de niveles
 
-import { createClient } from "@/lib/supabase/server"
-import { updateBrokerLevel } from "./broker-levels"
+import { createClient } from "@/lib/supabase/server";
+import { updateBrokerLevel } from "./broker-levels";
 
 export interface CommissionInput {
   reservationId: string

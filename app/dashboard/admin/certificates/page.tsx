@@ -1,47 +1,17 @@
-"use client"
+"use client";
+import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { useState, useEffect } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import { Slider } from "@/components/ui/slider"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import {
-  Ticket,
-  Settings,
-  DollarSign,
-  Users,
-  Calendar,
-  TrendingUp,
-  AlertTriangle,
-  CheckCircle,
-  XCircle,
-  Play,
-  Ban,
-  RefreshCw,
-  Plus,
-  Edit,
-  Save,
-  Loader2,
-  Layers,
-  Activity,
-  Shield,
-  Clock,
-  Hash,
-  QrCode,
-  Eye,
-  Copy,
-  Download,
-  BarChart3,
-  PieChart,
-  Zap,
-} from "lucide-react"
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Ticket, Settings, Users, Calendar, AlertTriangle, CheckCircle, XCircle, Play, Ban, RefreshCw, Edit, Save, Loader2, Layers, Activity, Shield, Clock, Hash, QrCode, Eye, Copy, Download, Zap,  } from "lucide-react";
 
 interface CertificateProduct {
   id: string
@@ -363,8 +333,7 @@ export default function SVCConfiguratorPage() {
                           key={product.id}
                           className={`border-2 transition-all ${
                             product.sales_enabled
-                              ? "border-emerald-200 bg-emerald-50/30"
-                              : "border-red-200 bg-red-50/30"
+                              ? "border-emerald-200 bg-emerald-50/30" :"border-red-200 bg-red-50/30"
                           }`}
                         >
                           <CardContent className="p-4">
@@ -404,8 +373,7 @@ export default function SVCConfiguratorPage() {
                               onClick={() => toggleProductSales(product.id, product.sales_enabled)}
                               className={`w-full ${
                                 product.sales_enabled
-                                  ? "bg-red-500 hover:bg-red-600"
-                                  : "bg-emerald-500 hover:bg-emerald-600"
+                                  ? "bg-red-500 hover:bg-red-600" :"bg-emerald-500 hover:bg-emerald-600"
                               }`}
                               size="sm"
                             >

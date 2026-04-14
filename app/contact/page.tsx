@@ -1,7 +1,6 @@
-"use client"
-
-import type React from "react"
-import { useState } from "react"
+"use client";
+import type React from "react";
+import { useState } from "react";
 import {
   Mail,
   MapPin,
@@ -13,16 +12,16 @@ import {
   Calendar,
   HelpCircle,
   ChevronRight,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Navbar } from "@/components/navbar"
-import { SiteFooter } from "@/components/site-footer"
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({

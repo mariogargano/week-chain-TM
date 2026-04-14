@@ -1,9 +1,8 @@
-"use client"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Loader2, FileArchive } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Loader2, FileArchive } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface DownloadLegalPackageButtonProps {
   bookingId: string

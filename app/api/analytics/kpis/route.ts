@@ -3,9 +3,9 @@
  * Returns role-based KPI data for dashboards
  */
 
-import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
-import { getKPIsForRole, getAdminDashboardData } from "@/lib/analytics/kpis"
+import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { getKPIsForRole, getAdminDashboardData } from "@/lib/analytics/kpis";
 
 export async function GET(request: Request) {
   const supabase = await createClient()

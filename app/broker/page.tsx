@@ -1,9 +1,9 @@
-import { createClient } from "@/lib/supabase/server"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import Link from "next/link"
-import { Users, DollarSign, TrendingUp, Share2, Award, Home, Copy } from "lucide-react"
-import { BrokerStatsCard } from "@/components/broker-stats-card"
+import { createClient } from "@/lib/supabase/server";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
+import { Users, DollarSign, TrendingUp, Share2, Award, Home, Copy } from "lucide-react";
+import { BrokerStatsCard } from "@/components/broker-stats-card";
 
 export default async function BrokerPortalPage() {
   const supabase = await createClient()

@@ -1,7 +1,7 @@
-import { createClient } from "@/lib/supabase/server"
-import { NextResponse } from "next/server"
-import { logger } from "@/lib/config/logger"
-import { env } from "@/lib/config/environment"
+import { createClient } from "@/lib/supabase/server";
+import { NextResponse } from "next/server";
+import { logger } from "@/lib/config/logger";
+import { env } from "@/lib/config/environment";
 
 /**
  * Demo Flow Simulator
@@ -31,7 +31,6 @@ export async function POST(request: Request) {
 
     const demoUserId = user.id
     const demoUserEmail = user.email || "demo@weekchain.com"
-
     logger.info("[DEMO] Using user for simulation", {
       user_id: demoUserId,
       authenticated: !!user,

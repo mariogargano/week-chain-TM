@@ -1,21 +1,9 @@
-import { createClient } from "@/lib/supabase/client"
+import { createClient } from "@/lib/supabase/client";
 
 export const ADMIN_EMAIL = "corporativo@morises.com"
 
 export type UserRole =
-  | "admin"
-  | "super_admin"
-  | "management"
-  | "broker"
-  | "broker_elite"
-  | "notaria"
-  | "of_counsel"
-  | "service_provider"
-  | "vafi_manager"
-  | "dao_member"
-  | "property_owner"
-  | "staff"
-  | "user"
+  | "admin" |"super_admin" |"management" |"broker" |"broker_elite" |"notaria" |"of_counsel" |"service_provider" |"vafi_manager" |"dao_member" |"property_owner" |"staff" |"user"
 
 export interface RoleInfo {
   role: UserRole

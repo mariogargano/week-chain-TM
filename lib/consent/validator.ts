@@ -1,4 +1,4 @@
-import { createServerClient } from "@/lib/supabase/server"
+import { createServerClient } from "@/lib/supabase/server";
 
 export type ConsentType = "terms" | "privacy" | "reservation" | "activation" | "offer_acceptance"
 

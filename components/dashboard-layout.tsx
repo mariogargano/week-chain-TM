@@ -1,6 +1,6 @@
-import type { ReactNode } from "react"
-import { Card } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
+import type { ReactNode } from "react";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface DashboardLayoutProps {
   children: ReactNode
@@ -17,8 +17,7 @@ export function DashboardLayout({ children, theme = "light", headerContent, side
       className={cn(
         "min-h-screen",
         isDark
-          ? "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
-          : "bg-gradient-to-br from-slate-50 to-slate-100",
+          ? "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" :"bg-gradient-to-br from-slate-50 to-slate-100",
       )}
     >
       {headerContent && (

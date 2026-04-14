@@ -1,5 +1,5 @@
-import type { Metadata } from "next"
-import WeekLiveStyleClientPage from "./_components/WeekLiveStyleClientPage"
+import type { Metadata } from "next";
+import WeekLiveStyleClientPage from "./_components/WeekLiveStyleClientPage";
 
 export const metadata: Metadata = {
   title: "WEEK Live In Style | Blog de Estilo de Vida Vacacional",

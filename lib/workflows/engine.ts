@@ -4,7 +4,7 @@
  * Based on the 360° REaaS Architecture Document
  */
 
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server";
 
 // ============================================================================
 // TYPES

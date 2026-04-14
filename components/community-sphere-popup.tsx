@@ -1,13 +1,12 @@
-"use client"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import SphereImageGrid, { type ImageData } from "@/components/ui/img-sphere"
-import { Users, TrendingUp, Building2, Globe } from "lucide-react"
-import Link from "next/link"
-import { FaXTwitter, FaFacebook, FaLinkedin, FaInstagram, FaTelegram, FaDiscord } from "react-icons/fa6"
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import SphereImageGrid, { type ImageData } from "./ui/img-sphere";
+import { Users, TrendingUp, Building2, Globe } from "lucide-react";
+import Link from "next/link";
+import { FaXTwitter, FaFacebook, FaLinkedin, FaInstagram, FaTelegram, FaDiscord } from "react-icons/fa6";
 
 const COMMUNITY_MEMBERS: ImageData[] = [
   {

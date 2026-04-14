@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 import {
   Award,
   ArrowRight,
@@ -16,9 +16,9 @@ import {
   CheckCircle,
   Lock,
   Sparkles,
-} from "lucide-react"
-import type { Metadata } from "next"
-import { BrokerDashboardPreview } from "@/components/broker-dashboard-preview"
+} from "lucide-react";
+import type { Metadata } from "next";
+import { BrokerDashboardPreview } from "@/components/broker-dashboard-preview";
 
 export const metadata: Metadata = {
   title: "Programa de Intermediación | WEEK-CHAIN™",

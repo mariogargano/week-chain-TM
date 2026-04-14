@@ -1,8 +1,8 @@
-import type { Metadata } from "next"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
+import type { Metadata } from "next";
+
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 import {
   Home,
   FileText,
@@ -14,7 +14,7 @@ import {
   Building2,
   Key,
   Calendar,
-} from "lucide-react"
+} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "WEEK-Management™ | Administración de Certificados Vacacionales",

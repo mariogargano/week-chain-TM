@@ -1,10 +1,9 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { detectLocale, type Locale } from "./locale"
-import { defaultLocale } from "./config"
-import { translations } from "./translations"
-import { fmtDate, fmtCurrency, fmtNumber, fmtPercent, fmtDateTime, fmtRelativeTime } from "./format"
+"use client";
+import { useEffect, useState } from "react";
+import { detectLocale, type Locale } from "./locale";
+import { defaultLocale } from "./config";
+import { translations } from "./translations";
+import { fmtDate, fmtCurrency, fmtNumber, fmtPercent, fmtDateTime, fmtRelativeTime } from "./format";
 
 export function useI18n() {
   const [locale, setLocaleState] = useState<Locale>(defaultLocale)

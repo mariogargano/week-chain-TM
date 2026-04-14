@@ -1,25 +1,24 @@
-"use client"
+"use client";
+import type React from "react";
 
-import type React from "react"
+import { useRef } from "react";
 
-import { useRef } from "react"
-
-import { createBrowserClient } from "@/lib/supabase/client"
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { toast } from "sonner"
-import { Loader2, Upload, Camera } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useRouter } from "next/navigation"
-import { CardDescription } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
+import { createBrowserClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import { Loader2, Upload, Camera } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useRouter } from "next/navigation";
+import { CardDescription } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import {
   ArrowLeft,
   User,
@@ -34,8 +33,8 @@ import {
   MapPin,
   Save,
   X,
-} from "lucide-react"
-import Link from "next/link"
+} from "lucide-react";
+import Link from "next/link";
 
 interface UserProfile {
   id: string
@@ -649,8 +648,7 @@ export default function ProfilePage() {
                     <div
                       className={`border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors ${
                         profile?.id_front_url
-                          ? "border-green-300 bg-green-50"
-                          : "border-gray-200 hover:border-primary hover:bg-gray-50"
+                          ? "border-green-300 bg-green-50" :"border-gray-200 hover:border-primary hover:bg-gray-50"
                       }`}
                       onClick={() => triggerFileInput("id_front_url")}
                     >
@@ -685,8 +683,7 @@ export default function ProfilePage() {
                     <div
                       className={`border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors ${
                         profile?.id_back_url
-                          ? "border-green-300 bg-green-50"
-                          : "border-gray-200 hover:border-primary hover:bg-gray-50"
+                          ? "border-green-300 bg-green-50" :"border-gray-200 hover:border-primary hover:bg-gray-50"
                       }`}
                       onClick={() => triggerFileInput("id_back_url")}
                     >
@@ -721,8 +718,7 @@ export default function ProfilePage() {
                     <div
                       className={`border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors ${
                         profile?.selfie_url
-                          ? "border-green-300 bg-green-50"
-                          : "border-gray-200 hover:border-primary hover:bg-gray-50"
+                          ? "border-green-300 bg-green-50" :"border-gray-200 hover:border-primary hover:bg-gray-50"
                       }`}
                       onClick={() => triggerFileInput("selfie_url")}
                     >
@@ -757,8 +753,7 @@ export default function ProfilePage() {
                     <div
                       className={`border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors ${
                         profile?.proof_of_address_url
-                          ? "border-green-300 bg-green-50"
-                          : "border-gray-200 hover:border-primary hover:bg-gray-50"
+                          ? "border-green-300 bg-green-50" :"border-gray-200 hover:border-primary hover:bg-gray-50"
                       }`}
                       onClick={() => triggerFileInput("proof_of_address_url")}
                     >
@@ -793,11 +788,8 @@ export default function ProfilePage() {
                   className={`p-4 rounded-lg ${
                     profile?.verification_status === "verified"
                       ? "bg-green-50 border border-green-200"
-                      : profile?.verification_status === "in_review"
-                        ? "bg-yellow-50 border border-yellow-200"
-                        : profile?.verification_status === "rejected"
-                          ? "bg-red-50 border border-red-200"
-                          : "bg-gray-50 border border-gray-200"
+                      : profile?.verification_status === "in_review" ?"bg-yellow-50 border border-yellow-200"
+                        : profile?.verification_status === "rejected" ?"bg-red-50 border border-red-200" :"bg-gray-50 border border-gray-200"
                   }`}
                 >
                   <div className="flex items-start gap-3">
@@ -812,22 +804,14 @@ export default function ProfilePage() {
                     )}
                     <div>
                       <p className="font-medium">
-                        {profile?.verification_status === "verified"
-                          ? "Identidad Verificada"
-                          : profile?.verification_status === "in_review"
-                            ? "Documentos en Revisión"
-                            : profile?.verification_status === "rejected"
-                              ? "Verificación Rechazada"
-                              : "Verificación Pendiente"}
+                        {profile?.verification_status === "verified" ?"Identidad Verificada"
+                          : profile?.verification_status === "in_review" ?"Documentos en Revisión"
+                            : profile?.verification_status === "rejected" ?"Verificación Rechazada" :"Verificación Pendiente"}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {profile?.verification_status === "verified"
-                          ? "Tu identidad ha sido verificada exitosamente."
-                          : profile?.verification_status === "in_review"
-                            ? "Estamos revisando tus documentos. Esto puede tomar 24-48 horas."
-                            : profile?.verification_status === "rejected"
-                              ? "Por favor, sube nuevos documentos siguiendo las instrucciones."
-                              : "Sube tus documentos para verificar tu identidad."}
+                        {profile?.verification_status === "verified" ?"Tu identidad ha sido verificada exitosamente."
+                          : profile?.verification_status === "in_review" ?"Estamos revisando tus documentos. Esto puede tomar 24-48 horas."
+                            : profile?.verification_status === "rejected" ?"Por favor, sube nuevos documentos siguiendo las instrucciones." :"Sube tus documentos para verificar tu identidad."}
                       </p>
                     </div>
                   </div>

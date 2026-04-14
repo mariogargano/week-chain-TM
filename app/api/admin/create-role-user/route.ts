@@ -1,7 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@supabase/supabase-js"
-import { Resend } from "resend"
-import { ADMIN_EMAIL } from "@/lib/auth/roles"
+import { type NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
+import { Resend } from "resend";
+import { ADMIN_EMAIL } from "@/lib/auth/roles";
 
 function getSupabaseAdmin() {
   return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)

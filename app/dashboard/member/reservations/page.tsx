@@ -1,14 +1,13 @@
-"use client"
+"use client";
+import React from "react";
 
-import React from "react"
-
-import { useState, useEffect } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Plus,
   Clock,
@@ -21,11 +20,11 @@ import {
   Inbox,
   Send,
   FileCheck,
-} from "lucide-react"
-import { format } from "date-fns"
-import { es } from "date-fns/locale"
-import Link from "next/link"
-import { Navbar } from "@/components/navbar"
+} from "lucide-react";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+import Link from "next/link";
+import { Navbar } from "@/components/navbar";
 
 interface Request {
   id: string
@@ -287,15 +286,13 @@ export default function ReservationsPage() {
                         </div>
                         <Link 
                           href={request.offers_count && request.offers_count > 0 
-                            ? "/dashboard/member/reservations/offers" 
-                            : "#"
+                            ? "/dashboard/member/reservations/offers" :"#"
                           }
                         >
                           <Button 
                             variant={request.offers_count && request.offers_count > 0 ? "default" : "outline"}
                             className={request.offers_count && request.offers_count > 0 
-                              ? "glass-button text-white border-0" 
-                              : "bg-transparent"
+                              ? "glass-button text-white border-0" :"bg-transparent"
                             }
                             disabled={!request.offers_count || request.offers_count === 0}
                           >
