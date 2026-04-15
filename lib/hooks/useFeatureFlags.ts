@@ -1,9 +1,10 @@
 // lib/hooks/useFeatureFlags.ts
-'use client'
+'use client';
+import { useEffect, useState } from 'react';
+import type { FeatureFlags } from '@/lib/flags/client';
+import { getFeatureFlags, getDefaultFlags } from '@/lib/flags/client';
+import Error from '@/app/error';
 
-import { useEffect, useState } from 'react'
-import type { FeatureFlags } from '@/lib/flags/client'
-import { getFeatureFlags, getDefaultFlags } from '@/lib/flags/client'
 
 export function useFeatureFlags() {
   const [flags, setFlags] = useState<FeatureFlags>(getDefaultFlags())

@@ -1,13 +1,12 @@
-'use client'
-
-import { useEffect, useState, Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { toast } from 'sonner'
-import { CheckCircle, AlertCircle, Clock } from 'lucide-react'
-import Link from 'next/link'
+'use client';
+import { useEffect, useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { toast } from 'sonner';
+import { CheckCircle, AlertCircle, Clock } from 'lucide-react';
+import Link from 'next/link';
 
 function ConfirmContent() {
   const searchParams = useSearchParams()

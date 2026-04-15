@@ -1,16 +1,15 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Package, CheckCircle, Clock, AlertCircle, TrendingUp, Calendar, FileText, Download, Star } from "lucide-react"
-import { Navbar } from "@/components/navbar"
-import { RoleGuard } from "@/components/role-guard"
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
-import { ChartContainer } from "@/components/ui/chart"
+"use client";
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Package, CheckCircle, Clock, AlertCircle, TrendingUp, Calendar, FileText, Download, Star } from "lucide-react";
+import { Navbar } from "@/components/navbar";
+import { RoleGuard } from "@/components/role-guard";
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { ChartContainer } from "@/components/ui/chart";
 
 interface Service {
   id: string

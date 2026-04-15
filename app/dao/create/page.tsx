@@ -1,12 +1,12 @@
-import Link from "next/link"
-import { createServerClient } from "@/lib/supabase/server"
-import { redirect } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import Link from "next/link";
+import { createServerClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default async function CreateProposalPage() {
   const supabase = await createServerClient()
@@ -20,9 +20,8 @@ export default async function CreateProposalPage() {
   }
 
   async function createProposal(formData: FormData) {
-    "use server"
-
-    const supabase = await createServerClient()
+"use server";
+const supabase = await createServerClient()
     const {
       data: { user },
     } = await supabase.auth.getUser()

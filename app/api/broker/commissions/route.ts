@@ -1,6 +1,6 @@
-import { createClient } from "@/lib/supabase/server"
-import { NextResponse } from "next/server"
-import { getBrokerCommissionRate } from "@/lib/broker/broker-levels"
+import { createClient } from "@/lib/supabase/server";
+import { NextResponse } from "next/server";
+import { getBrokerCommissionRate } from "@/lib/broker/broker-levels";
 
 export async function GET() {
   try {

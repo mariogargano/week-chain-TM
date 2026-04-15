@@ -1,6 +1,6 @@
-import AdmZip from "adm-zip"
-import { createClient } from "@supabase/supabase-js"
-import { getEnv } from "@/lib/config/env-schema"
+import AdmZip from "adm-zip";
+import { createClient } from "@supabase/supabase-js";
+import { getEnv } from "@/lib/config/env-schema";
 
 export interface EvidenceFiles {
   contract_pdf: Buffer

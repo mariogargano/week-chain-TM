@@ -1,11 +1,10 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+"use client";
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Inbox,
   Mail,
@@ -18,8 +17,8 @@ import {
   User,
   Calendar,
   MessageSquare,
-} from "lucide-react"
-import { AdminSidebar } from "@/components/admin-sidebar"
+} from "lucide-react";
+import { AdminSidebar } from "@/components/admin-sidebar";
 
 interface ContactRequest {
   id: string
@@ -29,7 +28,7 @@ interface ContactRequest {
   subject: string
   category: string
   message: string
-  status: "pending" | "in_progress" | "resolved" | "archived"
+  status: "pending" | "in_progress" | "resolved" | "archived";
   priority: "low" | "normal" | "high" | "urgent"
   created_at: string
   assigned_to_admin?: { id: string; name: string; email: string }

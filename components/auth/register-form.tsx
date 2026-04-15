@@ -1,13 +1,12 @@
-"use client"
-
-import type React from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Eye, EyeOff, Mail, Lock, User, Phone, Gift } from "lucide-react"
-import { useState } from "react"
-import Link from "next/link"
+"use client";
+import type React from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Eye, EyeOff, Mail, Lock, User, Phone, Gift } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
 
 interface RegisterFormProps {
   email: string

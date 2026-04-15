@@ -1,7 +1,6 @@
-"use client"
-
-import Link from "next/link"
-import { Shield, FileCheck, Users, Lock, CheckCircle } from "lucide-react"
+"use client";
+import Link from "next/link";
+import { Shield, FileCheck, Users, Lock, CheckCircle } from "lucide-react";
 
 export function GlobalInfrastructureSection() {
   return (

@@ -1,5 +1,5 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { type NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,8 +30,7 @@ export async function POST(request: NextRequest) {
         }
         break
 
-      case "PAYMENT.CAPTURE.DENIED":
-      case "PAYMENT.CAPTURE.REFUNDED":
+      case "PAYMENT.CAPTURE.DENIED": case"PAYMENT.CAPTURE.REFUNDED":
         // Payment denied or refunded
         const refOrderId = body.resource?.supplementary_data?.related_ids?.order_id
         if (refOrderId) {

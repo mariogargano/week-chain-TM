@@ -1,7 +1,6 @@
-"use client"
-
-import { SidebarTrigger } from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button"
+"use client";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,13 +8,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Bell, Search, Settings, User, LogOut } from "lucide-react"
-import { useEffect, useState } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Bell, Search, Settings, User, LogOut } from "lucide-react";
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function AdminHeader() {
   const router = useRouter()
@@ -26,19 +25,15 @@ export function AdminHeader() {
     const loadUserData = async () => {
       try {
         const supabase = createClient()
-        const { data: { user } } = await supabase.auth.getUser()
+        const { data: { user } } = await supabase?.auth?.getUser()
         if (user) {
-          const email = user.email || ""
+          const email = user?.email || ""
           setUserEmail(email)
-          const { data: userData } = await supabase
-            .from("users")
-            .select("full_name")
-            .eq("id", user.id)
-            .maybeSingle()
+          const { data: userData } = await supabase?.from("users")?.select("full_name")?.eq("id", user?.id)?.maybeSingle()
           if (userData?.full_name) {
-            setUserName(userData.full_name)
+            setUserName(userData?.full_name)
           } else {
-            setUserName(email.split("@")[0] || "Admin")
+            setUserName(email?.split("@")?.[0] || "Admin")
           }
         }
       } catch {
@@ -51,17 +46,16 @@ export function AdminHeader() {
   const handleSignOut = async () => {
     try {
       const supabase = createClient()
-      await supabase.auth.signOut()
+      await supabase?.auth?.signOut()
     } catch {
       // Sign out failed silently
     }
-    router.push("/auth")
+    router?.push("/auth")
   }
 
   return (
     <header className="sticky top-0 z-10 flex h-14 items-center gap-2 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl px-3">
       <SidebarTrigger className="min-h-[44px] min-w-[44px] rounded-lg hover:bg-slate-100" />
-
       {/* Logo on mobile only */}
       <div className="flex items-center gap-2 sm:hidden">
         <div className="h-7 w-7 rounded-lg bg-sky-500 flex items-center justify-center">
@@ -69,7 +63,6 @@ export function AdminHeader() {
         </div>
         <span className="text-sm font-semibold text-slate-900">WEEK-WORLD</span>
       </div>
-
       <div className="flex flex-1 items-center justify-end gap-1">
         {/* Search - hidden on mobile */}
         <div className="relative hidden md:block">
@@ -96,7 +89,7 @@ export function AdminHeader() {
               <Avatar className="h-8 w-8">
                 <AvatarImage src="/admin-avatar.png" />
                 <AvatarFallback className="bg-sky-100 text-sky-700 text-sm font-semibold">
-                  {userName.charAt(0).toUpperCase()}
+                  {userName?.charAt(0)?.toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <div className="hidden flex-col items-start sm:flex">
@@ -115,11 +108,11 @@ export function AdminHeader() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => router.push("/dashboard/admin/profile")} className="cursor-pointer">
+            <DropdownMenuItem onClick={() => router?.push("/dashboard/admin/profile")} className="cursor-pointer">
               <User className="mr-2 h-4 w-4" />
               Perfil
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push("/dashboard/admin/settings")} className="cursor-pointer">
+            <DropdownMenuItem onClick={() => router?.push("/dashboard/admin/settings")} className="cursor-pointer">
               <Settings className="mr-2 h-4 w-4" />
               Configuracion
             </DropdownMenuItem>
@@ -132,5 +125,5 @@ export function AdminHeader() {
         </DropdownMenu>
       </div>
     </header>
-  )
+  );
 }

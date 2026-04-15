@@ -1,5 +1,5 @@
-import { createHmac, timingSafeEqual } from "crypto"
-import { getEnv } from "@/lib/config/env-schema"
+import { createHmac, timingSafeEqual } from "crypto";
+import { getEnv } from "@/lib/config/env-schema";
 
 export interface LegalarioWebhookPayload {
   event: "contract.certified" | "contract.rejected" | "contract.updated"

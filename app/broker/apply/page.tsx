@@ -1,21 +1,20 @@
-"use client"
+"use client";
+import type React from "react";
+import { useState, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
 
-import type React from "react"
-import { useState, Suspense } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Badge } from "@/components/ui/badge"
-import { Navbar } from "@/components/navbar"
-import { User, Building2, ArrowLeft, AlertTriangle, CreditCard, Mail, Phone, MapPin, Sparkles } from "lucide-react"
-import Link from "next/link"
-import { createClient } from "@/lib/supabase/client"
-import { QRCodeSVG } from "qrcode.react"
+import { User, Building2, ArrowLeft, AlertTriangle, CreditCard, Mail, Phone, MapPin, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
+import { QRCodeSVG } from "qrcode.react";
 
 const countries = [
   { code: "MX", name: "México", flag: "🇲🇽" },
@@ -335,9 +334,7 @@ function BrokerApplyContent() {
                         type="button"
                         onClick={() => setBrokerType("individual")}
                         className={`p-6 rounded-xl border-2 text-left transition-all ${
-                          brokerType === "individual"
-                            ? "border-[#FF9AA2] bg-[#FF9AA2]/5"
-                            : "border-slate-200 hover:border-slate-300"
+                          brokerType === "individual" ?"border-[#FF9AA2] bg-[#FF9AA2]/5" :"border-slate-200 hover:border-slate-300"
                         }`}
                       >
                         <User
@@ -350,9 +347,7 @@ function BrokerApplyContent() {
                         type="button"
                         onClick={() => setBrokerType("company")}
                         className={`p-6 rounded-xl border-2 text-left transition-all ${
-                          brokerType === "company"
-                            ? "border-[#C7CEEA] bg-[#C7CEEA]/5"
-                            : "border-slate-200 hover:border-slate-300"
+                          brokerType === "company" ?"border-[#C7CEEA] bg-[#C7CEEA]/5" :"border-slate-200 hover:border-slate-300"
                         }`}
                       >
                         <Building2

@@ -1,11 +1,10 @@
-"use client"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Loader2, CheckCircle2, Circle, PlayCircle } from "lucide-react"
-import { toast } from "sonner"
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Loader2, CheckCircle2, Circle, PlayCircle } from "lucide-react";
+import { toast } from "sonner";
 
 interface DemoStep {
   id: string

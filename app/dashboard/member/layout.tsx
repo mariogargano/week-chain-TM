@@ -1,17 +1,16 @@
-"use client"
+"use client";
+import type React from "react";
 
-import type React from "react"
-
-import { createBrowserClient } from "@/lib/supabase/client"
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { LayoutDashboard, User, CreditCard, Users, Settings, LogOut, Menu, X, Bell, Search } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Input } from "@/components/ui/input"
-import { SocialShareSidebar } from "@/components/social-share-sidebar"
-import { Suspense } from "react"
+import { createBrowserClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { LayoutDashboard, User, CreditCard, Users, Settings, LogOut, Menu, X, Bell, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Input } from "@/components/ui/input";
+import { SocialShareSidebar } from "@/components/social-share-sidebar";
+import { Suspense } from "react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard/member", icon: LayoutDashboard },

@@ -1,23 +1,20 @@
-import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { TrendingUp, DollarSign, Users, Building2, PieChart } from "lucide-react"
+import { createClient } from "@/lib/supabase/server";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { TrendingUp, DollarSign, Users, Building2, PieChart } from "lucide-react";
 
 export default async function ExitStrategyPage() {
   const supabase = await createClient()
 
-  const { data: distributions } = await supabase
-    .from("exit_distributions")
-    .select(`
+  const { data: distributions } = await supabase?.from("exit_distributions")?.select(`
       *,
       properties (
         name,
         location
       )
-    `)
-    .order("distribution_date", { ascending: false })
+    `)?.order("distribution_date", { ascending: false })
 
-  const totalDistributed = distributions?.reduce((sum, d) => sum + Number.parseFloat(d.total_sale_amount), 0) || 0
+  const totalDistributed = distributions?.reduce((sum, d) => sum + Number.parseFloat(d?.total_sale_amount), 0) || 0
   const propertiesExited = distributions?.length || 0
 
   return (
@@ -26,7 +23,6 @@ export default async function ExitStrategyPage() {
         <h1 className="text-3xl font-bold text-slate-800">Exit Strategy</h1>
         <p className="text-slate-600 mt-2">Distribución 50/10/30/10 después de 15 años</p>
       </div>
-
       <div className="grid gap-6 md:grid-cols-3">
         <Card className="border-green-200 bg-gradient-to-br from-green-50 to-green-100">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -34,7 +30,7 @@ export default async function ExitStrategyPage() {
             <DollarSign className="h-5 w-5 text-green-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-slate-800">${totalDistributed.toLocaleString()}</div>
+            <div className="text-3xl font-bold text-slate-800">${totalDistributed?.toLocaleString()}</div>
             <p className="text-xs text-slate-600 mt-1">De ventas finales</p>
           </CardContent>
         </Card>
@@ -57,13 +53,12 @@ export default async function ExitStrategyPage() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-slate-800">
-              {distributions?.reduce((sum, d) => sum + (d.holder_distributions?.length || 0), 0) || 0}
+              {distributions?.reduce((sum, d) => sum + (d?.holder_distributions?.length || 0), 0) || 0}
             </div>
             <p className="text-xs text-slate-600 mt-1">Holders pagados</p>
           </CardContent>
         </Card>
       </div>
-
       {/* Distribution Model */}
       <Card>
         <CardHeader>
@@ -114,7 +109,6 @@ export default async function ExitStrategyPage() {
           </div>
         </CardContent>
       </Card>
-
       {/* Distribution History */}
       <Card>
         <CardHeader>
@@ -137,30 +131,30 @@ export default async function ExitStrategyPage() {
               </thead>
               <tbody>
                 {distributions?.map((dist) => {
-                  const total = Number.parseFloat(dist.total_sale_amount)
+                  const total = Number.parseFloat(dist?.total_sale_amount)
                   const holders = total * 0.5
                   const brokers = total * 0.1
                   const weekchain = total * 0.3
                   const dao = total * 0.1
 
                   return (
-                    <tr key={dist.id} className="border-b hover:bg-slate-50">
+                    <tr key={dist?.id} className="border-b hover:bg-slate-50">
                       <td className="py-3 px-4">
                         <div>
-                          <div className="font-medium text-slate-800">{dist.properties?.name}</div>
-                          <div className="text-sm text-slate-600">{dist.properties?.location}</div>
+                          <div className="font-medium text-slate-800">{dist?.properties?.name}</div>
+                          <div className="text-sm text-slate-600">{dist?.properties?.location}</div>
                         </div>
                       </td>
-                      <td className="py-3 px-4 font-semibold text-green-600">${total.toLocaleString()}</td>
-                      <td className="py-3 px-4 font-semibold text-purple-600">${holders.toLocaleString()}</td>
-                      <td className="py-3 px-4 font-semibold text-blue-600">${brokers.toLocaleString()}</td>
-                      <td className="py-3 px-4 font-semibold text-green-600">${weekchain.toLocaleString()}</td>
-                      <td className="py-3 px-4 font-semibold text-yellow-600">${dao.toLocaleString()}</td>
+                      <td className="py-3 px-4 font-semibold text-green-600">${total?.toLocaleString()}</td>
+                      <td className="py-3 px-4 font-semibold text-purple-600">${holders?.toLocaleString()}</td>
+                      <td className="py-3 px-4 font-semibold text-blue-600">${brokers?.toLocaleString()}</td>
+                      <td className="py-3 px-4 font-semibold text-green-600">${weekchain?.toLocaleString()}</td>
+                      <td className="py-3 px-4 font-semibold text-yellow-600">${dao?.toLocaleString()}</td>
                       <td className="py-3 px-4 text-slate-600">
-                        {new Date(dist.distribution_date).toLocaleDateString()}
+                        {new Date(dist.distribution_date)?.toLocaleDateString()}
                       </td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
@@ -168,5 +162,5 @@ export default async function ExitStrategyPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

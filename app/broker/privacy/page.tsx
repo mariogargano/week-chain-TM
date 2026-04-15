@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Shield, Lock, Eye, Database, Mail, UserCheck, FileText, Trash2, AlertTriangle } from "lucide-react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Shield, Lock, Eye, Database, Mail, UserCheck, FileText, Trash2, AlertTriangle } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "Aviso de Privacidad para Intermediarios | WEEK-CHAIN",
@@ -26,7 +26,6 @@ export default function BrokerPrivacyPage() {
           </div>
         </div>
       </div>
-
       {/* Content */}
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
@@ -212,11 +211,11 @@ export default function BrokerPrivacyPage() {
                       purpose: "Cuando exista requerimiento legal",
                       consent: false,
                     },
-                  ].map((item, i) => (
+                  ]?.map((item, i) => (
                     <div key={i} className="p-4 bg-slate-50 rounded-lg">
-                      <p className="font-medium text-slate-900">{item.entity}</p>
-                      <p className="text-sm text-slate-600">{item.purpose}</p>
-                      {!item.consent && (
+                      <p className="font-medium text-slate-900">{item?.entity}</p>
+                      <p className="text-sm text-slate-600">{item?.purpose}</p>
+                      {!item?.consent && (
                         <p className="text-xs text-amber-600 mt-1">
                           * No requiere consentimiento conforme a la LFPDPPP
                         </p>
@@ -245,12 +244,12 @@ export default function BrokerPrivacyPage() {
                     { icon: Database, title: "Bases de datos seguras", desc: "Almacenamiento con acceso restringido" },
                     { icon: UserCheck, title: "Control de acceso", desc: "Solo personal autorizado" },
                     { icon: Shield, title: "Auditorías", desc: "Revisiones periódicas de seguridad" },
-                  ].map((item, i) => (
+                  ]?.map((item, i) => (
                     <div key={i} className="p-4 bg-slate-50 rounded-lg flex gap-3">
                       <item.icon className="h-5 w-5 text-lime-600 flex-shrink-0" />
                       <div>
-                        <p className="font-medium text-slate-900">{item.title}</p>
-                        <p className="text-sm text-slate-600">{item.desc}</p>
+                        <p className="font-medium text-slate-900">{item?.title}</p>
+                        <p className="text-sm text-slate-600">{item?.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -411,5 +410,5 @@ export default function BrokerPrivacyPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import type React from "react"
+import type React from "react";
 
 interface SimpleResponsiveTableProps {
   children: React.ReactNode

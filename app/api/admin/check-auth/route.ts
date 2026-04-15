@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server"
-import { checkAdminAuth } from "@/lib/auth/admin-guard"
+import { NextResponse } from "next/server";
+import { checkAdminAuth } from "@/lib/auth/admin-guard";
 
 /**
  * Admin authentication check endpoint
@@ -9,12 +9,12 @@ export async function GET() {
   const adminData = await checkAdminAuth()
 
   if (!adminData) {
-    return NextResponse.json({ error: "Unauthorized", authorized: false }, { status: 403 })
+    return NextResponse?.json({ error: "Unauthorized", authorized: false }, { status: 403 });
   }
 
-  return NextResponse.json({
+  return NextResponse?.json({
     authorized: true,
-    email: adminData.email,
-    role: adminData.role,
-  })
+    email: adminData?.email,
+    role: adminData?.role,
+  });
 }

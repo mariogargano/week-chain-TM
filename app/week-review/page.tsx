@@ -1,13 +1,12 @@
-"use client"
-
-import { useState } from "react"
-import { Star, Shield, CheckCircle, Award, TrendingUp, Users } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+"use client";
+import { useState } from "react";
+import { Star, Shield, CheckCircle, Award, TrendingUp, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function WeekReviewPage() {
   const [certificateNumber, setCertificateNumber] = useState("")
@@ -22,9 +21,9 @@ export default function WeekReviewPage() {
     setIsSubmitting(true)
     try {
       const response = await fetch(`/api/vouchers/verify?code=${certificateNumber}`)
-      const data = await response.json()
-      setIsVerified(data.valid)
-      if (!data.valid) {
+      const data = await response?.json()
+      setIsVerified(data?.valid)
+      if (!data?.valid) {
         alert("Certificado no encontrado. Verifica el código e intenta nuevamente.")
       }
     } catch (error) {
@@ -135,7 +134,6 @@ export default function WeekReviewPage() {
           </div>
         </div>
       </div>
-
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -164,7 +162,7 @@ export default function WeekReviewPage() {
                         id="certificate"
                         placeholder="Ej: WC-2023-12345"
                         value={certificateNumber}
-                        onChange={(e) => setCertificateNumber(e.target.value)}
+                        onChange={(e) => setCertificateNumber(e?.target?.value)}
                       />
                       <p className="text-sm text-slate-500">
                         Encuentra tu número en tu certificado digital o tarjeta física
@@ -201,7 +199,7 @@ export default function WeekReviewPage() {
                     <div className="space-y-2">
                       <Label>Tu Calificación</Label>
                       <div className="flex gap-2">
-                        {[1, 2, 3, 4, 5].map((star) => (
+                        {[1, 2, 3, 4, 5]?.map((star) => (
                           <button
                             key={star}
                             type="button"
@@ -227,7 +225,7 @@ export default function WeekReviewPage() {
                         placeholder="Cuéntanos sobre tu experiencia con Week-Chain. ¿Qué te ha gustado más? ¿Qué podríamos mejorar?"
                         rows={6}
                         value={reviewText}
-                        onChange={(e) => setReviewText(e.target.value)}
+                        onChange={(e) => setReviewText(e?.target?.value)}
                       />
                       <p className="text-sm text-slate-500">Mínimo 50 caracteres</p>
                     </div>
@@ -235,7 +233,7 @@ export default function WeekReviewPage() {
                     <Button
                       className="w-full bg-blue-600 hover:bg-blue-700"
                       onClick={handleSubmitReview}
-                      disabled={!rating || reviewText.length < 50 || isSubmitting}
+                      disabled={!rating || reviewText?.length < 50 || isSubmitting}
                     >
                       {isSubmitting ? "Enviando..." : "Publicar Review"}
                     </Button>
@@ -274,14 +272,14 @@ export default function WeekReviewPage() {
             <div>
               <h2 className="text-2xl font-bold text-slate-900 mb-6">Reviews Recientes</h2>
               <div className="space-y-4">
-                {recentReviews.map((review) => (
-                  <Card key={review.id} className="hover:shadow-lg transition-shadow">
+                {recentReviews?.map((review) => (
+                  <Card key={review?.id} className="hover:shadow-lg transition-shadow">
                     <CardContent className="pt-6">
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <div className="font-semibold text-slate-900">{review.author}</div>
+                          <div className="font-semibold text-slate-900">{review?.author}</div>
                           <div className="text-sm text-slate-500">
-                            {review.certificateId} • {review.yearsCompleted} años completados
+                            {review?.certificateId} • {review?.yearsCompleted} años completados
                           </div>
                         </div>
                         <div className="flex items-center gap-1 bg-blue-50 px-3 py-1 rounded-full">
@@ -291,18 +289,18 @@ export default function WeekReviewPage() {
                       </div>
 
                       <div className="flex gap-1 mb-3">
-                        {[1, 2, 3, 4, 5].map((star) => (
+                        {[1, 2, 3, 4, 5]?.map((star) => (
                           <Star
                             key={star}
                             className={`h-4 w-4 ${
-                              star <= review.rating ? "fill-yellow-400 text-yellow-400" : "text-slate-300"
+                              star <= review?.rating ? "fill-yellow-400 text-yellow-400" : "text-slate-300"
                             }`}
                           />
                         ))}
                       </div>
 
-                      <p className="text-slate-700 mb-3">{review.text}</p>
-                      <div className="text-xs text-slate-500">{review.date}</div>
+                      <p className="text-slate-700 mb-3">{review?.text}</p>
+                      <div className="text-xs text-slate-500">{review?.date}</div>
                     </CardContent>
                   </Card>
                 ))}
@@ -315,7 +313,7 @@ export default function WeekReviewPage() {
                 <CardTitle className="text-lg">Desglose de Calificaciones</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {[5, 4, 3, 2, 1].map((stars) => (
+                {[5, 4, 3, 2, 1]?.map((stars) => (
                   <div key={stars} className="flex items-center gap-3">
                     <div className="flex items-center gap-1 w-20">
                       <span className="text-sm font-medium">{stars}</span>
@@ -340,5 +338,5 @@ export default function WeekReviewPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

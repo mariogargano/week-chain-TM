@@ -4,9 +4,9 @@
  * Schedule: Every 5 minutes via Vercel Cron
  */
 
-import { NextResponse } from "next/server"
-import { runAllMonitoringChecks, getAlertStats } from "@/lib/monitoring/alerts"
-import { processWorkflowQueue, checkSLABreaches } from "@/lib/workflows/engine"
+import { NextResponse } from "next/server";
+import { runAllMonitoringChecks, getAlertStats } from "@/lib/monitoring/alerts";
+import { processWorkflowQueue, checkSLABreaches } from "@/lib/workflows/engine";
 
 // Verify cron secret to prevent unauthorized access
 const CRON_SECRET = process.env.CRON_SECRET

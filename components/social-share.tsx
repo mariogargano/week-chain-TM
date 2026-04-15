@@ -1,8 +1,7 @@
-"use client"
-
-import { Facebook, Twitter, Linkedin, Link2, Check } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
+"use client";
+import { Facebook, Twitter, Linkedin, Link2, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface SocialShareProps {
   url?: string

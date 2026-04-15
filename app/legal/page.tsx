@@ -1,6 +1,6 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   FileText,
   Shield,
@@ -12,8 +12,8 @@ import {
   BookOpen,
   Users,
   Globe,
-} from "lucide-react"
-import Link from "next/link"
+} from "lucide-react";
+import Link from "next/link";
 
 export const metadata = {
   title: "Centro Legal | WEEK-CHAIN",
@@ -158,7 +158,7 @@ export default function LegalCenterPage() {
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Documentos Legales</h2>
           <div className="grid md:grid-cols-2 gap-4">
-            {legalDocuments.map((doc, index) => (
+            {legalDocuments?.map((doc, index) => (
               <Card key={index} className="hover:shadow-md transition-shadow">
                 <CardHeader>
                   <div className="flex items-start justify-between">
@@ -166,27 +166,27 @@ export default function LegalCenterPage() {
                       <doc.icon className="h-5 w-5 text-blue-600" />
                     </div>
                     <Badge variant="secondary" className="text-xs">
-                      {doc.type}
+                      {doc?.type}
                     </Badge>
                   </div>
-                  <CardTitle className="text-lg">{doc.title}</CardTitle>
-                  <CardDescription>{doc.description}</CardDescription>
+                  <CardTitle className="text-lg">{doc?.title}</CardTitle>
+                  <CardDescription>{doc?.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <span>Versión {doc.version}</span>
-                    <span>Actualizado: {doc.updated}</span>
+                    <span>Versión {doc?.version}</span>
+                    <span>Actualizado: {doc?.updated}</span>
                   </div>
                   <div className="flex gap-2">
                     <Button asChild variant="outline" className="flex-1 bg-transparent">
-                      <Link href={doc.href}>
+                      <Link href={doc?.href}>
                         <ExternalLink className="h-4 w-4 mr-2" />
                         Ver Documento
                       </Link>
                     </Button>
-                    {doc.downloadable && (
+                    {doc?.downloadable && (
                       <Button asChild variant="secondary">
-                        <Link href={`${doc.href}?download=pdf`}>
+                        <Link href={`${doc?.href}?download=pdf`}>
                           <Download className="h-4 w-4" />
                         </Link>
                       </Button>
@@ -204,16 +204,16 @@ export default function LegalCenterPage() {
           <Card>
             <CardContent className="pt-6">
               <div className="space-y-4">
-                {complianceInfo.map((item, index) => (
+                {complianceInfo?.map((item, index) => (
                   <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-3">
                       <CheckCircle className="h-5 w-5 text-green-600" />
                       <div>
-                        <p className="font-medium text-gray-900">{item.title}</p>
-                        <p className="text-sm text-gray-500">{item.description}</p>
+                        <p className="font-medium text-gray-900">{item?.title}</p>
+                        <p className="text-sm text-gray-500">{item?.description}</p>
                       </div>
                     </div>
-                    <Badge className="bg-green-100 text-green-800">{item.status}</Badge>
+                    <Badge className="bg-green-100 text-green-800">{item?.status}</Badge>
                   </div>
                 ))}
               </div>
@@ -285,5 +285,5 @@ export default function LegalCenterPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

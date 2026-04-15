@@ -1,11 +1,10 @@
-"use client"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { CheckCircle2, Home, Calendar, Shield, FileText, CreditCard } from "lucide-react"
-import { useRouter } from "next/navigation"
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { CheckCircle2, Home, Calendar, Shield, FileText, CreditCard } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const steps = [
   {
@@ -203,21 +202,21 @@ const steps = [
 export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState(0)
   const router = useRouter()
-  const progress = ((currentStep + 1) / steps.length) * 100
+  const progress = ((currentStep + 1) / steps?.length) * 100
 
   const handleNext = () => {
-    if (currentStep < steps.length - 1) {
+    if (currentStep < steps?.length - 1) {
       setCurrentStep(currentStep + 1)
     } else {
-      router.push("/properties")
+      router?.push("/properties")
     }
   }
 
   const handleSkip = () => {
-    router.push("/properties")
+    router?.push("/properties")
   }
 
-  const CurrentIcon = steps[currentStep].icon
+  const CurrentIcon = steps?.[currentStep]?.icon
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 flex items-center justify-center p-4">
@@ -229,8 +228,8 @@ export default function OnboardingPage() {
                 <CurrentIcon className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <CardTitle className="text-2xl">{steps[currentStep].title}</CardTitle>
-                <CardDescription>{steps[currentStep].description}</CardDescription>
+                <CardTitle className="text-2xl">{steps?.[currentStep]?.title}</CardTitle>
+                <CardDescription>{steps?.[currentStep]?.description}</CardDescription>
               </div>
             </div>
             <Button variant="ghost" size="sm" onClick={handleSkip}>
@@ -239,11 +238,11 @@ export default function OnboardingPage() {
           </div>
           <Progress value={progress} className="h-2" />
           <p className="text-sm text-muted-foreground mt-2">
-            Paso {currentStep + 1} de {steps.length}
+            Paso {currentStep + 1} de {steps?.length}
           </p>
         </CardHeader>
         <CardContent className="space-y-6">
-          {steps[currentStep].content}
+          {steps?.[currentStep]?.content}
 
           <div className="flex gap-3">
             {currentStep > 0 && (
@@ -252,11 +251,11 @@ export default function OnboardingPage() {
               </Button>
             )}
             <Button onClick={handleNext} className="flex-1">
-              {currentStep === steps.length - 1 ? "Ver Destinos" : "Siguiente"}
+              {currentStep === steps?.length - 1 ? "Ver Destinos" : "Siguiente"}
             </Button>
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

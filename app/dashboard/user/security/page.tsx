@@ -1,13 +1,12 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Badge } from "@/components/ui/badge"
-import { Shield, ShieldCheck, ShieldAlert, Loader2, Key } from "lucide-react"
-import { createBrowserClient } from "@/lib/supabase/client"
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Shield, ShieldCheck, ShieldAlert, Loader2, Key } from "lucide-react";
+import { createBrowserClient } from "@/lib/supabase/client";
 
 interface TwoFactorStatus {
   enabled: boolean

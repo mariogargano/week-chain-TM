@@ -1,12 +1,11 @@
-"use client"
+"use client";
+import type React from "react";
+import { useEffect, useState } from "react";
 
-import type React from "react"
-import { useEffect, useState } from "react"
-
-import { SidebarProvider } from "@/components/ui/sidebar"
-import { AdminSidebar } from "@/components/admin-sidebar"
-import { AdminHeader } from "@/components/admin-header"
-import { RoleGuard } from "@/components/role-guard"
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AdminSidebar } from "@/components/admin-sidebar";
+import { AdminHeader } from "@/components/admin-header";
+import { RoleGuard } from "@/components/role-guard";
 
 export default function AdminLayout({
   children,

@@ -6,7 +6,7 @@
  * For production, integrate with Upstash Redis
  */
 
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server";
 
 // Rate limit configuration by route type
 export const RATE_LIMITS = {
@@ -104,7 +104,7 @@ function getClientId(request: NextRequest): string {
   
   // Also include user agent for more granular limiting
   const userAgent = request.headers.get("user-agent") || "unknown"
-  const hash = simpleHash(userAgent)
+  let hash = simpleHash(userAgent)
   
   return `${ip}:${hash}`
 }

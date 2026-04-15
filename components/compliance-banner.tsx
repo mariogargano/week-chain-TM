@@ -1,8 +1,7 @@
-"use client"
-
-import { useState } from "react"
-import { X, ShieldCheck } from "lucide-react"
-import Link from "next/link"
+"use client";
+import { useState } from "react";
+import { X, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 
 export function ComplianceBanner() {
   const [isVisible, setIsVisible] = useState(true)

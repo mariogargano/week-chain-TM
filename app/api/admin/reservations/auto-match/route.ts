@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
-import { findBestPropertyMatch } from "@/lib/capacity-engine/supply-matcher"
+import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { findBestPropertyMatch } from "@/lib/capacity-engine/supply-matcher";
 
 export async function POST(request: Request) {
   try {

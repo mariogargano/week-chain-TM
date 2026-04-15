@@ -1,9 +1,9 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
-import { createCommissionFromOrder } from "@/lib/flows/commission-creation"
-import { logger } from "@/lib/config/logger"
-import { WebhookLogger } from "@/lib/webhooks/logger"
-import crypto from "crypto"
+import { type NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { createCommissionFromOrder } from "@/lib/flows/commission-creation";
+import { logger } from "@/lib/config/logger";
+import { WebhookLogger } from "@/lib/webhooks/logger";
+import crypto from "crypto";
 
 function verifyConektaSignature(rawBody: string, signatureHeader: string | null): boolean {
   const secret = process.env.CONEKTA_WEBHOOK_SECRET
@@ -44,7 +44,6 @@ export async function POST(req: NextRequest) {
     const body = JSON.parse(rawBody)
     const eventType = body.type
     const eventId = body.data?.object?.id || body.id || "unknown"
-
     logger.info("Conekta webhook received:", eventType)
 
     // Idempotency: check if this event was already processed

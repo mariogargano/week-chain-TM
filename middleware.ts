@@ -1,6 +1,6 @@
-import type { NextRequest } from "next/server"
-import { NextResponse } from "next/server"
-import { updateSession } from "@/lib/supabase/middleware"
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { updateSession } from "@/lib/supabase/middleware";
 
 const hits = new Map<string, { n: number; t: number }>()
 
@@ -31,9 +31,7 @@ export async function middleware(request: NextRequest) {
         "Retry-After": "60",
         "X-RateLimit-Limit": maxRequests.toString(),
         "X-RateLimit-Remaining": "0",
-        "X-RateLimit-Reset": new Date(rec.t + 60000).toISOString(),
-      },
-    })
+        "X-RateLimit-Reset": new Date(rec.t + 60000).toISOString()}})
   }
 
   if (SITE_PROTECTION_ENABLED) {
@@ -65,8 +63,7 @@ export async function middleware(request: NextRequest) {
     "/notaria",
     "/dashboard/service-provider",
     "/dashboard/vafi",
-    "/dashboard/dao",
-  ]
+    "/dashboard/dao"]
   const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
 
   if (isProtectedRoute) {
@@ -83,13 +80,10 @@ export async function middleware(request: NextRequest) {
           },
           setAll(cookiesToSet) {
             cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-          },
-        },
-      })
+          }}})
 
       const {
-        data: { user },
-      } = await supabase.auth.getUser()
+        data: { user }} = await supabase.auth.getUser()
 
       if (!user) {
         const loginUrl = new URL("/auth", request.url)
@@ -130,8 +124,7 @@ export async function middleware(request: NextRequest) {
           "/dashboard/user": ["user", "admin", "super_admin"],
           "/dashboard/intermediary": ["broker", "broker_elite", "admin", "super_admin"],
           "/management": ["management", "admin", "super_admin"],
-          "/notaria": ["notaria", "admin", "super_admin"],
-        }
+          "/notaria": ["notaria", "admin", "super_admin"]}
 
         // Check if current route requires specific role
         // Sort by longest prefix first to avoid greedy matching (/dashboard/management before /dashboard/member)
@@ -164,8 +157,7 @@ export async function middleware(request: NextRequest) {
             vafi_manager: "/dashboard/vafi",
             dao_member: "/dashboard/dao",
             property_owner: "/dashboard/owner",
-            staff: "/dashboard/member",
-          }
+            staff: "/dashboard/member"}
 
           const redirectPath = userDashboardMap[userRole] || "/dashboard/member"
           return NextResponse.redirect(new URL(redirectPath, request.url))
@@ -175,7 +167,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Security headers
-  response.headers.set("X-Frame-Options", "DENY")
+
   response.headers.set("X-Content-Type-Options", "nosniff")
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin")
   response.headers.set("Permissions-Policy", "geolocation=(), microphone=(), camera=()")
@@ -196,5 +188,4 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
-}
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"]}

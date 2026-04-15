@@ -1,10 +1,10 @@
-import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { AdminSidebar } from "@/components/admin-sidebar"
-import { CheckCircle2, XCircle, AlertCircle, Play, Database, Mail, User } from "lucide-react"
-import Link from "next/link"
+import { createClient } from "@/lib/supabase/server";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { AdminSidebar } from "@/components/admin-sidebar";
+import { CheckCircle2, XCircle, AlertCircle, Play, Database, Mail, User } from "lucide-react";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic"
 
@@ -285,11 +285,8 @@ export default async function EmailTestFlowPage() {
 
                     <Badge
                       variant={
-                        result.status === "success"
-                          ? "default"
-                          : result.status === "error"
-                            ? "destructive"
-                            : "secondary"
+                        result.status === "success" ?"default"
+                          : result.status === "error" ?"destructive" :"secondary"
                       }
                     >
                       {result.status}

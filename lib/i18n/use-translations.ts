@@ -1,10 +1,9 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { translations } from "./translations"
-import type { Locale } from "./config"
-import { defaultLocale } from "./config"
-import { detectLocale } from "./locale"
+"use client";
+import { useState, useEffect } from "react";
+import { translations } from "./translations";
+import type { Locale } from "./config";
+import { defaultLocale } from "./config";
+import { detectLocale } from "./locale";
 
 export function useTranslations() {
   const [locale, setLocaleState] = useState<Locale>(defaultLocale)

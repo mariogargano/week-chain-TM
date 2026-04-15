@@ -1,8 +1,7 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { createPersonaInquiry } from "@/lib/kyc/persona-client"
-import { Loader2 } from "lucide-react"
+"use client";
+import { useEffect, useState } from "react";
+import { createPersonaInquiry } from "@/lib/kyc/persona-client";
+import { Loader2 } from "lucide-react";
 
 interface PersonaKYCWidgetProps {
   userId: string

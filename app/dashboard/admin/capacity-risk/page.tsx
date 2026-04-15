@@ -1,11 +1,10 @@
-"use client"
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { AlertTriangle, TrendingUp, Activity, BarChart3 } from "lucide-react"
-import { useState, useEffect } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { useRouter } from "next/navigation"
+"use client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { AlertTriangle, TrendingUp, Activity, BarChart3 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function CapacityRiskPage() {
   const router = useRouter()
@@ -22,27 +21,22 @@ export default function CapacityRiskPage() {
 
       const {
         data: { user },
-      } = await supabase.auth.getUser()
+      } = await supabase?.auth?.getUser()
       if (!user) {
-        router.replace("/auth")
+        router?.replace("/auth")
         return
       }
 
-      const { data: adminUser } = await supabase
-        .from("admin_users")
-        .select("*")
-        .eq("email", user.email?.toLowerCase())
-        .eq("status", "active")
-        .single()
+      const { data: adminUser } = await supabase?.from("admin_users")?.select("*")?.eq("email", user?.email?.toLowerCase())?.eq("status", "active")?.single()
 
       if (!adminUser) {
-        router.replace("/dashboard")
+        router?.replace("/dashboard")
         return
       }
 
       // Fetch latest capacity status
       const response = await fetch("/api/admin/capacity/global-status")
-      const data = await response.json()
+      const data = await response?.json()
 
       setCapacityStatus(data)
       setLoading(false)
@@ -77,11 +71,8 @@ export default function CapacityRiskPage() {
         {/* System Semaphore */}
         <Card
           className={`border-4 ${
-            systemStatus === "RED"
-              ? "border-red-500 bg-red-50"
-              : systemStatus === "YELLOW"
-                ? "border-yellow-500 bg-yellow-50"
-                : "border-green-500 bg-green-50"
+            systemStatus === "RED" ?"border-red-500 bg-red-50"
+              : systemStatus === "YELLOW" ?"border-yellow-500 bg-yellow-50" :"border-green-500 bg-green-50"
           }`}
         >
           <CardContent className="p-8">
@@ -89,7 +80,7 @@ export default function CapacityRiskPage() {
               <div>
                 <p className="text-sm font-medium text-slate-700">SEMÁFORO DEL SISTEMA</p>
                 <p className="text-6xl font-bold mt-2">{systemStatus}</p>
-                <p className="text-lg text-slate-700 mt-2">Utilización: {utilization.toFixed(1)}%</p>
+                <p className="text-lg text-slate-700 mt-2">Utilización: {utilization?.toFixed(1)}%</p>
                 <div className="mt-4 space-y-2 text-sm text-slate-600">
                   <div>🟢 VERDE: &lt;50% - Ventas abiertas</div>
                   <div>🟡 AMARILLO: 50-65% - Monitoreo activo</div>
@@ -103,11 +94,8 @@ export default function CapacityRiskPage() {
                     systemStatus === "RED" ? "bg-red-600" : systemStatus === "YELLOW" ? "bg-yellow-600" : "bg-green-600"
                   }`}
                 >
-                  {systemStatus === "RED"
-                    ? "DETENER VENTAS"
-                    : systemStatus === "YELLOW"
-                      ? "PRECAUCIÓN"
-                      : "OPERACIÓN NORMAL"}
+                  {systemStatus === "RED" ?"DETENER VENTAS"
+                    : systemStatus === "YELLOW" ?"PRECAUCIÓN" :"OPERACIÓN NORMAL"}
                 </Badge>
               </div>
             </div>
@@ -170,7 +158,7 @@ export default function CapacityRiskPage() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-4">
-              {["silver", "gold", "platinum", "signature"].map((tier) => (
+              {["silver", "gold", "platinum", "signature"]?.map((tier) => (
                 <div key={tier} className="p-4 border-2 border-slate-200 rounded-lg">
                   <p className="text-sm font-medium text-slate-600 uppercase">{tier}</p>
                   <p className="text-2xl font-bold text-slate-900 mt-1">
@@ -186,5 +174,5 @@ export default function CapacityRiskPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

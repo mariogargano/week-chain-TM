@@ -1,12 +1,11 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { AdminSidebar } from "@/components/admin-sidebar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Mail, Eye, RefreshCw } from "lucide-react"
+"use client";
+import { useState, useEffect } from "react";
+import { AdminSidebar } from "@/components/admin-sidebar";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Mail, Eye, RefreshCw } from "lucide-react";
 
 interface EmailLog {
   id: string

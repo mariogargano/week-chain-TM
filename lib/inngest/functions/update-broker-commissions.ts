@@ -1,5 +1,5 @@
-import { inngest } from "@/lib/inngest/client"
-import { createClient } from "@supabase/supabase-js"
+import { inngest } from "@/lib/inngest/client";
+import { createClient } from "@supabase/supabase-js";
 
 // Calculate and update broker commissions
 export const updateBrokerCommissions = inngest.createFunction(

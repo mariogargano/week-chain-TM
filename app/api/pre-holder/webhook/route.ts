@@ -1,6 +1,6 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { createServiceRoleClient } from "@/lib/supabase/server"
-import { sendEmail } from "@/lib/email/send-email"
+import { type NextRequest, NextResponse } from "next/server";
+import { createServiceRoleClient } from "@/lib/supabase/server";
+import { sendEmail } from "@/lib/email/send-email";
 
 export const dynamic = "force-dynamic"
 

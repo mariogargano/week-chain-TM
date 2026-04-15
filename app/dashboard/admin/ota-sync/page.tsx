@@ -1,15 +1,13 @@
-import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { RefreshCw, CheckCircle, XCircle, Clock } from "lucide-react"
+import { createClient } from "@/lib/supabase/server";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { RefreshCw, CheckCircle, XCircle, Clock } from "lucide-react";
 
 export default async function OTASyncPage() {
   const supabase = await createClient()
 
-  const { data: syncLogs } = await supabase
-    .from("ota_sync_logs")
-    .select(`
+  const { data: syncLogs } = await supabase?.from("ota_sync_logs")?.select(`
       *,
       weeks (
         week_number,
@@ -18,13 +16,11 @@ export default async function OTASyncPage() {
           location
         )
       )
-    `)
-    .order("synced_at", { ascending: false })
-    .limit(50)
+    `)?.order("synced_at", { ascending: false })?.limit(50)
 
-  const successfulSyncs = syncLogs?.filter((s) => s.status === "success").length || 0
-  const failedSyncs = syncLogs?.filter((s) => s.status === "failed").length || 0
-  const pendingSyncs = syncLogs?.filter((s) => s.status === "pending").length || 0
+  const successfulSyncs = syncLogs?.filter((s) => s?.status === "success")?.length || 0
+  const failedSyncs = syncLogs?.filter((s) => s?.status === "failed")?.length || 0
+  const pendingSyncs = syncLogs?.filter((s) => s?.status === "pending")?.length || 0
 
   return (
     <div className="space-y-8">
@@ -38,7 +34,6 @@ export default async function OTASyncPage() {
           Sincronizar Ahora
         </Button>
       </div>
-
       <div className="grid gap-6 md:grid-cols-4">
         <Card className="border-green-200 bg-gradient-to-br from-green-50 to-green-100">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -84,7 +79,6 @@ export default async function OTASyncPage() {
           </CardContent>
         </Card>
       </div>
-
       <Card>
         <CardHeader>
           <CardTitle>Historial de Sincronización</CardTitle>
@@ -105,40 +99,37 @@ export default async function OTASyncPage() {
               </thead>
               <tbody>
                 {syncLogs?.map((log) => (
-                  <tr key={log.id} className="border-b hover:bg-slate-50">
+                  <tr key={log?.id} className="border-b hover:bg-slate-50">
                     <td className="py-3 px-4">
                       <Badge variant="outline" className="text-xs">
-                        {log.platform}
+                        {log?.platform}
                       </Badge>
                     </td>
                     <td className="py-3 px-4">
                       <div>
-                        <div className="font-medium text-slate-800">{log.weeks?.properties?.name}</div>
-                        <div className="text-sm text-slate-600">{log.weeks?.properties?.location}</div>
+                        <div className="font-medium text-slate-800">{log?.weeks?.properties?.name}</div>
+                        <div className="text-sm text-slate-600">{log?.weeks?.properties?.location}</div>
                       </div>
                     </td>
-                    <td className="py-3 px-4 font-semibold text-purple-600">Semana {log.weeks?.week_number}</td>
+                    <td className="py-3 px-4 font-semibold text-purple-600">Semana {log?.weeks?.week_number}</td>
                     <td className="py-3 px-4">
                       <Badge
                         variant={
-                          log.status === "success" ? "default" : log.status === "failed" ? "destructive" : "secondary"
+                          log?.status === "success" ? "default" : log?.status === "failed" ? "destructive" : "secondary"
                         }
                         className={
-                          log.status === "success"
-                            ? "bg-green-100 text-green-700"
-                            : log.status === "failed"
-                              ? "bg-red-100 text-red-700"
-                              : "bg-yellow-100 text-yellow-700"
+                          log?.status === "success" ?"bg-green-100 text-green-700"
+                            : log?.status === "failed" ?"bg-red-100 text-red-700" :"bg-yellow-100 text-yellow-700"
                         }
                       >
-                        {log.status === "success" && <CheckCircle className="h-3 w-3 mr-1" />}
-                        {log.status === "failed" && <XCircle className="h-3 w-3 mr-1" />}
-                        {log.status === "pending" && <Clock className="h-3 w-3 mr-1" />}
-                        {log.status}
+                        {log?.status === "success" && <CheckCircle className="h-3 w-3 mr-1" />}
+                        {log?.status === "failed" && <XCircle className="h-3 w-3 mr-1" />}
+                        {log?.status === "pending" && <Clock className="h-3 w-3 mr-1" />}
+                        {log?.status}
                       </Badge>
                     </td>
-                    <td className="py-3 px-4 text-slate-600">{new Date(log.synced_at).toLocaleString()}</td>
-                    <td className="py-3 px-4 text-sm text-slate-600">{log.sync_message || "N/A"}</td>
+                    <td className="py-3 px-4 text-slate-600">{new Date(log.synced_at)?.toLocaleString()}</td>
+                    <td className="py-3 px-4 text-sm text-slate-600">{log?.sync_message || "N/A"}</td>
                   </tr>
                 ))}
               </tbody>
@@ -147,5 +138,5 @@ export default async function OTASyncPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

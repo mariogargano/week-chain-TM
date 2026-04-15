@@ -1,6 +1,6 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase/server"
-import { initiateCertificatePurchase } from "@/lib/flows/certificate-purchase-flow"
+import { type NextRequest, NextResponse } from "next/server";
+import { createServerClient } from "@/lib/supabase/server";
+import { initiateCertificatePurchase } from "@/lib/flows/certificate-purchase-flow";
 
 export const dynamic = "force-dynamic"
 

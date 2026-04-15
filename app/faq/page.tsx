@@ -1,13 +1,12 @@
-"use client"
-
+"use client";
 export const dynamic = "force-dynamic"
 
-import { Button } from "@/components/ui/button"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { MessageCircle, HelpCircle, Calendar, Shield, Clock, AlertTriangle, FileText, Ban, MapPin } from "lucide-react"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { MessageCircle, HelpCircle, Calendar, Shield, Clock, AlertTriangle, FileText, Ban, MapPin } from "lucide-react";
+import Link from "next/link";
 // Navbar and SiteFooter are rendered by root layout
 
 export default function FAQPage() {
@@ -256,7 +255,6 @@ export default function FAQPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-
       <main className="container mx-auto px-4 py-24">
         {/* Header */}
         <div className="text-center mb-16">
@@ -316,40 +314,40 @@ export default function FAQPage() {
 
         {/* FAQ Categories */}
         <div className="max-w-5xl mx-auto space-y-6">
-          {categories.map((category) => {
-            const Icon = category.icon
+          {categories?.map((category) => {
+            const Icon = category?.icon
             return (
               <Card
-                key={category.id}
+                key={category?.id}
                 className="border-2 border-slate-200 shadow-xl hover:shadow-2xl transition-shadow"
               >
-                <CardHeader className={`bg-gradient-to-r ${category.color} text-white rounded-t-lg`}>
+                <CardHeader className={`bg-gradient-to-r ${category?.color} text-white rounded-t-lg`}>
                   <CardTitle className="flex items-center gap-3 text-xl md:text-2xl">
                     <div className="p-2 rounded-lg bg-white/20">
                       <Icon className="h-6 w-6" />
                     </div>
-                    {category.name}
+                    {category?.name}
                   </CardTitle>
                   <CardDescription className="text-white/90">
-                    {category.questions.length} preguntas en esta categoría
+                    {category?.questions?.length} preguntas en esta categoría
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
                   <Accordion type="single" collapsible className="w-full">
-                    {category.questions.map((q, index) => (
-                      <AccordionItem key={index} value={`${category.id}-${index}`} className="border-slate-200">
+                    {category?.questions?.map((q, index) => (
+                      <AccordionItem key={index} value={`${category?.id}-${index}`} className="border-slate-200">
                         <AccordionTrigger className="text-left font-semibold text-slate-900 hover:text-blue-600 text-base">
-                          {q.q}
+                          {q?.q}
                         </AccordionTrigger>
                         <AccordionContent className="text-slate-700 leading-relaxed text-sm md:text-base pt-2">
-                          {q.a}
+                          {q?.a}
                         </AccordionContent>
                       </AccordionItem>
                     ))}
                   </Accordion>
                 </CardContent>
               </Card>
-            )
+            );
           })}
         </div>
 
@@ -394,5 +392,5 @@ export default function FAQPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

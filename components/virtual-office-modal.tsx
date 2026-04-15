@@ -1,8 +1,8 @@
-"use client"
-import { useRouter } from "next/navigation"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Lock, Mail, ShieldAlert, ArrowRight } from "lucide-react"
+"use client";
+import { useRouter } from "next/navigation";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Lock, ShieldAlert, ArrowRight } from "lucide-react";
 
 interface VirtualOfficeModalProps {
   isOpen: boolean

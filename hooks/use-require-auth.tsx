@@ -1,7 +1,6 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { createBrowserClient } from "@/lib/supabase/client"
+"use client";
+import { useState, useEffect } from "react";
+import { createBrowserClient } from "@/lib/supabase/client";
 
 export function useRequireAuth() {
   const [user, setUser] = useState<any>(null)

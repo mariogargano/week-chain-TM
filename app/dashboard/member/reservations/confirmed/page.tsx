@@ -1,11 +1,10 @@
-"use client"
-
-import { useState, useEffect, Suspense } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+"use client";
+import { useState, useEffect, Suspense } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle2,
   MapPin,
@@ -21,11 +20,11 @@ import {
   QrCode,
   AlertCircle,
   ArrowLeft,
-} from "lucide-react"
-import { format } from "date-fns"
-import { es } from "date-fns/locale"
-import Link from "next/link"
-import { Navbar } from "@/components/navbar"
+} from "lucide-react";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+import Link from "next/link";
+import { Navbar } from "@/components/navbar";
 
 interface ConfirmedReservation {
   id: string

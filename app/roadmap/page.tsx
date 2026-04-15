@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 import {
   CheckCircle2,
   ArrowLeft,
@@ -15,11 +14,11 @@ import {
   Shield,
   TrendingUp,
   Sparkles,
-} from "lucide-react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { motion } from "framer-motion"
+} from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 
 export default function RoadmapPage() {
   const phases = [
@@ -292,7 +291,6 @@ export default function RoadmapPage() {
           </motion.div>
         </div>
       </section>
-
       {/* Timeline Section - Improved timeline visual design */}
       <section className="py-20 md:py-28 bg-gradient-to-b from-white to-slate-50/50">
         <div className="container mx-auto max-w-6xl px-4">
@@ -302,7 +300,7 @@ export default function RoadmapPage() {
 
             {/* Phases */}
             <div className="space-y-16 md:space-y-24">
-              {phases.map((phase, i) => (
+              {phases?.map((phase, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 50 }}
@@ -321,16 +319,14 @@ export default function RoadmapPage() {
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: 0.2 }}
                       className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-xl ${
-                        phase.status === "completed"
+                        phase?.status === "completed"
                           ? "bg-gradient-to-br from-[#B5EAD7] to-[#8DD4BE] text-white"
-                          : phase.status === "in-progress"
-                            ? "bg-gradient-to-br from-[#FFB7B2] to-[#FF9AA2] text-white"
-                            : "bg-white border-2 border-slate-200 text-slate-400"
+                          : phase?.status === "in-progress" ?"bg-gradient-to-br from-[#FFB7B2] to-[#FF9AA2] text-white" :"bg-white border-2 border-slate-200 text-slate-400"
                       }`}
                     >
-                      {phase.status === "completed" ? (
+                      {phase?.status === "completed" ? (
                         <CheckCircle2 className="h-7 w-7" />
-                      ) : phase.status === "in-progress" ? (
+                      ) : phase?.status === "in-progress" ? (
                         <Clock className="h-7 w-7 animate-pulse" />
                       ) : (
                         <phase.icon className="h-7 w-7" />
@@ -346,34 +342,32 @@ export default function RoadmapPage() {
                       <div className="flex items-center justify-between mb-6">
                         <Badge
                           className={`text-sm px-3 py-1 ${
-                            phase.status === "completed"
+                            phase?.status === "completed"
                               ? "bg-[#B5EAD7]/20 text-[#B5EAD7] border-[#B5EAD7]/30"
-                              : phase.status === "in-progress"
-                                ? "bg-[#FFB7B2]/20 text-[#FFB7B2] border-[#FFB7B2]/30"
-                                : "bg-slate-800 text-slate-400 border-slate-700"
+                              : phase?.status === "in-progress" ?"bg-[#FFB7B2]/20 text-[#FFB7B2] border-[#FFB7B2]/30" :"bg-slate-800 text-slate-400 border-slate-700"
                           }`}
                         >
                           <Calendar className="h-3.5 w-3.5 mr-1.5" />
-                          {phase.quarter}
+                          {phase?.quarter}
                         </Badge>
-                        {phase.status === "completed" && (
+                        {phase?.status === "completed" && (
                           <span className="text-xs text-[#B5EAD7] font-semibold uppercase tracking-wider">
                             Completado
                           </span>
                         )}
-                        {phase.status === "in-progress" && (
+                        {phase?.status === "in-progress" && (
                           <span className="text-xs text-[#FFB7B2] font-semibold uppercase tracking-wider animate-pulse">
                             En Progreso
                           </span>
                         )}
                       </div>
 
-                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">{phase.title}</h3>
-                      <p className="text-slate-400 mb-8 text-lg">{phase.description}</p>
+                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">{phase?.title}</h3>
+                      <p className="text-slate-400 mb-8 text-lg">{phase?.description}</p>
 
                       {/* Items */}
                       <div className="space-y-4 mb-8">
-                        {phase.items.map((item, j) => (
+                        {phase?.items?.map((item, j) => (
                           <motion.div
                             key={j}
                             className="bg-slate-800/60 rounded-2xl p-5 border border-slate-700/50 hover:border-slate-600/50 transition-colors"
@@ -385,26 +379,22 @@ export default function RoadmapPage() {
                             <div className="flex items-start gap-4">
                               <div
                                 className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                                  phase.status === "completed"
+                                  phase?.status === "completed"
                                     ? "bg-[#B5EAD7]/20"
-                                    : phase.status === "in-progress"
-                                      ? "bg-[#FFB7B2]/20"
-                                      : "bg-slate-700"
+                                    : phase?.status === "in-progress" ?"bg-[#FFB7B2]/20" :"bg-slate-700"
                                 }`}
                               >
                                 <CheckCircle2
                                   className={`h-4 w-4 ${
-                                    phase.status === "completed"
+                                    phase?.status === "completed"
                                       ? "text-[#B5EAD7]"
-                                      : phase.status === "in-progress"
-                                        ? "text-[#FFB7B2]"
-                                        : "text-slate-500"
+                                      : phase?.status === "in-progress" ?"text-[#FFB7B2]" :"text-slate-500"
                                   }`}
                                 />
                               </div>
                               <div>
-                                <h4 className="font-semibold text-white">{item.title}</h4>
-                                <p className="text-sm text-slate-400 mt-1 leading-relaxed">{item.desc}</p>
+                                <h4 className="font-semibold text-white">{item?.title}</h4>
+                                <p className="text-sm text-slate-400 mt-1 leading-relaxed">{item?.desc}</p>
                               </div>
                             </div>
                           </motion.div>
@@ -416,7 +406,7 @@ export default function RoadmapPage() {
                         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF9AA2]/20 to-[#C7CEEA]/20 flex items-center justify-center">
                           <Target className="h-5 w-5 text-[#FF9AA2]" />
                         </div>
-                        <span className="text-slate-300 font-medium">{phase.metrics}</span>
+                        <span className="text-slate-300 font-medium">{phase?.metrics}</span>
                       </div>
                     </div>
                   </div>
@@ -426,7 +416,6 @@ export default function RoadmapPage() {
           </div>
         </div>
       </section>
-
       {/* Values Section - Updated with icons instead of emojis */}
       <section className="py-20 md:py-28 bg-white">
         <div className="container mx-auto max-w-6xl px-4">
@@ -467,7 +456,7 @@ export default function RoadmapPage() {
                 desc: "Servicio de clase mundial con concierge 24/7 y atención personalizada.",
                 color: "#C7CEEA",
               },
-            ].map((value, i) => (
+            ]?.map((value, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
@@ -478,18 +467,17 @@ export default function RoadmapPage() {
               >
                 <div
                   className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
-                  style={{ backgroundColor: `${value.color}20` }}
+                  style={{ backgroundColor: `${value?.color}20` }}
                 >
-                  <value.icon className="h-8 w-8" style={{ color: value.color }} />
+                  <value.icon className="h-8 w-8" style={{ color: value?.color }} />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-3">{value.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{value.desc}</p>
+                <h3 className="text-2xl font-bold text-slate-900 mb-3">{value?.title}</h3>
+                <p className="text-slate-600 leading-relaxed">{value?.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
-
       {/* CTA Section - Enhanced CTA with better visual design */}
       <section className="py-20 md:py-28 bg-slate-50">
         <div className="container mx-auto max-w-4xl px-4">
@@ -539,5 +527,5 @@ export default function RoadmapPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }

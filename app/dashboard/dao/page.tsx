@@ -1,13 +1,12 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Vote, CheckCircle, Clock } from "lucide-react"
-import { RoleGuard } from "@/components/role-guard"
-import { Navbar } from "@/components/navbar"
+"use client";
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Vote, CheckCircle, Clock } from "lucide-react";
+import { RoleGuard } from "@/components/role-guard";
+import { Navbar } from "@/components/navbar";
 
 interface Proposal {
   id: string

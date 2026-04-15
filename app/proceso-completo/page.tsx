@@ -1,7 +1,7 @@
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import Link from "next/link"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
 import {
   UserPlus,
   FileText,
@@ -15,8 +15,8 @@ import {
   Key,
   Lock,
   Mail,
-} from "lucide-react"
-import type { Metadata } from "next"
+} from "lucide-react";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Proceso Completo | WEEK-CHAIN™",

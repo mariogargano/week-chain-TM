@@ -1,16 +1,15 @@
-"use client"
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Navbar } from "@/components/navbar"
-import { RoleGuard } from "@/components/role-guard"
-import { createClient } from "@/lib/supabase/client"
-import { useEffect, useState, useRef } from "react"
-import { useRouter, useParams } from "next/navigation"
-import { FileText, CheckCircle, Download, Pen } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
-import SignatureCanvas from "react-signature-canvas"
+"use client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Navbar } from "@/components/navbar";
+import { RoleGuard } from "@/components/role-guard";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState, useRef } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { FileText, CheckCircle, Download, Pen } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import SignatureCanvas from "react-signature-canvas";
 
 export default function SignContractPage() {
   return (

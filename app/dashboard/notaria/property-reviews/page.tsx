@@ -1,15 +1,14 @@
-"use client"
-
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Navbar } from "@/components/navbar"
-import { RoleGuard } from "@/components/role-guard"
-import { createClient } from "@/lib/supabase/client"
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { Building2, Search, Eye, Clock, CheckCircle, XCircle } from "lucide-react"
+"use client";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Navbar } from "@/components/navbar";
+import { RoleGuard } from "@/components/role-guard";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Building2, Search, Eye, Clock, CheckCircle, XCircle } from "lucide-react";
 
 export default function NotaryPropertyReviewsPage() {
   return (
@@ -149,17 +148,11 @@ function NotaryPropertyReviewsContent() {
                           <Badge
                             className={
                               submission.notary_reviewed_at
-                                ? submission.notary_status === "approved"
-                                  ? "bg-green-100 text-green-700"
-                                  : "bg-red-100 text-red-700"
-                                : "bg-yellow-100 text-yellow-700"
+                                ? submission.notary_status === "approved" ?"bg-green-100 text-green-700" :"bg-red-100 text-red-700" :"bg-yellow-100 text-yellow-700"
                             }
                           >
                             {submission.notary_reviewed_at
-                              ? submission.notary_status === "approved"
-                                ? "Aprobado"
-                                : "Rechazado"
-                              : "Pendiente"}
+                              ? submission.notary_status === "approved" ?"Aprobado" :"Rechazado" :"Pendiente"}
                           </Badge>
                         </div>
                         <div className="grid grid-cols-4 gap-4 mb-4">

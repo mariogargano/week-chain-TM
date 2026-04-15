@@ -1,4 +1,4 @@
-import type { TemplateVariables } from "@/types/email"
+import type { TemplateVariables } from "@/types/email";
 
 /**
  * Renders template string by replacing {{variables}} with actual values

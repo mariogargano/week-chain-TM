@@ -15,14 +15,12 @@
  * NOM-151 Compliant: All checks audited with SHA-256
  */
 
-import { type NextRequest, NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase/server"
+import { type NextRequest, NextResponse } from "next/server";
+import { createServerClient } from "@/lib/supabase/server";
 
 export type ProtectedAction =
   | "certificate_purchase"
-  | "reservation_request"
-  | "offer_acceptance"
-  | "certificate_activation"
+  | "reservation_request" |"offer_acceptance" |"certificate_activation"
 
 export interface ConsentCheckResult {
   allowed: boolean

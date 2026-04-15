@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -7,11 +6,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Home, Vote, Info } from "lucide-react"
-import { VaFiIcon } from "@/components/icons/vafi-icon"
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Home, Vote, Info } from "lucide-react";
+import { VaFiIcon } from "@/components/icons/vafi-icon";
 
 export function UtilitiesModal() {
   return (

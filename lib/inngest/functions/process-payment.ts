@@ -1,5 +1,5 @@
-import { inngest } from "@/lib/inngest/client"
-import { createClient } from "@supabase/supabase-js"
+import { inngest } from "@/lib/inngest/client";
+import { createClient } from "@supabase/supabase-js";
 
 // Process pending payments and update reservation status
 export const processPayment = inngest.createFunction(

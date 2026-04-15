@@ -1,6 +1,6 @@
-import { CertificateSelector } from "@/components/certificate-selector"
-import { Badge } from "@/components/ui/badge"
-import { Shield, CheckCircle } from "lucide-react"
+import { CertificateSelector } from "@/components/certificate-selector";
+import { Badge } from "@/components/ui/badge";
+import { Shield, CheckCircle } from "lucide-react";
 
 export const metadata = {
   title: "Certificados Digitales | WEEK-CHAIN",

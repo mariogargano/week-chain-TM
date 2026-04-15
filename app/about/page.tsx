@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import Image from "next/image"
-import { ArrowRight, Target, Eye, Heart, Award, Users, Globe, TrendingUp } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight, Target, Eye, Heart, Award, Users, Globe, TrendingUp } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -21,7 +21,6 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
-
       {/* Mission & Vision Section */}
       <section className="bg-white px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-7xl">
@@ -65,7 +64,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
       {/* Founder Section - Mario Gargano */}
       <section className="bg-gradient-to-br from-sky-50/30 via-white to-cyan-50/30 px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-6xl">
@@ -117,11 +115,11 @@ export default function AboutPage() {
                   { icon: Globe, label: "70+", desc: "Destinos de Referencia" },
                   { icon: Users, label: "21", desc: "Intermediarios Comerciales" },
                   { icon: TrendingUp, label: "9", desc: "Empresas de Servicios Integradas" },
-                ].map((stat, i) => (
+                ]?.map((stat, i) => (
                   <div key={i} className="rounded-2xl glass border border-slate-200/60 p-4 text-center">
                     <stat.icon className="h-8 w-8 mx-auto mb-2 text-sky-500" />
-                    <div className="text-2xl font-bold text-slate-900 mb-1">{stat.label}</div>
-                    <div className="text-sm text-slate-600">{stat.desc}</div>
+                    <div className="text-2xl font-bold text-slate-900 mb-1">{stat?.label}</div>
+                    <div className="text-sm text-slate-600">{stat?.desc}</div>
                   </div>
                 ))}
               </div>
@@ -129,7 +127,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
       {/* Values Section */}
       <section className="bg-white px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-7xl">
@@ -160,22 +157,21 @@ export default function AboutPage() {
                 desc: "Utilizamos tecnologia de vanguardia cumpliendo estrictamente con NOM-151 y regulacion mexicana para crear un sistema legalmente robusto.",
                 color: "teal",
               },
-            ].map((value, i) => (
+            ]?.map((value, i) => (
               <div
                 key={i}
-                className={`rounded-3xl border-2 p-8 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-${value.color}-200/40 bg-${value.color}-50/30`}
+                className={`rounded-3xl border-2 p-8 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-${value?.color}-200/40 bg-${value?.color}-50/30`}
               >
-                <div className={`flex h-16 w-16 items-center justify-center rounded-2xl mb-6 bg-${value.color}-100`}>
-                  <value.icon className={`h-8 w-8 text-${value.color}-600`} />
+                <div className={`flex h-16 w-16 items-center justify-center rounded-2xl mb-6 bg-${value?.color}-100`}>
+                  <value.icon className={`h-8 w-8 text-${value?.color}-600`} />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">{value.title}</h3>
-                <p className="text-lg text-slate-700 leading-relaxed">{value.desc}</p>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">{value?.title}</h3>
+                <p className="text-lg text-slate-700 leading-relaxed">{value?.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
-
       {/* CTA Section */}
       <section className="bg-gradient-to-br from-sky-500 via-cyan-500 to-teal-500 px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-4xl text-center">
@@ -209,5 +205,5 @@ export default function AboutPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }

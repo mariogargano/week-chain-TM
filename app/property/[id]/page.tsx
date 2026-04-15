@@ -1,13 +1,12 @@
-"use client"
+"use client";
 
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { MapPin, DollarSign, Calendar, CheckCircle, XCircle, Clock, Users, Bed, Bath } from "lucide-react"
-import { useEffect, useState } from "react"
-import { useParams, useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { MapPin, DollarSign, Calendar, CheckCircle, XCircle, Clock, Users, Bed, Bath } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 interface Property {
   id: string
@@ -299,9 +298,7 @@ export default function PropertyDetailPage() {
                       className={`p-3 rounded-lg border-2 transition-all ${
                         selectedWeek?.id === week.id
                           ? "border-blue-500 bg-blue-50"
-                          : week.status === "available"
-                            ? "border-slate-200 hover:border-blue-300 hover:bg-blue-50/50"
-                            : "border-slate-200 bg-slate-50 opacity-50 cursor-not-allowed"
+                          : week.status === "available" ?"border-slate-200 hover:border-blue-300 hover:bg-blue-50/50" :"border-slate-200 bg-slate-50 opacity-50 cursor-not-allowed"
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">

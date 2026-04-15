@@ -1,12 +1,11 @@
-"use client"
-
-import { createClient } from "@/lib/supabase/client"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Wallet, Users, Clock, CheckCircle, XCircle, ArrowLeft } from "lucide-react"
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+"use client";
+import { createClient } from "@/lib/supabase/client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Wallet, Clock, CheckCircle, XCircle, ArrowLeft } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 
 export default function EscrowPage() {
@@ -170,11 +169,8 @@ export default function EscrowPage() {
                         <td className="py-3 px-4">
                           <Badge
                             className={
-                              deposit.status === "confirmed"
-                                ? "bg-green-100 text-green-700"
-                                : deposit.status === "pending"
-                                  ? "bg-yellow-100 text-yellow-700"
-                                  : "bg-red-100 text-red-700"
+                              deposit.status === "confirmed" ?"bg-green-100 text-green-700"
+                                : deposit.status === "pending" ?"bg-yellow-100 text-yellow-700" :"bg-red-100 text-red-700"
                             }
                           >
                             {deposit.status === "confirmed" && <CheckCircle className="h-3 w-3 mr-1" />}

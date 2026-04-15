@@ -1,17 +1,16 @@
-"use client"
-
-import type React from "react"
-import { createClient } from "@/lib/supabase/client"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { toast } from "sonner"
-import { AlertCircle, Mail, Shield } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { useRouter, useSearchParams } from "next/navigation"
-import { useState, useEffect, Suspense } from "react"
-import Image from "next/image"
+"use client";
+import type React from "react";
+import { createClient } from "@/lib/supabase/client";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { AlertCircle, Mail, Shield } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import Image from "next/image";
 
 export default function AuthPage() {
   return (
@@ -402,11 +401,8 @@ function AuthPageContent() {
                   {activeTab === "login" ? "Iniciar Sesion" : activeTab === "magic" ? "Enlace Magico" : "Crear Cuenta"}
                 </h2>
                 <p className="text-xs sm:text-sm text-muted-foreground">
-                  {activeTab === "login"
-                    ? "Accede a tus certificados vacacionales"
-                    : activeTab === "magic"
-                      ? "Inicia sesion sin contrasena"
-                      : "Registrate para obtener tu certificado digital"}
+                  {activeTab === "login" ?"Accede a tus certificados vacacionales"
+                    : activeTab === "magic" ?"Inicia sesion sin contrasena" :"Registrate para obtener tu certificado digital"}
                 </p>
               </div>
             </div>

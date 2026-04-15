@@ -1,12 +1,12 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@supabase/supabase-js"
-import { logger } from "@/lib/config/logger"
-import { WebhookLogger } from "@/lib/webhooks/logger"
-import { SignatureVerifier } from "@/lib/legalario/signature-verifier"
-import { checkRateLimit } from "@/lib/legalario/rate-limiter"
-import { getClientIP, isIPAllowed } from "@/lib/legalario/ip-allowlist"
-import { verifyLegalarioSignature, extractWebhookHeaders } from "@/lib/legalario/webhook-handler"
-import { getEnv } from "@/lib/config/env-schema"
+import { type NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
+import { logger } from "@/lib/config/logger";
+import { WebhookLogger } from "@/lib/webhooks/logger";
+import { SignatureVerifier } from "@/lib/legalario/signature-verifier";
+import { checkRateLimit } from "@/lib/legalario/rate-limiter";
+import { getClientIP, isIPAllowed } from "@/lib/legalario/ip-allowlist";
+import { verifyLegalarioSignature, extractWebhookHeaders } from "@/lib/legalario/webhook-handler";
+import { getEnv } from "@/lib/config/env-schema";
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"

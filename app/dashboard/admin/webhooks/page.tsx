@@ -1,12 +1,11 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { createBrowserClient } from "@/lib/supabase/client"
-import { RefreshCw, CheckCircle, XCircle, Clock, AlertCircle } from "lucide-react"
+"use client";
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { createBrowserClient } from "@/lib/supabase/client";
+import { RefreshCw, CheckCircle, XCircle, Clock, AlertCircle } from "lucide-react";
 
 interface WebhookEvent {
   id: string

@@ -4,7 +4,7 @@
  * Based on the 360° REaaS Architecture Document
  */
 
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server";
 
 // ============================================================================
 // TYPES
@@ -12,15 +12,7 @@ import { createClient } from "@/lib/supabase/server"
 
 export type AlertSeverity = 'low' | 'medium' | 'high' | 'critical'
 export type AlertType = 
-  | 'sla_breach'
-  | 'sla_warning'
-  | 'capacity_alert'
-  | 'compliance_alert'
-  | 'payment_alert'
-  | 'booking_alert'
-  | 'incident_alert'
-  | 'system_alert'
-  | 'security_alert'
+  | 'sla_breach' |'sla_warning' |'capacity_alert' |'compliance_alert' |'payment_alert' |'booking_alert' |'incident_alert' |'system_alert' |'security_alert'
 
 export interface Alert {
   id?: string

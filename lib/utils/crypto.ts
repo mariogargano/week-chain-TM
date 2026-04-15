@@ -1,4 +1,4 @@
-import crypto from "crypto"
+import crypto from "crypto";
 
 /**
  * Generate SHA-256 hash from base64 string

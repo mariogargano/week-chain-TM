@@ -1,20 +1,19 @@
-"use client"
-
-import type React from "react"
-import { SiteFooter } from "@/components/site-footer"
-import { Navbar } from "@/components/navbar"
-import { PostHogProvider } from "@/lib/analytics/posthog-provider"
-import { ScrollToTop } from "@/components/scroll-to-top"
-import { useLocale } from "@/lib/i18n/use-translations"
-import { LanguageProvider } from "@/lib/i18n/use-language"
-import { SupportChatbot } from "@/components/support-chatbot"
-import { OrganizationJsonLd, WebsiteJsonLd, LocalBusinessJsonLd } from "@/components/seo/json-ld"
-import { GoogleAnalytics } from "@/components/analytics/google-analytics"
-import { MicrosoftClarity } from "@/components/analytics/microsoft-clarity"
-import { BetaBanner } from "@/components/beta-banner"
-import { PasswordProtectionOverlay } from "@/components/password-protection-overlay"
-import { PWAInstall } from "@/components/pwa-install"
-import { usePathname } from "next/navigation"
+"use client";
+import type React from "react";
+import { SiteFooter } from "@/components/site-footer";
+import { Navbar } from "@/components/navbar";
+import { PostHogProvider } from "@/lib/analytics/posthog-provider";
+import { ScrollToTop } from "@/components/scroll-to-top";
+import { useLocale } from "@/lib/i18n/use-translations";
+import { LanguageProvider } from "@/lib/i18n/use-language";
+import { SupportChatbot } from "@/components/support-chatbot";
+import { OrganizationJsonLd, WebsiteJsonLd, LocalBusinessJsonLd } from "@/components/seo/json-ld";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
+import { MicrosoftClarity } from "@/components/analytics/microsoft-clarity";
+import { BetaBanner } from "@/components/beta-banner";
+import { PasswordProtectionOverlay } from "@/components/password-protection-overlay";
+import { PWAInstall } from "@/components/pwa-install";
+import { usePathname } from "next/navigation";
 
 interface RootLayoutClientProps {
   children: React.ReactNode

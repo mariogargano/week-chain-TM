@@ -1,17 +1,16 @@
-"use client"
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Navbar } from "@/components/navbar"
-import { RoleGuard } from "@/components/role-guard"
-import { createClient } from "@/lib/supabase/client"
-import { useEffect, useState } from "react"
-import { useRouter, useParams } from "next/navigation"
-import { ArrowLeft, CheckCircle, XCircle, FileText, Download, MapPin, Home, DollarSign } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+"use client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Navbar } from "@/components/navbar";
+import { RoleGuard } from "@/components/role-guard";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { ArrowLeft, CheckCircle, XCircle, FileText, Download, MapPin, Home, DollarSign } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function NotaryReviewDetailPage() {
   return (
@@ -265,9 +264,7 @@ function NotaryReviewDetailContent() {
                       variant={decision === "approved" ? "default" : "outline"}
                       onClick={() => setDecision("approved")}
                       className={
-                        decision === "approved"
-                          ? "bg-green-500 hover:bg-green-600 text-white"
-                          : "border-green-500 text-green-700 hover:bg-green-50"
+                        decision === "approved" ?"bg-green-500 hover:bg-green-600 text-white" :"border-green-500 text-green-700 hover:bg-green-50"
                       }
                     >
                       <CheckCircle className="h-4 w-4 mr-2" />
@@ -277,9 +274,7 @@ function NotaryReviewDetailContent() {
                       variant={decision === "needs_changes" ? "default" : "outline"}
                       onClick={() => setDecision("needs_changes")}
                       className={
-                        decision === "needs_changes"
-                          ? "bg-yellow-500 hover:bg-yellow-600 text-white"
-                          : "border-yellow-500 text-yellow-700 hover:bg-yellow-50"
+                        decision === "needs_changes" ?"bg-yellow-500 hover:bg-yellow-600 text-white" :"border-yellow-500 text-yellow-700 hover:bg-yellow-50"
                       }
                     >
                       Requiere Cambios
@@ -288,9 +283,7 @@ function NotaryReviewDetailContent() {
                       variant={decision === "rejected" ? "default" : "outline"}
                       onClick={() => setDecision("rejected")}
                       className={
-                        decision === "rejected"
-                          ? "bg-red-500 hover:bg-red-600 text-white"
-                          : "border-red-500 text-red-700 hover:bg-red-50"
+                        decision === "rejected" ?"bg-red-500 hover:bg-red-600 text-white" :"border-red-500 text-red-700 hover:bg-red-50"
                       }
                     >
                       <XCircle className="h-4 w-4 mr-2" />
@@ -325,9 +318,7 @@ function NotaryReviewDetailContent() {
                   <p className="text-sm text-slate-500">Decisión</p>
                   <Badge
                     className={
-                      submission.notary_status === "approved"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-red-100 text-red-700"
+                      submission.notary_status === "approved" ?"bg-green-100 text-green-700" :"bg-red-100 text-red-700"
                     }
                   >
                     {submission.notary_status === "approved" ? "Aprobado" : "Rechazado"}

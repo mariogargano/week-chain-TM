@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
-import { addDays } from "date-fns"
+import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { addDays } from "date-fns";
 
 const ADMIN_EMAIL = "corporativo@morises.com"
 

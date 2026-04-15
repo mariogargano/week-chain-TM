@@ -1,7 +1,7 @@
-import { createServerClient } from "@/lib/supabase/server"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Navbar } from "@/components/navbar"
+import { createServerClient } from "@/lib/supabase/server";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+
 import {
   DollarSign,
   Shield,
@@ -17,15 +17,15 @@ import {
   BadgeCheck,
   Sparkles,
   Bell,
-} from "lucide-react"
-import Link from "next/link"
+} from "lucide-react";
+import Link from "next/link";
 
 export default async function VAFIPage() {
   const supabase = await createServerClient()
 
   const {
     data: { user },
-  } = await supabase.auth.getUser()
+  } = await supabase?.auth?.getUser()
 
   const stats = [
     { label: "Tasa de Interés", value: "8.5%", suffix: "APR", icon: Percent },
@@ -178,7 +178,7 @@ export default async function VAFIPage() {
                   </div>
 
                   <div className="flex flex-wrap gap-6 pt-4">
-                    {["Sin verificación crediticia", "Aprobación instantánea", "Términos flexibles"].map((item, i) => (
+                    {["Sin verificación crediticia", "Aprobación instantánea", "Términos flexibles"]?.map((item, i) => (
                       <div key={i} className="flex items-center gap-2 text-sm text-slate-600">
                         <CheckCircle2 className="h-5 w-5 text-[#B5EAD7]" />
                         <span>{item}</span>
@@ -207,15 +207,15 @@ export default async function VAFIPage() {
                       </div>
 
                       <div className="grid grid-cols-2 gap-4 mb-6">
-                        {stats.map((stat, i) => (
+                        {stats?.map((stat, i) => (
                           <div key={i} className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
                             <div className="flex items-center gap-2 mb-2">
                               <stat.icon className="h-4 w-4 text-[#B5EAD7]" />
-                              <span className="text-xs text-slate-400">{stat.label}</span>
+                              <span className="text-xs text-slate-400">{stat?.label}</span>
                             </div>
                             <p className="text-2xl font-bold text-white">
-                              {stat.value}
-                              {stat.suffix && <span className="text-[#B5EAD7] text-sm ml-1">{stat.suffix}</span>}
+                              {stat?.value}
+                              {stat?.suffix && <span className="text-[#B5EAD7] text-sm ml-1">{stat?.suffix}</span>}
                             </p>
                           </div>
                         ))}
@@ -265,17 +265,17 @@ export default async function VAFIPage() {
               </div>
 
               <div className="grid md:grid-cols-3 gap-8">
-                {howItWorks.map((step, i) => (
+                {howItWorks?.map((step, i) => (
                   <div key={i} className="relative text-center">
-                    {i < howItWorks.length - 1 && (
+                    {i < howItWorks?.length - 1 && (
                       <div className="hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-[#B5EAD7]/50 to-transparent -translate-x-1/2" />
                     )}
                     <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#B5EAD7] to-[#E2F0CB] flex items-center justify-center mx-auto mb-6 shadow-lg">
                       <step.icon className="h-10 w-10 text-slate-800" />
                     </div>
-                    <div className="text-sm font-semibold text-[#B5EAD7] mb-2">Paso {step.step}</div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-3">{step.title}</h3>
-                    <p className="text-slate-600">{step.description}</p>
+                    <div className="text-sm font-semibold text-[#B5EAD7] mb-2">Paso {step?.step}</div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-3">{step?.title}</h3>
+                    <p className="text-slate-600">{step?.description}</p>
                   </div>
                 ))}
               </div>
@@ -291,7 +291,7 @@ export default async function VAFIPage() {
               </div>
 
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {benefits.map((benefit, i) => (
+                {benefits?.map((benefit, i) => (
                   <div
                     key={i}
                     className="p-6 rounded-2xl bg-white border border-slate-100 hover:border-[#B5EAD7]/50 hover:shadow-lg transition-all duration-300 group"
@@ -299,8 +299,8 @@ export default async function VAFIPage() {
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#B5EAD7]/20 to-[#E2F0CB]/20 flex items-center justify-center mb-4 group-hover:from-[#B5EAD7]/30 group-hover:to-[#E2F0CB]/30 transition-all">
                       <benefit.icon className="h-6 w-6 text-[#B5EAD7]" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">{benefit.title}</h3>
-                    <p className="text-slate-600">{benefit.description}</p>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">{benefit?.title}</h3>
+                    <p className="text-slate-600">{benefit?.description}</p>
                   </div>
                 ))}
               </div>
@@ -445,5 +445,5 @@ export default async function VAFIPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

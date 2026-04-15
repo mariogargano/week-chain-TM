@@ -1,44 +1,13 @@
-import { Navbar } from "@/components/navbar"
-import { SiteFooter } from "@/components/site-footer"
-import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
-  Shield,
-  Building2,
-  Users,
-  ClipboardCheck,
-  FileSearch,
-  FileText,
-  Settings,
-  HeadphonesIcon,
-  AlertTriangle,
-  ArrowRight,
-  CheckCircle2,
-  HelpCircle,
-  ChevronDown,
-  Home,
-  Scale,
-  Umbrella,
-  Flame,
-  Truck,
-  Clock,
-  Camera,
-  MapPin,
-  Ruler,
-  CalendarDays,
-  UserCheck,
-  Upload,
-  Sparkles,
-  LockKeyhole,
-  Search,
-  BookOpen,
-  ShieldCheck,
-} from "lucide-react"
-import Link from "next/link"
-import type { Metadata } from "next"
-import { InsuranceContactForm } from "./insurance-contact-form"
+
+
+import { createClient } from "@/lib/supabase/server";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Shield, Building2, Users, ClipboardCheck, FileSearch, FileText, Settings, HeadphonesIcon, AlertTriangle, ArrowRight, HelpCircle, ChevronDown, Home, Scale, Flame, Truck, Clock, Camera, MapPin, Ruler, CalendarDays, UserCheck, Upload, Sparkles, LockKeyhole, Search, BookOpen, ShieldCheck,  } from "lucide-react";
+
+import type { Metadata } from "next";
+import { InsuranceContactForm } from "./insurance-contact-form";
 
 export const metadata: Metadata = {
   title: "WEEK-INSURANCE | Proteccion Integral para Propiedades y Operacion Hospitality",

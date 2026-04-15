@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
-import { isProductAvailable, getProductById } from "@/lib/capacity-engine/pax-products"
-import { runCapacityEngineCalculation } from "@/lib/capacity-engine/engine"
+import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { isProductAvailable, getProductById } from "@/lib/capacity-engine/pax-products";
+import { runCapacityEngineCalculation } from "@/lib/capacity-engine/engine";
 
 export async function POST(req: Request) {
   try {

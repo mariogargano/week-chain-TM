@@ -1,7 +1,7 @@
-import { createAgentUIStreamResponse, convertToModelMessages } from 'ai'
-import { createAgent, AgentType, AGENT_CONFIGS } from '@/lib/agents'
-import { createClient } from '@/lib/supabase/server'
-import { NextRequest, NextResponse } from 'next/server'
+import { createAgentUIStreamResponse } from 'ai';
+import { createAgent, AgentType, AGENT_CONFIGS } from '@/lib/agents';
+import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {

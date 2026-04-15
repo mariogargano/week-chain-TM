@@ -1,6 +1,6 @@
-import { createClient } from '@/lib/supabase/server'
-import { NextRequest, NextResponse } from 'next/server'
-import { getStripe } from '@/lib/stripe'
+import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { getStripe } from '@/lib/stripe';
 
 export async function GET(request: NextRequest) {
   try {

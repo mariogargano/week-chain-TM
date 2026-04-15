@@ -1,5 +1,5 @@
-import { inngest } from "@/lib/inngest/client"
-import { createClient } from "@supabase/supabase-js"
+import { inngest } from "@/lib/inngest/client";
+import { createClient } from "@supabase/supabase-js";
 
 // Generate digital certificate for verified reservation
 export const generateCertificate = inngest.createFunction(

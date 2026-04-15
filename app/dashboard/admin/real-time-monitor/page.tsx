@@ -1,9 +1,8 @@
-"use client"
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { createClient } from "@/lib/supabase/client"
-import { useEffect, useState } from "react"
+"use client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
 import {
   Users,
   Building2,
@@ -15,7 +14,7 @@ import {
   Eye,
   TrendingUp,
   AlertCircle,
-} from "lucide-react"
+} from "lucide-react";
 
 
 export default function RealTimeMonitorPage() {

@@ -1,7 +1,6 @@
-"use client"
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Network, Home, Percent, TrendingUp } from "lucide-react"
+"use client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Network, Home, Percent, TrendingUp } from "lucide-react";
 
 export function BrokerEliteInfoCard() {
   return (

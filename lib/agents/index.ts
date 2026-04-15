@@ -1,6 +1,6 @@
-import { ToolLoopAgent, tool } from 'ai'
-import { z } from 'zod'
-import { createClient } from '@/lib/supabase/server'
+import { ToolLoopAgent, tool } from 'ai';
+import { z } from 'zod';
+import { createClient } from '@/lib/supabase/server';
 
 // Agent Types
 export type AgentType = 'support' | 'sales' | 'legal' | 'marketing' | 'finance'
@@ -274,8 +274,7 @@ const legalTools = {
         hasIssues: issues.length > 0,
         issues,
         recommendation: issues.length > 0 
-          ? 'Se encontraron terminos que requieren revision antes de publicar'
-          : 'Texto parece cumplir con lineamientos basicos. Requiere aprobacion final de supervision.'
+          ? 'Se encontraron terminos que requieren revision antes de publicar' :'Texto parece cumplir con lineamientos basicos. Requiere aprobacion final de supervision.'
       }
     }
   }),

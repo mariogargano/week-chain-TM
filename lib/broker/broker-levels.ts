@@ -1,7 +1,7 @@
 // lib/broker/broker-levels.ts
 // Lógica de negocio para el sistema de niveles de broker
 
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server";
 
 // Tipos
 export interface BrokerLevel {

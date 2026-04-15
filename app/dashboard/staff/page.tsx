@@ -1,13 +1,12 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Calendar, MessageSquare, FileText, CheckCircle2, Clock, Briefcase, Mail } from "lucide-react"
-import Link from "next/link"
-import { RoleGuard } from "@/components/role-guard"
+"use client";
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar, MessageSquare, FileText, CheckCircle2, Clock, Briefcase, Mail } from "lucide-react";
+import Link from "next/link";
+import { RoleGuard } from "@/components/role-guard";
 
 function StaffDashboardContent() {
   const [loading, setLoading] = useState(true)
@@ -74,7 +73,7 @@ function StaffDashboardContent() {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
-                  <div className="text-3xl font-bold text-slate-900">{stats.pendingTasks}</div>
+                  <div className="text-3xl font-bold text-slate-900">{stats?.pendingTasks}</div>
                   <Clock className="h-8 w-8 text-[#FFB7B2]" />
                 </div>
                 <p className="text-xs text-slate-500 mt-2">Requieren atención</p>
@@ -87,7 +86,7 @@ function StaffDashboardContent() {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
-                  <div className="text-3xl font-bold text-slate-900">{stats.completedToday}</div>
+                  <div className="text-3xl font-bold text-slate-900">{stats?.completedToday}</div>
                   <CheckCircle2 className="h-8 w-8 text-[#B5EAD7]" />
                 </div>
                 <p className="text-xs text-slate-500 mt-2">Tareas finalizadas</p>
@@ -100,7 +99,7 @@ function StaffDashboardContent() {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
-                  <div className="text-3xl font-bold text-slate-900">{stats.unreadMessages}</div>
+                  <div className="text-3xl font-bold text-slate-900">{stats?.unreadMessages}</div>
                   <Mail className="h-8 w-8 text-[#C7CEEA]" />
                 </div>
                 <p className="text-xs text-slate-500 mt-2">Sin leer</p>
@@ -113,7 +112,7 @@ function StaffDashboardContent() {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
-                  <div className="text-3xl font-bold text-slate-900">{stats.upcomingMeetings}</div>
+                  <div className="text-3xl font-bold text-slate-900">{stats?.upcomingMeetings}</div>
                   <Calendar className="h-8 w-8 text-[#FFDAC1]" />
                 </div>
                 <p className="text-xs text-slate-500 mt-2">Próximas</p>
@@ -167,7 +166,7 @@ function StaffDashboardContent() {
                         dueDate: "Viernes",
                         status: "Pendiente",
                       },
-                    ].map((task, i) => (
+                    ]?.map((task, i) => (
                       <div
                         key={i}
                         className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-[#FFB7B2] transition-colors"
@@ -175,17 +174,17 @@ function StaffDashboardContent() {
                         <div className="flex items-center gap-4">
                           <input type="checkbox" className="h-5 w-5 rounded border-slate-300" />
                           <div>
-                            <h4 className="font-semibold text-slate-900">{task.title}</h4>
+                            <h4 className="font-semibold text-slate-900">{task?.title}</h4>
                             <div className="flex items-center gap-2 mt-1">
-                              <Badge variant={task.priority === "Alta" ? "destructive" : "secondary"} className="text-xs">
-                                {task.priority}
+                              <Badge variant={task?.priority === "Alta" ? "destructive" : "secondary"} className="text-xs">
+                                {task?.priority}
                               </Badge>
                               <Badge variant="outline" className="text-xs">
                                 <Clock className="h-3 w-3 mr-1" />
-                                {task.dueDate}
+                                {task?.dueDate}
                               </Badge>
                               <Badge variant="outline" className="text-xs">
-                                {task.status}
+                                {task?.status}
                               </Badge>
                             </div>
                           </div>
@@ -251,19 +250,19 @@ function StaffDashboardContent() {
                         date: "Viernes",
                         type: "Capacitación",
                       },
-                    ].map((event, i) => (
+                    ]?.map((event, i) => (
                       <div key={i} className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
                         <div className="flex items-center gap-4">
                           <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#C7CEEA]/10">
                             <Calendar className="h-6 w-6 text-[#C7CEEA]" />
                           </div>
                           <div>
-                            <h4 className="font-semibold text-slate-900">{event.title}</h4>
+                            <h4 className="font-semibold text-slate-900">{event?.title}</h4>
                             <p className="text-sm text-slate-600">
-                              {event.date} - {event.time}
+                              {event?.date} - {event?.time}
                             </p>
                             <Badge variant="outline" className="text-xs mt-1">
-                              {event.type}
+                              {event?.type}
                             </Badge>
                           </div>
                         </div>
@@ -294,7 +293,7 @@ function StaffDashboardContent() {
                       { title: "Políticas de la Empresa", type: "PDF", size: "1.8 MB" },
                       { title: "Plantillas de Documentos", type: "ZIP", size: "5.2 MB" },
                       { title: "Guía de Recursos Humanos", type: "PDF", size: "3.1 MB" },
-                    ].map((doc, i) => (
+                    ]?.map((doc, i) => (
                       <div
                         key={i}
                         className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-[#C7CEEA] transition-colors"
@@ -304,9 +303,9 @@ function StaffDashboardContent() {
                             <FileText className="h-5 w-5 text-[#C7CEEA]" />
                           </div>
                           <div>
-                            <h4 className="font-semibold text-sm text-slate-900">{doc.title}</h4>
+                            <h4 className="font-semibold text-sm text-slate-900">{doc?.title}</h4>
                             <p className="text-xs text-slate-600">
-                              {doc.type} • {doc.size}
+                              {doc?.type} • {doc?.size}
                             </p>
                           </div>
                         </div>
@@ -352,7 +351,7 @@ function StaffDashboardContent() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default function StaffDashboard() {

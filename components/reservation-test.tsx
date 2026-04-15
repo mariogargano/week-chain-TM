@@ -1,11 +1,10 @@
-"use client"
-
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ReservationFlow } from "@/components/reservation-flow"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Info } from "lucide-react"
+"use client";
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ReservationFlow } from "./reservation-flow";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Info } from "lucide-react";
 
 export function ReservationTest() {
   const [showFlow, setShowFlow] = useState(false)
@@ -50,15 +49,15 @@ export function ReservationTest() {
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div>
                   <span className="text-slate-600">Property:</span>
-                  <p className="font-medium">{testWeek.propertyName}</p>
+                  <p className="font-medium">{testWeek?.propertyName}</p>
                 </div>
                 <div>
                   <span className="text-slate-600">Week:</span>
-                  <p className="font-medium">Week {testWeek.weekNumber}</p>
+                  <p className="font-medium">Week {testWeek?.weekNumber}</p>
                 </div>
                 <div>
                   <span className="text-slate-600">Price:</span>
-                  <p className="font-medium">${testWeek.price.toLocaleString()} USDC</p>
+                  <p className="font-medium">${testWeek?.price?.toLocaleString()} USDC</p>
                 </div>
                 <div>
                   <span className="text-slate-600">Network:</span>
@@ -77,11 +76,11 @@ export function ReservationTest() {
           </>
         ) : (
           <ReservationFlow
-            weekId={testWeek.id}
-            propertyId={testWeek.propertyId}
-            weekNumber={testWeek.weekNumber}
-            weekPrice={testWeek.price}
-            propertyName={testWeek.propertyName}
+            weekId={testWeek?.id}
+            propertyId={testWeek?.propertyId}
+            weekNumber={testWeek?.weekNumber}
+            weekPrice={testWeek?.price}
+            propertyName={testWeek?.propertyName}
             onComplete={() => {
               setTimeout(() => {
                 setShowFlow(false)
@@ -92,5 +91,5 @@ export function ReservationTest() {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

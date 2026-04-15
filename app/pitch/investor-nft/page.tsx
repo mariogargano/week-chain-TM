@@ -1,9 +1,8 @@
-"use client"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Home,
   Award,
@@ -17,8 +16,8 @@ import {
   Percent,
   Key,
   Users,
-} from "lucide-react"
-import Link from "next/link"
+} from "lucide-react";
+import Link from "next/link";
 
 const tiers = [
   {
@@ -187,7 +186,7 @@ export default function FounderNFTPage() {
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-center mb-8">Tiers de Financiamiento</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            {tiers.map((tier, index) => (
+            {tiers?.map((tier, index) => (
               <Card
                 key={index}
                 className={`p-6 cursor-pointer transition-all ${
@@ -196,18 +195,18 @@ export default function FounderNFTPage() {
                 onClick={() => setSelectedTier(index)}
               >
                 <div className="text-center mb-6">
-                  <div className="text-6xl mb-3">{tier.icon}</div>
-                  <h3 className="text-xl font-bold mb-2">{tier.name}</h3>
+                  <div className="text-6xl mb-3">{tier?.icon}</div>
+                  <h3 className="text-xl font-bold mb-2">{tier?.name}</h3>
                   <div className="space-y-1">
-                    <Badge className={`bg-gradient-to-r ${tier.color} text-white`}>{tier.contribution}</Badge>
-                    <div className="text-sm text-muted-foreground">Equity: {tier.equity}</div>
+                    <Badge className={`bg-gradient-to-r ${tier?.color} text-white`}>{tier?.contribution}</Badge>
+                    <div className="text-sm text-muted-foreground">Equity: {tier?.equity}</div>
                   </div>
                 </div>
                 <div className="space-y-3">
-                  {tier.benefits.map((benefit, idx) => (
+                  {tier?.benefits?.map((benefit, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <benefit.icon className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                      <span>{benefit.text}</span>
+                      <span>{benefit?.text}</span>
                     </div>
                   ))}
                 </div>
@@ -349,5 +348,5 @@ export default function FounderNFTPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

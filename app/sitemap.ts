@@ -1,4 +1,4 @@
-import type { MetadataRoute } from "next"
+import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.week-chain.com"
@@ -11,12 +11,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/properties", priority: 0.95, changeFrequency: "daily" as const },
     { path: "/brokers", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/broker-elite", priority: 0.8, changeFrequency: "monthly" as const },
+    { path: "/broker-programa", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/partnership", priority: 0.7, changeFrequency: "monthly" as const },
     { path: "/contact", priority: 0.7, changeFrequency: "monthly" as const },
     { path: "/faq", priority: 0.7, changeFrequency: "weekly" as const },
     { path: "/roadmap", priority: 0.6, changeFrequency: "monthly" as const },
     { path: "/valuation", priority: 0.7, changeFrequency: "monthly" as const },
     { path: "/pitch", priority: 0.6, changeFrequency: "monthly" as const },
+    { path: "/como-funciona", priority: 0.9, changeFrequency: "monthly" as const },
+    { path: "/destinos", priority: 0.85, changeFrequency: "weekly" as const },
+    { path: "/testimonios", priority: 0.75, changeFrequency: "weekly" as const },
+    { path: "/week-fundacion", priority: 0.7, changeFrequency: "monthly" as const },
     { path: "/auth", priority: 0.5, changeFrequency: "yearly" as const },
 
     // Legal pages

@@ -1,14 +1,12 @@
-import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Home, DollarSign, TrendingUp, Calendar } from "lucide-react"
+import { createClient } from "@/lib/supabase/server";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Home, DollarSign, TrendingUp, Calendar } from "lucide-react";
 
 export default async function RentalsPage() {
   const supabase = await createClient()
 
-  const { data: rentals } = await supabase
-    .from("rental_bookings")
-    .select(`
+  const { data: rentals } = await supabase?.from("rental_bookings")?.select(`
       *,
       weeks (
         week_number,
@@ -21,12 +19,11 @@ export default async function RentalsPage() {
           full_name
         )
       )
-    `)
-    .order("check_in_date", { ascending: false })
+    `)?.order("check_in_date", { ascending: false })
 
-  const totalRevenue = rentals?.reduce((sum, r) => sum + Number.parseFloat(r.total_amount), 0) || 0
-  const activeRentals = rentals?.filter((r) => r.status === "confirmed").length || 0
-  const pendingRentals = rentals?.filter((r) => r.status === "pending").length || 0
+  const totalRevenue = rentals?.reduce((sum, r) => sum + Number.parseFloat(r?.total_amount), 0) || 0
+  const activeRentals = rentals?.filter((r) => r?.status === "confirmed")?.length || 0
+  const pendingRentals = rentals?.filter((r) => r?.status === "pending")?.length || 0
 
   return (
     <div className="space-y-8">
@@ -34,7 +31,6 @@ export default async function RentalsPage() {
         <h1 className="text-3xl font-bold text-slate-800">Gestión de Rentas</h1>
         <p className="text-slate-600 mt-2">Administra rentas y sincronización con OTAs</p>
       </div>
-
       <div className="grid gap-6 md:grid-cols-4">
         <Card className="border-green-200 bg-gradient-to-br from-green-50 to-green-100">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -42,7 +38,7 @@ export default async function RentalsPage() {
             <DollarSign className="h-5 w-5 text-green-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-slate-800">${totalRevenue.toLocaleString()}</div>
+            <div className="text-3xl font-bold text-slate-800">${totalRevenue?.toLocaleString()}</div>
             <p className="text-xs text-slate-600 mt-1">De rentas</p>
           </CardContent>
         </Card>
@@ -80,7 +76,6 @@ export default async function RentalsPage() {
           </CardContent>
         </Card>
       </div>
-
       <Card>
         <CardHeader>
           <CardTitle>Rentas Recientes</CardTitle>
@@ -102,39 +97,36 @@ export default async function RentalsPage() {
               </thead>
               <tbody>
                 {rentals?.map((rental) => (
-                  <tr key={rental.id} className="border-b hover:bg-slate-50">
+                  <tr key={rental?.id} className="border-b hover:bg-slate-50">
                     <td className="py-3 px-4">
                       <div>
-                        <div className="font-medium text-slate-800">{rental.weeks?.properties?.name}</div>
-                        <div className="text-sm text-slate-600">{rental.weeks?.properties?.location}</div>
+                        <div className="font-medium text-slate-800">{rental?.weeks?.properties?.name}</div>
+                        <div className="text-sm text-slate-600">{rental?.weeks?.properties?.location}</div>
                       </div>
                     </td>
-                    <td className="py-3 px-4 font-semibold text-purple-600">Semana {rental.weeks?.week_number}</td>
+                    <td className="py-3 px-4 font-semibold text-purple-600">Semana {rental?.weeks?.week_number}</td>
                     <td className="py-3 px-4">
-                      <div className="text-sm text-slate-800">{rental.weeks?.users?.full_name || "N/A"}</div>
+                      <div className="text-sm text-slate-800">{rental?.weeks?.users?.full_name || "N/A"}</div>
                     </td>
-                    <td className="py-3 px-4 text-slate-600">{new Date(rental.check_in_date).toLocaleDateString()}</td>
+                    <td className="py-3 px-4 text-slate-600">{new Date(rental.check_in_date)?.toLocaleDateString()}</td>
                     <td className="py-3 px-4 font-semibold text-green-600">
-                      ${Number.parseFloat(rental.total_amount).toLocaleString()}
+                      ${Number.parseFloat(rental?.total_amount)?.toLocaleString()}
                     </td>
                     <td className="py-3 px-4">
                       <Badge
-                        variant={rental.status === "confirmed" ? "default" : "secondary"}
+                        variant={rental?.status === "confirmed" ? "default" : "secondary"}
                         className={
-                          rental.status === "confirmed"
-                            ? "bg-green-100 text-green-700"
-                            : rental.status === "pending"
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-red-100 text-red-700"
+                          rental?.status === "confirmed" ?"bg-green-100 text-green-700"
+                            : rental?.status === "pending" ?"bg-yellow-100 text-yellow-700" :"bg-red-100 text-red-700"
                         }
                       >
-                        {rental.status}
+                        {rental?.status}
                       </Badge>
                     </td>
                     <td className="py-3 px-4">
-                      {rental.ota_platform && (
+                      {rental?.ota_platform && (
                         <Badge variant="outline" className="text-xs">
-                          {rental.ota_platform}
+                          {rental?.ota_platform}
                         </Badge>
                       )}
                     </td>
@@ -146,5 +138,5 @@ export default async function RentalsPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
