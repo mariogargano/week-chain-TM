@@ -1,111 +1,97 @@
-# WEEK-CHAIN
+# WEEK-CHAIN Platform
 
-WEEK-CHAIN is the REaaS (Real Estate as a Service) infrastructure behind the WEEK-WORLD ecosystem.  
-It converts premium vacation inventory into standardized annual capacity (weeks) and operates it as a **digital right-to-use** product: the **Smart Vacational Certificate (SVC)**.
+Plataforma digital de Smart Vacational Certificates (SVC) - certificados de derecho de uso vacacional con validez legal conforme a NOM-151.
 
-> IMPORTANT: SVCs are **not ownership**, **not equity**, and **not an investment product**.  
-> WEEK-CHAIN does **not** promise ROI, yield, appreciation, or financial returns to end customers.
+## Descripcion
 
----
+WEEK-CHAIN ofrece certificados digitales de derecho personal y temporal para solicitar uso vacacional durante hasta 15 anos en destinos participantes, sujeto a disponibilidad. 
 
-## What is an SVC (Smart Vacational Certificate)?
+**Importante:** NO constituye propiedad inmobiliaria, tiempo compartido tradicional ni instrumento de inversion.
 
-An SVC is a **personal, limited-term vacation right-to-use** that allows a holder to request and confirm 1 week/year (depending on the certificate rules) within a managed inventory network.
+## Stack Tecnologico
 
-**SVC ≠ Timeshare ownership**
-- No fractional ownership
-- No real estate title transfer
-- No “guaranteed unit/week” without confirmation
-- No perpetual obligations
+- **Frontend:** Next.js 15, React, TypeScript, Tailwind CSS
+- **Backend:** Supabase (PostgreSQL + Auth)
+- **Pagos:** Stripe
+- **Storage:** Vercel Blob
+- **Deployment:** Vercel
 
-**Core properties (high level)**
-- **Term:** up to **15 years** (configurable by product series/rules)
-- **Usage:** typically **1 week per year**, subject to rules and availability
-- **Booking flow:** **REQUEST → OFFER → CONFIRM**
-- **Transferability:** allowed under policy + KYC (where applicable)
+## Caracteristicas Principales
 
----
+- Smart Vacational Certificates (SVC) con validez de hasta 15 anos
+- Sistema de reservaciones REQUEST -> OFFER -> CONFIRM
+- Panel de administracion completo
+- Oficina Virtual con agentes de IA especializados
+- Programa Pre-Holder con depositos reembolsables
+- Red de WEEK-AGENTS (brokers) con comision fija del 4%
+- Documentacion digital conforme a NOM-151
 
-## How booking works (REQUEST → OFFER → CONFIRM)
+## Variables de Entorno
 
-WEEK-CHAIN is designed around a compliance-friendly, expectation-safe booking flow:
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
 
-1. **REQUEST** — the holder requests destination + dates + capacity (PAX)
-2. **OFFER** — the system returns concrete options based on availability and rules
-3. **CONFIRM** — the holder confirms one offer; the week is locked and operational processes start
+# Stripe
+STRIPE_SECRET_KEY=
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_WEBHOOK_SECRET=
 
-This flow is a key guardrail to avoid “guaranteed fixed-week/unit” behavior typical of traditional timeshare models.
+# Google OAuth
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=
 
----
+# Email
+RESEND_API_KEY=
 
-## Trust & Compliance (design principles)
+# App
+NEXT_PUBLIC_BASE_URL=https://www.week-chain.com
+NEXT_PUBLIC_ADMIN_EMAIL=
+```
 
-WEEK-CHAIN is built to operate **compliance-first** (jurisdiction-dependent), emphasizing auditability and consumer protection.
+## Desarrollo
 
-Typical components:
-- **Consumer protection** alignment (e.g., PROFECO adhesion contract in Mexico)
-- **Digital evidence & integrity** (e.g., NOM-151 compatible preservation where applicable)
-- **Cryptographic integrity**: document hashes (e.g., SHA-256) + QR verification
-- **KYC / KYB** for holders, agents, and counterparties (policy-based)
+```bash
+# Instalar dependencias
+npm install
 
-> We may implement or reference “blockchain” for verification/integrity and controlled transfer records, but this repository and product positioning must **never** imply an investment, token yield, or speculative asset.
+# Iniciar servidor de desarrollo
+npm run dev
 
----
+# Build de produccion
+npm run build
+```
 
-## What WEEK-CHAIN is (and what it is not)
+## Estructura del Proyecto
 
-### ✅ It is
-- An operating system for **vacation capacity** (weeks) across curated properties
-- A platform that issues and manages **digital right-to-use certificates**
-- A workflow + compliance layer to run booking and operations at scale
+```
+app/
+  dashboard/
+    admin/         # Panel de administracion
+    user/          # Dashboard de usuarios
+    broker/        # Panel de brokers/agentes
+  api/             # API routes
+  pre-holder/      # Programa Pre-Holder
+components/        # Componentes React
+lib/
+  agents/          # Sistema de agentes IA
+  auth/            # Autenticacion y roles
+  security/        # Rate limiting, validacion
+scripts/           # Migraciones SQL
+docs/              # Documentacion tecnica
+```
 
-### ❌ It is not
-- A real estate investment product
-- A promise of financial returns
-- A token sale
-- A property ownership scheme
-- A “guaranteed fixed week/unit” without confirmation
+## Seguridad
 
----
+- Autenticacion via Supabase Auth + Google OAuth
+- Rate limiting en endpoints sensibles
+- Validacion de inputs con whitelists
+- RLS policies en base de datos
+- Generacion segura de contrasenas (crypto.randomBytes)
 
-## Repository scope
+## Licencia
 
-This repository contains code and documentation related to:
-- Certificate lifecycle (issuance, rules, status, verification metadata)
-- Inventory/week capacity modeling (52 weeks, blackout/maintenance windows)
-- Request/offers/confirmation engine
-- Operational workflows & integrations (payments, notifications, audits)
-- Compliance-related evidence trails (as configured)
-
-> Legal documents, consumer terms, and jurisdiction-specific policies may live in separate repositories or internal systems.
-
----
-
-## Terminology
-
-- **REaaS**: Real Estate as a Service (access/usage as a service, not ownership)
-- **SVC**: Smart Vacational Certificate (personal right-to-use)
-- **Holder**: certificate holder
-- **PAX**: capacity tier (2/4/6/8/10)
-- **SPV**: Special Purpose Vehicle (used per property for risk isolation, when applicable)
-
----
-
-## Security & responsible disclosure
-
-If you find a security issue, do not open a public issue. Please contact: **security@week-chain.com** (or replace with your official channel).
-
----
-
-## License
-
-TBD (proprietary / source-available / MIT).  
-If this is proprietary, make sure the LICENSE file and headers reflect it.
-
----
-
-## Disclaimer
-
-WEEK-CHAIN provides a managed vacation usage right through SVCs.  
-SVCs are **not** securities, **not** investment contracts, and **not** real estate ownership instruments.  
-Availability is managed through **REQUEST → OFFER → CONFIRM** under the applicable Terms and Rules.
+Propiedad de WEEK-CHAIN. Todos los derechos reservados.

@@ -1,7 +1,15 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-import { Resend } from "resend";
-import { ADMIN_EMAIL } from "@/lib/auth/roles";
+import { type NextRequest, NextResponse } from "next/server"
+import { createClient } from "@supabase/supabase-js"
+import { Resend } from "resend"
+import { randomBytes } from "crypto"
+import { checkRateLimit, ADMIN_RATE_LIMIT } from "@/lib/security/rate-limiter"
+
+// Valid roles whitelist for validation
+const VALID_ROLES = [
+  "admin", "super_admin", "management", "broker", "broker_elite",
+  "notaria", "of_counsel", "service_provider", "vafi_manager",
+  "dao_member", "property_owner", "staff", "user"
+] as const
 
 function getSupabaseAdmin() {
   return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
@@ -11,8 +19,29 @@ function getResend() {
   return new Resend(process.env.RESEND_API_KEY)
 }
 
+// F-02 FIX: Cryptographically secure password generation
+function generateSecurePassword(): string {
+  const bytes = randomBytes(16)
+  const password = bytes.toString('base64').slice(0, 16)
+  // Ensure complexity requirements
+  return password + 'A1!'
+}
+
 export async function POST(request: NextRequest) {
   try {
+    // F-07 FIX: Rate limiting
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || 
+               request.headers.get("x-real-ip") || 
+               "unknown"
+    
+    const rateLimit = checkRateLimit(`create-user:${ip}`, ADMIN_RATE_LIMIT)
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      )
+    }
+
     const supabaseAdmin = getSupabaseAdmin()
     const resend = getResend()
 
@@ -33,19 +62,52 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 })
     }
 
-    if (user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+    // F-03/F-04 FIX: Check admin role from database, not hardcoded email
+    const { data: adminCheck } = await supabaseAdmin
+      .from("users")
+      .select("role")
+      .eq("id", user.id)
+      .single()
+
+    const isAdmin = adminCheck?.role === "admin" || adminCheck?.role === "super_admin"
+    if (!isAdmin) {
       return NextResponse.json({ error: "Not authorized" }, { status: 403 })
     }
 
     const body = await request.json()
     const { email, name, role } = body
 
+    // F-08 FIX: Enhanced input validation
     if (!email || !name || !role) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
-    // Generate temporary password
-    const tempPassword = Math.random().toString(36).slice(-12) + "A1!"
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: "Invalid email format" }, { status: 400 })
+    }
+
+    // Validate name length
+    if (name.length > 100) {
+      return NextResponse.json({ error: "Name too long (max 100 chars)" }, { status: 400 })
+    }
+
+    // Validate role against whitelist
+    if (!VALID_ROLES.includes(role)) {
+      return NextResponse.json({ error: "Invalid role" }, { status: 400 })
+    }
+
+    // Sanitize name for HTML (escape special chars)
+    const sanitizedName = name
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;')
+
+    // F-02 FIX: Use cryptographically secure password
+    const tempPassword = generateSecurePassword()
 
     // Create user in Supabase Auth
     const { data: newUser, error: createError } = await supabaseAdmin.auth.admin.createUser({
@@ -98,7 +160,7 @@ export async function POST(request: NextRequest) {
             </div>
             
             <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
-              <h2 style="color: #333; margin-top: 0;">¡Bienvenido, ${name}!</h2>
+              <h2 style="color: #333; margin-top: 0;">¡Bienvenido, ${sanitizedName}!</h2>
               
               <p>Tu cuenta ha sido creada en la plataforma WEEK-CHAIN con el rol de <strong>${role}</strong>.</p>
               
@@ -131,13 +193,21 @@ export async function POST(request: NextRequest) {
       })
     } catch (emailError) {
       console.error("Error sending email:", emailError)
-      // Return success but note email failed
+      // F-01 FIX: Never return password in response - log internally and advise manual reset
+      // Log the error for admin to handle via other secure channels
+      await supabaseAdmin.from("audit_logs").insert({
+        action: "create_user_email_failed",
+        user_id: newUser.user.id,
+        details: { email, role, error: "Email delivery failed - manual password reset required" },
+        created_at: new Date().toISOString(),
+      }).catch(() => {}) // Silent fail for audit log
+      
       return NextResponse.json({
         success: true,
         user: { id: newUser.user.id, email, name, role },
         emailSent: false,
-        tempPassword: tempPassword, // Return password if email fails
-        message: "Usuario creado pero el email no pudo ser enviado. Contraseña temporal incluida.",
+        // F-01 FIX: No password in response - advise password reset
+        message: "Usuario creado pero el email no pudo ser enviado. El usuario debe usar 'Olvidé mi contraseña' para obtener acceso.",
       })
     }
 

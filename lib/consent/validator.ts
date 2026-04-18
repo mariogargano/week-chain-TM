@@ -10,7 +10,7 @@ export async function validateConsent(
   userId: string,
   consentType: ConsentType,
   requiredVersion?: string,
-): Promise<{ valid: boolean; error?: string }> {
+): Promise<{ valid: boolean; error?: string; version?: string }> {
   try {
     const supabase = await createServerClient()
 
@@ -23,6 +23,14 @@ export async function validateConsent(
       .limit(1)
 
     if (error) {
+      // Check if table doesn't exist yet (migration pending)
+      if (error.code === "42P01" || error.message?.includes("does not exist")) {
+        console.warn("[v0] user_consents table does not exist - run migration 001")
+        // Allow operation to proceed in development, block in production
+        if (process.env.NODE_ENV === "development") {
+          return { valid: true, version: "migration_pending" }
+        }
+      }
       console.error("[v0] Consent validation error:", error)
       return { valid: false, error: "Database error" }
     }
@@ -43,7 +51,7 @@ export async function validateConsent(
       }
     }
 
-    return { valid: true }
+    return { valid: true, version: latestConsent.consent_version }
   } catch (error) {
     console.error("[v0] Consent validation exception:", error)
     return { valid: false, error: "Validation failed" }

@@ -115,12 +115,12 @@ export default function AccessPage() {
             </Button>
           </form>
 
-          {/* Footer */}
+          {/* Footer - F-06 FIX: Use generic support email, not admin email */}
           <div className="pt-4 border-t border-border">
             <p className="text-center text-xs text-muted-foreground">
               {"No tienes acceso? Contacta a "}
-              <a href="mailto:corporativo@morises.com" className="text-sky-600 hover:underline font-medium">
-                corporativo@morises.com
+              <a href="mailto:soporte@week-chain.com" className="text-sky-600 hover:underline font-medium">
+                soporte@week-chain.com
               </a>
             </p>
           </div>

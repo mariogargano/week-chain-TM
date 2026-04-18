@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+// F-05 FIX: Whitelist of valid tier values
+const VALID_TIERS = ["silver", "gold", "platinum", "signature"] as const
+type ValidTier = typeof VALID_TIERS[number]
+
 export async function POST(req: Request) {
   try {
     const supabase = await createClient()
@@ -28,6 +32,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid parameters" }, { status: 400 })
     }
 
+    // F-05 FIX: Validate tier against whitelist to prevent field injection
+    const normalizedTier = tier.toLowerCase() as ValidTier
+    if (!VALID_TIERS.includes(normalizedTier)) {
+      return NextResponse.json({ error: "Invalid tier. Must be one of: silver, gold, platinum, signature" }, { status: 400 })
+    }
+
     // Get latest capacity status and update the specific tier flag
     const { data: latest } = await supabase
       .from("capacity_engine_status")
@@ -40,8 +50,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No capacity status found" }, { status: 404 })
     }
 
-    // Create new status record with updated flag
-    const updateField = `${tier.toLowerCase()}_sales_enabled`
+    // Create new status record with updated flag (using validated tier)
+    const updateField = `${normalizedTier}_sales_enabled`
     const newStatus = {
       ...latest,
       [updateField]: enabled,

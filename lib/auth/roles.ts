@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/client";
 
-export const ADMIN_EMAIL = "corporativo@morises.com"
+// F-04 FIX: Admin email moved to environment variable, not hardcoded
+// Use ADMIN_EMAIL env var or check database roles directly
+export const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || ""
 
 export type UserRole =
   | "admin" |"super_admin" |"management" |"broker" |"broker_elite" |"notaria" |"of_counsel" |"service_provider" |"vafi_manager" |"dao_member" |"property_owner" |"staff" |"user"
@@ -13,15 +15,7 @@ export interface RoleInfo {
 
 export async function getUserRoleByEmail(email: string): Promise<RoleInfo | null> {
   try {
-    // Admin email always returns admin role
-    if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
-      return {
-        role: "admin",
-        name: "Administrador",
-        email: email,
-      }
-    }
-
+    // F-04 FIX: Always check database for role, don't rely on hardcoded email
     const supabase = createClient()
 
     const { data: userData } = await supabase
