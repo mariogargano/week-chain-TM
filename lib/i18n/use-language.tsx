@@ -1,37 +1,38 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import { translations } from "./translations"
+import { createContext, useContext, type ReactNode } from "react"
+import { useTranslations, useLocale, setLocale as setLocaleFunc } from "./use-translations"
+import type { Locale } from "./config"
 
-type Language = "es" | "en" | "pt" | "fr" | "it"
+/**
+ * LEGACY wrapper for backwards compatibility.
+ * Delegates to the unified useTranslations/useLocale system.
+ * New code should import directly from "./use-translations".
+ */
 
 interface LanguageContextType {
-  language: Language
-  setLanguage: (lang: Language) => void
-  t: typeof translations.es
+  language: Locale
+  setLanguage: (lang: Locale) => void
+  t: ReturnType<typeof useTranslations>
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("es")
+  const language = useLocale()
+  const t = useTranslations()
 
-  useEffect(() => {
-    // Load language from localStorage
-    const saved = localStorage.getItem("week-chain-language") as Language
-    if (saved && ["es", "en", "pt", "fr", "it"].includes(saved)) {
-      setLanguageState(saved)
-    }
-  }, [])
-
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang)
-    localStorage.setItem("week-chain-language", lang)
-  }
-
-  const t = translations[language]
-
-  return <LanguageContext.Provider value={{ language, setLanguage, t }}>{children}</LanguageContext.Provider>
+  return (
+    <LanguageContext.Provider
+      value={{
+        language,
+        setLanguage: setLocaleFunc,
+        t,
+      }}
+    >
+      {children}
+    </LanguageContext.Provider>
+  )
 }
 
 export function useLanguage() {

@@ -37,8 +37,29 @@ import {
 const fallbackNav = {
   aboutUs: "Nosotros",
   myPanel: "Mi Panel",
-  signOut: "Cerrar Sesion",
+  signOut: "Cerrar Sesión",
   language: "Idioma",
+  destinations: "Nuestros Destinos",
+  howItWorks: "Cómo Funciona",
+  start: "COMENZAR",
+  login: "Iniciar Sesión",
+  createAccount: "Crear Cuenta",
+  user: "Usuario",
+}
+
+const fallbackEcosystem = {
+  title: "Ecosistema WEEK-CHAIN",
+  subtitle: "Explora todas nuestras plataformas",
+  mundoWeek: "Mundo-WEEK",
+  style: { label: "WEEK-Style", desc: "Blog & Lifestyle" },
+  management: { label: "WEEK-Management", desc: "Gestión de certificados" },
+  agent: { label: "WEEK-Agent", desc: "Programa de comisiones 4%" },
+  wedding: { label: "WEEK-Wedding", desc: "Experiencias especiales" },
+  service: { label: "WEEK-Service", desc: "Servicios vacacionales" },
+  booking: { label: "WEEK-Booking", desc: "Sistema de reservas" },
+  vafi: { label: "WEEK-VA-FI", desc: "Protocolo financiero" },
+  fundacion: { label: "WEEK-Fundación", desc: "Impacto social" },
+  insurance: { label: "WEEK-Insurance", desc: "Protección vacacional" },
 }
 
 export function Navbar() {
@@ -52,11 +73,33 @@ export function Navbar() {
   const router = useRouter()
   const t = useTranslations()
 
+  const tAny = t as any
   const nav = {
-    aboutUs: t?.nav?.aboutUs || fallbackNav.aboutUs,
-    myPanel: t?.nav?.myPanel || fallbackNav.myPanel,
-    signOut: t?.nav?.signOut || fallbackNav.signOut,
-    language: t?.nav?.language || fallbackNav.language,
+    aboutUs: tAny?.nav?.aboutUs || fallbackNav.aboutUs,
+    myPanel: tAny?.nav?.myPanel || fallbackNav.myPanel,
+    signOut: tAny?.nav?.signOut || fallbackNav.signOut,
+    language: tAny?.nav?.language || fallbackNav.language,
+    destinations: tAny?.nav?.destinations || fallbackNav.destinations,
+    howItWorks: tAny?.nav?.howItWorks || fallbackNav.howItWorks,
+    start: tAny?.nav?.start || fallbackNav.start,
+    login: tAny?.nav?.login || fallbackNav.login,
+    createAccount: tAny?.nav?.createAccount || fallbackNav.createAccount,
+    user: tAny?.nav?.user || fallbackNav.user,
+  }
+
+  const eco = {
+    title: tAny?.ecosystem?.title || fallbackEcosystem.title,
+    subtitle: tAny?.ecosystem?.subtitle || fallbackEcosystem.subtitle,
+    mundoWeek: tAny?.ecosystem?.mundoWeek || fallbackEcosystem.mundoWeek,
+    style: tAny?.ecosystem?.style || fallbackEcosystem.style,
+    management: tAny?.ecosystem?.management || fallbackEcosystem.management,
+    agent: tAny?.ecosystem?.agent || fallbackEcosystem.agent,
+    wedding: tAny?.ecosystem?.wedding || fallbackEcosystem.wedding,
+    service: tAny?.ecosystem?.service || fallbackEcosystem.service,
+    booking: tAny?.ecosystem?.booking || fallbackEcosystem.booking,
+    vafi: tAny?.ecosystem?.vafi || fallbackEcosystem.vafi,
+    fundacion: tAny?.ecosystem?.fundacion || fallbackEcosystem.fundacion,
+    insurance: tAny?.ecosystem?.insurance || fallbackEcosystem.insurance,
   }
 
   useEffect(() => {
@@ -135,20 +178,20 @@ export function Navbar() {
   }
 
   const navItems = [
-    { label: "Nuestros Destinos", href: "/properties", icon: <MapPin className="w-5 h-5" />, color: "text-blue-600", hoverColor: "hover:text-blue-700", bgHover: "hover:bg-blue-50" },
-    { label: "Como Funciona", href: "/proceso-completo", icon: <Play className="w-5 h-5" />, color: "text-emerald-600", hoverColor: "hover:text-emerald-700", bgHover: "hover:bg-emerald-50" },
+    { label: nav.destinations, href: "/properties", icon: <MapPin className="w-5 h-5" />, color: "text-blue-600", hoverColor: "hover:text-blue-700", bgHover: "hover:bg-blue-50" },
+    { label: nav.howItWorks, href: "/proceso-completo", icon: <Play className="w-5 h-5" />, color: "text-emerald-600", hoverColor: "hover:text-emerald-700", bgHover: "hover:bg-emerald-50" },
   ]
 
   const ecosystemItems = [
-    { label: "WEEK-Style", href: "/week-in-life", icon: <Store className="w-5 h-5" />, color: "text-blue-500", description: "Blog & Lifestyle" },
-    { label: "WEEK-Management", href: "/week-management", icon: <Briefcase className="w-5 h-5" />, color: "text-purple-500", description: "Gestion de certificados" },
-    { label: "WEEK-Agent", href: "/week-agent", icon: <TrendingUp className="w-5 h-5" />, color: "text-emerald-500", description: "Programa de comisiones 4%" },
-    { label: "WEEK-Wedding", href: "/week-wedding", icon: <Calendar className="w-5 h-5" />, color: "text-sky-500", description: "Experiencias especiales" },
-    { label: "WEEK-Service", href: "/services", icon: <Store className="w-5 h-5" />, color: "text-cyan-500", description: "Servicios vacacionales" },
-    { label: "WEEK-Booking", href: "/week-booking", icon: <ShoppingBag className="w-5 h-5" />, color: "text-cyan-500", description: "Sistema de reservas" },
-    { label: "WEEK-VA-FI", href: "/va-fi", icon: <HandCoins className="w-5 h-5" />, color: "text-yellow-500", description: "Protocolo financiero" },
-    { label: "WEEK-Fundacion", href: "/week-fundacion", icon: <Globe className="w-5 h-5" />, color: "text-rose-500", description: "Impacto social" },
-    { label: "WEEK-Insurance", href: "/week-insurance", icon: <Shield className="w-5 h-5" />, color: "text-indigo-500", description: "Proteccion vacacional" },
+    { label: eco.style.label, href: "/week-in-life", icon: <Store className="w-5 h-5" />, color: "text-blue-500", description: eco.style.desc },
+    { label: eco.management.label, href: "/week-management", icon: <Briefcase className="w-5 h-5" />, color: "text-purple-500", description: eco.management.desc },
+    { label: eco.agent.label, href: "/week-agent", icon: <TrendingUp className="w-5 h-5" />, color: "text-emerald-500", description: eco.agent.desc },
+    { label: eco.wedding.label, href: "/week-wedding", icon: <Calendar className="w-5 h-5" />, color: "text-sky-500", description: eco.wedding.desc },
+    { label: eco.service.label, href: "/services", icon: <Store className="w-5 h-5" />, color: "text-cyan-500", description: eco.service.desc },
+    { label: eco.booking.label, href: "/week-booking", icon: <ShoppingBag className="w-5 h-5" />, color: "text-cyan-500", description: eco.booking.desc },
+    { label: eco.vafi.label, href: "/va-fi", icon: <HandCoins className="w-5 h-5" />, color: "text-yellow-500", description: eco.vafi.desc },
+    { label: eco.fundacion.label, href: "/week-fundacion", icon: <Globe className="w-5 h-5" />, color: "text-rose-500", description: eco.fundacion.desc },
+    { label: eco.insurance.label, href: "/week-insurance", icon: <Shield className="w-5 h-5" />, color: "text-indigo-500", description: eco.insurance.desc },
   ]
 
   return (
@@ -197,14 +240,14 @@ export function Navbar() {
               <DropdownMenuTrigger asChild>
                 <button className="group flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-sky-500 transition-all rounded-xl hover:bg-gradient-to-r hover:from-sky-50 hover:to-cyan-50">
                   <Globe className="w-5 h-5 text-sky-600 group-hover:rotate-12 transition-transform" />
-                  <span className="whitespace-nowrap">Mundo-WEEK</span>
+                  <span className="whitespace-nowrap">{eco.mundoWeek}</span>
                   <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-72 p-2 shadow-xl border-slate-200">
                 <div className="px-3 py-2 mb-2">
-                  <p className="text-xs font-semibold text-slate-900">Ecosistema WEEK-CHAIN</p>
-                  <p className="text-[10px] text-slate-500 mt-0.5">Explora todas nuestras plataformas</p>
+                  <p className="text-xs font-semibold text-slate-900">{eco.title}</p>
+                  <p className="text-[10px] text-slate-500 mt-0.5">{eco.subtitle}</p>
                 </div>
                 <DropdownMenuSeparator />
                 {ecosystemItems.map((item) => (
@@ -224,7 +267,7 @@ export function Navbar() {
             <Link href="/auth">
               <button className="group flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-500 hover:shadow-lg transition-all rounded-xl hover:scale-105 shadow-md shadow-sky-300/40 border border-sky-300">
                 <Play className="w-5 h-5 fill-white group-hover:scale-110 transition-transform" />
-                <span>COMENZAR</span>
+                <span>{nav.start}</span>
               </button>
             </Link>
           </nav>
@@ -234,7 +277,7 @@ export function Navbar() {
             {!isAuthenticated ? (
               <Link href="/auth">
                 <Button variant="outline" className="font-semibold text-sm px-5 py-2.5 h-auto transition-all rounded-lg bg-transparent border-slate-300 text-slate-700 hover:bg-slate-50">
-                  Iniciar Sesion
+                  {nav.login}
                 </Button>
               </Link>
             ) : (
@@ -242,7 +285,7 @@ export function Navbar() {
                 <DropdownMenuTrigger asChild>
                   <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-sm transition-all">
                     <UserCircle className="w-5 h-5" />
-                    <span className="max-w-[120px] truncate">{userName || "Usuario"}</span>
+                    <span className="max-w-[120px] truncate">{userName || nav.user}</span>
                     <ChevronDown className="w-4 h-4" />
                   </button>
                 </DropdownMenuTrigger>
@@ -296,7 +339,7 @@ export function Navbar() {
             ))}
 
             <div className="pt-4 pb-2">
-              <p className="px-5 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Ecosistema WEEK</p>
+              <p className="px-5 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider">{eco.title}</p>
             </div>
 
             {ecosystemItems.map((item) => (
@@ -320,20 +363,20 @@ export function Navbar() {
                   <Link href="/auth" onClick={() => setMobileMenuOpen(false)}>
                     <Button className="w-full bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-500 text-white font-bold text-base min-h-[52px] py-3 hover:shadow-xl transition-all shadow-lg shadow-sky-300/50 border-2 border-sky-200 rounded-xl active:scale-[0.98]">
                       <Play className="w-6 h-6 fill-white mr-2" />
-                      COMENZAR
+                      {nav.start}
                     </Button>
                   </Link>
                   <div className="grid grid-cols-2 gap-3 mt-3">
                     <Link href="/auth?tab=login" onClick={() => setMobileMenuOpen(false)}>
                       <Button variant="outline" className="w-full min-h-[48px] font-semibold text-sm border-slate-300 text-slate-700 hover:bg-slate-50 rounded-xl">
                         <Mail className="w-5 h-5 mr-2" />
-                        Iniciar Sesion
+                        {nav.login}
                       </Button>
                     </Link>
                     <Link href="/auth?tab=register" onClick={() => setMobileMenuOpen(false)}>
                       <Button variant="outline" className="w-full min-h-[48px] font-semibold text-sm border-cyan-300 text-cyan-700 hover:bg-cyan-50 rounded-xl">
                         <Shield className="w-5 h-5 mr-2" />
-                        Crear Cuenta
+                        {nav.createAccount}
                       </Button>
                     </Link>
                   </div>
