@@ -1,10 +1,10 @@
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { MapPin, DollarSign, Calendar, Lock, CheckCircle2 } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { MapPin, DollarSign, Calendar, Lock, CheckCircle2 } from "lucide-react"
+import Link from "next/link"
+import Image from "next/image"
 
 interface PropertyCardProps {
   property: {

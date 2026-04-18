@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
-import { fraudDetection } from '@/lib/security/fraud-detection';
+import { NextRequest, NextResponse } from 'next/server'
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+import { fraudDetection } from '@/lib/security/fraud-detection'
 
 export async function POST(request: NextRequest) {
   try {

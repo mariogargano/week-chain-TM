@@ -1,9 +1,9 @@
-import { Suspense } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { Shield, Lock, Eye, Database, Mail, UserCheck } from "lucide-react";
-import { PrivacyActions } from "./privacy-actions";
+import { Suspense } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
+import { Shield, Lock, Eye, Database, Mail, UserCheck } from "lucide-react"
+import { PrivacyActions } from "./privacy-actions"
 
 export const dynamic = "force-dynamic"
 
@@ -112,9 +112,9 @@ export default function PrivacyPage() {
                 <Shield className="h-8 w-8 text-purple-600" />
               </div>
             </div>
-            <CardTitle className="text-3xl font-bold">{privacyContent?.title}</CardTitle>
-            <CardDescription className="text-base">{privacyContent?.company}</CardDescription>
-            <p className="text-sm text-muted-foreground">{privacyContent?.subtitle}</p>
+            <CardTitle className="text-3xl font-bold">{privacyContent.title}</CardTitle>
+            <CardDescription className="text-base">{privacyContent.company}</CardDescription>
+            <p className="text-sm text-muted-foreground">{privacyContent.subtitle}</p>
           </CardHeader>
 
           <CardContent className="space-y-6">
@@ -123,11 +123,11 @@ export default function PrivacyPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <UserCheck className="h-5 w-5 text-purple-600" />
-                    <h3 className="text-xl font-semibold">{privacyContent?.sections?.responsible?.title}</h3>
+                    <h3 className="text-xl font-semibold">{privacyContent.sections.responsible.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{privacyContent?.sections?.responsible?.content}</p>
+                  <p className="text-muted-foreground leading-relaxed">{privacyContent.sections.responsible.content}</p>
                   <p className="text-muted-foreground leading-relaxed mt-2">
-                    <strong>{privacyContent?.sections?.responsible?.contact}</strong>
+                    <strong>{privacyContent.sections.responsible.contact}</strong>
                   </p>
                 </section>
 
@@ -136,11 +136,11 @@ export default function PrivacyPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Database className="h-5 w-5 text-blue-600" />
-                    <h3 className="text-xl font-semibold">{privacyContent?.sections?.data?.title}</h3>
+                    <h3 className="text-xl font-semibold">{privacyContent.sections.data.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed mb-2">{privacyContent?.sections?.data?.intro}</p>
+                  <p className="text-muted-foreground leading-relaxed mb-2">{privacyContent.sections.data.intro}</p>
                   <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                    {privacyContent?.sections?.data?.items?.map((item, i) => (
+                    {privacyContent.sections.data.items.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
                   </ul>
@@ -151,21 +151,21 @@ export default function PrivacyPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Eye className="h-5 w-5 text-green-600" />
-                    <h3 className="text-xl font-semibold">{privacyContent?.sections?.purposes?.title}</h3>
+                    <h3 className="text-xl font-semibold">{privacyContent.sections.purposes.title}</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed mb-2">
-                    <strong>{privacyContent?.sections?.purposes?.primary}</strong>
+                    <strong>{privacyContent.sections.purposes.primary}</strong>
                   </p>
                   <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4 mb-3">
-                    {privacyContent?.sections?.purposes?.primaryItems?.map((item, i) => (
+                    {privacyContent.sections.purposes.primaryItems.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
                   </ul>
                   <p className="text-muted-foreground leading-relaxed mb-2">
-                    <strong>{privacyContent?.sections?.purposes?.secondary}</strong>
+                    <strong>{privacyContent.sections.purposes.secondary}</strong>
                   </p>
                   <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                    {privacyContent?.sections?.purposes?.secondaryItems?.map((item, i) => (
+                    {privacyContent.sections.purposes.secondaryItems.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
                   </ul>
@@ -176,11 +176,11 @@ export default function PrivacyPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Lock className="h-5 w-5 text-orange-600" />
-                    <h3 className="text-xl font-semibold">{privacyContent?.sections?.sharing?.title}</h3>
+                    <h3 className="text-xl font-semibold">{privacyContent.sections.sharing.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed mb-2">{privacyContent?.sections?.sharing?.intro}</p>
+                  <p className="text-muted-foreground leading-relaxed mb-2">{privacyContent.sections.sharing.intro}</p>
                   <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                    {privacyContent?.sections?.sharing?.items?.map((item, i) => (
+                    {privacyContent.sections.sharing.items.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
                   </ul>
@@ -191,15 +191,15 @@ export default function PrivacyPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Shield className="h-5 w-5 text-blue-600" />
-                    <h3 className="text-xl font-semibold">{privacyContent?.sections?.rights?.title}</h3>
+                    <h3 className="text-xl font-semibold">{privacyContent.sections.rights.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed mb-2">{privacyContent?.sections?.rights?.intro}</p>
+                  <p className="text-muted-foreground leading-relaxed mb-2">{privacyContent.sections.rights.intro}</p>
                   <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                    {privacyContent?.sections?.rights?.items?.map((item, i) => (
+                    {privacyContent.sections.rights.items.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
                   </ul>
-                  <p className="text-muted-foreground leading-relaxed mt-2">{privacyContent?.sections?.rights?.footer}</p>
+                  <p className="text-muted-foreground leading-relaxed mt-2">{privacyContent.sections.rights.footer}</p>
                 </section>
 
                 <Separator />
@@ -207,11 +207,11 @@ export default function PrivacyPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Lock className="h-5 w-5 text-purple-600" />
-                    <h3 className="text-xl font-semibold">{privacyContent?.sections?.security?.title}</h3>
+                    <h3 className="text-xl font-semibold">{privacyContent.sections.security.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{privacyContent?.sections?.security?.intro}</p>
+                  <p className="text-muted-foreground leading-relaxed">{privacyContent.sections.security.intro}</p>
                   <ul className="list-disc list-inside mt-2 space-y-1 text-muted-foreground ml-4">
-                    {privacyContent?.sections?.security?.items?.map((item, i) => (
+                    {privacyContent.sections.security.items.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
                   </ul>
@@ -222,9 +222,9 @@ export default function PrivacyPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Eye className="h-5 w-5 text-green-600" />
-                    <h3 className="text-xl font-semibold">{privacyContent?.sections?.cookies?.title}</h3>
+                    <h3 className="text-xl font-semibold">{privacyContent.sections.cookies.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{privacyContent?.sections?.cookies?.content}</p>
+                  <p className="text-muted-foreground leading-relaxed">{privacyContent.sections.cookies.content}</p>
                 </section>
 
                 <Separator />
@@ -232,23 +232,23 @@ export default function PrivacyPage() {
                 <section>
                   <div className="flex items-center gap-2 mb-3">
                     <Mail className="h-5 w-5 text-orange-600" />
-                    <h3 className="text-xl font-semibold">{privacyContent?.sections?.changes?.title}</h3>
+                    <h3 className="text-xl font-semibold">{privacyContent.sections.changes.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{privacyContent?.sections?.changes?.content}</p>
+                  <p className="text-muted-foreground leading-relaxed">{privacyContent.sections.changes.content}</p>
                 </section>
 
                 <Separator />
 
                 <section className="bg-muted/50 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">{privacyContent?.contactInfo?.title}</h4>
+                  <h4 className="font-semibold mb-2">{privacyContent.contactInfo.title}</h4>
                   <p className="text-sm text-muted-foreground">
-                    <strong>{privacyContent?.contactInfo?.company}</strong>
+                    <strong>{privacyContent.contactInfo.company}</strong>
                     <br />
-                    {privacyContent?.contactInfo?.address}
+                    {privacyContent.contactInfo.address}
                     <br />
-                    {privacyContent?.contactInfo?.email}
+                    {privacyContent.contactInfo.email}
                     <br />
-                    {privacyContent?.contactInfo?.version}
+                    {privacyContent.contactInfo.version}
                   </p>
                 </section>
               </div>
@@ -261,5 +261,5 @@ export default function PrivacyPage() {
         </Card>
       </div>
     </div>
-  );
+  )
 }

@@ -3,7 +3,7 @@
  * Manages hold period and automatic approval of commissions
  */
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server"
 
 export async function reverseCommission(orderId: string, reason: string) {
   const supabase = await createClient()

@@ -1,7 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server";
-import JSZip from "jszip";
-import { createClient } from "@/lib/supabase/server";
-import { createHash } from "crypto";
+import { type NextRequest, NextResponse } from "next/server"
+import JSZip from "jszip"
+import { createClient } from "@/lib/supabase/server"
+import { createHash } from "crypto"
 
 function sha256(buf: Uint8Array | ArrayBuffer): string {
   const buffer = buf instanceof ArrayBuffer ? new Uint8Array(buf) : buf

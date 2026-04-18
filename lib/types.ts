@@ -1,5 +1,5 @@
 // Type definitions for WeekChain platform
-import { z } from "zod";
+import { z } from "zod"
 
 // Zod validation schemas
 export const MintSchema = z.object({

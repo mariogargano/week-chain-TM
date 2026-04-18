@@ -1,6 +1,6 @@
 // WEEK-CHAIN PAX-based Certificate Product Logic
-import { createClient } from "@/lib/supabase/server";
-import { BETA_CONFIG } from "./types";
+import { createClient } from "@/lib/supabase/server"
+import { BETA_CONFIG } from "./types"
 
 export interface CertificateProductV2 {
   id: string

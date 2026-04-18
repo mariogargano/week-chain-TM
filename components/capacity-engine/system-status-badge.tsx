@@ -1,6 +1,7 @@
-"use client";
-import { cn } from "@/lib/utils";
-import type { SystemStatus } from "@/lib/capacity-engine/types";
+"use client"
+
+import { cn } from "@/lib/utils"
+import type { SystemStatus } from "@/lib/capacity-engine/types"
 
 interface SystemStatusBadgeProps {
   status: SystemStatus

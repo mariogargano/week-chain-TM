@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { generateText } from 'ai';
-import { AGENT_CONFIGS } from '@/lib/agents';
+import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+import { generateText } from 'ai'
+import { AGENT_CONFIGS } from '@/lib/agents'
 
 // This handles incoming emails via SendGrid Inbound Parse or similar
 export async function POST(request: NextRequest) {

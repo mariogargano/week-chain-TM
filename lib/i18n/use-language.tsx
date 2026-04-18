@@ -1,6 +1,7 @@
-"use client";
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import { translations } from "./translations";
+"use client"
+
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { translations } from "./translations"
 
 type Language = "es" | "en" | "pt" | "fr" | "it"
 

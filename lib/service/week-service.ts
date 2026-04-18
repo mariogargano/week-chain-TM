@@ -1,5 +1,5 @@
-import { createClient } from '@/lib/supabase/client';
-
+import { createClient } from '@/lib/supabase/client'
+import { formatDistanceToNow } from 'date-fns'
 
 export interface PreStayReminder {
   booking_id: string

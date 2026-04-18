@@ -1,7 +1,7 @@
-import { createServerClient } from "@/lib/supabase/server";
-import { generateVoucher } from "@/lib/vouchers/generator";
-import { generateInvoice } from "@/lib/invoices/generator";
-import { sendEmail } from "@/lib/email/send-email";
+import { createServerClient } from "@/lib/supabase/server"
+import { generateVoucher } from "@/lib/vouchers/generator"
+import { generateInvoice } from "@/lib/invoices/generator"
+import { sendEmail } from "@/lib/email/send-email"
 
 export interface CertificatePurchaseData {
   userId: string

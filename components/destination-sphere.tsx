@@ -1,8 +1,9 @@
-"use client";
-import type React from "react";
-import { useState, useEffect, useRef, useCallback } from "react";
-import { X } from "lucide-react";
-import { AlertCircle } from "lucide-react";
+"use client"
+
+import type React from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
+import { X } from "lucide-react"
+import { AlertCircle } from "lucide-react"
 
 export interface Position3D {
   x: number

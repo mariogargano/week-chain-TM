@@ -1,9 +1,10 @@
-"use client";
-import { cn } from "@/lib/utils";
-import type { CertificateTier, CapacityEngineStatus } from "@/lib/capacity-engine/types";
-import { CERTIFICATE_PRICES, CERTIFICATE_WEEKS, REQUEST_WINDOW_DAYS } from "@/lib/capacity-engine/types";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+"use client"
+
+import { cn } from "@/lib/utils"
+import type { CertificateTier, CapacityEngineStatus } from "@/lib/capacity-engine/types"
+import { CERTIFICATE_PRICES, CERTIFICATE_WEEKS, REQUEST_WINDOW_DAYS } from "@/lib/capacity-engine/types"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 
 interface TierAvailabilityProps {
   status: CapacityEngineStatus | null

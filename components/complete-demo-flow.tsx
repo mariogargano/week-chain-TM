@@ -1,9 +1,10 @@
-"use client";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Badge } from "@/components/ui/badge"
 import {
   CheckCircle2,
   Loader2,
@@ -15,8 +16,8 @@ import {
   Sparkles,
   ArrowRight,
   ExternalLink,
-} from "lucide-react";
-import { logger } from "@/lib/config/logger";
+} from "lucide-react"
+import { logger } from "@/lib/config/logger"
 
 interface CompleteDemoFlowProps {
   propertyId: string
@@ -208,7 +209,8 @@ export function CompleteDemoFlow({ propertyId, weekId, weekNumber, weekPrice, pr
                     : isCompleted
                       ? "bg-green-50 border border-green-200"
                       : isError
-                        ? "bg-red-50 border border-red-200" :"bg-white/50 border border-gray-200"
+                        ? "bg-red-50 border border-red-200"
+                        : "bg-white/50 border border-gray-200"
                 }`}
               >
                 <div
@@ -218,7 +220,8 @@ export function CompleteDemoFlow({ propertyId, weekId, weekNumber, weekPrice, pr
                       : isProcessing
                         ? "bg-blue-500 text-white"
                         : isError
-                          ? "bg-red-500 text-white" :"bg-gray-200 text-gray-400"
+                          ? "bg-red-500 text-white"
+                          : "bg-gray-200 text-gray-400"
                   }`}
                 >
                   {isProcessing ? (

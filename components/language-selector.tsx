@@ -1,9 +1,10 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { locales, localeNames, localeFlags, type Locale } from "@/lib/i18n/config";
-import { useLocale, setLocale } from "@/lib/i18n/use-translations";
-import { Globe } from "lucide-react";
+"use client"
+
+import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { locales, localeNames, localeFlags, type Locale } from "@/lib/i18n/config"
+import { useLocale, setLocale } from "@/lib/i18n/use-translations"
+import { Globe } from "lucide-react"
 
 export function LanguageSelector() {
   const currentLocale = useLocale()

@@ -1,7 +1,8 @@
-"use client";
-import type React from "react";
+"use client"
 
-import { useState, useEffect } from "react";
+import type React from "react"
+
+import { useState, useEffect } from "react"
 import {
   Dialog,
   DialogContent,
@@ -9,12 +10,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { AlertCircle, FileText } from "lucide-react";
-import { cn } from "@/lib/utils";
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { AlertCircle, FileText } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 interface LegalDocument {
   id: string
@@ -191,7 +192,8 @@ export function LegalAcceptanceModal({ isOpen, onClose, onAccept, documents }: L
             {isAccepting
               ? "Registrando..."
               : currentDocIndex < documents.length - 1
-                ? "Aceptar y Continuar" :"Aceptar y Finalizar"}
+                ? "Aceptar y Continuar"
+                : "Aceptar y Finalizar"}
           </Button>
         </DialogFooter>
       </DialogContent>

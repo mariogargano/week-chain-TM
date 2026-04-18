@@ -1,13 +1,39 @@
-"use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Progress } from "@/components/ui/progress";
-import { Download, Calendar, TrendingUp, Building2, CreditCard, Clock, AlertTriangle, CheckCircle, DollarSign, BarChart3, Activity, Target, Loader2, RefreshCw, ArrowUpRight, ArrowDownRight, Shield, Star,  } from "lucide-react";
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+"use client"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Progress } from "@/components/ui/progress"
+import {
+  FileText,
+  Download,
+  Calendar,
+  TrendingUp,
+  TrendingDown,
+  Users,
+  Building2,
+  CreditCard,
+  Clock,
+  AlertTriangle,
+  CheckCircle,
+  DollarSign,
+  Percent,
+  BarChart3,
+  PieChart,
+  Activity,
+  Target,
+  Loader2,
+  RefreshCw,
+  ArrowUpRight,
+  ArrowDownRight,
+  Shield,
+  Star,
+  Briefcase,
+} from "lucide-react"
+import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface KPIData {
   // SLA

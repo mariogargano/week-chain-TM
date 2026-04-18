@@ -1,6 +1,6 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { type NextRequest, NextResponse } from "next/server"
+import { createServerClient } from "@supabase/ssr"
+import { cookies } from "next/headers"
 
 // Apple Wallet pass template (simplified version)
 // For production, you would use the 'passkit-generator' library with proper certificates

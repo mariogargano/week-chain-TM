@@ -1,9 +1,10 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Loader2, AlertCircle } from "lucide-react";
-import { getCurrentUserDashboardUrl } from "@/lib/auth/redirect";
-import { createClient } from "@/lib/supabase/client";
+"use client"
+
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { Loader2, AlertCircle } from "lucide-react"
+import { getCurrentUserDashboardUrl } from "@/lib/auth/redirect"
+import { createClient } from "@/lib/supabase/client"
 
 export default function DashboardPage() {
   const router = useRouter()

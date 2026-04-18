@@ -1,14 +1,29 @@
-"use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Calendar, MapPin, Users, Clock, Send, XCircle, ArrowLeft, Loader2, Search, Filter, Eye, MessageSquare,  } from "lucide-react";
-import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+"use client"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  Calendar,
+  MapPin,
+  Users,
+  Clock,
+  Send,
+  CheckCircle,
+  XCircle,
+  ArrowLeft,
+  Loader2,
+  Search,
+  Filter,
+  Eye,
+  MessageSquare,
+} from "lucide-react"
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 type ReservationRequest = {
   id: string

@@ -1,13 +1,13 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { User, Shield, Bell, Settings, Ticket } from "lucide-react";
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { User, Shield, Bell, Settings, Ticket } from "lucide-react"
 
 export default async function ProfilePage() {
   const supabase = await createClient()
@@ -15,24 +15,32 @@ export default async function ProfilePage() {
   const {
     data: { user },
     error,
-  } = await supabase?.auth?.getUser()
+  } = await supabase.auth.getUser()
 
   if (error || !user) {
     redirect("/auth")
   }
 
   // Fetch user profile data
-  const { data: profile } = await supabase?.from("users")?.select("*")?.eq("id", user?.id)?.single()
+  const { data: profile } = await supabase.from("users").select("*").eq("id", user.id).single()
 
   // Fetch user's weeks
-  const { data: userWeeks } = await supabase?.from("weeks")?.select("*, properties(*)")?.eq("owner_id", user?.id)
+  const { data: userWeeks } = await supabase.from("weeks").select("*, properties(*)").eq("owner_id", user.id)
 
   // Fetch user's reservations
-  const { data: reservations } = await supabase?.from("reservations")?.select("*, weeks(*, properties(*))")?.eq("user_id", user?.id)?.order("created_at", { ascending: false })
+  const { data: reservations } = await supabase
+    .from("reservations")
+    .select("*, weeks(*, properties(*))")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
 
-  const { data: vouchers } = await supabase?.from("purchase_vouchers")?.select("*, weeks(*, properties(*))")?.eq("user_wallet", profile?.wallet_address)?.order("created_at", { ascending: false })
+  const { data: vouchers } = await supabase
+    .from("purchase_vouchers")
+    .select("*, weeks(*, properties(*))")
+    .eq("user_wallet", profile?.wallet_address)
+    .order("created_at", { ascending: false })
 
-  const initials = user?.email?.substring(0, 2)?.toUpperCase() || "U"
+  const initials = user.email?.substring(0, 2).toUpperCase() || "U"
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -43,7 +51,7 @@ export default async function ProfilePage() {
         </Avatar>
         <div>
           <h1 className="text-3xl font-bold">{profile?.full_name || "User Profile"}</h1>
-          <p className="text-muted-foreground">{user?.email}</p>
+          <p className="text-muted-foreground">{user.email}</p>
           <div className="flex gap-2 mt-2">
             <Badge variant="secondary">{profile?.role || "Member"}</Badge>
             {profile?.kyc_verified && (
@@ -55,6 +63,7 @@ export default async function ProfilePage() {
           </div>
         </div>
       </div>
+
       <Tabs defaultValue="overview" className="space-y-6">
         <TabsList>
           <TabsTrigger value="overview">
@@ -111,23 +120,23 @@ export default async function ProfilePage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {vouchers?.slice(0, 5)?.map((voucher) => (
-                  <div key={voucher?.id} className="flex items-center justify-between border-b pb-4 last:border-0">
+                {vouchers?.slice(0, 5).map((voucher) => (
+                  <div key={voucher.id} className="flex items-center justify-between border-b pb-4 last:border-0">
                     <div className="flex items-center gap-3">
                       <Ticket className="h-5 w-5 text-muted-foreground" />
                       <div>
-                        <p className="font-medium">{voucher?.weeks?.properties?.name}</p>
+                        <p className="font-medium">{voucher.weeks?.properties?.name}</p>
                         <p className="text-sm text-muted-foreground">
-                          Semana {voucher?.weeks?.week_number} - {voucher?.payment_method?.toUpperCase()}
+                          Semana {voucher.weeks?.week_number} - {voucher.payment_method?.toUpperCase()}
                         </p>
                       </div>
                     </div>
-                    <Badge variant={voucher?.status === "redeemed" ? "default" : "secondary"}>
-                      {voucher?.status === "pending" ? "Pendiente" : "Canjeado"}
+                    <Badge variant={voucher.status === "redeemed" ? "default" : "secondary"}>
+                      {voucher.status === "pending" ? "Pendiente" : "Canjeado"}
                     </Badge>
                   </div>
                 ))}
-                {(!vouchers || vouchers?.length === 0) && (
+                {(!vouchers || vouchers.length === 0) && (
                   <p className="text-muted-foreground text-center py-8">No recent activity</p>
                 )}
               </div>
@@ -148,7 +157,7 @@ export default async function ProfilePage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" defaultValue={user?.email || ""} disabled />
+                <Input id="email" type="email" defaultValue={user.email || ""} disabled />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="phone">Phone Number</Label>
@@ -229,5 +238,5 @@ export default async function ProfilePage() {
         </TabsContent>
       </Tabs>
     </div>
-  );
+  )
 }

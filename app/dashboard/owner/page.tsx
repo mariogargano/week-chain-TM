@@ -1,13 +1,14 @@
-"use client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Navbar } from "@/components/navbar";
-import { RoleGuard } from "@/components/role-guard";
-import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+"use client"
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Navbar } from "@/components/navbar"
+import { RoleGuard } from "@/components/role-guard"
+import { createClient } from "@/lib/supabase/client"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import {
   Building2,
   DollarSign,
@@ -22,9 +23,9 @@ import {
   Download,
   ArrowUpRight,
   ArrowDownRight,
-} from "lucide-react";
-import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { ChartContainer } from "@/components/ui/chart";
+} from "lucide-react"
+import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { ChartContainer } from "@/components/ui/chart"
 
 export default function OwnerDashboardPage() {
   return (

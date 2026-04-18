@@ -1,13 +1,28 @@
-"use client";
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle, ArrowLeft, AlertCircle, Wallet, Shield, DollarSign, Lock, Activity, Loader2,  } from "lucide-react";
-import { RoleGuard } from "@/components/role-guard";
-import { Navbar } from "@/components/navbar";
-import Link from "next/link";
+"use client"
+
+import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import {
+  TrendingUp,
+  CheckCircle,
+  XCircle,
+  ArrowLeft,
+  AlertCircle,
+  Wallet,
+  Shield,
+  Percent,
+  DollarSign,
+  Lock,
+  Unlock,
+  Activity,
+  Loader2,
+} from "lucide-react"
+import { RoleGuard } from "@/components/role-guard"
+import { Navbar } from "@/components/navbar"
+import Link from "next/link"
 
 interface VafiPosition {
   id: string

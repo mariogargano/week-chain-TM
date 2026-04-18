@@ -1,11 +1,12 @@
-"use client";
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+"use client"
+
+import { useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   MapPin,
   Star,
@@ -28,8 +29,8 @@ import {
   Sparkles,
   Info,
   Eye,
-} from "lucide-react";
-
+} from "lucide-react"
+import { Navbar } from "@/components/navbar"
 
 const POLO54_IMAGES = [
   {
@@ -87,11 +88,11 @@ export default function Polo54Page() {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false)
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % POLO54_IMAGES?.length)
+    setCurrentImageIndex((prev) => (prev + 1) % POLO54_IMAGES.length)
   }
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + POLO54_IMAGES?.length) % POLO54_IMAGES?.length)
+    setCurrentImageIndex((prev) => (prev - 1 + POLO54_IMAGES.length) % POLO54_IMAGES.length)
   }
 
   return (
@@ -160,18 +161,18 @@ export default function Polo54Page() {
               onClick={() => setIsGalleryOpen(true)}
             >
               <Image
-                src={POLO54_IMAGES?.[0]?.url || "/placeholder.svg"}
-                alt={POLO54_IMAGES?.[0]?.alt}
+                src={POLO54_IMAGES[0].url || "/placeholder.svg"}
+                alt={POLO54_IMAGES[0].alt}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               <div className="absolute bottom-4 left-4 text-white">
-                <p className="text-sm font-medium">{POLO54_IMAGES?.[0]?.caption}</p>
+                <p className="text-sm font-medium">{POLO54_IMAGES[0].caption}</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              {POLO54_IMAGES?.slice(1, 5)?.map((image, index) => (
+              {POLO54_IMAGES.slice(1, 5).map((image, index) => (
                 <div
                   key={index}
                   className="relative rounded-xl overflow-hidden aspect-square cursor-pointer group"
@@ -181,14 +182,14 @@ export default function Polo54Page() {
                   }}
                 >
                   <Image
-                    src={image?.url || "/placeholder.svg"}
-                    alt={image?.alt}
+                    src={image.url || "/placeholder.svg"}
+                    alt={image.alt}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   {index === 3 && (
                     <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                      <span className="text-white font-semibold">+{POLO54_IMAGES?.length - 4} fotos</span>
+                      <span className="text-white font-semibold">+{POLO54_IMAGES.length - 4} fotos</span>
                     </div>
                   )}
                 </div>
@@ -197,6 +198,7 @@ export default function Polo54Page() {
           </div>
         </div>
       </section>
+
       {/* Content Section */}
       <section className="container mx-auto max-w-7xl px-4 pb-16">
         <div className="grid lg:grid-cols-3 gap-8">
@@ -206,22 +208,22 @@ export default function Polo54Page() {
             <div className="grid grid-cols-4 gap-4">
               <div className="text-center p-4 bg-white rounded-xl shadow-sm">
                 <Bed className="h-6 w-6 mx-auto mb-2 text-[#FF9AA2]" />
-                <p className="text-2xl font-bold">{POLO_SPECS?.bedrooms}</p>
+                <p className="text-2xl font-bold">{POLO_SPECS.bedrooms}</p>
                 <p className="text-sm text-slate-500">Recámaras</p>
               </div>
               <div className="text-center p-4 bg-white rounded-xl shadow-sm">
                 <Bath className="h-6 w-6 mx-auto mb-2 text-[#B5EAD7]" />
-                <p className="text-2xl font-bold">{POLO_SPECS?.bathrooms}</p>
+                <p className="text-2xl font-bold">{POLO_SPECS.bathrooms}</p>
                 <p className="text-sm text-slate-500">Baños</p>
               </div>
               <div className="text-center p-4 bg-white rounded-xl shadow-sm">
                 <Users className="h-6 w-6 mx-auto mb-2 text-[#C7CEEA]" />
-                <p className="text-2xl font-bold">{POLO_SPECS?.maxGuests}</p>
+                <p className="text-2xl font-bold">{POLO_SPECS.maxGuests}</p>
                 <p className="text-sm text-slate-500">Huéspedes</p>
               </div>
               <div className="text-center p-4 bg-white rounded-xl shadow-sm">
                 <Building2 className="h-6 w-6 mx-auto mb-2 text-[#FFDAC1]" />
-                <p className="text-2xl font-bold">{POLO_SPECS?.sqMeters}</p>
+                <p className="text-2xl font-bold">{POLO_SPECS.sqMeters}</p>
                 <p className="text-sm text-slate-500">m²</p>
               </div>
             </div>
@@ -241,11 +243,11 @@ export default function Polo54Page() {
                     <div className="prose prose-slate max-w-none">
                       <p className="text-slate-600 leading-relaxed mb-4">
                         POLO 54 PH 501 es un exclusivo penthouse ubicado en una de las zonas más privilegiadas de Playa
-                        del Carmen. Con {POLO_SPECS?.sqMeters}m² de espacios diseñados para el confort y la elegancia,
+                        del Carmen. Con {POLO_SPECS.sqMeters}m² de espacios diseñados para el confort y la elegancia,
                         este departamento ofrece una experiencia de vida incomparable en la Riviera Maya.
                       </p>
                       <p className="text-slate-600 leading-relaxed mb-4">
-                        El penthouse cuenta con {POLO_SPECS?.bedrooms} amplias recámaras, {POLO_SPECS?.bathrooms} baños
+                        El penthouse cuenta con {POLO_SPECS.bedrooms} amplias recámaras, {POLO_SPECS.bathrooms} baños
                         completos de lujo, una cocina gourmet totalmente equipada y una terraza privada con vistas
                         espectaculares. Los acabados de primera calidad y el diseño contemporáneo crean un ambiente
                         sofisticado y acogedor.
@@ -265,14 +267,14 @@ export default function Polo54Page() {
                   <CardContent className="p-6">
                     <h3 className="text-xl font-bold text-slate-900 mb-6">Amenidades</h3>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {AMENITIES?.map((amenity, index) => (
+                      {AMENITIES.map((amenity, index) => (
                         <div
                           key={index}
                           className="flex flex-col items-center text-center p-4 rounded-xl bg-slate-50 hover:bg-[#B5EAD7]/10 transition-colors"
                         >
                           <amenity.icon className="h-8 w-8 text-[#FF9AA2] mb-2" />
-                          <p className="font-medium text-slate-900 text-sm">{amenity?.name}</p>
-                          <p className="text-xs text-slate-500">{amenity?.description}</p>
+                          <p className="font-medium text-slate-900 text-sm">{amenity.name}</p>
+                          <p className="text-xs text-slate-500">{amenity.description}</p>
                         </div>
                       ))}
                     </div>
@@ -390,6 +392,7 @@ export default function Polo54Page() {
           </div>
         </div>
       </section>
+
       <section className="px-4 py-16 bg-gradient-to-br from-[#B5EAD7]/10 via-white to-[#FFDAC1]/10">
         <div className="container mx-auto max-w-4xl">
           <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-3xl p-8 md:p-12 text-center text-white">
@@ -411,6 +414,7 @@ export default function Polo54Page() {
           </div>
         </div>
       </section>
+
       {/* Gallery Modal */}
       {isGalleryOpen && (
         <div className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center">
@@ -428,16 +432,16 @@ export default function Polo54Page() {
           </button>
           <div className="max-w-6xl max-h-[90vh] relative">
             <Image
-              src={POLO54_IMAGES?.[currentImageIndex]?.url || "/placeholder.svg"}
-              alt={POLO54_IMAGES?.[currentImageIndex]?.alt}
+              src={POLO54_IMAGES[currentImageIndex].url || "/placeholder.svg"}
+              alt={POLO54_IMAGES[currentImageIndex].alt}
               width={1200}
               height={800}
               className="object-contain"
             />
-            <p className="text-white text-center mt-4">{POLO54_IMAGES?.[currentImageIndex]?.caption}</p>
+            <p className="text-white text-center mt-4">{POLO54_IMAGES[currentImageIndex].caption}</p>
           </div>
         </div>
       )}
     </div>
-  );
+  )
 }

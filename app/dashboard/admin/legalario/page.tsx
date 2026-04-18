@@ -1,17 +1,46 @@
-"use client";
-import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+"use client"
 
-import { FileText, CheckCircle, XCircle, Clock, Search, Send, Download, Eye, QrCode, Shield, Hash, Calendar, FileSignature, Stamp, Lock, RefreshCw, Plus, Copy, ExternalLink, Loader2, Scale, Verified,  } from "lucide-react";
+import { useState, useEffect, useRef } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  FileText,
+  CheckCircle,
+  XCircle,
+  Clock,
+  Search,
+  Send,
+  Download,
+  Upload,
+  Eye,
+  QrCode,
+  Shield,
+  Hash,
+  Calendar,
+  User,
+  Mail,
+  FileSignature,
+  Stamp,
+  Lock,
+  AlertTriangle,
+  RefreshCw,
+  Plus,
+  Copy,
+  ExternalLink,
+  Loader2,
+  Building2,
+  Scale,
+  Verified,
+} from "lucide-react"
 
 interface Contract {
   id: string

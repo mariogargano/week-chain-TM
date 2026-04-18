@@ -1,12 +1,13 @@
-"use client";
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ShieldCheck, ShieldAlert, Search, Loader2, Download } from "lucide-react";
-import { createBrowserClient } from "@/lib/supabase/client";
+"use client"
+
+import { useState, useEffect } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { ShieldCheck, ShieldAlert, Search, Loader2, Download } from "lucide-react"
+import { createBrowserClient } from "@/lib/supabase/client"
 
 interface UserSecurityStatus {
   id: string

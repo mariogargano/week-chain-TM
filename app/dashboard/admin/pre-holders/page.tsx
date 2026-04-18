@@ -1,9 +1,10 @@
-'use client';
-import { useEffect, useState, useRef } from 'react';
-import { createClient } from '@/lib/supabase/client';
+'use client'
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { useEffect, useState, useRef } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
@@ -11,10 +12,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import { Download, Users, DollarSign, CheckCircle, Clock, Search, RefreshCw, Loader2, Mail, Eye } from 'lucide-react';
-import { toast } from 'sonner';
+} from '@/components/ui/table'
+import { Badge } from '@/components/ui/badge'
+import { 
+  Download, 
+  Users, 
+  DollarSign, 
+  CheckCircle, 
+  Clock, 
+  Search, 
+  RefreshCw,
+  Loader2,
+  AlertCircle,
+  Mail,
+  Eye
+} from 'lucide-react'
+import { toast } from 'sonner'
 
 const glass = "bg-gradient-to-br from-sky-500/[0.08] to-blue-600/[0.04] backdrop-blur-xl border border-sky-500/20 rounded-2xl shadow-[0_4px_24px_rgba(14,165,233,0.1)]"
 const glassHover = "hover:shadow-[0_8px_32px_rgba(14,165,233,0.18)] hover:border-sky-400/30 transition-all duration-300"
@@ -242,7 +255,8 @@ export default function PreHolderManagementPage() {
                 size="sm"
                 onClick={() => setFilter(f)}
                 className={filter === f 
-                  ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl text-xs' :'border-sky-500/20 text-slate-600 hover:bg-sky-50 rounded-xl text-xs'
+                  ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl text-xs'
+                  : 'border-sky-500/20 text-slate-600 hover:bg-sky-50 rounded-xl text-xs'
                 }
               >
                 {f === 'all' ? 'Todos' : f === 'completed' ? 'Pagados' : 'Pendientes'}
@@ -286,7 +300,8 @@ export default function PreHolderManagementPage() {
                     <TableCell>
                       <Badge className={
                         ph.status === 'completed'
-                          ? 'bg-emerald-500/20 text-emerald-700 border-emerald-500/30 text-[10px] sm:text-xs' :'bg-amber-500/20 text-amber-700 border-amber-500/30 text-[10px] sm:text-xs'
+                          ? 'bg-emerald-500/20 text-emerald-700 border-emerald-500/30 text-[10px] sm:text-xs'
+                          : 'bg-amber-500/20 text-amber-700 border-amber-500/30 text-[10px] sm:text-xs'
                       }>
                         {ph.status === 'completed' ? 'Pagado' : 'Pendiente'}
                       </Badge>

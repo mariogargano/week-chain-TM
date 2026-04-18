@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { weekService } from '@/lib/service/week-service';
+import { NextRequest, NextResponse } from 'next/server'
+import { weekService } from '@/lib/service/week-service'
 
 /**
  * Cron endpoint for WEEK-SERVICE pre-stay reminders and post-stay reviews

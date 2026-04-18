@@ -1,9 +1,10 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { createClient } from "@/lib/supabase/client";
-import { Loader2, CheckCircle2, XCircle, Clock, RefreshCw } from "lucide-react";
+"use client"
+
+import { useEffect, useState } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { createClient } from "@/lib/supabase/client"
+import { Loader2, CheckCircle2, XCircle, Clock, RefreshCw } from "lucide-react"
 
 interface EscrowDeposit {
   id: string

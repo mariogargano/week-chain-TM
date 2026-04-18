@@ -175,11 +175,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Security headers
-  // Allow iframe embedding from v0.app for preview, deny all others in production
-  const allowedFrameAncestors = process.env.NODE_ENV === "production" 
-    ? "https://v0.app https://*.v0.app https://vercel.com https://*.vercel.com"
-    : "*"
-  response.headers.set("X-Frame-Options", process.env.NODE_ENV === "production" ? "SAMEORIGIN" : "ALLOWALL")
+  response.headers.set("X-Frame-Options", "DENY")
   response.headers.set("X-Content-Type-Options", "nosniff")
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin")
   response.headers.set("Permissions-Policy", "geolocation=(), microphone=(), camera=()")
@@ -192,7 +188,7 @@ export async function middleware(request: NextRequest) {
     response.headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload")
     response.headers.set(
       "Content-Security-Policy",
-      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co https://api.conekta.io; frame-ancestors 'self' https://v0.app https://*.v0.app https://vercel.com https://*.vercel.com;",
+      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co https://api.conekta.io;",
     )
   }
 

@@ -1,11 +1,17 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Building2, Users, AlertCircle, ArrowUpRight, Loader2, Ticket, Calendar, Eye, RefreshCw, TrendingUp, DollarSign, ShieldCheck, BadgeCheck, BarChart3, MapPin, CreditCard, FileText, Clock, Activity, Briefcase, ArrowUp, Scale, Coins, Lock, Star, Wrench, Shield,  } from "lucide-react";
-import { useEffect, useState, useRef } from "react";
-import { createClient } from "@/lib/supabase/client";
-import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import {
+  Building2, Users, AlertCircle, ArrowUpRight, Loader2, Ticket, Calendar, Eye,
+  RefreshCw, TrendingUp, DollarSign, ShieldCheck, BadgeCheck, BarChart3, MapPin,
+  CreditCard, FileText, Clock, Activity, Briefcase, ArrowUp, Globe, Scale, Coins,
+  Lock, Star, Wrench, Shield,
+} from "lucide-react"
+import { useEffect, useState, useRef } from "react"
+import { createClient } from "@/lib/supabase/client"
+import Link from "next/link"
 
 /* ---------- Glass utility classes ---------- */
 const glass = "bg-white/80 backdrop-blur-xl border border-sky-200/60 rounded-2xl shadow-sm"

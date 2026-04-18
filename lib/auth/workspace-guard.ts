@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
-import { logger } from "@/lib/config/logger";
+import { createClient } from "@/lib/supabase/server"
+import { logger } from "@/lib/config/logger"
 
 /**
  * Dominios de email oficiales de WEEK-CHAIN

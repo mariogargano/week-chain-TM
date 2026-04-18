@@ -1,29 +1,33 @@
-import { createServerClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Users, Vote, TrendingUp, Clock } from "lucide-react";
-import Link from "next/link";
+import { createServerClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Users, Vote, TrendingUp, Clock } from "lucide-react"
+import Link from "next/link"
 
 export default async function DAOPage() {
   const supabase = await createServerClient()
 
   const {
     data: { user },
-  } = await supabase?.auth?.getUser()
+  } = await supabase.auth.getUser()
 
   if (!user) {
     redirect("/auth")
   }
 
   // Fetch active proposals
-  const { data: proposals } = await supabase?.from("dao_proposals")?.select("*")?.order("created_at", { ascending: false })?.limit(10)
+  const { data: proposals } = await supabase
+    .from("dao_proposals")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(10)
 
   // Fetch DAO stats
-  const { data: stats } = await supabase?.from("dao_proposals")?.select("status")
+  const { data: stats } = await supabase.from("dao_proposals").select("status")
 
-  const activeProposals = stats?.filter((s) => s?.status === "active")?.length || 0
+  const activeProposals = stats?.filter((s) => s.status === "active").length || 0
   const totalProposals = stats?.length || 0
 
   return (
@@ -91,26 +95,30 @@ export default async function DAOPage() {
         <div className="space-y-4">
           <h2 className="text-2xl font-bold mb-4">Active Proposals</h2>
 
-          {proposals && proposals?.length > 0 ? (
-            proposals?.map((proposal) => (
-              <Card key={proposal?.id} className="hover:shadow-lg transition-shadow">
+          {proposals && proposals.length > 0 ? (
+            proposals.map((proposal) => (
+              <Card key={proposal.id} className="hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
                         <Badge
                           variant={
-                            proposal?.status === "active" ?"default"
-                              : proposal?.status === "passed" ?"default"
-                                : proposal?.status === "rejected" ?"destructive" :"secondary"
+                            proposal.status === "active"
+                              ? "default"
+                              : proposal.status === "passed"
+                                ? "default"
+                                : proposal.status === "rejected"
+                                  ? "destructive"
+                                  : "secondary"
                           }
                         >
-                          {proposal?.status}
+                          {proposal.status}
                         </Badge>
-                        <Badge variant="outline">{proposal?.category}</Badge>
+                        <Badge variant="outline">{proposal.category}</Badge>
                       </div>
-                      <CardTitle className="text-xl mb-2">{proposal?.title}</CardTitle>
-                      <CardDescription>{proposal?.description}</CardDescription>
+                      <CardTitle className="text-xl mb-2">{proposal.title}</CardTitle>
+                      <CardDescription>{proposal.description}</CardDescription>
                     </div>
                   </div>
                 </CardHeader>
@@ -119,14 +127,14 @@ export default async function DAOPage() {
                     {/* Voting Progress */}
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
-                        <span className="text-green-600">For: {proposal?.votes_for || 0}</span>
-                        <span className="text-red-600">Against: {proposal?.votes_against || 0}</span>
+                        <span className="text-green-600">For: {proposal.votes_for || 0}</span>
+                        <span className="text-red-600">Against: {proposal.votes_against || 0}</span>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
                         <div
                           className="bg-primary h-2 rounded-full transition-all"
                           style={{
-                            width: `${((proposal?.votes_for || 0) / ((proposal?.votes_for || 0) + (proposal?.votes_against || 0) + 1)) * 100}%`,
+                            width: `${((proposal.votes_for || 0) / ((proposal.votes_for || 0) + (proposal.votes_against || 0) + 1)) * 100}%`,
                           }}
                         />
                       </div>
@@ -137,11 +145,11 @@ export default async function DAOPage() {
                       <div className="flex items-center gap-4">
                         <span className="flex items-center gap-1">
                           <Clock className="h-4 w-4" />
-                          Ends {new Date(proposal.end_date)?.toLocaleDateString()}
+                          Ends {new Date(proposal.end_date).toLocaleDateString()}
                         </span>
-                        <span>Quorum: {proposal?.quorum_required}%</span>
+                        <span>Quorum: {proposal.quorum_required}%</span>
                       </div>
-                      <Link href={`/dao/proposals/${proposal?.id}`}>
+                      <Link href={`/dao/proposals/${proposal.id}`}>
                         <Button variant="outline" size="sm">
                           View Details
                         </Button>
@@ -161,5 +169,5 @@ export default async function DAOPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

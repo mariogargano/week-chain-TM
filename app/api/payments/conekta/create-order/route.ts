@@ -1,8 +1,8 @@
-import { createClient } from "@/lib/supabase/server";
-import { NextResponse } from "next/server";
-import { createConektaClient } from "@/lib/conekta/client";
-import { logger } from "@/lib/config/logger";
-import { retryWithBackoff } from "@/lib/utils/retry";
+import { createClient } from "@/lib/supabase/server"
+import { NextResponse } from "next/server"
+import { createConektaClient } from "@/lib/conekta/client"
+import { logger } from "@/lib/config/logger"
+import { retryWithBackoff } from "@/lib/utils/retry"
 
 function isDevelopment() {
   return process.env.NODE_ENV === "development"
@@ -218,7 +218,9 @@ export async function POST(request: Request) {
         service_name: charge?.payment_method?.service_name,
       },
       message:
-        payment_method === "oxxo" ?"Paga en cualquier Oxxo con la referencia proporcionada" :"Realiza la transferencia SPEI con los datos proporcionados",
+        payment_method === "oxxo"
+          ? "Paga en cualquier Oxxo con la referencia proporcionada"
+          : "Realiza la transferencia SPEI con los datos proporcionados",
     })
   } catch (error) {
     logger.error("Conekta API error", { error })

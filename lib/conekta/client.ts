@@ -1,8 +1,8 @@
 // Conekta API client for payment processing
 // Supports card, OXXO, and SPEI payments
 
-import { getEnvironment } from "@/lib/config/environment";
-import { logger } from "@/lib/config/logger";
+import { getEnvironment } from "@/lib/config/environment"
+import { logger } from "@/lib/config/logger"
 
 interface ConektaConfig {
   apiKey: string

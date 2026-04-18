@@ -1,4 +1,4 @@
-import { locales, defaultLocale, type Locale } from "./config";
+import { locales, defaultLocale, type Locale } from "./config"
 
 export function detectLocale(): Locale {
   // Check localStorage first
@@ -37,5 +37,3 @@ export function getLocale(): Locale {
   }
   return defaultLocale
 }
-
-export { Locale };

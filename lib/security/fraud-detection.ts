@@ -1,5 +1,6 @@
-'use client';
-import { createClient } from '@/lib/supabase/client';
+'use client'
+
+import { createClient } from '@/lib/supabase/client'
 
 export interface FraudSignal {
   type: 'multiple_accounts' | 'suspicious_login' | 'high_velocity' | 'chargeback_pattern' | 'document_forgery' | 'suspicious_device' | 'unusual_pattern'

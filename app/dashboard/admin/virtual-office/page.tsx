@@ -1,13 +1,14 @@
-'use client';
-import { useState, useEffect } from 'react';
-import { useChat } from '@ai-sdk/react';
-import { DefaultChatTransport } from 'ai';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useChat } from '@ai-sdk/react'
+import { DefaultChatTransport } from 'ai'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
   Users, 
   MessageSquare, 
@@ -26,8 +27,8 @@ import {
   Megaphone,
   DollarSign,
   RefreshCw
-} from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+} from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
 
 // Agent configurations matching the backend
 const AGENTS = [
@@ -289,7 +290,8 @@ export default function VirtualOfficePage() {
                   onClick={() => setSelectedAgent(agent)}
                   className={`p-3 rounded-xl border transition-all ${
                     selectedAgent.id === agent.id 
-                      ? 'bg-slate-800 border-slate-600 ring-2 ring-offset-2 ring-offset-slate-950 ring-slate-600' :'bg-slate-900/50 border-slate-800 hover:border-slate-700'
+                      ? 'bg-slate-800 border-slate-600 ring-2 ring-offset-2 ring-offset-slate-950 ring-slate-600' 
+                      : 'bg-slate-900/50 border-slate-800 hover:border-slate-700'
                   }`}
                 >
                   <div className={`h-10 w-10 rounded-full ${agent.color} flex items-center justify-center mx-auto mb-2`}>
@@ -341,7 +343,9 @@ export default function VirtualOfficePage() {
                         )}
                         <div
                           className={`max-w-[80%] rounded-2xl px-4 py-2 ${
-                            message.role === 'user' ?'bg-sky-600 text-white' :'bg-slate-800 text-slate-100'
+                            message.role === 'user'
+                              ? 'bg-sky-600 text-white'
+                              : 'bg-slate-800 text-slate-100'
                           }`}
                         >
                           <p className="text-sm">{getUIMessageText(message)}</p>
@@ -419,7 +423,8 @@ export default function VirtualOfficePage() {
                           <p className="font-medium text-sm">{notification.title}</p>
                           <Badge className={`text-xs ${
                             notification.status === 'pending' ? 'bg-amber-500/20 text-amber-400' :
-                            notification.status === 'approved'? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
+                            notification.status === 'approved' ? 'bg-emerald-500/20 text-emerald-400' :
+                            'bg-red-500/20 text-red-400'
                           } border-0`}>
                             {notification.status}
                           </Badge>

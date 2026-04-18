@@ -1,5 +1,5 @@
 // WEEK-CHAIN Capacity Engine - Core Logic
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server"
 import {
   type CertificateTier,
   type SystemStatus,
@@ -9,7 +9,7 @@ import {
   EXPECTED_USAGE_RATES,
   CERTIFICATE_WEEKS,
   BETA_CONFIG,
-} from "./types";
+} from "./types"
 
 /**
  * Calculate total supply weeks from all active properties

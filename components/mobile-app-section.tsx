@@ -1,6 +1,6 @@
-"use client";
-import { Smartphone, Calendar } from "lucide-react";
-import Image from "next/image";
+"use client"
+import { Smartphone, Calendar } from "lucide-react"
+import Image from "next/image"
 
 export function MobileAppSection() {
   return (

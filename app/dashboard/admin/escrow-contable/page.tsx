@@ -1,12 +1,13 @@
-"use client";
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Clock, CheckCircle, RefreshCw, Search, Users, AlertCircle } from "lucide-react";
-import { AdminSidebar } from "@/components/admin-sidebar";
-import { createClient } from "@/lib/supabase/client";
+"use client"
+
+import { useState, useEffect } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { Clock, CheckCircle, RefreshCw, Search, Users, AlertCircle } from "lucide-react"
+import { AdminSidebar } from "@/components/admin-sidebar"
+import { createClient } from "@/lib/supabase/client"
 
 interface EscrowRecord {
   id: string
@@ -225,9 +226,13 @@ export default function EscrowContablePage() {
                       size="sm"
                       onClick={() => setStatusFilter(status)}
                     >
-                      {status === "all" ?"Todos"
-                        : status === "held" ?"Retenidos"
-                          : status === "released" ?"Liberados" :"Devueltos"}
+                      {status === "all"
+                        ? "Todos"
+                        : status === "held"
+                          ? "Retenidos"
+                          : status === "released"
+                            ? "Liberados"
+                            : "Devueltos"}
                     </Button>
                   ))}
                 </div>

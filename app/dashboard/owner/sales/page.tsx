@@ -1,13 +1,14 @@
-"use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Navbar } from "@/components/navbar";
-import { RoleGuard } from "@/components/role-guard";
-import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, TrendingUp, Calendar, Download, Filter, Building2 } from "lucide-react";
+"use client"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Navbar } from "@/components/navbar"
+import { RoleGuard } from "@/components/role-guard"
+import { createClient } from "@/lib/supabase/client"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { ArrowLeft, TrendingUp, Calendar, Download, Filter, Building2 } from "lucide-react"
 
 export default function OwnerSalesPage() {
   return (

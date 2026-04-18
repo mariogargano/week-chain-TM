@@ -1,16 +1,41 @@
-"use client";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Switch } from "@/components/ui/switch";
-import { Mail, Search, Shield, User, MoreVertical, Download, Filter, Loader2, Users, UserCog, Briefcase, Building2, CreditCard, Eye, Lock, Unlock, Edit,  } from "lucide-react";
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+"use client"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Switch } from "@/components/ui/switch"
+import {
+  Mail,
+  Search,
+  Shield,
+  User,
+  MoreVertical,
+  Download,
+  Filter,
+  Loader2,
+  Plus,
+  Users,
+  UserCog,
+  Briefcase,
+  Building2,
+  CreditCard,
+  Eye,
+  Lock,
+  Unlock,
+  Trash2,
+  Edit,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  Clock,
+} from "lucide-react"
+import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,8 +43,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { toast } from "sonner";
+} from "@/components/ui/dropdown-menu"
+import { toast } from "sonner"
 
 const ROLES = [
   { value: "user", label: "Usuario", color: "bg-slate-100 text-slate-700 border-slate-200" },

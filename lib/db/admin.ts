@@ -1,6 +1,6 @@
 // Admin Supabase client for server-side operations
-import { createClient } from "@supabase/supabase-js";
-import { env } from "@/lib/config/env";
+import { createClient } from "@supabase/supabase-js"
+import { env } from "@/lib/config/env"
 
 export const supabaseAdmin = createClient(env.supabase.url, env.supabase.serviceRoleKey, {
   auth: {

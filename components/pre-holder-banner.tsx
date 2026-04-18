@@ -1,7 +1,8 @@
-'use client';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Zap, Clock, DollarSign } from 'lucide-react';
+'use client'
+
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Zap, Clock, DollarSign } from 'lucide-react'
 
 export function PreHolderBanner() {
   return (

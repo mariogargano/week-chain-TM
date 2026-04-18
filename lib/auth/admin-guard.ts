@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
-import { ADMIN_EMAIL } from "@/lib/auth/roles";
+import { createClient } from "@/lib/supabase/server"
+import { ADMIN_EMAIL } from "@/lib/auth/roles"
 
 /**
  * Server-side admin authentication check
@@ -8,7 +8,8 @@ import { ADMIN_EMAIL } from "@/lib/auth/roles";
  * REQUIREMENTS:
  * 1. Email must match corporativo@morises.com exactly
  * 2. User must exist in admin_users table with matching email
- * 3. admin_users.status must be 'active' * 4. admin_users.role must be'super_admin'
+ * 3. admin_users.status must be 'active'
+ * 4. admin_users.role must be 'super_admin'
  */
 export async function checkAdminAuth() {
   try {

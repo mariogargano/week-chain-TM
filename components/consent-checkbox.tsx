@@ -1,8 +1,9 @@
-"use client";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, Shield } from "lucide-react";
-import Link from "next/link";
+"use client"
+
+import { Checkbox } from "@/components/ui/checkbox"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { AlertCircle, Shield } from "lucide-react"
+import Link from "next/link"
 
 interface ConsentCheckboxProps {
   checked: boolean

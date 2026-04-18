@@ -1,8 +1,8 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Shield, Wallet, Mail, ArrowRight } from "lucide-react";
+"use client"
+import { useRouter } from "next/navigation"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Shield, Wallet, Mail, ArrowRight } from "lucide-react"
 
 interface RequireAuthModalProps {
   open: boolean

@@ -1,9 +1,10 @@
-"use client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+"use client"
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import {
   Video,
   Users,
@@ -21,12 +22,12 @@ import {
   Settings,
   ShieldAlert,
   Lock,
-} from "lucide-react";
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { Navbar } from "@/components/navbar";
-import { logger } from "@/lib/config/logger";
-import { useRouter } from "next/navigation";
+} from "lucide-react"
+import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Navbar } from "@/components/navbar"
+import { logger } from "@/lib/config/logger"
+import { useRouter } from "next/navigation"
 
 interface TeamMember {
   id: string

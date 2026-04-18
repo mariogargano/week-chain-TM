@@ -1,9 +1,10 @@
-"use client";
-import { useEffect, useState } from "react";
-import SumsubWebSdk from "@sumsub/websdk-react";
-import { generateSumsubAccessToken, getSumsubConfig } from "@/lib/kyc/sumsub-client";
-import { Loader2 } from "lucide-react";
-import { analytics } from "@/lib/analytics/events";
+"use client"
+
+import { useEffect, useState } from "react"
+import SumsubWebSdk from "@sumsub/websdk-react"
+import { generateSumsubAccessToken, getSumsubConfig } from "@/lib/kyc/sumsub-client"
+import { Loader2 } from "lucide-react"
+import { analytics } from "@/lib/analytics/events"
 
 interface SumsubKYCWidgetProps {
   userId: string

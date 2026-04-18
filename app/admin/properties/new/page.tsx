@@ -1,16 +1,17 @@
-"use client";
-import type React from "react";
+"use client"
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, Building2, DollarSign, MapPin, ImageIcon } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import type React from "react"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { ArrowLeft, Building2, DollarSign, MapPin, ImageIcon } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
 
 export default function NewPropertyPage() {
   const router = useRouter()

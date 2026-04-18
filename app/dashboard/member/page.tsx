@@ -1,13 +1,34 @@
-"use client";
-import { createBrowserClient } from "@/lib/supabase/client";
-import { useEffect, useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Check, ChevronRight, Calendar, MapPin, Loader2, Shield, AlertCircle, User, Mail, Phone, QrCode, FileCheck, ShoppingCart, RefreshCw, Copy, Share2, UserCog, Users,  } from "lucide-react";
-import { toast } from "sonner";
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { RoleGuard } from "@/components/role-guard";
+"use client"
+
+import { createBrowserClient } from "@/lib/supabase/client"
+import { useEffect, useState, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import {
+  Check,
+  ChevronRight,
+  Calendar,
+  MapPin,
+  Loader2,
+  Shield,
+  AlertCircle,
+  User,
+  Mail,
+  Phone,
+  QrCode,
+  FileCheck,
+  ShoppingCart,
+  ExternalLink,
+  RefreshCw,
+  Copy,
+  Share2,
+  UserCog,
+  Users,
+} from "lucide-react"
+import { toast } from "sonner"
+import Link from "next/link"
+import { Badge } from "@/components/ui/badge"
+import { RoleGuard } from "@/components/role-guard"
 
 interface UserProfile {
   id: string
@@ -265,28 +286,40 @@ function MemberDashboardContent() {
       {/* KYC Banner - if not approved */}
       {kycStatus?.status !== "approved" && (
         <div className={`rounded-xl p-4 border ${
-          kycStatus?.status === "pending" ?"bg-amber-50 border-amber-200"
-            : kycStatus?.status === "failed" ?"bg-red-50 border-red-200" :"bg-sky-50 border-sky-200"
+          kycStatus?.status === "pending"
+            ? "bg-amber-50 border-amber-200"
+            : kycStatus?.status === "failed"
+            ? "bg-red-50 border-red-200"
+            : "bg-sky-50 border-sky-200"
         }`}>
           <div className="flex items-start gap-3">
             <Shield className={`w-5 h-5 flex-shrink-0 mt-0.5 ${
               kycStatus?.status === "pending" ? "text-amber-500"
-                : kycStatus?.status === "failed"? "text-red-500" :"text-sky-500"
+                : kycStatus?.status === "failed" ? "text-red-500"
+                : "text-sky-500"
             }`} />
             <div className="flex-1">
               <p className={`font-semibold ${
                 kycStatus?.status === "pending" ? "text-amber-900"
-                  : kycStatus?.status === "failed"? "text-red-900" :"text-sky-900"
+                  : kycStatus?.status === "failed" ? "text-red-900"
+                  : "text-sky-900"
               }`}>
-                {kycStatus?.status === "pending" ?"Verificacion en proceso"
-                  : kycStatus?.status === "failed" ?"Verificacion rechazada" :"Verifica tu identidad"}
+                {kycStatus?.status === "pending"
+                  ? "Verificacion en proceso"
+                  : kycStatus?.status === "failed"
+                  ? "Verificacion rechazada"
+                  : "Verifica tu identidad"}
               </p>
               <p className={`text-sm ${
                 kycStatus?.status === "pending" ? "text-amber-700"
-                  : kycStatus?.status === "failed"? "text-red-700" :"text-sky-700"
+                  : kycStatus?.status === "failed" ? "text-red-700"
+                  : "text-sky-700"
               }`}>
-                {kycStatus?.status === "pending" ?"Estamos revisando tu documentacion. Te notificaremos cuando este lista."
-                  : kycStatus?.status === "failed" ?"No se pudo verificar tu identidad. Intenta de nuevo o contacta soporte." :"La verificacion KYC es obligatoria antes de realizar una compra. Toma solo unos minutos."}
+                {kycStatus?.status === "pending"
+                  ? "Estamos revisando tu documentacion. Te notificaremos cuando este lista."
+                  : kycStatus?.status === "failed"
+                  ? "No se pudo verificar tu identidad. Intenta de nuevo o contacta soporte."
+                  : "La verificacion KYC es obligatoria antes de realizar una compra. Toma solo unos minutos."}
               </p>
               {kycStatus?.status !== "pending" && (
                 <Button asChild size="sm" className="mt-3 bg-sky-500 hover:bg-sky-600">
@@ -357,7 +390,8 @@ function MemberDashboardContent() {
                               Certificado SVC - {cert.max_pax} PAX
                             </h3>
                             <Badge className={isActive
-                              ? "bg-emerald-100 text-emerald-700 border-emerald-200" :"bg-slate-100 text-slate-600 border-slate-200"
+                              ? "bg-emerald-100 text-emerald-700 border-emerald-200"
+                              : "bg-slate-100 text-slate-600 border-slate-200"
                             }>
                               {isActive ? "Activo" : cert.status}
                             </Badge>

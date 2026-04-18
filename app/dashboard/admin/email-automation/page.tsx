@@ -1,11 +1,11 @@
-import { createClient } from "@/lib/supabase/server";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AdminSidebar } from "@/components/admin-sidebar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Send, Mail, TrendingUp, Users, AlertCircle } from "lucide-react";
-import Link from "next/link";
+import { createClient } from "@/lib/supabase/server"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { AdminSidebar } from "@/components/admin-sidebar"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Send, Mail, TrendingUp, Users, AlertCircle } from "lucide-react"
+import Link from "next/link"
 
 export const dynamic = "force-dynamic"
 
@@ -13,25 +13,32 @@ export default async function EmailAutomationPage() {
   const supabase = await createClient()
 
   // Get analytics
-  const { data: analytics } = await supabase?.from("email_analytics")?.select("*")
+  const { data: analytics } = await supabase.from("email_analytics").select("*")
 
   // Get recent logs
-  const { data: recentLogs } = await supabase?.from("email_logs")?.select("*")?.order("sent_at", { ascending: false })?.limit(10)
+  const { data: recentLogs } = await supabase
+    .from("email_logs")
+    .select("*")
+    .order("sent_at", { ascending: false })
+    .limit(10)
 
   // Get templates count
-  const { count: templatesCount } = await supabase?.from("email_templates")?.select("*", { count: "exact", head: true })
+  const { count: templatesCount } = await supabase.from("email_templates").select("*", { count: "exact", head: true })
 
   // Get unsubscribes count
-  const { count: unsubscribesCount } = await supabase?.from("email_unsubscribes")?.select("*", { count: "exact", head: true })
+  const { count: unsubscribesCount } = await supabase
+    .from("email_unsubscribes")
+    .select("*", { count: "exact", head: true })
 
   // Calculate totals
-  const totalSent = analytics?.reduce((sum, a) => sum + (a?.total_sent || 0), 0) || 0
-  const totalOpened = analytics?.reduce((sum, a) => sum + (a?.opened || 0), 0) || 0
-  const avgOpenRate = totalSent > 0 ? ((totalOpened / totalSent) * 100)?.toFixed(2) : "0.00"
+  const totalSent = analytics?.reduce((sum, a) => sum + (a.total_sent || 0), 0) || 0
+  const totalOpened = analytics?.reduce((sum, a) => sum + (a.opened || 0), 0) || 0
+  const avgOpenRate = totalSent > 0 ? ((totalOpened / totalSent) * 100).toFixed(2) : "0.00"
 
   return (
     <div className="flex min-h-screen">
       <AdminSidebar />
+
       <main className="flex-1 p-8 bg-slate-50">
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Header */}
@@ -56,7 +63,7 @@ export default async function EmailAutomationPage() {
                 <Mail className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{totalSent?.toLocaleString()}</div>
+                <div className="text-2xl font-bold">{totalSent.toLocaleString()}</div>
                 <p className="text-xs text-muted-foreground">Emails enviados total</p>
               </CardContent>
             </Card>
@@ -129,21 +136,21 @@ export default async function EmailAutomationPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {analytics && analytics?.length > 0 ? (
-                      analytics?.map((stat) => (
+                    {analytics && analytics.length > 0 ? (
+                      analytics.map((stat) => (
                         <div
-                          key={stat?.template_type}
+                          key={stat.template_type}
                           className="flex items-center justify-between p-4 border rounded-lg"
                         >
                           <div>
-                            <p className="font-medium">{stat?.template_type}</p>
+                            <p className="font-medium">{stat.template_type}</p>
                             <p className="text-sm text-slate-600">
-                              {stat?.total_sent} enviados • {stat?.opened} abiertos • {stat?.clicked} clicks
+                              {stat.total_sent} enviados • {stat.opened} abiertos • {stat.clicked} clicks
                             </p>
                           </div>
                           <div className="text-right">
-                            <Badge variant={Number.parseFloat(stat?.open_rate) > 20 ? "default" : "secondary"}>
-                              {stat?.open_rate}% Open Rate
+                            <Badge variant={Number.parseFloat(stat.open_rate) > 20 ? "default" : "secondary"}>
+                              {stat.open_rate}% Open Rate
                             </Badge>
                           </div>
                         </div>
@@ -168,19 +175,19 @@ export default async function EmailAutomationPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {recentLogs && recentLogs?.length > 0 ? (
-                      recentLogs?.map((log) => (
-                        <div key={log?.id} className="flex items-center justify-between p-3 border rounded-lg">
+                    {recentLogs && recentLogs.length > 0 ? (
+                      recentLogs.map((log) => (
+                        <div key={log.id} className="flex items-center justify-between p-3 border rounded-lg">
                           <div>
-                            <p className="font-medium text-sm">{log?.recipient_email}</p>
-                            <p className="text-xs text-slate-600">{log?.subject}</p>
+                            <p className="font-medium text-sm">{log.recipient_email}</p>
+                            <p className="text-xs text-slate-600">{log.subject}</p>
                           </div>
                           <div className="text-right">
-                            <Badge variant={log?.failed ? "destructive" : log?.opened_at ? "default" : "secondary"}>
-                              {log?.failed ? "Failed" : log?.opened_at ? "Opened" : "Sent"}
+                            <Badge variant={log.failed ? "destructive" : log.opened_at ? "default" : "secondary"}>
+                              {log.failed ? "Failed" : log.opened_at ? "Opened" : "Sent"}
                             </Badge>
                             <p className="text-xs text-slate-500 mt-1">
-                              {new Date(log.sent_at)?.toLocaleString("es-MX")}
+                              {new Date(log.sent_at).toLocaleString("es-MX")}
                             </p>
                           </div>
                         </div>
@@ -199,5 +206,5 @@ export default async function EmailAutomationPage() {
         </div>
       </main>
     </div>
-  );
+  )
 }

@@ -1,9 +1,10 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+"use client"
+
+import { useEffect, useState } from "react"
+import { Card } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 import {
   DollarSign,
   Users,
@@ -14,7 +15,7 @@ import {
   ArrowUpRight,
   ArrowRight,
   Sparkles,
-} from "lucide-react";
+} from "lucide-react"
 
 // Sample data that rotates
 const brokerProfiles = [

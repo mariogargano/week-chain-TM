@@ -1,7 +1,7 @@
-import { AlertTriangle, Scale, FileText, Info, BookOpen } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import Link from "next/link";
+import { AlertTriangle, Scale, FileText, Info, BookOpen } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import Link from "next/link"
 
 export const metadata = {
   title: "Disclaimer Legal | WEEK-CHAIN Smart Vacational Certificates",
@@ -433,7 +433,7 @@ export default function DisclaimerPage() {
                 <div className="pt-4 space-y-2">
                   <p className="text-sm text-slate-500">
                     Última actualización:{" "}
-                    {new Date()?.toLocaleDateString("es-MX", {
+                    {new Date().toLocaleDateString("es-MX", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
@@ -457,5 +457,5 @@ export default function DisclaimerPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

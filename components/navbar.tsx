@@ -1,7 +1,8 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Image from "next/image";
+"use client"
+
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import Image from "next/image"
 import {
   Menu,
   X,
@@ -19,19 +20,19 @@ import {
   MapPin,
   ChevronDown,
   Shield,
-} from "lucide-react";
-import { useState, useEffect } from "react";
-import { LanguageSelector } from "@/components/language-selector";
-import { useTranslations } from "@/lib/i18n/use-translations";
-import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
+} from "lucide-react"
+import { useState, useEffect } from "react"
+import { LanguageSelector } from "@/components/language-selector"
+import { useTranslations } from "@/lib/i18n/use-translations"
+import { createClient } from "@/lib/supabase/client"
+import { useRouter } from "next/navigation"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu"
 
 const fallbackNav = {
   aboutUs: "Nosotros",
@@ -52,10 +53,10 @@ export function Navbar() {
   const t = useTranslations()
 
   const nav = {
-    aboutUs: t?.nav?.aboutUs || fallbackNav?.aboutUs,
-    myPanel: t?.nav?.myPanel || fallbackNav?.myPanel,
-    signOut: t?.nav?.signOut || fallbackNav?.signOut,
-    language: t?.nav?.language || fallbackNav?.language,
+    aboutUs: t?.nav?.aboutUs || fallbackNav.aboutUs,
+    myPanel: t?.nav?.myPanel || fallbackNav.myPanel,
+    signOut: t?.nav?.signOut || fallbackNav.signOut,
+    language: t?.nav?.language || fallbackNav.language,
   }
 
   useEffect(() => {
@@ -78,18 +79,22 @@ export function Navbar() {
     const checkAuth = async () => {
       try {
         const supabase = createClient()
-        const { data: { session } } = await supabase?.auth?.getSession()
+        const { data: { session } } = await supabase.auth.getSession()
         if (session?.user) {
           setIsAuthenticated(true)
-          setUserEmail(session?.user?.email || null)
-          const { data: profile } = await supabase?.from("profiles")?.select("role, full_name")?.eq("id", session?.user?.id)?.single()
+          setUserEmail(session.user.email || null)
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("role, full_name")
+            .eq("id", session.user.id)
+            .single()
           if (profile) {
-            setUserRole(profile?.role)
-            setUserName(profile?.full_name || session?.user?.email?.split("@")?.[0] || null)
-            localStorage.setItem("user_role", profile?.role || "user")
-            if (profile?.full_name) localStorage.setItem("user_name", profile?.full_name)
+            setUserRole(profile.role)
+            setUserName(profile.full_name || session.user.email?.split("@")[0] || null)
+            localStorage.setItem("user_role", profile.role || "user")
+            if (profile.full_name) localStorage.setItem("user_name", profile.full_name)
           } else {
-            setUserName(session?.user?.email?.split("@")?.[0] || null)
+            setUserName(session.user.email?.split("@")[0] || null)
           }
         } else {
           setIsAuthenticated(false)
@@ -103,11 +108,11 @@ export function Navbar() {
     }
     checkAuth()
     const supabase = createClient()
-    const { data: { subscription } } = supabase?.auth?.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN" && session) {
         setIsAuthenticated(true)
-        setUserEmail(session?.user?.email || null)
-        setUserName(session?.user?.email?.split("@")?.[0] || null)
+        setUserEmail(session.user.email || null)
+        setUserName(session.user.email?.split("@")[0] || null)
       } else if (event === "SIGNED_OUT") {
         setIsAuthenticated(false)
         setUserRole(null)
@@ -115,18 +120,18 @@ export function Navbar() {
         setUserEmail(null)
       }
     })
-    return () => { subscription?.unsubscribe() };
+    return () => { subscription.unsubscribe() }
   }, [])
 
   const handleSignOut = async () => {
     const supabase = createClient()
-    await supabase?.auth?.signOut()
+    await supabase.auth.signOut()
     localStorage.clear()
     setIsAuthenticated(false)
     setUserRole(null)
     setUserName(null)
     setUserEmail(null)
-    router?.push("/")
+    router.push("/")
   }
 
   const navItems = [
@@ -176,14 +181,14 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-2">
-            {navItems?.map((item) => (
+            {navItems.map((item) => (
               <Link
-                key={item?.label}
-                href={item?.href}
-                className={`group flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all rounded-xl ${item?.bgHover} ${item?.hoverColor}`}
+                key={item.label}
+                href={item.href}
+                className={`group flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all rounded-xl ${item.bgHover} ${item.hoverColor}`}
               >
-                <span className={`${item?.color} group-hover:scale-110 transition-transform`}>{item?.icon}</span>
-                <span className="whitespace-nowrap">{item?.label}</span>
+                <span className={`${item.color} group-hover:scale-110 transition-transform`}>{item.icon}</span>
+                <span className="whitespace-nowrap">{item.label}</span>
               </Link>
             ))}
 
@@ -202,13 +207,13 @@ export function Navbar() {
                   <p className="text-[10px] text-slate-500 mt-0.5">Explora todas nuestras plataformas</p>
                 </div>
                 <DropdownMenuSeparator />
-                {ecosystemItems?.map((item) => (
-                  <DropdownMenuItem key={item?.label} asChild>
-                    <Link href={item?.href} className="flex items-start gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors">
-                      <span className={`${item?.color} mt-0.5`}>{item?.icon}</span>
+                {ecosystemItems.map((item) => (
+                  <DropdownMenuItem key={item.label} asChild>
+                    <Link href={item.href} className="flex items-start gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors">
+                      <span className={`${item.color} mt-0.5`}>{item.icon}</span>
                       <div className="flex-1">
-                        <p className="text-sm font-semibold text-slate-900">{item?.label}</p>
-                        <p className="text-xs text-slate-500 mt-0.5">{item?.description}</p>
+                        <p className="text-sm font-semibold text-slate-900">{item.label}</p>
+                        <p className="text-xs text-slate-500 mt-0.5">{item.description}</p>
                       </div>
                     </Link>
                   </DropdownMenuItem>
@@ -249,13 +254,13 @@ export function Navbar() {
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard" className="flex items-center gap-2">
                       <UserCircle className="w-4 h-4" />
-                      <span>{nav?.myPanel}</span>
+                      <span>{nav.myPanel}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
                     <LogOut className="w-4 h-4 mr-2" />
-                    <span>{nav?.signOut}</span>
+                    <span>{nav.signOut}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -273,19 +278,20 @@ export function Navbar() {
           </button>
         </div>
       </div>
+
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white shadow-xl">
           <div className="container mx-auto px-4 py-4 space-y-1 max-h-[calc(100vh-64px)] overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom,16px)]">
-            {navItems?.map((item) => (
+            {navItems.map((item) => (
               <Link
-                key={item?.label}
-                href={item?.href}
+                key={item.label}
+                href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl text-slate-700 font-semibold transition-all active:scale-[0.98] ${item?.bgHover} text-base`}
+                className={`flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl text-slate-700 font-semibold transition-all active:scale-[0.98] ${item.bgHover} text-base`}
               >
-                <span className={item?.color}>{item?.icon}</span>
-                <span>{item?.label}</span>
+                <span className={item.color}>{item.icon}</span>
+                <span>{item.label}</span>
               </Link>
             ))}
 
@@ -293,17 +299,17 @@ export function Navbar() {
               <p className="px-5 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Ecosistema WEEK</p>
             </div>
 
-            {ecosystemItems?.map((item) => (
+            {ecosystemItems.map((item) => (
               <Link
-                key={item?.label}
-                href={item?.href}
+                key={item.label}
+                href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl text-slate-700 hover:bg-slate-50 transition-all active:scale-[0.98]"
               >
-                <span className={`${item?.color} flex-shrink-0`}>{item?.icon}</span>
+                <span className={`${item.color} flex-shrink-0`}>{item.icon}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-bold text-sm">{item?.label}</p>
-                  <p className="text-xs text-slate-500 truncate">{item?.description}</p>
+                  <p className="font-bold text-sm">{item.label}</p>
+                  <p className="text-xs text-slate-500 truncate">{item.description}</p>
                 </div>
               </Link>
             ))}
@@ -340,11 +346,11 @@ export function Navbar() {
                   </div>
                   <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 text-slate-700 font-semibold">
                     <UserCircle className="w-5 h-5" />
-                    <span>{nav?.myPanel}</span>
+                    <span>{nav.myPanel}</span>
                   </Link>
                   <button onClick={() => { handleSignOut(); setMobileMenuOpen(false) }} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 font-semibold hover:bg-red-50">
                     <LogOut className="w-5 h-5" />
-                    <span>{nav?.signOut}</span>
+                    <span>{nav.signOut}</span>
                   </button>
                 </div>
               )}
@@ -357,5 +363,5 @@ export function Navbar() {
         </div>
       )}
     </header>
-  );
+  )
 }

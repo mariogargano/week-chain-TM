@@ -1,6 +1,6 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { get } from "@vercel/blob";
-import { createClient } from "@/lib/supabase/server";
+import { type NextRequest, NextResponse } from "next/server"
+import { get } from "@vercel/blob"
+import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
   try {

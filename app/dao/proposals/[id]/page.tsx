@@ -1,10 +1,10 @@
-import { createServerClient } from "@/lib/supabase/server";
-import { redirect, notFound } from "next/navigation";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ThumbsUp, ThumbsDown, Clock, Users } from "lucide-react";
-import Link from "next/link";
+import { createServerClient } from "@/lib/supabase/server"
+import { redirect, notFound } from "next/navigation"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { ThumbsUp, ThumbsDown, Clock, Users } from "lucide-react"
+import Link from "next/link"
 
 export default async function ProposalDetailPage({ params }: { params: { id: string } }) {
   const supabase = await createServerClient()
@@ -33,8 +33,9 @@ export default async function ProposalDetailPage({ params }: { params: { id: str
     .single()
 
   async function vote(formData: FormData) {
-"use server";
-const supabase = await createServerClient()
+    "use server"
+
+    const supabase = await createServerClient()
     const {
       data: { user },
     } = await supabase.auth.getUser()
@@ -81,14 +82,21 @@ const supabase = await createServerClient()
               <div className="flex gap-2">
                 <Badge
                   variant={
-                    proposal.status === "active" ?"default"
-                      : proposal.status === "passed" ?"default"
-                        : proposal.status === "rejected" ?"destructive" :"secondary"
+                    proposal.status === "active"
+                      ? "default"
+                      : proposal.status === "passed"
+                        ? "default"
+                        : proposal.status === "rejected"
+                          ? "destructive"
+                          : "secondary"
                   }
                 >
-                  {proposal.status === "active" ?"activa"
-                    : proposal.status === "passed" ?"aprobada"
-                      : proposal.status === "rejected" ?"rechazada"
+                  {proposal.status === "active"
+                    ? "activa"
+                    : proposal.status === "passed"
+                      ? "aprobada"
+                      : proposal.status === "rejected"
+                        ? "rechazada"
                         : proposal.status}
                 </Badge>
                 <Badge variant="outline">{proposal.category}</Badge>

@@ -1,13 +1,14 @@
-"use client";
-import { createBrowserClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Plus, Pencil, Trash2, Save, X, MessageSquare, Eye, EyeOff, BarChart3, Loader2, ArrowLeft } from "lucide-react";
-import { toast } from "sonner";
-import Link from "next/link";
+"use client"
+
+import { createBrowserClient } from "@/lib/supabase/client"
+import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Badge } from "@/components/ui/badge"
+import { Plus, Pencil, Trash2, Save, X, MessageSquare, Eye, EyeOff, BarChart3, Loader2, ArrowLeft } from "lucide-react"
+import { toast } from "sonner"
+import Link from "next/link"
 
 
 interface MarketingMessage {

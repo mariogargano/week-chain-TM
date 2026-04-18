@@ -1,5 +1,5 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { sendEmail } from "@/lib/email/resend-client";
+import { type NextRequest, NextResponse } from "next/server"
+import { sendEmail } from "@/lib/email/resend-client"
 
 export async function POST(request: NextRequest) {
   try {

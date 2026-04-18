@@ -1,8 +1,9 @@
-"use client";
+"use client"
 
-import { useEffect, useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { createBrowserClient } from "@/lib/supabase/client"
+import { useEffect, useState, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
+import { Button } from "@/components/ui/button"
 import {
   Shield,
   Loader2,
@@ -14,10 +15,10 @@ import {
   ShoppingCart,
   FileCheck,
   UserCheck,
-} from "lucide-react";
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { RoleGuard } from "@/components/role-guard";
+} from "lucide-react"
+import Link from "next/link"
+import { Badge } from "@/components/ui/badge"
+import { RoleGuard } from "@/components/role-guard"
 
 type KycStatusType = "missing" | "pending" | "approved" | "failed"
 

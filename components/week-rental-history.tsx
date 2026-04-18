@@ -1,7 +1,8 @@
-"use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, DollarSign } from "lucide-react";
+"use client"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Calendar, DollarSign } from "lucide-react"
 
 interface WeekRentalHistoryProps {
   weekId: string

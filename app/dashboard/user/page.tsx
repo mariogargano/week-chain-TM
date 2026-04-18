@@ -1,15 +1,16 @@
-"use client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Link from "next/link";
-import { Building2, Wallet, Calendar, MapPin, Clock, Mail, FileText, Download, CreditCard } from "lucide-react";
-import { Navbar } from "@/components/navbar";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
-import { logger } from "@/lib/config/logger";
+"use client"
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Link from "next/link"
+import { Building2, Wallet, Calendar, MapPin, Clock, Mail, FileText, Download, CreditCard } from "lucide-react"
+import { Navbar } from "@/components/navbar"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { createClient } from "@/lib/supabase/client"
+import { logger } from "@/lib/config/logger"
 
 export default function UserDashboardPage() {
   const [isLoading, setIsLoading] = useState(true)

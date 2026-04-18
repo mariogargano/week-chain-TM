@@ -1,6 +1,7 @@
-"use client";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+"use client"
+
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import {
   Users,
   Mail,
@@ -14,16 +15,16 @@ import {
   Copy,
   Eye,
   EyeOff,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { createClient } from "@/lib/supabase/client";
-import { ADMIN_EMAIL, roleLabels, type UserRole } from "@/lib/auth/roles";
-import Link from "next/link";
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Badge } from "@/components/ui/badge"
+import { createClient } from "@/lib/supabase/client"
+import { ADMIN_EMAIL, roleLabels, type UserRole } from "@/lib/auth/roles"
+import Link from "next/link"
 
 interface TeamMember {
   id: string

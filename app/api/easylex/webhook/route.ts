@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { verifyEasylexSignature, extractEasylexWebhookHeaders } from "@/lib/easylex/webhook-handler";
-import { logEvidenceEvent } from "@/lib/evidence/logger";
-import { logger } from "@/lib/config/logger";
+import { NextResponse } from "next/server"
+import { createClient } from "@/lib/supabase/server"
+import { verifyEasylexSignature, extractEasylexWebhookHeaders } from "@/lib/easylex/webhook-handler"
+import { logEvidenceEvent } from "@/lib/evidence/logger"
+import { logger } from "@/lib/config/logger"
 
 export async function POST(request: Request) {
   try {

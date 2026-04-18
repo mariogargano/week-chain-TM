@@ -1,12 +1,14 @@
-import { createClient } from "@/lib/supabase/server";
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { createClient } from "@/lib/supabase/server"
+import { Card, CardContent } from "@/components/ui/card"
+import { AlertCircle, ArrowLeft } from "lucide-react"
+import Link from "next/link"
 
 export default async function VAFIPage() {
   const supabase = await createClient()
 
-  const { data: loans } = await supabase?.from("vafi_loans")?.select(`
+  const { data: loans } = await supabase
+    .from("vafi_loans")
+    .select(`
       *,
       users (
         email,
@@ -19,12 +21,13 @@ export default async function VAFIPage() {
           location
         )
       )
-    `)?.order("created_at", { ascending: false })
+    `)
+    .order("created_at", { ascending: false })
 
-  const totalLoaned = loans?.reduce((sum, l) => sum + Number.parseFloat(l?.loan_amount), 0) || 0
-  const activeLoans = loans?.filter((l) => l?.status === "active")?.length || 0
-  const defaultedLoans = loans?.filter((l) => l?.status === "defaulted")?.length || 0
-  const totalCollateral = loans?.reduce((sum, l) => sum + Number.parseFloat(l?.collateral_value), 0) || 0
+  const totalLoaned = loans?.reduce((sum, l) => sum + Number.parseFloat(l.loan_amount), 0) || 0
+  const activeLoans = loans?.filter((l) => l.status === "active").length || 0
+  const defaultedLoans = loans?.filter((l) => l.status === "defaulted").length || 0
+  const totalCollateral = loans?.reduce((sum, l) => sum + Number.parseFloat(l.collateral_value), 0) || 0
 
   return (
     <div className="space-y-8">

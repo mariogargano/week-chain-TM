@@ -1,16 +1,17 @@
-"use client";
-import type React from "react";
+"use client"
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Mail, ArrowLeft, Loader2 } from "lucide-react";
-import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
-import { passwordResetRateLimiter } from "@/lib/utils/rate-limiter";
+import type React from "react"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Mail, ArrowLeft, Loader2 } from "lucide-react"
+import Link from "next/link"
+import { createClient } from "@/lib/supabase/client"
+import { passwordResetRateLimiter } from "@/lib/utils/rate-limiter"
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("")

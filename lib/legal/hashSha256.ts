@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import crypto from "crypto"
 
 /**
  * Genera un hash SHA-256 de un string

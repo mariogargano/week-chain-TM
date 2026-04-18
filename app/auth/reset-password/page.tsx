@@ -1,17 +1,18 @@
-"use client";
-import type React from "react";
+"use client"
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Lock } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
-import { validatePassword } from "@/lib/utils/password-validation";
-import { PasswordStrengthIndicator } from "@/components/password-strength-indicator";
+import type React from "react"
+
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Loader2, Lock } from "lucide-react"
+import { createClient } from "@/lib/supabase/client"
+import { validatePassword } from "@/lib/utils/password-validation"
+import { PasswordStrengthIndicator } from "@/components/password-strength-indicator"
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("")

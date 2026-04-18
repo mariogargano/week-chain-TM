@@ -1,16 +1,17 @@
-"use client";
-import type React from "react";
+"use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Building2, DollarSign, ImageIcon, Loader2, Calendar, Shield, Info } from "lucide-react";
-import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
-import { RoleGuard } from "@/components/role-guard";
-import { Badge } from "@/components/ui/badge";
+import type React from "react"
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { ArrowLeft, Building2, DollarSign, ImageIcon, Loader2, Calendar, Shield, Info } from "lucide-react"
+import { useState, useMemo } from "react"
+import { useRouter } from "next/navigation"
+import { RoleGuard } from "@/components/role-guard"
+import { Badge } from "@/components/ui/badge"
 
 // Modelo de negocio WEEK-CHAIN:
 // - 52 semanas por propiedad al año

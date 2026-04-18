@@ -1,10 +1,11 @@
-"use client";
-import { useState, useEffect } from "react";
-import { Shield, CheckCircle2, MapPin, Phone, ExternalLink } from "lucide-react";
-import { motion } from "framer-motion";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+"use client"
+
+import { useState, useEffect } from "react"
+import { Shield, CheckCircle2, MapPin, Phone, ExternalLink } from "lucide-react"
+import { motion } from "framer-motion"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 
 interface Operator {
   id: string

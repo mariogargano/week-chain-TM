@@ -1,10 +1,11 @@
-"use client";
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLink } from "lucide-react";
+"use client"
+
+import { useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label"
+import { Badge } from "@/components/ui/badge"
+import { ExternalLink } from "lucide-react"
 
 interface OTAListingToggleProps {
   weekId: string

@@ -1,7 +1,8 @@
-"use client";
-import { useEffect, useState } from "react";
-import { createBrowserClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
+"use client"
+
+import { useEffect, useState } from "react"
+import { createBrowserClient } from "@/lib/supabase/client"
+import { Button } from "@/components/ui/button"
 import {
   MapPin,
   ChevronLeft,
@@ -16,261 +17,261 @@ import {
   Star,
   Sparkles,
   Eye,
-  Info } from
-"lucide-react";
+  Info,
+} from "lucide-react"
 // Navbar is rendered by root layout for public pages
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import Image from "next/image";
-import { NotaryBadge } from "@/components/notary-badge";
-// import { DashboardCalendarDemo } from "@/components/dashboard-calendar-demo";
+import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
+import Image from "next/image"
+import { NotaryBadge } from "@/components/notary-badge"
+// import { DashboardCalendarDemo } from "@/components/dashboard-calendar-demo"
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"
 
 const PARTICIPATING_DESTINATIONS = [
-{
-  id: "aflora-tulum",
-  name: "AFLORA Tulum",
-  location: "Tulum, Quintana Roo, México",
-  operator: "María Carmen López",
-  description:
-  "Ejemplo de alojamiento participante: departamento en el corazón de Tulum con arquitectura orgánica, rodeado de selva maya. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "/images/diseno-sin-titulo-4.jpg",
-  amenities: ["Alberca Natural", "Spa & Wellness", "Restaurante", "Yoga Deck", "Cenote Privado"],
-  gallery: [
-  "/images/diseno-sin-titulo-4.jpg",
-  "/images/photo-2025-10-08-12-39-27-203.jpg",
-  "/images/photo-2025-10-08-12-39-27-202.jpg",
-  "/images/photo-2025-10-08-12-39-27-204.jpg"],
+  {
+    id: "aflora-tulum",
+    name: "AFLORA Tulum",
+    location: "Tulum, Quintana Roo, México",
+    operator: "María Carmen López",
+    description:
+      "Ejemplo de alojamiento participante: departamento en el corazón de Tulum con arquitectura orgánica, rodeado de selva maya. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "/images/diseno-sin-titulo-4.jpg",
+    amenities: ["Alberca Natural", "Spa & Wellness", "Restaurante", "Yoga Deck", "Cenote Privado"],
+    gallery: [
+      "/images/diseno-sin-titulo-4.jpg",
+      "/images/photo-2025-10-08-12-39-27-203.jpg",
+      "/images/photo-2025-10-08-12-39-27-202.jpg",
+      "/images/photo-2025-10-08-12-39-27-204.jpg",
+    ],
+    specs: { bedrooms: 1, bathrooms: 1, size: "65m²", maxGuests: 2 },
+    type: "Alojamiento Participante",
+  },
+  {
+    id: "uxan-villa-aruma",
+    name: "UXAN Villa Aruma",
+    location: "Tulum, Riviera Maya, México",
+    operator: "Roberto Sánchez Mendoza",
+    description:
+      "Experimenta la armonía entre la arquitectura sostenible y la naturaleza, donde la serenidad se encuentra en cada rincón. Con 1,000 m² de terreno y 277 m² de construcción, es la villa más espaciosa de UXAN. Villa de bambú sumergida en el corazón de la selva maya. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7207a97f94e0d5d60adc_0000.jpg",
+    amenities: [
+      "Construcción con Bambú",
+      "Arquitectura Sostenible",
+      "Vista a Selva Maya",
+      "Diseño Bioclimático",
+      "Jardines Tropicales",
+    ],
+    gallery: [
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7207a97f94e0d5d60adc_0000.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c720817b5a4e7fca634ab_0014.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c720845505970245c9607_0013.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c720766c5a4b84e22e275_0015.jpg",
+    ],
+    specs: { bedrooms: 3, bathrooms: 3, size: "277m²", maxGuests: 6 },
+    type: "Alojamiento Participante",
+  },
+  {
+    id: "uxan-villa-naab",
+    name: "UXAN Villa Naab",
+    location: "Tulum, Riviera Maya, México",
+    operator: "Roberto Sánchez Mendoza",
+    description:
+      "En medio de la selva y rodeada de naturaleza, esta villa de bambú deslumbra por su auténtica arquitectura. Con 1,000 m² de terreno y 218 m² de construcción, ofrece una experiencia única de conexión con la naturaleza en la Riviera Maya. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c725309cc9bd18f1c442d_0009.jpg",
+    amenities: ["Villa de Bambú", "Auténtica Arquitectura", "Rodeada de Selva", "Diseño Orgánico", "Conexión Natural"],
+    gallery: [
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c725309cc9bd18f1c442d_0009.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c725309cc9bd18f1c4428_0001.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c725396ee4a96cd033a11_0005.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c72535c04b2e158ebd4f5_0000.jpg",
+    ],
+    specs: { bedrooms: 3, bathrooms: 3, size: "218m²", maxGuests: 6 },
+    type: "Alojamiento Participante",
+  },
+  {
+    id: "uxan-villa-cora",
+    name: "UXAN Villa Cora",
+    location: "Tulum, Riviera Maya, México",
+    operator: "Roberto Sánchez Mendoza",
+    description:
+      "Sumérgete en la serenidad mientras esta residencia de ensueño se funde armoniosamente con la naturaleza. Villa de bambú con 1,000 m² de terreno y 158 m² de construcción en el corazón de la selva maya. Diseño que respeta el ecosistema local. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7265d811d8c5b87393f3_Cora_10.jpg",
+    amenities: [
+      "Residencia de Ensueño",
+      "Fusión con Naturaleza",
+      "Arquitectura de Bambú",
+      "Selva Maya",
+      "Diseño Ecológico",
+    ],
+    gallery: [
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7265d811d8c5b87393f3_Cora_10.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7265d811d8c5b8739317_Cora_02.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c72652fe10ff1177e7215_Cora_11.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7265698e95f38405b70b_Cora_08.jpg",
+    ],
+    specs: { bedrooms: 2, bathrooms: 2, size: "158m²", maxGuests: 4 },
+    type: "Alojamiento Participante",
+  },
+  {
+    id: "uxan-loft-saasil",
+    name: "UXAN Loft Saasil",
+    location: "Tulum, Riviera Maya, México",
+    operator: "Roberto Sánchez Mendoza",
+    description:
+      "Descubre Saasil, lofts de bambú diseñados para crear un espacio armonioso en conexión con la naturaleza. Con 60 m² de construcción, ofrece una experiencia íntima y acogedora en medio de la selva. Ideal para parejas o viajeros solitarios. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7221bf5472a2eb02db6f_0000.jpg",
+    amenities: ["Loft de Bambú", "Diseño Minimalista", "Conexión Natural", "Espacio Íntimo", "Vista a Selva"],
+    gallery: [
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7221bf5472a2eb02db6f_0000.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c72213ed70e442f4a8e7c_0017.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7221f7a54b20ccceb955_0016.jpg",
+      "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c722150040bd7c96fceec_0002.jpg",
+    ],
+    specs: { bedrooms: 1, bathrooms: 1, size: "60m²", maxGuests: 3 },
+    type: "Alojamiento Participante",
+  },
+  {
+    id: "vila-ksamil",
+    name: "Vila Ksamil",
+    location: "Ksamil, Riviera Albanesa, Albania",
+    operator: "Altin Hoxha",
+    description:
+      "Villa moderna frente al mar en la Riviera Albanesa con vistas al Mar Jónico. Diseño mediterráneo contemporáneo con amplias terrazas y acceso directo a playas de arena blanca. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "/luxury-modern-beachfront-villa-ksamil-albania-whit.jpg",
+    amenities: [
+      "Vista al Mar Jónico",
+      "Acceso Directo a Playa",
+      "Terrazas Amplias",
+      "Piscina Infinity",
+      "Diseño Mediterráneo",
+    ],
+    gallery: [
+      "/luxury-modern-beachfront-villa-ksamil-albania-whit.jpg",
+      "/luxury-modern-beachfront-villa-ksamil-albania-whit.jpg",
+    ],
+    specs: { bedrooms: 5, bathrooms: 4, size: "380m²", maxGuests: 10 },
+    type: "Alojamiento Participante",
+  },
+  {
+    id: "bosphorus-yali",
+    name: "Bosphorus Yalı",
+    location: "Estambul, Bósforo, Turquía",
+    operator: "Mehmet Öztürk",
+    description:
+      "Mansión histórica otomana renovada a orillas del Bósforo con vistas panorámicas del estrecho. Arquitectura tradicional turca con acabados contemporáneos de lujo. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "/ottoman-yali-mansion-bosphorus-istanbul-waterfront.jpg",
+    amenities: [
+      "Vista al Bósforo",
+      "Arquitectura Otomana",
+      "Muelle Privado",
+      "Hammam Tradicional",
+      "Jardines Orientales",
+    ],
+    gallery: [
+      "/ottoman-yali-mansion-bosphorus-istanbul-waterfront.jpg",
+      "/ottoman-yali-mansion-bosphorus-istanbul-waterfront.jpg",
+    ],
+    specs: { bedrooms: 6, bathrooms: 5, size: "520m²", maxGuests: 12 },
+    type: "Alojamiento Participante",
+  },
+  {
+    id: "borgo-civita",
+    name: "Borgo di Civita",
+    location: "Orvieto, Umbría, Italia",
+    operator: "Alessandro Bianchi",
+    description:
+      "Villa en borgo medieval restaurado con vistas a viñedos umbríos. Arquitectura de piedra histórica con interiores modernos en la región vinícola de Orvieto. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "/medieval-stone-borgo-orvieto-umbria-italy-hilltop-.jpg",
+    amenities: ["Borgo Medieval", "Viñedos Propios", "Terraza Panorámica", "Bodega de Vino", "Piscina con Vista"],
+    gallery: [
+      "/medieval-stone-borgo-orvieto-umbria-italy-hilltop-.jpg",
+      "/medieval-stone-borgo-orvieto-umbria-italy-hilltop-.jpg",
+    ],
+    specs: { bedrooms: 4, bathrooms: 3, size: "350m²", maxGuests: 8 },
+    type: "Alojamiento Participante",
+  },
+  {
+    id: "casa-bacalar",
+    name: "Casa Bacalar",
+    location: "Bacalar, Quintana Roo, México",
+    operator: "Daniela Ramírez Torres",
+    description:
+      "Villa moderna sobre la Laguna de los Siete Colores con diseño contemporáneo tropical. Arquitectura abierta con vistas panorámicas y acceso directo al agua cristalina. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "/modern-luxury-villa-bacalar-lagoon-mexico-overwate.jpg",
+    amenities: ["Vista a Laguna", "Muelle Privado", "Diseño Tropical", "Kayaks Incluidos", "Terrazas sobre Agua"],
+    gallery: [
+      "/modern-luxury-villa-bacalar-lagoon-mexico-overwate.jpg",
+      "/modern-luxury-villa-bacalar-lagoon-mexico-overwate.jpg",
+    ],
+    specs: { bedrooms: 3, bathrooms: 3, size: "240m²", maxGuests: 6 },
+    type: "Alojamiento Participante",
+  },
+  {
+    id: "villa-positano",
+    name: "Villa Positano",
+    location: "Positano, Costa Amalfitana, Italia",
+    operator: "Giuseppe Romano",
+    description:
+      "Villa en acantilado con vistas espectaculares al Mediterráneo en la icónica Costa Amalfitana. Diseño italiano clásico con terrazas escalonadas y jardines colgantes. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "/cliffside-villa-positano-amalfi-coast-italy-medite.jpg",
+    amenities: [
+      "Vista al Mediterráneo",
+      "Terrazas Escalonadas",
+      "Piscina Infinity",
+      "Jardines Colgantes",
+      "Acceso a Playa Privada",
+    ],
+    gallery: [
+      "/cliffside-villa-positano-amalfi-coast-italy-medite.jpg",
+      "/cliffside-villa-positano-amalfi-coast-italy-medite.jpg",
+    ],
+    specs: { bedrooms: 5, bathrooms: 5, size: "420m²", maxGuests: 10 },
+    type: "Alojamiento Participante",
+  },
+  {
+    id: "chalet-dolomites",
+    name: "Chalet Dolomiti",
+    location: "Cortina d'Ampezzo, Dolomitas, Italia",
+    operator: "Francesca Moretti",
+    description:
+      "Chalet de lujo alpino con vistas a los picos de los Dolomitas. Diseño tradicional de montaña con spa privado y acceso directo a pistas de esquí. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "/luxury-alpine-chalet-dolomites-italy-mountain-view.jpg",
+    amenities: ["Vista a Dolomitas", "Spa Privado", "Acceso a Pistas", "Chimenea de Piedra", "Sauna Finlandesa"],
+    gallery: [
+      "/luxury-alpine-chalet-dolomites-italy-mountain-view.jpg",
+      "/luxury-alpine-chalet-dolomites-italy-mountain-view.jpg",
+    ],
+    specs: { bedrooms: 4, bathrooms: 4, size: "310m²", maxGuests: 8 },
+    type: "Alojamiento Participante",
+  },
+  {
+    id: "finca-puebla",
+    name: "Finca Cholula",
+    location: "Cholula, Valle de Puebla, México",
+    operator: "José Luis Hernández García",
+    description:
+      "Hacienda colonial restaurada con vistas a la pirámide de Cholula. Arquitectura histórica mexicana con acabados de lujo y amplios jardines tradicionales. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
+    image_url: "/colonial-hacienda-cholula-puebla-mexico-pyramid-vi.jpg",
+    amenities: ["Vista a Pirámide", "Hacienda Colonial", "Jardines Extensos", "Capilla Privada", "Piscina Histórica"],
+    gallery: [
+      "/colonial-hacienda-cholula-puebla-mexico-pyramid-vi.jpg",
+      "/colonial-hacienda-cholula-puebla-mexico-pyramid-vi.jpg",
+    ],
+    specs: { bedrooms: 6, bathrooms: 4, size: "580m²", maxGuests: 12 },
+    type: "Alojamiento Participante",
+  },
+]
 
-  specs: { bedrooms: 1, bathrooms: 1, size: "65m²", maxGuests: 2 },
-  type: "Alojamiento Participante"
-},
-{
-  id: "uxan-villa-aruma",
-  name: "UXAN Villa Aruma",
-  location: "Tulum, Riviera Maya, México",
-  operator: "Roberto Sánchez Mendoza",
-  description:
-  "Experimenta la armonía entre la arquitectura sostenible y la naturaleza, donde la serenidad se encuentra en cada rincón. Con 1,000 m² de terreno y 277 m² de construcción, es la villa más espaciosa de UXAN. Villa de bambú sumergida en el corazón de la selva maya. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "https://img.rocket.new/generatedImages/rocket_gen_img_182ee4157-1776131220993.png",
-  amenities: [
-  "Construcción con Bambú",
-  "Arquitectura Sostenible",
-  "Vista a Selva Maya",
-  "Diseño Bioclimático",
-  "Jardines Tropicales"],
-
-  gallery: [
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7207a97f94e0d5d60adc_0000.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c720817b5a4e7fca634ab_0014.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c720845505970245c9607_0013.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c720766c5a4b84e22e275_0015.jpg"],
-
-  specs: { bedrooms: 3, bathrooms: 3, size: "277m²", maxGuests: 6 },
-  type: "Alojamiento Participante"
-},
-{
-  id: "uxan-villa-naab",
-  name: "UXAN Villa Naab",
-  location: "Tulum, Riviera Maya, México",
-  operator: "Roberto Sánchez Mendoza",
-  description:
-  "En medio de la selva y rodeada de naturaleza, esta villa de bambú deslumbra por su auténtica arquitectura. Con 1,000 m² de terreno y 218 m² de construcción, ofrece una experiencia única de conexión con la naturaleza en la Riviera Maya. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "https://img.rocket.new/generatedImages/rocket_gen_img_182ee4157-1776131220993.png",
-  amenities: ["Villa de Bambú", "Auténtica Arquitectura", "Rodeada de Selva", "Diseño Orgánico", "Conexión Natural"],
-  gallery: [
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c725309cc9bd18f1c442d_0009.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c725309cc9bd18f1c4428_0001.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c725396ee4a96cd033a11_0005.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c72535c04b2e158ebd4f5_0000.jpg"],
-
-  specs: { bedrooms: 3, bathrooms: 3, size: "218m²", maxGuests: 6 },
-  type: "Alojamiento Participante"
-},
-{
-  id: "uxan-villa-cora",
-  name: "UXAN Villa Cora",
-  location: "Tulum, Riviera Maya, México",
-  operator: "Roberto Sánchez Mendoza",
-  description:
-  "Sumérgete en la serenidad mientras esta residencia de ensueño se funde armoniosamente con la naturaleza. Villa de bambú con 1,000 m² de terreno y 158 m² de construcción en el corazón de la selva maya. Diseño que respeta el ecosistema local. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "https://img.rocket.new/generatedImages/rocket_gen_img_182ee4157-1776131220993.png",
-  amenities: [
-  "Residencia de Ensueño",
-  "Fusión con Naturaleza",
-  "Arquitectura de Bambú",
-  "Selva Maya",
-  "Diseño Ecológico"],
-
-  gallery: [
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7265d811d8c5b87393f3_Cora_10.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7265d811d8c5b8739317_Cora_02.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c72652fe10ff1177e7215_Cora_11.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7265698e95f38405b70b_Cora_08.jpg"],
-
-  specs: { bedrooms: 2, bathrooms: 2, size: "158m²", maxGuests: 4 },
-  type: "Alojamiento Participante"
-},
-{
-  id: "uxan-loft-saasil",
-  name: "UXAN Loft Saasil",
-  location: "Tulum, Riviera Maya, México",
-  operator: "Roberto Sánchez Mendoza",
-  description:
-  "Descubre Saasil, lofts de bambú diseñados para crear un espacio armonioso en conexión con la naturaleza. Con 60 m² de construcción, ofrece una experiencia íntima y acogedora en medio de la selva. Ideal para parejas o viajeros solitarios. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "https://img.rocket.new/generatedImages/rocket_gen_img_182ee4157-1776131220993.png",
-  amenities: ["Loft de Bambú", "Diseño Minimalista", "Conexión Natural", "Espacio Íntimo", "Vista a Selva"],
-  gallery: [
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7221bf5472a2eb02db6f_0000.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c72213ed70e442f4a8e7c_0017.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c7221f7a54b20ccceb955_0016.jpg",
-  "https://cdn.prod.website-files.com/65fc71a078305843e339ff15/660c722150040bd7c96fceec_0002.jpg"],
-
-  specs: { bedrooms: 1, bathrooms: 1, size: "60m²", maxGuests: 3 },
-  type: "Alojamiento Participante"
-},
-{
-  id: "vila-ksamil",
-  name: "Vila Ksamil",
-  location: "Ksamil, Riviera Albanesa, Albania",
-  operator: "Altin Hoxha",
-  description:
-  "Villa moderna frente al mar en la Riviera Albanesa con vistas al Mar Jónico. Diseño mediterráneo contemporáneo con amplias terrazas y acceso directo a playas de arena blanca. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "/luxury-modern-beachfront-villa-ksamil-albania-whit.jpg",
-  amenities: [
-  "Vista al Mar Jónico",
-  "Acceso Directo a Playa",
-  "Terrazas Amplias",
-  "Piscina Infinity",
-  "Diseño Mediterráneo"],
-
-  gallery: [
-  "/luxury-modern-beachfront-villa-ksamil-albania-whit.jpg",
-  "/luxury-modern-beachfront-villa-ksamil-albania-whit.jpg"],
-
-  specs: { bedrooms: 5, bathrooms: 4, size: "380m²", maxGuests: 10 },
-  type: "Alojamiento Participante"
-},
-{
-  id: "bosphorus-yali",
-  name: "Bosphorus Yalı",
-  location: "Estambul, Bósforo, Turquía",
-  operator: "Mehmet Öztürk",
-  description:
-  "Mansión histórica otomana renovada a orillas del Bósforo con vistas panorámicas del estrecho. Arquitectura tradicional turca con acabados contemporáneos de lujo. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "/ottoman-yali-mansion-bosphorus-istanbul-waterfront.jpg",
-  amenities: [
-  "Vista al Bósforo",
-  "Arquitectura Otomana",
-  "Muelle Privado",
-  "Hammam Tradicional",
-  "Jardines Orientales"],
-
-  gallery: [
-  "/ottoman-yali-mansion-bosphorus-istanbul-waterfront.jpg",
-  "/ottoman-yali-mansion-bosphorus-istanbul-waterfront.jpg"],
-
-  specs: { bedrooms: 6, bathrooms: 5, size: "520m²", maxGuests: 12 },
-  type: "Alojamiento Participante"
-},
-{
-  id: "borgo-civita",
-  name: "Borgo di Civita",
-  location: "Orvieto, Umbría, Italia",
-  operator: "Alessandro Bianchi",
-  description:
-  "Villa en borgo medieval restaurado con vistas a viñedos umbríos. Arquitectura de piedra histórica con interiores modernos en la región vinícola de Orvieto. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "/medieval-stone-borgo-orvieto-umbria-italy-hilltop-.jpg",
-  amenities: ["Borgo Medieval", "Viñedos Propios", "Terraza Panorámica", "Bodega de Vino", "Piscina con Vista"],
-  gallery: [
-  "/medieval-stone-borgo-orvieto-umbria-italy-hilltop-.jpg",
-  "/medieval-stone-borgo-orvieto-umbria-italy-hilltop-.jpg"],
-
-  specs: { bedrooms: 4, bathrooms: 3, size: "350m²", maxGuests: 8 },
-  type: "Alojamiento Participante"
-},
-{
-  id: "casa-bacalar",
-  name: "Casa Bacalar",
-  location: "Bacalar, Quintana Roo, México",
-  operator: "Daniela Ramírez Torres",
-  description:
-  "Villa moderna sobre la Laguna de los Siete Colores con diseño contemporáneo tropical. Arquitectura abierta con vistas panorámicas y acceso directo al agua cristalina. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "/modern-luxury-villa-bacalar-lagoon-mexico-overwate.jpg",
-  amenities: ["Vista a Laguna", "Muelle Privado", "Diseño Tropical", "Kayaks Incluidos", "Terrazas sobre Agua"],
-  gallery: [
-  "/modern-luxury-villa-bacalar-lagoon-mexico-overwate.jpg",
-  "/modern-luxury-villa-bacalar-lagoon-mexico-overwate.jpg"],
-
-  specs: { bedrooms: 3, bathrooms: 3, size: "240m²", maxGuests: 6 },
-  type: "Alojamiento Participante"
-},
-{
-  id: "villa-positano",
-  name: "Villa Positano",
-  location: "Positano, Costa Amalfitana, Italia",
-  operator: "Giuseppe Romano",
-  description:
-  "Villa en acantilado con vistas espectaculares al Mediterráneo en la icónica Costa Amalfitana. Diseño italiano clásico con terrazas escalonadas y jardines colgantes. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "/cliffside-villa-positano-amalfi-coast-italy-medite.jpg",
-  amenities: [
-  "Vista al Mediterráneo",
-  "Terrazas Escalonadas",
-  "Piscina Infinity",
-  "Jardines Colgantes",
-  "Acceso a Playa Privada"],
-
-  gallery: [
-  "/cliffside-villa-positano-amalfi-coast-italy-medite.jpg",
-  "/cliffside-villa-positano-amalfi-coast-italy-medite.jpg"],
-
-  specs: { bedrooms: 5, bathrooms: 5, size: "420m²", maxGuests: 10 },
-  type: "Alojamiento Participante"
-},
-{
-  id: "chalet-dolomites",
-  name: "Chalet Dolomiti",
-  location: "Cortina d'Ampezzo, Dolomitas, Italia",
-  operator: "Francesca Moretti",
-  description:
-  "Chalet de lujo alpino con vistas a los picos de los Dolomitas. Diseño tradicional de montaña con spa privado y acceso directo a pistas de esquí. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "/luxury-alpine-chalet-dolomites-italy-mountain-view.jpg",
-  amenities: ["Vista a Dolomitas", "Spa Privado", "Acceso a Pistas", "Chimenea de Piedra", "Sauna Finlandesa"],
-  gallery: [
-  "/luxury-alpine-chalet-dolomites-italy-mountain-view.jpg",
-  "/luxury-alpine-chalet-dolomites-italy-mountain-view.jpg"],
-
-  specs: { bedrooms: 4, bathrooms: 4, size: "310m²", maxGuests: 8 },
-  type: "Alojamiento Participante"
-},
-{
-  id: "finca-puebla",
-  name: "Finca Cholula",
-  location: "Cholula, Valle de Puebla, México",
-  operator: "José Luis Hernández García",
-  description:
-  "Hacienda colonial restaurada con vistas a la pirámide de Cholula. Arquitectura histórica mexicana con acabados de lujo y amplios jardines tradicionales. Acceso sujeto a disponibilidad del sistema WEEK-CHAIN.",
-  image_url: "/colonial-hacienda-cholula-puebla-mexico-pyramid-vi.jpg",
-  amenities: ["Vista a Pirámide", "Hacienda Colonial", "Jardines Extensos", "Capilla Privada", "Piscina Histórica"],
-  gallery: [
-  "/colonial-hacienda-cholula-puebla-mexico-pyramid-vi.jpg",
-  "/colonial-hacienda-cholula-puebla-mexico-pyramid-vi.jpg"],
-
-  specs: { bedrooms: 6, bathrooms: 4, size: "580m²", maxGuests: 12 },
-  type: "Alojamiento Participante"
-}];
-
-
-function DestinationCard({ destination }: {destination: (typeof PARTICIPATING_DESTINATIONS)[0];}) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+function DestinationCard({ destination }: { destination: (typeof PARTICIPATING_DESTINATIONS)[0] }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % destination.gallery.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [destination.gallery.length]);
+      setCurrentImageIndex((prev) => (prev + 1) % destination.gallery.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [destination.gallery.length])
 
   return (
     <div className="relative">
@@ -293,11 +294,11 @@ function DestinationCard({ destination }: {destination: (typeof PARTICIPATING_DE
               <MapPin className="h-3 w-3 text-sky-400" />
               {destination.location}
             </p>
-            {destination.operator &&
-            <p className="text-slate-300 text-sm mt-2 font-medium">
+            {destination.operator && (
+              <p className="text-slate-300 text-sm mt-2 font-medium">
                 <span className="text-slate-400">Operador local:</span> {destination.operator}
               </p>
-            }
+            )}
           </div>
           <div className="sm:text-right flex-shrink-0">
             <div className="px-4 py-3 rounded-xl bg-white/10 border border-white/20 inline-block">
@@ -344,35 +345,35 @@ function DestinationCard({ destination }: {destination: (typeof PARTICIPATING_DE
                 src={destination.gallery[currentImageIndex] || "/placeholder.svg"}
                 alt={destination.name}
                 fill
-                className="object-cover transition-all duration-700" />
-              
+                className="object-cover transition-all duration-700"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               <button
                 onClick={() =>
-                setCurrentImageIndex((prev) => (prev - 1 + destination.gallery.length) % destination.gallery.length)
+                  setCurrentImageIndex((prev) => (prev - 1 + destination.gallery.length) % destination.gallery.length)
                 }
                 className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full shadow-lg transition-all active:scale-95"
-                aria-label="Imagen anterior">
-                
+                aria-label="Imagen anterior"
+              >
                 <ChevronLeft className="h-5 w-5 text-slate-900" />
               </button>
               <button
                 onClick={() => setCurrentImageIndex((prev) => (prev + 1) % destination.gallery.length)}
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full shadow-lg transition-all active:scale-95"
-                aria-label="Siguiente imagen">
-                
+                aria-label="Siguiente imagen"
+              >
                 <ChevronRight className="h-5 w-5 text-slate-900" />
               </button>
               <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-                {destination.gallery.map((_, idx) =>
-                <button
-                  key={idx}
-                  onClick={() => setCurrentImageIndex(idx)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                  idx === currentImageIndex ? "bg-white w-4" : "bg-white/50"}`
-                  } />
-
-                )}
+                {destination.gallery.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentImageIndex(idx)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      idx === currentImageIndex ? "bg-white w-4" : "bg-white/50"
+                    }`}
+                  />
+                ))}
               </div>
             </div>
 
@@ -387,16 +388,16 @@ function DestinationCard({ destination }: {destination: (typeof PARTICIPATING_DE
 
             {/* Amenities */}
             <div className="flex flex-wrap gap-2 mt-4">
-              {destination.amenities.map((amenity) =>
-              <Badge
-                key={amenity}
-                variant="secondary"
-                className="text-xs px-3 py-1.5 bg-sky-50 text-slate-700 border border-sky-200/50">
-                
+              {destination.amenities.map((amenity) => (
+                <Badge
+                  key={amenity}
+                  variant="secondary"
+                  className="text-xs px-3 py-1.5 bg-sky-50 text-slate-700 border border-sky-200/50"
+                >
                   <Star className="w-3 h-3 mr-1 text-sky-500" />
                   {amenity}
                 </Badge>
-              )}
+              ))}
             </div>
 
             {/* SVC disclaimer explaining this is reference only */}
@@ -450,28 +451,28 @@ function DestinationCard({ destination }: {destination: (typeof PARTICIPATING_DE
           </div>
         </div>
       </div>
-    </div>);
-
+    </div>
+  )
 }
 
 export default function PropertiesPage() {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const supabase = createBrowserClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    )
     const fetchUser = async () => {
       const {
-        data: { user }
-      } = await supabase.auth.getUser();
-      setUser(user);
-      setLoading(false);
-    };
-    fetchUser();
-  }, []);
+        data: { user },
+      } = await supabase.auth.getUser()
+      setUser(user)
+      setLoading(false)
+    }
+    fetchUser()
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-sky-50/5 to-white">
@@ -510,11 +511,11 @@ export default function PropertiesPage() {
       {/* Destinations List */}
       <section className="py-8 px-4">
         <div className="container mx-auto max-w-6xl space-y-10">
-          {PARTICIPATING_DESTINATIONS.map((destination) =>
-          <DestinationCard key={destination.id} destination={destination} />
-          )}
+          {PARTICIPATING_DESTINATIONS.map((destination) => (
+            <DestinationCard key={destination.id} destination={destination} />
+          ))}
         </div>
       </section>
-    </div>);
-
+    </div>
+  )
 }

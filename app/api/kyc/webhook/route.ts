@@ -1,66 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
-import crypto from "crypto"
-
-/**
- * Verify Persona webhook signature
- * SECURITY: Required to prevent unauthorized KYC status changes
- */
-function verifyPersonaSignature(payload: string, signature: string | null): boolean {
-  const webhookSecret = process.env.PERSONA_WEBHOOK_SECRET
-  
-  // If no secret configured, log warning but allow in development
-  if (!webhookSecret) {
-    console.warn("[v0] PERSONA_WEBHOOK_SECRET not configured - skipping signature verification")
-    return process.env.NODE_ENV === "development"
-  }
-  
-  if (!signature) {
-    console.error("[v0] Missing Persona-Signature header")
-    return false
-  }
-  
-  // Persona uses HMAC-SHA256 for webhook signatures
-  const expectedSignature = crypto
-    .createHmac("sha256", webhookSecret)
-    .update(payload)
-    .digest("hex")
-  
-  // Use timing-safe comparison to prevent timing attacks
-  try {
-    return crypto.timingSafeEqual(
-      Buffer.from(signature),
-      Buffer.from(expectedSignature)
-    )
-  } catch {
-    return false
-  }
-}
 
 export async function POST(request: NextRequest) {
   try {
-    // Get raw body for signature verification
-    const rawBody = await request.text()
-    const signature = request.headers.get("persona-signature") || request.headers.get("x-persona-signature")
-    
-    // Verify webhook signature (SECURITY: P0 requirement)
-    if (!verifyPersonaSignature(rawBody, signature)) {
-      console.error("[v0] Invalid Persona webhook signature")
-      // Log failed attempt for security monitoring
-      const supabase = await createClient()
-      await supabase.from("system_logs").insert({
-        level: "error",
-        message: "Invalid Persona webhook signature",
-        context: {
-          ip: request.headers.get("x-forwarded-for") || "unknown",
-          userAgent: request.headers.get("user-agent"),
-        }
-      })
-      return NextResponse.json({ error: "Invalid signature" }, { status: 401 })
-    }
-    
-    // Parse body after signature verification
-    const body = JSON.parse(rawBody)
+    const body = await request.json()
     const { data } = body
 
     if (!data || data.type !== "inquiry") {

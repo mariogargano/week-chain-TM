@@ -1,8 +1,9 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, CheckCircle, XCircle } from "lucide-react";
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+import { Card } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Loader2, CheckCircle, XCircle } from "lucide-react"
 
 interface EasylexSignatureWidgetProps {
   documentId: string
@@ -24,22 +25,27 @@ export function EasylexSignatureWidget({ documentId, signerId, onComplete, onErr
       const { type, data } = event.data
 
       switch (type) {
-        case "easylex:ready": setStatus("ready")
+        case "easylex:ready":
+          setStatus("ready")
           break
 
-        case "easylex:signing": setStatus("signing")
+        case "easylex:signing":
+          setStatus("signing")
           break
 
-        case "easylex:success": setStatus("success")
+        case "easylex:success":
+          setStatus("success")
           onComplete?.(true)
           break
 
-        case "easylex:error": setStatus("error")
+        case "easylex:error":
+          setStatus("error")
           setErrorMessage(data.message || "Error desconocido")
           onError?.(data.message)
           break
 
-        case "easylex:cancelled": setStatus("error")
+        case "easylex:cancelled":
+          setStatus("error")
           setErrorMessage("Firma cancelada por el usuario")
           onComplete?.(false)
           break

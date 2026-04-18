@@ -1,7 +1,8 @@
-"use client";
-import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { logger } from "@/lib/config/logger";
+"use client"
+
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { logger } from "@/lib/config/logger"
 
 export function useTermsAcceptance() {
   const [hasAccepted, setHasAccepted] = useState<boolean | null>(null)

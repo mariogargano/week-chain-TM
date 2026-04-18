@@ -1,16 +1,41 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
 
 // User roles from profiles table
 export type UserRole =
-  | "admin_super" |"admin_ops" |"admin_finance" |"admin_compliance" |"support_l2" |"holder" |"management" |"booking" |"agency_b2b" |"agent" |"service_provider_company" |"vendor" |"insurance" |"review_moderation" |"foundation" |"vafi"
+  | "admin_super"
+  | "admin_ops"
+  | "admin_finance"
+  | "admin_compliance"
+  | "support_l2"
+  | "holder"
+  | "management"
+  | "booking"
+  | "agency_b2b"
+  | "agent"
+  | "service_provider_company"
+  | "vendor"
+  | "insurance"
+  | "review_moderation"
+  | "foundation"
+  | "vafi"
 
 // Actions that can be performed
 export type Action = "view" | "create" | "edit" | "delete" | "approve" | "override"
 
 // Resources in the system
 export type Resource =
-  | "properties" |"reservations" |"payments" |"users" |"kyc" |"payouts" |"reviews" |"services" |"insurance_policies" |"foundation_projects" |"vafi_loans"
+  | "properties"
+  | "reservations"
+  | "payments"
+  | "users"
+  | "kyc"
+  | "payouts"
+  | "reviews"
+  | "services"
+  | "insurance_policies"
+  | "foundation_projects"
+  | "vafi_loans"
 
 /**
  * Require specific roles for a server action or page

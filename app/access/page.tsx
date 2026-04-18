@@ -1,11 +1,12 @@
-"use client";
-import type React from "react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Lock, Eye, EyeOff, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
+"use client"
+
+import type React from "react"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Lock, Eye, EyeOff, Calendar } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import Image from "next/image"
 
 export default function AccessPage() {
   const [password, setPassword] = useState("")

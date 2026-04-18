@@ -1,10 +1,10 @@
-import { translations as baseTranslations } from "./translations";
+import { translations as baseTranslations } from "./translations"
 
 // Extender traducciones existentes con nuevas secciones
 export const translationsExtended = {
   ...baseTranslations,
   es: {
-    ...baseTranslations?.es,
+    ...baseTranslations.es,
     properties: {
       title: "Propiedades Vacacionales Tokenizadas",
       subtitle: "Compra semanas de vacaciones con pagos flexibles",
@@ -48,7 +48,7 @@ export const translationsExtended = {
     },
   },
   en: {
-    ...baseTranslations?.en,
+    ...baseTranslations.en,
     properties: {
       title: "Tokenized Vacation Properties",
       subtitle: "Buy vacation weeks with flexible payments",

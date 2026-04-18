@@ -1,7 +1,7 @@
-import { createServerClient } from "@/lib/supabase/server";
-import { enforceConsent } from "@/lib/consent/validator";
-import { type NextRequest, NextResponse } from "next/server";
-import { extractRequestMetadata, logEvidenceEvent } from "@/lib/evidence";
+import { createServerClient } from "@/lib/supabase/server"
+import { enforceConsent } from "@/lib/consent/validator"
+import { type NextRequest, NextResponse } from "next/server"
+import { extractRequestMetadata, logEvidenceEvent } from "@/lib/evidence"
 
 export async function POST(request: NextRequest) {
   try {

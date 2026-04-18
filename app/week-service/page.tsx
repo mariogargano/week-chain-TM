@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import Image from "next/image";
+import type { Metadata } from "next"
+import { Navbar } from "@/components/navbar"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
+import Image from "next/image"
 import {
   ArrowRight,
   Star,
@@ -17,7 +17,7 @@ import {
   Plane,
   CheckCircle2,
   Globe,
-} from "lucide-react";
+} from "lucide-react"
 
 export const metadata: Metadata = {
   title: "WEEK-Service™ | Servicios Premium para tu Estancia Vacacional",

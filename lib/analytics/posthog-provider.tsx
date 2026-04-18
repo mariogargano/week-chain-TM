@@ -1,5 +1,6 @@
-"use client";
-import type React from "react";
+"use client"
+
+import type React from "react"
 
 // PostHog temporarily disabled due to Vercel security scanner false positive
 // PostHog tokens are meant to be public, but Vercel flags them as sensitive

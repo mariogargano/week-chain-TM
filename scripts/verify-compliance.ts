@@ -5,9 +5,9 @@
  * Verifica que todos los componentes del sistema de compliance estén implementados correctamente
  */
 
-import { createClient } from "@supabase/supabase-js";
-import fs from "fs";
-import path from "path";
+import { createClient } from "@supabase/supabase-js"
+import fs from "fs"
+import path from "path"
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!

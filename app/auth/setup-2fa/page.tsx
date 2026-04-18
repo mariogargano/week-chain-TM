@@ -1,13 +1,14 @@
-"use client";
-import { useState, useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Shield, Copy, Check, Download, RefreshCw } from "lucide-react";
-import { QRCodeSVG } from "qrcode.react";
-import { createBrowserClient } from "@/lib/supabase/client";
+"use client"
+
+import { useState, useEffect, Suspense } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Loader2, Shield, Copy, Check, Download, RefreshCw } from "lucide-react"
+import { QRCodeSVG } from "qrcode.react"
+import { createBrowserClient } from "@/lib/supabase/client"
 
 export const dynamic = "force-dynamic"
 
@@ -141,7 +142,8 @@ function Setup2FAContent() {
           </div>
           <CardDescription>
             {required
-              ? "Tu rol requiere 2FA para acceder a esta sección" :"Agrega una capa extra de seguridad a tu cuenta"}
+              ? "Tu rol requiere 2FA para acceder a esta sección"
+              : "Agrega una capa extra de seguridad a tu cuenta"}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">

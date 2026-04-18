@@ -1,12 +1,13 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+'use client'
 
-import { CheckCircle, AlertCircle, Copy } from 'lucide-react';
-import { toast } from 'sonner';
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Badge } from '@/components/ui/badge'
+import { CheckCircle, Clock, AlertCircle, Copy } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function PreHolderDashboard() {
   const router = useRouter()
@@ -34,10 +35,10 @@ export default function PreHolderDashboard() {
 
   const copyReferralCode = () => {
     if (preHolder?.referralCode) {
-      navigator.clipboard?.writeText(preHolder?.referralCode)
+      navigator.clipboard.writeText(preHolder.referralCode)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-      toast?.success('Código copiado')
+      toast.success('Código copiado')
     }
   }
 
@@ -53,18 +54,18 @@ export default function PreHolderDashboard() {
             <CardContent className="pt-12 pb-12 text-center">
               <AlertCircle className="w-12 h-12 text-orange-600 mx-auto mb-4" />
               <p className="text-lg text-slate-600 mb-4">No hay sesión activa de pre-holder</p>
-              <Button onClick={() => router?.push('/pre-holder')}>
+              <Button onClick={() => router.push('/pre-holder')}>
                 Volver a Registrar Depósito
               </Button>
             </CardContent>
           </Card>
         </div>
       </div>
-    );
+    )
   }
 
   const earlyAccessEnd = new Date(preHolder.earlyAccessEnds)
-  const daysRemaining = Math.ceil((earlyAccessEnd?.getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+  const daysRemaining = Math.ceil((earlyAccessEnd.getTime() - Date.now()) / (1000 * 60 * 60 * 24))
   const isActive = daysRemaining > 0
 
   return (
@@ -76,7 +77,7 @@ export default function PreHolderDashboard() {
             <CheckCircle className="w-12 h-12 text-emerald-600" />
           </div>
           <h1 className="text-3xl font-bold text-slate-900">Tu Dashboard Pre-Holder</h1>
-          <p className="text-lg text-slate-600 mt-2">Bienvenido, {preHolder?.fullName}</p>
+          <p className="text-lg text-slate-600 mt-2">Bienvenido, {preHolder.fullName}</p>
         </div>
 
         {/* Status */}
@@ -120,7 +121,7 @@ export default function PreHolderDashboard() {
                 </div>
                 <div>
                   <span className="text-sm text-slate-500">Acceso Exclusivo Hasta</span>
-                  <p className="text-lg font-bold">{earlyAccessEnd?.toLocaleDateString('es-MX')}</p>
+                  <p className="text-lg font-bold">{earlyAccessEnd.toLocaleDateString('es-MX')}</p>
                 </div>
               </div>
             </div>
@@ -134,7 +135,7 @@ export default function PreHolderDashboard() {
             <p className="text-sm text-slate-600 mb-3">Comparte este código y gana bonificaciones:</p>
             <div className="flex items-center gap-2 bg-white p-3 rounded-lg border border-purple-200">
               <code className="flex-1 font-mono text-lg font-bold text-purple-600">
-                {preHolder?.referralCode}
+                {preHolder.referralCode}
               </code>
               <Button
                 size="sm"
@@ -174,7 +175,7 @@ export default function PreHolderDashboard() {
           <div className="flex gap-4">
             <Button
               className="flex-1 h-12 bg-gradient-to-r from-sky-600 to-cyan-600 hover:from-sky-700 hover:to-cyan-700"
-              onClick={() => router?.push('/checkout/pre-holder')}
+              onClick={() => router.push('/checkout/pre-holder')}
             >
               Comprar Certificado Ahora
             </Button>
@@ -185,5 +186,5 @@ export default function PreHolderDashboard() {
         )}
       </div>
     </div>
-  );
+  )
 }

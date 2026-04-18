@@ -1,4 +1,4 @@
-import ContratoModeloClient from "./_components/ContratoModeloClient";
+import ContratoModeloClient from "./_components/ContratoModeloClient"
 
 export const metadata = {
   title: "Contrato Modelo de Tiempo Compartido | WEEK-CHAIN",

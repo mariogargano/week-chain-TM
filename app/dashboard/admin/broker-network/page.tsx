@@ -1,14 +1,18 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Briefcase, Users, DollarSign, TrendingUp, Search, Download, Eye, Mail, RefreshCw, Loader2, AlertCircle, CheckCircle2, Clock, Copy } from "lucide-react";
-import { useEffect, useState, useRef } from "react";
-import { createClient } from "@/lib/supabase/client";
-import Link from "next/link";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { toast } from "sonner";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import {
+  Briefcase, Users, DollarSign, TrendingUp, Search, Download, Eye, Mail,
+  RefreshCw, Loader2, AlertCircle, CheckCircle2, Clock, ArrowUpRight, Copy, ExternalLink
+} from "lucide-react"
+import { useEffect, useState, useRef } from "react"
+import { createClient } from "@/lib/supabase/client"
+import Link from "next/link"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { toast } from "sonner"
 
 /* ---------- Glass utility classes ---------- */
 const glass = "bg-gradient-to-br from-sky-500/[0.08] to-blue-600/[0.04] backdrop-blur-xl border border-sky-500/20 rounded-2xl shadow-[0_4px_24px_rgba(14,165,233,0.1)]"
@@ -309,7 +313,8 @@ export default function BrokerNetworkPage() {
                 size="sm"
                 onClick={() => setFilter(f)}
                 className={filter === f 
-                  ? "bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl text-xs" :"border-sky-500/20 text-slate-600 hover:bg-sky-50 rounded-xl text-xs"
+                  ? "bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl text-xs"
+                  : "border-sky-500/20 text-slate-600 hover:bg-sky-50 rounded-xl text-xs"
                 }
               >
                 {f === "all" ? "Todos" : f === "active" ? "Activos" : "Pendientes"}
@@ -362,8 +367,11 @@ export default function BrokerNetworkPage() {
                     </TableCell>
                     <TableCell>
                       <Badge className={
-                        broker.status === "active" || broker.status === "approved" ?"bg-emerald-500/20 text-emerald-700 border-emerald-500/30 text-[10px] sm:text-xs"
-                          : broker.status === "pending" ?"bg-amber-500/20 text-amber-700 border-amber-500/30 text-[10px] sm:text-xs" :"bg-slate-500/20 text-slate-700 border-slate-500/30 text-[10px] sm:text-xs"
+                        broker.status === "active" || broker.status === "approved"
+                          ? "bg-emerald-500/20 text-emerald-700 border-emerald-500/30 text-[10px] sm:text-xs"
+                          : broker.status === "pending"
+                          ? "bg-amber-500/20 text-amber-700 border-amber-500/30 text-[10px] sm:text-xs"
+                          : "bg-slate-500/20 text-slate-700 border-slate-500/30 text-[10px] sm:text-xs"
                       }>
                         {broker.status === "active" || broker.status === "approved" ? "Activo" : broker.status === "pending" ? "Pendiente" : broker.status}
                       </Badge>

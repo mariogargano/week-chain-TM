@@ -1,5 +1,6 @@
-"use client";
-import { motion } from "framer-motion";
+"use client"
+
+import { motion } from "framer-motion"
 import {
   Handshake,
   TrendingUp,
@@ -12,11 +13,11 @@ import {
   Rocket,
   CheckCircle2,
   ArrowRight,
-} from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { useRouter } from "next/navigation";
+} from "lucide-react"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { useRouter } from "next/navigation"
 
 const benefits = [
   {
@@ -138,7 +139,7 @@ export default function PartnershipPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
-                onClick={() => router?.push("/contact")}
+                onClick={() => router.push("/contact")}
                 className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:opacity-90 text-white text-lg px-8 py-6"
               >
                 Quiero Participar al Programa
@@ -154,15 +155,15 @@ export default function PartnershipPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20"
           >
-            {stats?.map((stat, index) => (
+            {stats.map((stat, index) => (
               <Card
                 key={index}
                 className="p-6 text-center border-2 border-slate-200/50 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all"
               >
                 <p className="text-4xl font-bold bg-gradient-to-r from-[#FF9AA2] to-[#B5EAD7] bg-clip-text text-transparent mb-2">
-                  {stat?.value}
+                  {stat.value}
                 </p>
-                <p className="text-sm text-slate-600">{stat?.label}</p>
+                <p className="text-sm text-slate-600">{stat.label}</p>
               </Card>
             ))}
           </motion.div>
@@ -182,7 +183,7 @@ export default function PartnershipPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {benefits?.map((benefit, index) => (
+              {benefits.map((benefit, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
@@ -191,12 +192,12 @@ export default function PartnershipPage() {
                 >
                   <Card className="group p-6 border-2 border-slate-200/50 bg-white hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 h-full">
                     <div
-                      className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${benefit?.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
+                      className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${benefit.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
                     >
                       <benefit.icon className="w-7 h-7 text-white" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-3">{benefit?.title}</h3>
-                    <p className="text-slate-600 leading-relaxed">{benefit?.description}</p>
+                    <h3 className="text-xl font-bold text-slate-900 mb-3">{benefit.title}</h3>
+                    <p className="text-slate-600 leading-relaxed">{benefit.description}</p>
                   </Card>
                 </motion.div>
               ))}
@@ -218,7 +219,7 @@ export default function PartnershipPage() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {partnerTypes?.map((type, index) => (
+              {partnerTypes.map((type, index) => (
                 <Card
                   key={index}
                   className="p-8 border-2 border-slate-200/50 bg-white hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
@@ -226,10 +227,10 @@ export default function PartnershipPage() {
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FF9AA2] to-[#FFB7B2] flex items-center justify-center mb-6">
                     <type.icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3">{type?.title}</h3>
-                  <p className="text-slate-600 mb-6">{type?.description}</p>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-3">{type.title}</h3>
+                  <p className="text-slate-600 mb-6">{type.description}</p>
                   <ul className="space-y-3">
-                    {type?.features?.map((feature, idx) => (
+                    {type.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-[#B5EAD7] flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-slate-700">{feature}</span>
@@ -259,7 +260,7 @@ export default function PartnershipPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
                   size="lg"
-                  onClick={() => router?.push("/contact")}
+                  onClick={() => router.push("/contact")}
                   className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:opacity-90 text-white text-lg px-8 py-6"
                 >
                   Quiero Participar al Programa
@@ -279,5 +280,5 @@ export default function PartnershipPage() {
         </div>
       </section>
     </div>
-  );
+  )
 }

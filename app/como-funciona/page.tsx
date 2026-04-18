@@ -1,7 +1,7 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import Link from "next/link";
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import Link from "next/link"
 import {
   Users,
   Building2,
@@ -16,8 +16,8 @@ import {
   CreditCard,
   Calendar,
   MapPin,
-} from "lucide-react";
-import type { Metadata } from "next";
+} from "lucide-react"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Cómo Funciona WEEK-CHAIN | Plataforma Completa",

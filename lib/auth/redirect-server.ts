@@ -1,5 +1,5 @@
-import { ADMIN_EMAIL } from "./roles";
-import { roleRoutes } from "./redirect";
+import { ADMIN_EMAIL } from "./roles"
+import { roleRoutes } from "./redirect"
 
 /**
  * Version server-side para obtener URL de dashboard

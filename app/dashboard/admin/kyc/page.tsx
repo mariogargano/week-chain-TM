@@ -1,13 +1,14 @@
-"use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { FileText, Calendar, Search, ArrowLeft, CheckCircle, XCircle, Clock, Mail, MapPin } from "lucide-react";
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { RoleGuard } from "@/components/role-guard";
-import { useRouter } from "next/navigation";
+"use client"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { FileText, Calendar, Search, ArrowLeft, CheckCircle, XCircle, Clock, Mail, MapPin } from "lucide-react"
+import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { RoleGuard } from "@/components/role-guard"
+import { useRouter } from "next/navigation"
 
 
 export default function AdminKYCPage() {
@@ -227,8 +228,11 @@ function AdminKYCContent() {
                           <CardTitle className="text-slate-900">{kyc.name || "Unknown"}</CardTitle>
                           <Badge
                             className={
-                              kyc.status === "pending" ?"bg-gradient-to-r from-yellow-500 to-orange-500"
-                                : kyc.status === "approved" ?"bg-gradient-to-r from-green-500 to-emerald-500" :"bg-gradient-to-r from-red-500 to-rose-500"
+                              kyc.status === "pending"
+                                ? "bg-gradient-to-r from-yellow-500 to-orange-500"
+                                : kyc.status === "approved"
+                                  ? "bg-gradient-to-r from-green-500 to-emerald-500"
+                                  : "bg-gradient-to-r from-red-500 to-rose-500"
                             }
                           >
                             {kyc.status === "pending" && <Clock className="h-3 w-3 mr-1" />}
@@ -296,7 +300,9 @@ function AdminKYCContent() {
                 <div className="text-center">
                   <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
                   <p className="text-slate-600">
-                    {searchTerm || filter !== "all" ?"No KYC submissions found matching your criteria" :"No KYC submissions found"}
+                    {searchTerm || filter !== "all"
+                      ? "No KYC submissions found matching your criteria"
+                      : "No KYC submissions found"}
                   </p>
                 </div>
               </CardContent>
