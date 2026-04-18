@@ -19,9 +19,11 @@ export async function POST(request: NextRequest) {
       .eq("id", user.id)
       .single()
 
+    const envAdminEmail = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "").toLowerCase()
+    const userEmailLower = user.email?.toLowerCase() || ""
     const isAdmin = userData?.role === "admin" || 
                     userData?.role === "super_admin" || 
-                    user.email === "corporativo@morises.com"
+                    (envAdminEmail !== "" && userEmailLower === envAdminEmail)
 
     if (!isAdmin) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 })

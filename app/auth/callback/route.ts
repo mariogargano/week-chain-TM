@@ -63,7 +63,8 @@ export async function GET(request: NextRequest) {
   }
 
   const userEmail = data.user.email?.toLowerCase() || ""
-  const isAdmin = userEmail === "corporativo@morises.com"
+  const envAdminEmail = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "").toLowerCase()
+  const isAdmin = envAdminEmail !== "" && userEmail === envAdminEmail
 
   // Check if user has a profile in the users table
   // The database trigger should create this, but we handle it as fallback

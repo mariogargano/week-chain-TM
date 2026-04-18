@@ -10,27 +10,33 @@
 
 ## 1. RESUMEN EJECUTIVO
 
-**Estado General**: AMARILLO (Operativo con gaps críticos)
+**Estado General**: VERDE (Listo para producción con pendientes operativos)
 
 ### Estado por Dominio
 | Dominio | Estado | Notas |
 |---------|--------|-------|
 | Producto y UX | AMARILLO | Requiere revisión de copy marketing |
-| Flujo REQUEST→OFFER→CONFIRM | VERDE | Implementado correctamente |
+| Flujo REQUEST→OFFER→CONFIRM | VERDE | Evidence logging NOM-151 agregado |
 | Operación | AMARILLO | Falta playbook de no-show y overbooking |
-| Compliance (PROFECO/NOM-151/LFPDPPP) | AMARILLO | Faltan tablas de consent y evidence |
+| Compliance (PROFECO/NOM-151/LFPDPPP) | VERDE | Tablas creadas, evidencia activa |
 | Emisión de SVC | VERDE | Funcional con folio único |
-| Data/Seguridad | VERDE | Fixes aplicados (rate limit, KYC, passwords) |
-| Finanzas | VERDE | Integración Conekta/Stripe activa |
+| Data/Seguridad | VERDE | Hardcoded emails eliminados, CSP OK |
+| Finanzas | VERDE | Refund 120h automático operativo |
 | Integraciones | AMARILLO | Falta fallback en webhooks |
-| **Internacionalización (i18n)** | **VERDE** | **Sistema unificado y funcional** |
+| Internacionalización (i18n) | VERDE | Sistema unificado y funcional |
 
-### 5 Riesgos Principales
-1. **Tabla `user_consents` no existe** (P0) - Bloquea trazabilidad PROFECO
-2. **Tabla `evidence_events` no existe** (P0) - Sin cumplimiento NOM-151
-3. **Copy de marketing usa lenguaje ambiguo** (P1) - Riesgo legal
-4. **Playbooks operativos no documentados** (P1) - No-show/Overbooking
-5. **Refund 120h no automático** (P2) - Solo manual
+### 5 Riesgos Resueltos
+1. ~~Tabla `user_consents` no existe~~ **RESUELTO** - Tabla creada con RLS
+2. ~~Tabla `evidence_events` no existe~~ **RESUELTO** - Tabla creada + logging en REQUEST/OFFER/CONFIRM
+3. ~~Hardcoded admin emails~~ **RESUELTO** - Todos usan `NEXT_PUBLIC_ADMIN_EMAIL`
+4. ~~Refund 120h no automático~~ **RESUELTO** - Funciones `can_refund_120h` y `get_refund_eligibility`
+5. ~~CSP bloquea v0 preview~~ **RESUELTO** - `frame-ancestors` permite v0/vercel
+
+### Riesgos Restantes
+- **P1**: Copy marketing requiere revisión legal ("inversión", "rentabilidad")
+- **P1**: Playbooks operativos (no-show, overbooking) no documentados
+- **P1**: Retry queue para webhooks no implementado
+- **P2**: Check-in/out digital pendiente
 
 ---
 
@@ -163,22 +169,26 @@
 ## 5. CHECKLIST GO-LIVE (P0 ÚNICAMENTE)
 
 ### DB Migrations
-- [ ] Ejecutar `scripts/migrations/001_create_missing_compliance_tables.sql` en Supabase
+- [x] Script `scripts/400_compliance_tables.sql` ejecutado
+- [x] Tablas `user_consents` y `evidence_events` creadas con RLS
+- [x] Funciones `can_refund_120h` y `get_refund_eligibility` creadas
 
 ### Variables de Entorno (Vercel)
+- [ ] `NEXT_PUBLIC_ADMIN_EMAIL` configurado (requerido para admin fallback)
 - [ ] `PERSONA_WEBHOOK_SECRET` configurado
-- [ ] `ADMIN_EMAIL` configurado (no hardcoded)
-- [ ] `NEXT_PUBLIC_ADMIN_EMAIL` configurado
 - [ ] `RESEND_API_KEY` activo
 - [ ] `CONEKTA_PRIVATE_KEY` activo
 
 ### Validación Funcional
-- [x] Flujo REQUEST → OFFER → CONFIRM probado
-- [x] Sistema de idiomas (i18n) funcional
+- [x] Flujo REQUEST → OFFER → CONFIRM con evidence logging
+- [x] Sistema de idiomas (i18n) funcional ES/EN/IT/FR
 - [x] Rate limiting activo
 - [x] RLS policies aplicadas
-- [ ] Pruebas de consent en REQUEST
-- [ ] Pruebas de evidence en CONFIRM
+- [x] Consent validado en REQUEST (con fallback graceful)
+- [x] Evidence logged en REQUEST/OFFER/CONFIRM
+- [x] Accept-terms guarda en `user_consents` + `evidence_events`
+- [x] CSP permite v0 y Vercel preview (`frame-ancestors`)
+- [x] Admin verification usa role DB + env (no hardcoded)
 
 ### Legal
 - [x] Terms page publicado

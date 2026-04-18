@@ -5,15 +5,21 @@ export type ConsentType = "terms" | "privacy" | "reservation" | "activation" | "
 /**
  * Check if user has valid consent for specified action
  * PROFECO-compliant: Blocks action if consent not granted
+ *
+ * Graceful fallback strategy:
+ * - Try user_consents (primary, PROFECO-compliant)
+ * - Fall back to terms_acceptance (legacy)
+ * - If both missing, return invalid
  */
 export async function validateConsent(
   userId: string,
   consentType: ConsentType,
   requiredVersion?: string,
-): Promise<{ valid: boolean; error?: string }> {
+): Promise<{ valid: boolean; error?: string; version?: string }> {
   try {
     const supabase = await createServerClient()
 
+    // Primary: user_consents table
     const { data: consents, error } = await supabase
       .from("user_consents")
       .select("consent_version, accepted_at")
@@ -21,6 +27,27 @@ export async function validateConsent(
       .eq("consent_type", consentType)
       .order("accepted_at", { ascending: false })
       .limit(1)
+
+    if (error && (error.code === "42P01" || error.message?.includes("does not exist"))) {
+      console.warn("[v0] user_consents table missing - falling back to terms_acceptance")
+      // Fallback to legacy table for terms
+      if (consentType === "terms") {
+        const { data: legacy } = await supabase
+          .from("terms_acceptance")
+          .select("terms_version, accepted_at")
+          .eq("user_id", userId)
+          .order("accepted_at", { ascending: false })
+          .limit(1)
+        if (legacy && legacy.length > 0) {
+          return { valid: true, version: legacy[0].terms_version }
+        }
+      }
+      // Dev mode bypass
+      if (process.env.NODE_ENV === "development") {
+        return { valid: true, version: "dev_bypass" }
+      }
+      return { valid: false, error: `Missing ${consentType} consent` }
+    }
 
     if (error) {
       console.error("[v0] Consent validation error:", error)
@@ -43,7 +70,7 @@ export async function validateConsent(
       }
     }
 
-    return { valid: true }
+    return { valid: true, version: latestConsent.consent_version }
   } catch (error) {
     console.error("[v0] Consent validation exception:", error)
     return { valid: false, error: "Validation failed" }

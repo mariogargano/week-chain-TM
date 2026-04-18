@@ -131,17 +131,20 @@ function AuthPageContent() {
       if (error) throw error
 
       if (data.user) {
-        if (data.user.email?.toLowerCase() === "corporativo@morises.com") {
-          router.push("/dashboard/admin")
-          toast.success("Bienvenido, Administrador!")
-          return
-        }
-
         const { data: userData } = await supabase
           .from("users")
           .select("role")
           .eq("id", data.user.id)
           .maybeSingle()
+
+        // Admin bootstrap: env-based admin email gets admin route
+        const envAdminEmail = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "").toLowerCase()
+        const userEmail = data.user.email?.toLowerCase() || ""
+        if (envAdminEmail && userEmail === envAdminEmail) {
+          router.push("/dashboard/admin")
+          toast.success("Bienvenido, Administrador!")
+          return
+        }
 
         const role = userData?.role || "user"
         const roleRouteMap: Record<string, string> = {

@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server"
 import { sha256 } from "@/lib/utils/crypto"
 
+// Note: All functions in this file are server-only and assume RSC/route handler context
+
 /**
  * NOM-151 Evidence Event Logger
  * Records immutable audit trail events with SHA-256 hashing

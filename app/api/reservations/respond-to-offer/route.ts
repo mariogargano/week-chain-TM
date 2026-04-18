@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
+import { extractRequestMetadata, logEvidenceEvent } from "@/lib/evidence/logger"
 
 export async function POST(request: Request) {
   try {
@@ -58,6 +59,23 @@ export async function POST(request: Request) {
       if (declineError) {
         return NextResponse.json({ error: "Failed to decline offer" }, { status: 500 })
       }
+
+      // NOM-151 evidence: offer_rejected
+      const { ip, userAgent } = extractRequestMetadata(request)
+      await logEvidenceEvent({
+        eventType: "offer_rejected",
+        entityType: "offer",
+        entityId: request_id,
+        userId: user.id,
+        actorRole: "user",
+        payload: {
+          requestId: request_id,
+          declinedAt: new Date().toISOString(),
+          previousPropertyId: reservationRequest.offered_property_id,
+        },
+        ipAddress: ip,
+        userAgent: userAgent,
+      })
 
       return NextResponse.json({
         success: true,
@@ -239,6 +257,44 @@ export async function POST(request: Request) {
       title: "Reservacion confirmada",
       message: `Tu reservacion del ${reservationRequest.offered_dates_start} al ${reservationRequest.offered_dates_end} ha sido confirmada.`,
       type: "reservation_confirmed",
+    })
+
+    // NOM-151 evidence: offer_accepted + reservation_confirmed
+    const { ip, userAgent } = extractRequestMetadata(request)
+    await logEvidenceEvent({
+      eventType: "offer_accepted",
+      entityType: "offer",
+      entityId: request_id,
+      userId: user.id,
+      actorRole: "user",
+      payload: {
+        requestId: request_id,
+        propertyId: reservationRequest.offered_property_id,
+        datesStart: reservationRequest.offered_dates_start,
+        datesEnd: reservationRequest.offered_dates_end,
+        acceptedAt: new Date().toISOString(),
+      },
+      ipAddress: ip,
+      userAgent: userAgent,
+    })
+
+    await logEvidenceEvent({
+      eventType: "reservation_confirmed",
+      entityType: "reservation",
+      entityId: confirmedReservation.id,
+      userId: user.id,
+      actorRole: "system",
+      payload: {
+        requestId: request_id,
+        reservationId: confirmedReservation.id,
+        certificateId: reservationRequest.certificate_id,
+        propertyId: reservationRequest.offered_property_id,
+        checkIn: reservationRequest.offered_dates_start,
+        checkOut: reservationRequest.offered_dates_end,
+        partySize: reservationRequest.party_size,
+      },
+      ipAddress: ip,
+      userAgent: userAgent,
     })
 
     return NextResponse.json({

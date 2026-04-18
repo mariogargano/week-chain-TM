@@ -36,6 +36,7 @@ export async function POST(request: Request) {
 
     try {
       if (user) {
+        // Legacy table (keeps backwards compat)
         const { error: insertError } = await supabase.from("terms_acceptance").insert({
           user_id: user.id,
           ip_address: ip,
@@ -51,24 +52,54 @@ export async function POST(request: Request) {
         })
 
         if (insertError) {
-          logger.warn("Database insert failed, but accepting terms anyway:", insertError.message)
+          logger.warn("Legacy terms_acceptance insert failed:", insertError.message)
         } else {
           logger.info("Terms acceptance saved successfully for user:", user.id)
-
-          // Audit log (non-blocking)
-          supabase
-            .from("compliance_audit_log")
-            .insert({
-              user_id: user.id,
-              event_type: "terms_accepted",
-              event_data: { terms_version, nom151Hash },
-              ip_address: ip,
-              user_agent: userAgent,
-            })
-            .then(({ error }) => {
-              if (error) logger.warn("Audit log failed:", error.message)
-            })
         }
+
+        // New user_consents table (PROFECO-compliant)
+        const { error: consentError } = await supabase.from("user_consents").insert({
+          user_id: user.id,
+          consent_type: "terms",
+          consent_version: terms_version,
+          accepted_at: timestamp,
+          ip_address: ip,
+          user_agent: userAgent,
+          hash_sha256: nom151Hash,
+        })
+
+        if (consentError) {
+          logger.warn("user_consents insert failed (migration pending?):", consentError.message)
+        }
+
+        // Evidence event (NOM-151)
+        await supabase.from("evidence_events").insert({
+          event_type: "consent_accepted",
+          entity_type: "consent",
+          entity_id: user.id,
+          user_id: user.id,
+          actor_role: "user",
+          payload_canonical: { consent_type: "terms", version: terms_version, method: "clickwrap" },
+          hash_sha256: nom151Hash,
+          document_version: terms_version,
+          occurred_at: timestamp,
+          ip_address: ip,
+          user_agent: userAgent,
+        }).catch((e) => logger.warn("Evidence log failed:", e))
+
+        // Audit log (non-blocking)
+        supabase
+          .from("compliance_audit_log")
+          .insert({
+            user_id: user.id,
+            event_type: "terms_accepted",
+            event_data: { terms_version, nom151Hash },
+            ip_address: ip,
+            user_agent: userAgent,
+          })
+          .then(({ error }) => {
+            if (error) logger.warn("Audit log failed:", error.message)
+          })
       }
     } catch (dbError) {
       logger.warn("Database operation failed, continuing anyway:", dbError)

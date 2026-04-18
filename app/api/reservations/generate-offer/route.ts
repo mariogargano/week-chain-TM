@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { addDays } from "date-fns"
+import { extractRequestMetadata, logEvidenceEvent } from "@/lib/evidence/logger"
 
-const ADMIN_EMAIL = "corporativo@morises.com"
+const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "").toLowerCase()
 
 export async function POST(request: Request) {
   try {
@@ -26,9 +27,9 @@ export async function POST(request: Request) {
       .maybeSingle()
 
     const isAdmin =
-      userEmail === ADMIN_EMAIL ||
       userData?.role === "admin" ||
-      userData?.role === "super_admin"
+      userData?.role === "super_admin" ||
+      (ADMIN_EMAIL !== "" && userEmail === ADMIN_EMAIL)
 
     if (!isAdmin) {
       return NextResponse.json({ error: "Admin access required" }, { status: 403 })
@@ -110,6 +111,27 @@ export async function POST(request: Request) {
       title: "Nueva oferta de reservacion",
       message: `Tienes una nueva oferta para ${property.name || "una propiedad"} del ${offered_dates_start} al ${offered_dates_end}. Tienes ${offer_expires_hours}h para responder.`,
       type: "offer_created",
+    })
+
+    // NOM-151 evidence logging for OFFER
+    const { ip, userAgent } = extractRequestMetadata(request)
+    await logEvidenceEvent({
+      eventType: "reservation_offered",
+      entityType: "offer",
+      entityId: updatedRequest.id,
+      userId: reservationRequest.user_id,
+      actorRole: "admin",
+      payload: {
+        requestId: request_id,
+        propertyId: offered_property_id,
+        propertyName: property.name,
+        offeredDatesStart: offered_dates_start,
+        offeredDatesEnd: offered_dates_end,
+        expiresAt: offer_expires_at,
+        offeredByAdmin: user.id,
+      },
+      ipAddress: ip,
+      userAgent: userAgent,
     })
 
     return NextResponse.json({

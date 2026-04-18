@@ -5,7 +5,8 @@ import { updateSession } from "@/lib/supabase/middleware"
 const hits = new Map<string, { n: number; t: number }>()
 
 const SITE_PROTECTION_ENABLED = false
-const ADMIN_EMAIL = "corporativo@morises.com"
+// Use env var, never hardcode admin email
+const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "").toLowerCase()
 
 export async function middleware(request: NextRequest) {
   const ip = request.ip ?? request.headers.get("x-forwarded-for") ?? "unknown"
@@ -101,8 +102,8 @@ export async function middleware(request: NextRequest) {
       const pathname = request.nextUrl.pathname
       const userEmail = user.email?.toLowerCase() || ""
 
-      // Admin email always gets full access
-      if (userEmail === ADMIN_EMAIL.toLowerCase()) {
+      // Admin email from env always gets full access (fallback/bootstrap)
+      if (ADMIN_EMAIL && userEmail === ADMIN_EMAIL) {
         // Admin email - full access granted
       } else {
         // Get user's role from users table (primary source)
@@ -174,8 +175,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Security headers
-  response.headers.set("X-Frame-Options", "DENY")
+  // Security headers (allow v0 and Vercel preview iframes)
   response.headers.set("X-Content-Type-Options", "nosniff")
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin")
   response.headers.set("Permissions-Policy", "geolocation=(), microphone=(), camera=()")
@@ -188,7 +188,7 @@ export async function middleware(request: NextRequest) {
     response.headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload")
     response.headers.set(
       "Content-Security-Policy",
-      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co https://api.conekta.io;",
+      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co https://api.conekta.io; frame-ancestors 'self' https://v0.app https://*.v0.app https://vercel.com https://*.vercel.com;",
     )
   }
 
