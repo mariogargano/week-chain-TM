@@ -42,20 +42,36 @@ function AuthPageContent() {
   const [registerPhone, setRegisterPhone] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [registerTermsAccepted, setRegisterTermsAccepted] = useState(false)
+  const [wantsToBeAgent, setWantsToBeAgent] = useState(false)
   const [referralCode, setReferralCode] = useState("")
   const [referrerName, setReferrerName] = useState<string | null>(null)
 
   useEffect(() => {
     const ref = searchParams?.get("ref")
-    if (ref) {
-      setReferralCode(ref)
-      fetchReferrerName(ref)
+    let finalRef = ref || ""
+
+    // Fallback: read the cookie set by middleware.ts when the visitor arrived
+    // on any page with ?ref=CODE (not just /auth).
+    if (!finalRef && typeof document !== "undefined") {
+      const match = document.cookie.match(/(?:^|; )week_chain_ref=([^;]+)/)
+      if (match) finalRef = decodeURIComponent(match[1])
+    }
+
+    if (finalRef) {
+      setReferralCode(finalRef)
+      fetchReferrerName(finalRef)
       setActiveTab("register")
     }
 
     const tab = searchParams?.get("tab")
     if (tab === "login" || tab === "register") {
       setActiveTab(tab)
+    }
+
+    const agentFlag = searchParams?.get("becomeAgent") || searchParams?.get("agent")
+    if (agentFlag === "1" || agentFlag === "true") {
+      setWantsToBeAgent(true)
+      setActiveTab("register")
     }
 
     const errorMsg = searchParams?.get("error")
@@ -215,8 +231,9 @@ function AuthPageContent() {
             full_name: registerName,
             phone: registerPhone,
             referral_code: referralCode || null,
+            wants_to_be_agent: wantsToBeAgent,
           },
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?${wantsToBeAgent ? "becomeAgent=1" : ""}${referralCode ? (wantsToBeAgent ? "&" : "") + "ref=" + encodeURIComponent(referralCode) : ""}`,
         },
       })
 
@@ -227,6 +244,42 @@ function AuthPageContent() {
         setError("Este email ya esta registrado. Por favor inicia sesion.")
         setIsLoading(false)
         return
+      }
+
+      // If the user is already logged in (confirmation disabled), we can try
+      // to persist the referral attribution AND activate agent mode immediately.
+      if (data.session && data.user) {
+        if (referralCode) {
+          try {
+            await fetch("/api/intermediary/attribution", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                referralCode,
+                email: data.user.email,
+                userId: data.user.id,
+              }),
+            })
+          } catch (e) {
+            console.error("[v0] referral attribution failed:", e)
+          }
+        }
+        if (wantsToBeAgent) {
+          try {
+            await fetch("/api/intermediary/activate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                displayName: registerName,
+                phone: registerPhone,
+                source: "signup_checkbox",
+              }),
+            })
+            toast.success("Cuenta creada y modo agente activado")
+          } catch (e) {
+            console.error("[v0] agent activation failed:", e)
+          }
+        }
       }
 
       toast.success("Registro exitoso! Revisa tu email para confirmar tu cuenta.")
@@ -666,6 +719,23 @@ function AuthPageContent() {
                   />
                 </div>
               )}
+
+              {/* Become-Agent opt-in */}
+              <div className="flex items-start gap-3 p-4 bg-amber-50 rounded-xl border-2 border-amber-200">
+                <input
+                  type="checkbox"
+                  id="register-agent"
+                  checked={wantsToBeAgent}
+                  onChange={(e) => setWantsToBeAgent(e.target.checked)}
+                  className="mt-0.5 h-5 w-5 rounded border-amber-300 text-amber-600 focus:ring-amber-500 flex-shrink-0"
+                />
+                <label htmlFor="register-agent" className="text-sm text-amber-900 leading-relaxed cursor-pointer">
+                  <span className="font-semibold block mb-1">Quiero ser Agente WEEK-CHAIN</span>
+                  <span className="text-xs text-amber-800/90">
+                    Obtendras un enlace de referido personal y ganaras 4% de comision sobre cada certificado vendido a traves de tu link. Requiere KYC aprobado para cobrar.
+                  </span>
+                </label>
+              </div>
 
               <div className="flex items-start gap-3 p-3 bg-sky-50 rounded-lg border border-sky-200">
                 <input

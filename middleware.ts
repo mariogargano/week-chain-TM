@@ -52,6 +52,23 @@ export async function middleware(request: NextRequest) {
 
   const response = await updateSession(request)
 
+  // ======= REFERRAL CAPTURE =======
+  // Capture ?ref=CODE from any URL on the public site and persist it as a cookie
+  // so that when the visitor signs up or purchases, we can credit the agent.
+  const refCode = request.nextUrl.searchParams.get("ref")
+  if (refCode && /^[A-Za-z0-9_-]{4,32}$/.test(refCode)) {
+    const existing = request.cookies.get("week_chain_ref")?.value
+    if (existing !== refCode) {
+      response.cookies.set("week_chain_ref", refCode, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: "/",
+        httpOnly: false, // readable by client so we can show banner
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+      })
+    }
+  }
+
   // Protected routes check
   const protectedRoutes = [
     "/dashboard/admin",
@@ -61,6 +78,7 @@ export async function middleware(request: NextRequest) {
     "/dashboard/owner",
     "/dashboard/notaria",
     "/dashboard/intermediary",
+    "/dashboard/agent",
     "/dashboard/workspace",
     "/management",
     "/notaria",
@@ -130,6 +148,7 @@ export async function middleware(request: NextRequest) {
           "/dashboard/staff": ["staff", "admin", "super_admin"],
           "/dashboard/user": ["user", "admin", "super_admin"],
           "/dashboard/intermediary": ["broker", "broker_elite", "admin", "super_admin"],
+          "/dashboard/agent": ["user", "broker", "broker_elite", "dao_member", "property_owner", "staff", "admin", "super_admin"],
           "/management": ["management", "admin", "super_admin"],
           "/notaria": ["notaria", "admin", "super_admin"],
         }

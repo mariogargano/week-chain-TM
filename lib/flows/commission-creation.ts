@@ -1,10 +1,20 @@
 /**
- * FLOW B — Sale → Commission Creation
- * Automatically creates commission records when a certificate is purchased
+ * FLOW B — Sale -> Commission Creation
+ * Creates commission records when a certificate is purchased.
+ *
+ * Business rules (WEEK-CHAIN):
+ *  - Flat 4% referral commission for any certificate tier.
+ *  - Self-referral is forbidden (an agent cannot earn commission on their own purchase).
+ *  - Commissions enter a 45-day anti-fraud hold before being approved.
+ *  - An agent can only have commissions *released* once they pass KYC
+ *    (enforced in anti-fraud-hold.ts when moving pending -> approved).
  */
 
 import { createClient } from "@/lib/supabase/server"
 import { getActiveAttribution } from "./referral-attribution"
+
+const FLAT_COMMISSION_RATE = 0.04
+const HOLD_DAYS = 45
 
 export async function createCommissionFromOrder(params: {
   orderId: string
@@ -15,7 +25,18 @@ export async function createCommissionFromOrder(params: {
 }) {
   const supabase = await createClient()
 
-  // Check for active attribution
+  // Idempotency: if we've already created a commission for this order, return it.
+  const { data: existing } = await supabase
+    .from("commission_records")
+    .select("id, status")
+    .eq("order_id", params.orderId)
+    .maybeSingle()
+
+  if (existing) {
+    return existing
+  }
+
+  // Find an active attribution for this buyer (30-day window handled upstream).
   const attribution = await getActiveAttribution({
     userId: params.buyerUserId,
     email: params.buyerEmail,
@@ -25,41 +46,55 @@ export async function createCommissionFromOrder(params: {
     return null
   }
 
-  // Get commission rate for this tier (try exact match, then fallback to default)
-  const { data: rateConfig } = await supabase
-    .from("commission_rates")
-    .select("*")
-    .eq("certificate_tier", params.certificateTier)
-    .single()
+  // ---- Self-referral guard ----
+  // If the intermediary's user_id equals the buyer's user_id, refuse the commission.
+  const { data: agentProfile } = await supabase
+    .from("intermediary_profiles")
+    .select("id, user_id, status")
+    .eq("id", attribution.intermediary_id)
+    .maybeSingle()
 
-  // WEEK-CHAIN uses a flat 4% referral commission. No multi-level, no tier-based rates.
-  const FLAT_COMMISSION_RATE = 0.04
-  let commissionRate: number
-
-  if (rateConfig) {
-    // Cap at 4% even if DB has a higher value (safety guard)
-    commissionRate = Math.min(rateConfig.default_rate, FLAT_COMMISSION_RATE)
-  } else {
-    commissionRate = FLAT_COMMISSION_RATE
+  if (!agentProfile) {
+    return null
   }
-  const commissionAmount = params.saleAmount * commissionRate
 
-  // Create commission with PENDING status and hold period
+  if (agentProfile.status !== "active") {
+    // Agent is suspended/banned -> no commission.
+    return null
+  }
+
+  if (agentProfile.user_id === params.buyerUserId) {
+    // Self-referral attempt: block commission silently.
+    console.warn("[Commission] Self-referral attempt blocked", {
+      userId: params.buyerUserId,
+      orderId: params.orderId,
+    })
+    return null
+  }
+
+  const commissionAmount = +(params.saleAmount * FLAT_COMMISSION_RATE).toFixed(2)
+
   const holdUntil = new Date()
-  holdUntil.setDate(holdUntil.getDate() + 45) // 45-day hold period
+  holdUntil.setDate(holdUntil.getDate() + HOLD_DAYS)
 
   const { data: commission, error } = await supabase
     .from("commission_records")
     .insert({
-      intermediary_id: attribution.intermediary_id,
+      intermediary_id: agentProfile.id,
       buyer_user_id: params.buyerUserId,
       order_id: params.orderId,
       certificate_tier: params.certificateTier,
       sale_amount: params.saleAmount,
-      commission_rate: commissionRate,
+      commission_rate: FLAT_COMMISSION_RATE,
       commission_amount: commissionAmount,
       status: "pending",
       hold_until: holdUntil.toISOString(),
+      metadata: {
+        flat_rate: true,
+        rate: FLAT_COMMISSION_RATE,
+        attribution_id: attribution.id ?? null,
+        buyer_email: params.buyerEmail ?? null,
+      },
     })
     .select()
     .single()
@@ -67,6 +102,29 @@ export async function createCommissionFromOrder(params: {
   if (error) {
     console.error("[Commission] Error creating commission:", error)
     throw error
+  }
+
+  // Bump intermediary aggregate counters (best-effort, non-blocking)
+  try {
+    const { data: current } = await supabase
+      .from("intermediary_profiles")
+      .select("total_sales, total_commissions")
+      .eq("id", agentProfile.id)
+      .maybeSingle()
+
+    const newSales = Number(current?.total_sales ?? 0) + Number(params.saleAmount)
+    const newCommissions = Number(current?.total_commissions ?? 0) + Number(commissionAmount)
+
+    await supabase
+      .from("intermediary_profiles")
+      .update({
+        total_sales: newSales,
+        total_commissions: newCommissions,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", agentProfile.id)
+  } catch (e) {
+    console.error("[Commission] Could not update aggregate counters:", e)
   }
 
   return commission

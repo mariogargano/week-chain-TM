@@ -29,6 +29,7 @@ import { toast } from "sonner"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { RoleGuard } from "@/components/role-guard"
+import { BecomeAgentCard } from "@/components/become-agent-card"
 
 interface UserProfile {
   id: string
@@ -333,6 +334,8 @@ function MemberDashboardContent() {
           </div>
         </div>
       )}
+
+      <BecomeAgentCard />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Certificates */}

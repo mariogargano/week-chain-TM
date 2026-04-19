@@ -111,6 +111,81 @@ export async function GET(request: NextRequest) {
       .eq("id", data.user.id)
   }
 
+  // ----- Post-signup hooks: referral attribution + agent activation -----
+  const becomeAgentFlag =
+    requestUrl.searchParams.get("becomeAgent") === "1" ||
+    data.user.user_metadata?.wants_to_be_agent === true
+  const refFromQuery = requestUrl.searchParams.get("ref")
+  const refFromCookie = cookieStore.get("week_chain_ref")?.value
+  const refFromMeta = data.user.user_metadata?.referral_code
+  const effectiveRef = refFromQuery || refFromCookie || refFromMeta || null
+
+  if (effectiveRef) {
+    try {
+      // Resolve the agent's intermediary_profile using the referral code.
+      const { data: agentProfile } = await supabase
+        .from("intermediary_profiles")
+        .select("id, status")
+        .eq("referral_code", effectiveRef)
+        .maybeSingle()
+
+      if (agentProfile && agentProfile.status === "active") {
+        const expiresAt = new Date()
+        expiresAt.setDate(expiresAt.getDate() + 30)
+
+        await supabase.from("referral_attributions").upsert(
+          {
+            referral_code: effectiveRef,
+            intermediary_id: agentProfile.id,
+            lead_user_id: data.user.id,
+            lead_email: data.user.email || null,
+            expires_at: expiresAt.toISOString(),
+          },
+          { onConflict: "referral_code,lead_user_id" }
+        )
+      }
+    } catch (e) {
+      console.error("[Auth Callback] attribution hook failed:", e)
+    }
+  }
+
+  if (becomeAgentFlag) {
+    try {
+      // Create intermediary_profile idempotently.
+      const { data: existingAgent } = await supabase
+        .from("intermediary_profiles")
+        .select("id")
+        .eq("user_id", data.user.id)
+        .maybeSingle()
+
+      if (!existingAgent) {
+        const baseCode =
+          existingUser && "referral_code" in existingUser && (existingUser as any).referral_code
+            ? String((existingUser as any).referral_code)
+            : `WC${data.user.id.replace(/-/g, "").slice(0, 6).toUpperCase()}`
+
+        await supabase.from("intermediary_profiles").insert({
+          user_id: data.user.id,
+          referral_code: baseCode,
+          display_name:
+            data.user.user_metadata?.full_name ||
+            data.user.email?.split("@")[0] ||
+            "Agente",
+          email: data.user.email,
+          phone: data.user.user_metadata?.phone || null,
+          status: "active",
+          total_sales: 0,
+          total_commissions: 0,
+          metadata: {
+            activated_via: "auth_callback_signup",
+          },
+        })
+      }
+    } catch (e) {
+      console.error("[Auth Callback] agent activation failed:", e)
+    }
+  }
+
   // Admin email always goes to admin dashboard
   if (isAdmin) {
     return NextResponse.redirect(new URL("/dashboard/admin", requestUrl.origin))
@@ -130,6 +205,11 @@ export async function GET(request: NextRequest) {
     vafi_manager: "/dashboard/vafi",
     dao_member: "/dashboard/dao",
     property_owner: "/dashboard/owner",
+  }
+
+  // New agents: send them to the agent dashboard so they see their link right away.
+  if (becomeAgentFlag) {
+    return NextResponse.redirect(new URL("/dashboard/agent?welcome=1", requestUrl.origin))
   }
 
   const redirectPath = roleRouteMap[userRole] || next
