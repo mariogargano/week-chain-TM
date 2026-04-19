@@ -14,37 +14,31 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/weekchain-logo.png",
-      "sizes": "any",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/weekchain-logo.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/weekchain-logo.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/weekchain-logo.png",
+      "src": "/icon-maskable-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/weekchain-logo.png",
+      "src": "/icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/weekchain-logo.png",
+      "src": "/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
@@ -58,7 +52,7 @@
       "url": "/dashboard/member/bookings?utm_source=pwa_shortcut",
       "icons": [
         {
-          "src": "/weekchain-logo.png",
+          "src": "/icon-192.png",
           "sizes": "192x192",
           "type": "image/png"
         }
@@ -71,7 +65,7 @@
       "url": "/properties?utm_source=pwa_shortcut",
       "icons": [
         {
-          "src": "/weekchain-logo.png",
+          "src": "/icon-192.png",
           "sizes": "192x192",
           "type": "image/png"
         }
@@ -84,7 +78,7 @@
       "url": "/dashboard/member/profile?utm_source=pwa_shortcut",
       "icons": [
         {
-          "src": "/weekchain-logo.png",
+          "src": "/icon-192.png",
           "sizes": "192x192",
           "type": "image/png"
         }

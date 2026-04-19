@@ -88,13 +88,13 @@ export const metadata: Metadata = {
   referrer: "origin-when-cross-origin",
   icons: {
     icon: [
-      { url: "/weekchain-logo.png", type: "image/png" },
-      { url: "/weekchain-logo.png", type: "image/png", sizes: "192x192" },
-      { url: "/weekchain-logo.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
     ],
-    shortcut: "/weekchain-logo.png",
+    shortcut: "/favicon-32.png",
     apple: [
-      { url: "/weekchain-logo.png", type: "image/png", sizes: "180x180" },
+      { url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" },
     ],
   },
   manifest: "/manifest.json",
