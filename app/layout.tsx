@@ -50,10 +50,11 @@ export const metadata: Metadata = {
       "Sistema innovador de certificados vacacionales. 15 años de experiencias en destinos premium de México. Transparente, seguro y protegido.",
     images: [
       {
-        url: "https://www.week-chain.com/og-image.jpg",
-        width: 1200,
-        height: 630,
+        url: "/weekchain-logo.png",
+        width: 1024,
+        height: 1024,
         alt: "WEEK-CHAIN - Certificados de Servicios Vacacionales",
+        type: "image/png",
       },
     ],
   },
@@ -63,7 +64,7 @@ export const metadata: Metadata = {
     description: "15 años de experiencias únicas en destinos premium de México. Sistema innovador y protegido.",
     creator: "@weekchain",
     site: "@weekchain",
-    images: ["https://www.week-chain.com/og-image.jpg"],
+    images: ["/weekchain-logo.png"],
   },
   robots: {
     index: true,
@@ -87,12 +88,14 @@ export const metadata: Metadata = {
   referrer: "origin-when-cross-origin",
   icons: {
     icon: [
-      { url: "/favicon.jpg", type: "image/jpeg" },
-      { url: "/icon-192.jpg", type: "image/jpeg", sizes: "192x192" },
-      { url: "/icon-512.jpg", type: "image/jpeg", sizes: "512x512" },
+      { url: "/weekchain-logo.png", type: "image/png" },
+      { url: "/weekchain-logo.png", type: "image/png", sizes: "192x192" },
+      { url: "/weekchain-logo.png", type: "image/png", sizes: "512x512" },
     ],
-    shortcut: "/favicon.jpg",
-    apple: [{ url: "/apple-touch-icon.jpg", type: "image/jpeg" }],
+    shortcut: "/weekchain-logo.png",
+    apple: [
+      { url: "/weekchain-logo.png", type: "image/png", sizes: "180x180" },
+    ],
   },
   manifest: "/manifest.json",
   verification: {

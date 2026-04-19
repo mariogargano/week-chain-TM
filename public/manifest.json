@@ -14,27 +14,39 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/favicon.jpg",
+      "src": "/weekchain-logo.png",
       "sizes": "any",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-192.jpg",
+      "src": "/weekchain-logo.png",
       "sizes": "192x192",
-      "type": "image/jpeg",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/icon-512.jpg",
+      "src": "/weekchain-logo.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/apple-touch-icon.jpg",
+      "src": "/weekchain-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/weekchain-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/weekchain-logo.png",
       "sizes": "180x180",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     }
   ],
@@ -46,8 +58,9 @@
       "url": "/dashboard/member/bookings?utm_source=pwa_shortcut",
       "icons": [
         {
-          "src": "/icon-192.jpg",
-          "sizes": "192x192"
+          "src": "/weekchain-logo.png",
+          "sizes": "192x192",
+          "type": "image/png"
         }
       ]
     },
@@ -58,8 +71,9 @@
       "url": "/properties?utm_source=pwa_shortcut",
       "icons": [
         {
-          "src": "/icon-192.jpg",
-          "sizes": "192x192"
+          "src": "/weekchain-logo.png",
+          "sizes": "192x192",
+          "type": "image/png"
         }
       ]
     },
@@ -70,8 +84,9 @@
       "url": "/dashboard/member/profile?utm_source=pwa_shortcut",
       "icons": [
         {
-          "src": "/icon-192.jpg",
-          "sizes": "192x192"
+          "src": "/weekchain-logo.png",
+          "sizes": "192x192",
+          "type": "image/png"
         }
       ]
     }
