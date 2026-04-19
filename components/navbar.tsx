@@ -325,7 +325,10 @@ export function Navbar() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white shadow-xl">
-          <div className="container mx-auto px-4 py-4 space-y-1 max-h-[calc(100vh-64px)] overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom,16px)]">
+          <div
+            className="container mx-auto px-4 py-4 space-y-1 overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom,16px)]"
+            style={{ maxHeight: "calc(100dvh - 64px)" }}
+          >
             {navItems.map((item) => (
               <Link
                 key={item.label}

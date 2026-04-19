@@ -243,20 +243,26 @@ export function SiteFooter() {
         </div>
 
         {/* Newsletter Section */}
-        <div className="border-t border-white/10 pt-12 mb-12">
+        <div className="border-t border-white/10 pt-8 sm:pt-12 mb-8 sm:mb-12">
           <div className="max-w-md">
             <h4 className="font-semibold text-lg mb-2">Stay Updated</h4>
             <p className="text-sm text-gray-400 mb-4">Get the latest news and updates about WEEK-CHAIN</p>
-            <div className="flex gap-2">
+            <form className="flex flex-col sm:flex-row gap-2">
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 text-base h-12"
+                aria-label="Email address"
+                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 text-base h-12 min-w-0 flex-1"
               />
-              <Button className="bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 h-12 min-w-[48px]">
+              <Button
+                type="submit"
+                aria-label="Subscribe to newsletter"
+                className="bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 h-12 min-w-[48px] sm:w-auto w-full gap-2"
+              >
                 <Send className="h-4 w-4" />
+                <span className="sm:hidden">Suscribirse</span>
               </Button>
-            </div>
+            </form>
           </div>
         </div>
 
