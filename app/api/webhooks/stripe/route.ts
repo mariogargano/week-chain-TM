@@ -24,7 +24,9 @@ export async function POST(req: NextRequest) {
   try {
     event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
   } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 400 })
+    // SECURITY: Do not expose Stripe error details. Just log locally and return generic error.
+    console.error("[stripe-webhook] Signature verification failed:", err?.message || String(err))
+    return NextResponse.json({ error: "Invalid signature" }, { status: 401 })
   }
 
   const supabase = await createClient()
