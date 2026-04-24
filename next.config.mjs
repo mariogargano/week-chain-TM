@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Quality gates: both TypeScript and ESLint errors now BLOCK the build.
+  // This prevents silent bugs from reaching production.
+  // If a new TS/ESLint error appears, fix it — do NOT re-disable these flags.
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   images: {
     unoptimized: true,

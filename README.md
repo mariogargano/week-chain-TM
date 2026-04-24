@@ -54,15 +54,20 @@ NEXT_PUBLIC_ADMIN_EMAIL=
 
 ## Desarrollo
 
+El proyecto usa **pnpm** como gestor de paquetes. No uses npm ni yarn para evitar conflictos de lockfile.
+
 ```bash
-# Instalar dependencias
-npm install
+# Instalar dependencias (respeta pnpm-lock.yaml)
+pnpm install
 
 # Iniciar servidor de desarrollo
-npm run dev
+pnpm dev
 
 # Build de produccion
-npm run build
+pnpm build
+
+# Type-check sin compilar
+pnpm exec tsc --noEmit
 ```
 
 ## Estructura del Proyecto

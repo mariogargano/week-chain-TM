@@ -1,15 +1,18 @@
 # Dockerfile for Next.js 15 Application
 FROM node:20-alpine AS base
 
+# Install pnpm globally — must match the packageManager field in package.json
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 # Install dependencies only when needed
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# F-11 FIX: Make lockfile mandatory for reproducible builds
-COPY package.json package-lock.json ./
-# Use npm ci for deterministic installs from lockfile
-RUN npm ci --legacy-peer-deps
+# Copy lockfile + package manifest + .npmrc so pnpm uses the exact locked versions
+COPY package.json pnpm-lock.yaml .npmrc ./
+# --frozen-lockfile: fails if lockfile is out of date (reproducible, safe for CI)
+RUN pnpm install --frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -25,7 +28,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV RESEND_API_KEY="build-time-placeholder"
 
 # Build the application
-RUN npm run build
+RUN pnpm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
