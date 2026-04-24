@@ -1,4 +1,4 @@
-import { getUserRoleByEmail, ADMIN_EMAIL } from "./roles";
+import { getUserRoleByEmail, ADMIN_EMAIL } from "./roles"
 
 /**
  * Mapeo de roles a rutas de dashboard

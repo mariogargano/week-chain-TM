@@ -1,8 +1,9 @@
-"use client";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import {
   Building2,
   MapPin,
@@ -24,11 +25,11 @@ import {
   Info,
   Eye,
   AlertTriangle,
-} from "lucide-react";
-
-import Link from "next/link";
-import Image from "next/image";
-import { NotaryBadge } from "@/components/notary-badge";
+} from "lucide-react"
+import { Navbar } from "@/components/navbar"
+import Link from "next/link"
+import Image from "next/image"
+import { NotaryBadge } from "@/components/notary-badge"
 
 const property = {
   id: "monterrey-urban",
@@ -86,17 +87,17 @@ export default function MonterreyUrbanPage() {
               <div className="flex items-center gap-2 mb-2">
                 <Badge className="bg-gradient-to-r from-violet-600 to-purple-600 text-white border-0">
                   <Eye className="w-3 h-3 mr-1" />
-                  {property?.type}
+                  {property.type}
                 </Badge>
                 <Badge className="bg-amber-100/80 text-amber-800 border-amber-200">
                   <Info className="w-3 h-3 mr-1" />
                   Ejemplo Inspiracional
                 </Badge>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">{property?.name}</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">{property.name}</h1>
               <p className="text-slate-600 flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-violet-600" />
-                {property?.location}
+                {property.location}
               </p>
             </div>
             <div className="text-right bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 text-white">
@@ -111,23 +112,24 @@ export default function MonterreyUrbanPage() {
           <div className="flex flex-wrap gap-4 text-sm">
             <span className="flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm">
               <Bed className="h-5 w-5 text-violet-500" />
-              {property?.specs?.bedrooms} Recámaras
+              {property.specs.bedrooms} Recámaras
             </span>
             <span className="flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm">
               <Bath className="h-5 w-5 text-purple-500" />
-              {property?.specs?.bathrooms} Baños
+              {property.specs.bathrooms} Baños
             </span>
             <span className="flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm">
               <Maximize className="h-5 w-5 text-indigo-500" />
-              {property?.specs?.size}
+              {property.specs.size}
             </span>
             <span className="flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm">
               <Users className="h-5 w-5 text-violet-500" />
-              Hasta {property?.specs?.maxGuests} huéspedes
+              Hasta {property.specs.maxGuests} huéspedes
             </span>
           </div>
         </div>
       </section>
+
       {/* Gallery and Info Grid */}
       <section className="px-4 pb-12">
         <div className="container mx-auto max-w-6xl">
@@ -139,15 +141,15 @@ export default function MonterreyUrbanPage() {
                 onClick={() => setLightboxOpen(true)}
               >
                 <Image
-                  src={property?.gallery?.[currentImageIndex] || "/placeholder.svg"}
-                  alt={property?.name}
+                  src={property.gallery[currentImageIndex] || "/placeholder.svg"}
+                  alt={property.name}
                   fill
                   className="object-cover transition-all duration-700"
                 />
                 <button
                   onClick={(e) => {
-                    e?.stopPropagation()
-                    setCurrentImageIndex((prev) => (prev - 1 + property?.gallery?.length) % property?.gallery?.length)
+                    e.stopPropagation()
+                    setCurrentImageIndex((prev) => (prev - 1 + property.gallery.length) % property.gallery.length)
                   }}
                   className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg"
                 >
@@ -155,19 +157,19 @@ export default function MonterreyUrbanPage() {
                 </button>
                 <button
                   onClick={(e) => {
-                    e?.stopPropagation()
-                    setCurrentImageIndex((prev) => (prev + 1) % property?.gallery?.length)
+                    e.stopPropagation()
+                    setCurrentImageIndex((prev) => (prev + 1) % property.gallery.length)
                   }}
                   className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg"
                 >
                   <ChevronRight className="h-5 w-5 text-slate-900" />
                 </button>
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                  {property?.gallery?.map((_, idx) => (
+                  {property.gallery.map((_, idx) => (
                     <button
                       key={idx}
                       onClick={(e) => {
-                        e?.stopPropagation()
+                        e.stopPropagation()
                         setCurrentImageIndex(idx)
                       }}
                       className={`w-2 h-2 rounded-full transition-all ${
@@ -178,7 +180,7 @@ export default function MonterreyUrbanPage() {
                 </div>
               </div>
 
-              <NotaryBadge propertyId={property?.id} />
+              <NotaryBadge propertyId={property.id} />
             </div>
 
             {/* Property Info */}
@@ -192,7 +194,7 @@ export default function MonterreyUrbanPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-slate-600 leading-relaxed">{property?.description}</p>
+                  <p className="text-slate-600 leading-relaxed">{property.description}</p>
                 </CardContent>
               </Card>
 
@@ -231,10 +233,10 @@ export default function MonterreyUrbanPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 gap-3">
-                    {property?.amenities?.map((amenity, idx) => (
+                    {property.amenities.map((amenity, idx) => (
                       <div key={idx} className="flex items-center gap-3 p-3 rounded-lg bg-violet-50/50">
-                        <div className="text-violet-600">{amenity?.icon}</div>
-                        <span className="text-sm text-slate-700">{amenity?.label}</span>
+                        <div className="text-violet-600">{amenity.icon}</div>
+                        <span className="text-sm text-slate-700">{amenity.label}</span>
                       </div>
                     ))}
                   </div>
@@ -251,7 +253,7 @@ export default function MonterreyUrbanPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
-                    {property?.features?.map((feature, idx) => (
+                    {property.features.map((feature, idx) => (
                       <Badge
                         key={idx}
                         variant="secondary"
@@ -267,6 +269,7 @@ export default function MonterreyUrbanPage() {
           </div>
         </div>
       </section>
+
       {/* CTA Section */}
       <section className="px-4 py-16 bg-gradient-to-br from-violet-50 via-white to-purple-50">
         <div className="container mx-auto max-w-4xl">
@@ -300,6 +303,7 @@ export default function MonterreyUrbanPage() {
           </div>
         </div>
       </section>
+
       {/* Lightbox */}
       <div
         className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
@@ -313,8 +317,8 @@ export default function MonterreyUrbanPage() {
         </button>
         <button
           onClick={(e) => {
-            e?.stopPropagation()
-            setCurrentImageIndex((prev) => (prev - 1 + property?.gallery?.length) % property?.gallery?.length)
+            e.stopPropagation()
+            setCurrentImageIndex((prev) => (prev - 1 + property.gallery.length) % property.gallery.length)
           }}
           className="absolute left-4 p-2 text-white/80 hover:text-white"
         >
@@ -322,7 +326,7 @@ export default function MonterreyUrbanPage() {
         </button>
         <div className="relative w-full max-w-5xl aspect-video mx-4">
           <Image
-            src={property?.gallery?.[currentImageIndex] || "/placeholder.svg"}
+            src={property.gallery[currentImageIndex] || "/placeholder.svg"}
             alt={`Imagen ${currentImageIndex + 1}`}
             fill
             className="object-contain"
@@ -330,19 +334,19 @@ export default function MonterreyUrbanPage() {
         </div>
         <button
           onClick={(e) => {
-            e?.stopPropagation()
-            setCurrentImageIndex((prev) => (prev + 1) % property?.gallery?.length)
+            e.stopPropagation()
+            setCurrentImageIndex((prev) => (prev + 1) % property.gallery.length)
           }}
           className="absolute right-4 p-2 text-white/80 hover:text-white"
         >
           <ChevronRight className="w-10 h-10" />
         </button>
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-          {property?.gallery?.map((_, idx) => (
+          {property.gallery.map((_, idx) => (
             <button
               key={idx}
               onClick={(e) => {
-                e?.stopPropagation()
+                e.stopPropagation()
                 setCurrentImageIndex(idx)
               }}
               className={`w-2 h-2 rounded-full transition-all ${idx === currentImageIndex ? "bg-white w-6" : "bg-white/50"}`}
@@ -351,5 +355,5 @@ export default function MonterreyUrbanPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

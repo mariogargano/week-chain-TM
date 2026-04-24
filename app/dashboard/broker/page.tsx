@@ -1,15 +1,20 @@
-"use client";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { DollarSign, Users, TrendingUp, Briefcase, Download, Calendar, CreditCard, Loader2, AlertCircle, Copy, RefreshCw, Share2, ExternalLink, ArrowUp } from "lucide-react";
-import { useEffect, useState, useRef } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { RoleGuard } from "@/components/role-guard";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import Link from "next/link";
-import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from "recharts";
-import { ChartContainer } from "@/components/ui/chart";
-import { toast } from "sonner";
+"use client"
+
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+  DollarSign, Users, TrendingUp, Briefcase, Download, Eye, ArrowUpRight,
+  Calendar, CreditCard, Clock, CheckCircle2, Loader2, AlertCircle, Copy,
+  RefreshCw, Share2, ExternalLink, ArrowUp
+} from "lucide-react"
+import { useEffect, useState, useRef } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { RoleGuard } from "@/components/role-guard"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import Link from "next/link"
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from "recharts"
+import { ChartContainer } from "@/components/ui/chart"
+import { toast } from "sonner"
 
 /* ---------- Glass utility classes ---------- */
 const glass = "bg-gradient-to-br from-sky-500/[0.08] to-blue-600/[0.04] backdrop-blur-xl border border-sky-500/20 rounded-2xl shadow-[0_4px_24px_rgba(14,165,233,0.1)]"
@@ -464,7 +469,8 @@ function BrokerDashboardContent() {
                       <TableCell>
                         <Badge className={
                           sale.status === "completed" || sale.status === "paid"
-                            ? "bg-emerald-500/20 text-emerald-700 border-emerald-500/30 text-[10px] sm:text-xs" :"bg-amber-500/20 text-amber-700 border-amber-500/30 text-[10px] sm:text-xs"
+                            ? "bg-emerald-500/20 text-emerald-700 border-emerald-500/30 text-[10px] sm:text-xs"
+                            : "bg-amber-500/20 text-amber-700 border-amber-500/30 text-[10px] sm:text-xs"
                         }>
                           {sale.status === "completed" || sale.status === "paid" ? "Pagado" : "Pendiente"}
                         </Badge>

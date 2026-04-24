@@ -1,6 +1,7 @@
-import { CertificateSelector } from "@/components/certificate-selector";
-import { Badge } from "@/components/ui/badge";
-import { Shield, CheckCircle } from "lucide-react";
+import { CertificateSelector } from "@/components/certificate-selector"
+import { ReferralBanner } from "@/components/referral-banner"
+import { Badge } from "@/components/ui/badge"
+import { Shield, CheckCircle } from "lucide-react"
 
 export const metadata = {
   title: "Certificados Digitales | WEEK-CHAIN",
@@ -12,6 +13,11 @@ export default function CertificatesPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       <div className="container mx-auto px-4 py-12 md:py-20">
+        {/* Referral banner (shows only if the visitor arrived with ?ref=CODE) */}
+        <div className="max-w-4xl mx-auto">
+          <ReferralBanner />
+        </div>
+
         {/* Header */}
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-amber-100 text-amber-700 border-amber-200">

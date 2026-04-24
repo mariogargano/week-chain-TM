@@ -1,14 +1,14 @@
-import { createClient } from "@/lib/supabase/server";
-import { ADMIN_EMAIL } from "@/lib/auth/roles";
+import { createClient } from "@/lib/supabase/server"
+import { ADMIN_EMAIL } from "@/lib/auth/roles"
 
 /**
  * Server-side admin authentication check
  * Returns admin user data if authorized, null otherwise
  *
- * REQUIREMENTS:
- * 1. Email must match corporativo@morises.com exactly
- * 2. User must exist in admin_users table with matching email
- * 3. admin_users.status must be 'active' * 4. admin_users.role must be'super_admin'
+ * REQUIREMENTS (in priority order):
+ * 1. User has role 'admin' or 'super_admin' in users table (primary)
+ * 2. User email matches NEXT_PUBLIC_ADMIN_EMAIL env var (bootstrap/fallback)
+ * 3. admin_users entry with status='active' (legacy)
  */
 export async function checkAdminAuth() {
   try {
@@ -25,66 +25,68 @@ export async function checkAdminAuth() {
       return null
     }
 
-    // CRITICAL CHECK: Email must match exactly
-    if (user.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-      await logAdminAccess(user.email, "denied", "unauthorized_email")
-      return null
-    }
+    const userEmail = user.email?.toLowerCase() || ""
 
-    const { data: adminUser, error: adminError } = await supabase
-      .from("admin_users")
-      .select("*")
-      .eq("email", ADMIN_EMAIL.toLowerCase())
-      .eq("status", "active")
-      .eq("role", "super_admin")
+    // PRIMARY CHECK: Role in users table
+    const { data: userRoleData } = await supabase
+      .from("users")
+      .select("role, full_name")
+      .eq("id", user.id)
       .maybeSingle()
 
-    if (adminError || !adminUser) {
-      if (user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
-        const { data: newAdmin, error: createError } = await supabase
-          .from("admin_users")
-          .upsert(
-            {
-              email: ADMIN_EMAIL.toLowerCase(),
-              name: "Administrador WEEK-CHAIN",
-              role: "super_admin",
-              status: "active",
-              user_id: user.id,
-              updated_at: new Date().toISOString(),
-            },
-            { onConflict: "email" },
-          )
-          .select()
-          .single()
+    const hasAdminRole = userRoleData?.role === "admin" || userRoleData?.role === "super_admin"
 
-        if (createError) {
-          await logAdminAccess(user.email, "denied", "admin_creation_failed")
-          return null
-        }
+    // FALLBACK CHECK: Env var admin email
+    const isEnvAdmin = ADMIN_EMAIL && userEmail === ADMIN_EMAIL.toLowerCase()
 
-        await logAdminAccess(user.email, "granted", "auto_created_admin")
-        return {
-          user,
-          adminUser: newAdmin,
-          email: user.email,
-          role: "super_admin",
-          isActive: true,
-        }
-      }
-
-      await logAdminAccess(user.email, "denied", "not_in_admin_users")
+    if (!hasAdminRole && !isEnvAdmin) {
+      await logAdminAccess(user.email, "denied", "insufficient_role")
       return null
     }
 
-    // SUCCESS: All checks passed
+    // Fetch or create admin_users entry
+    const { data: adminUser } = await supabase
+      .from("admin_users")
+      .select("*")
+      .eq("email", userEmail)
+      .eq("status", "active")
+      .maybeSingle()
+
+    if (!adminUser && (hasAdminRole || isEnvAdmin)) {
+      const { data: newAdmin } = await supabase
+        .from("admin_users")
+        .upsert(
+          {
+            email: userEmail,
+            name: userRoleData?.full_name || "Administrador WEEK-CHAIN",
+            role: userRoleData?.role === "super_admin" ? "super_admin" : "admin",
+            status: "active",
+            user_id: user.id,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "email" },
+        )
+        .select()
+        .single()
+
+      await logAdminAccess(user.email, "granted", "auto_created_admin")
+      return {
+        user,
+        adminUser: newAdmin,
+        email: user.email,
+        role: newAdmin?.role || "admin",
+        isActive: true,
+      }
+    }
+
     await logAdminAccess(user.email, "granted", "full_access")
 
     return {
       user,
       adminUser,
       email: user.email,
-      role: adminUser.role,
-      isActive: adminUser.status === "active",
+      role: adminUser?.role || userRoleData?.role || "admin",
+      isActive: adminUser?.status === "active",
     }
   } catch (error) {
     console.error("[Admin Guard] Error checking admin auth:", error)
@@ -113,13 +115,12 @@ async function logAdminAccess(email: string | null, result: "granted" | "denied"
     })
   } catch (error) {
     // Silent fail - don't block auth flow for logging errors
-    console.error("[Admin Guard] Failed to log access attempt:", error)
   }
 }
 
 /**
  * Client-side admin check (lightweight)
- * Should be used in conjunction with server-side checks
+ * Checks role in users table via Supabase client
  */
 export async function isAdminUser(): Promise<boolean> {
   try {
@@ -130,12 +131,27 @@ export async function isAdminUser(): Promise<boolean> {
       data: { session },
     } = await supabase.auth.getSession()
 
-    if (!session?.user?.email) {
+    if (!session?.user?.id) {
       return false
     }
 
-    // Quick email check
-    return session.user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()
+    // Check role in users table
+    const { data: userData } = await supabase
+      .from("users")
+      .select("role")
+      .eq("id", session.user.id)
+      .maybeSingle()
+
+    if (userData?.role === "admin" || userData?.role === "super_admin") {
+      return true
+    }
+
+    // Fallback: env admin email
+    if (ADMIN_EMAIL && session.user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+      return true
+    }
+
+    return false
   } catch (error) {
     return false
   }

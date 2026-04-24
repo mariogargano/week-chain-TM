@@ -1,10 +1,11 @@
-"use client";
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+"use client"
+
+import { useState, useEffect } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
   Star,
   ThumbsUp,
@@ -17,8 +18,8 @@ import {
   MessageSquare,
   Eye,
   EyeOff,
-} from "lucide-react";
-import { AdminSidebar } from "@/components/admin-sidebar";
+} from "lucide-react"
+import { AdminSidebar } from "@/components/admin-sidebar"
 
 interface Testimonial {
   id: string

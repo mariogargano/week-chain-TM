@@ -1,7 +1,8 @@
-"use client";
-import { Progress } from "@/components/ui/progress";
-import { Check, X } from "lucide-react";
-import { validatePassword, getPasswordStrengthColor, getPasswordStrengthBgColor } from "@/lib/utils/password-validation";
+"use client"
+
+import { Progress } from "@/components/ui/progress"
+import { Check, X } from "lucide-react"
+import { validatePassword, getPasswordStrengthColor, getPasswordStrengthBgColor } from "@/lib/utils/password-validation"
 
 interface PasswordStrengthIndicatorProps {
   password: string

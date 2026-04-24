@@ -1,6 +1,7 @@
-"use client";
-import Link from "next/link";
-import { useState } from "react";
+"use client"
+
+import Link from "next/link"
+import { useState } from "react"
 import {
   Twitter,
   Instagram,
@@ -18,12 +19,12 @@ import {
   Phone,
   MapPin,
   Star,
-} from "lucide-react";
-import { Logo } from "@/components/logo";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { VirtualOfficeModal } from "@/components/virtual-office-modal";
-import { FooterTrustSignal } from "@/components/footer-trust-signal";
+} from "lucide-react"
+import { Logo } from "@/components/logo"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { VirtualOfficeModal } from "@/components/virtual-office-modal"
+import { FooterTrustSignal } from "@/components/footer-trust-signal"
 
 export function SiteFooter() {
   const [isVirtualOfficeModalOpen, setIsVirtualOfficeModalOpen] = useState(false)
@@ -69,11 +70,11 @@ export function SiteFooter() {
                 { icon: Github, label: "GitHub" },
                 { icon: Linkedin, label: "LinkedIn" },
                 { icon: Instagram, label: "Instagram" },
-              ]?.map((s) => (
+              ].map((s) => (
                 <Link
-                  key={s?.label}
+                  key={s.label}
                   href="#"
-                  aria-label={s?.label}
+                  aria-label={s.label}
                   className="flex h-11 w-11 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors active:scale-95"
                 >
                   <s.icon className="h-5 w-5" />
@@ -242,20 +243,26 @@ export function SiteFooter() {
         </div>
 
         {/* Newsletter Section */}
-        <div className="border-t border-white/10 pt-12 mb-12">
+        <div className="border-t border-white/10 pt-8 sm:pt-12 mb-8 sm:mb-12">
           <div className="max-w-md">
             <h4 className="font-semibold text-lg mb-2">Stay Updated</h4>
             <p className="text-sm text-gray-400 mb-4">Get the latest news and updates about WEEK-CHAIN</p>
-            <div className="flex gap-2">
+            <form className="flex flex-col sm:flex-row gap-2">
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 text-base h-12"
+                aria-label="Email address"
+                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 text-base h-12 min-w-0 flex-1"
               />
-              <Button className="bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 h-12 min-w-[48px]">
+              <Button
+                type="submit"
+                aria-label="Subscribe to newsletter"
+                className="bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 h-12 min-w-[48px] sm:w-auto w-full gap-2"
+              >
                 <Send className="h-4 w-4" />
+                <span className="sm:hidden">Suscribirse</span>
               </Button>
-            </div>
+            </form>
           </div>
         </div>
 
@@ -277,7 +284,7 @@ export function SiteFooter() {
           </div>
 
           <div className="border-t border-white/10 pt-6 text-center space-y-3">
-            <p className="text-sm text-gray-400">© {new Date()?.getFullYear()} WEEK-CHAIN™ — All Rights Reserved</p>
+            <p className="text-sm text-gray-400">© {new Date().getFullYear()} WEEK-CHAIN™ — All Rights Reserved</p>
             <p className="text-sm text-gray-400">Operated by WEEK-CHAIN S.A.P.I. de C.V. (Mexico)</p>
             <p className="text-xs text-gray-500 max-w-3xl mx-auto">
               WEEK-CHAIN™ opera un sistema de certificados digitales vacacionales. Los derechos otorgados son
@@ -300,7 +307,8 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
+
       <VirtualOfficeModal isOpen={isVirtualOfficeModalOpen} onClose={() => setIsVirtualOfficeModalOpen(false)} />
     </footer>
-  );
+  )
 }

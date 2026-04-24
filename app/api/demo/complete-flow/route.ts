@@ -1,7 +1,7 @@
-import { createClient } from "@/lib/supabase/server";
-import { NextResponse } from "next/server";
-import { logger } from "@/lib/config/logger";
-import { getEnvironment } from "@/lib/config/environment";
+import { createClient } from "@/lib/supabase/server"
+import { NextResponse } from "next/server"
+import { logger } from "@/lib/config/logger"
+import { getEnvironment } from "@/lib/config/environment"
 
 export async function POST(request: Request) {
   try {

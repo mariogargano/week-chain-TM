@@ -1,11 +1,12 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { AlertTriangle, ArrowRight } from "lucide-react";
-import { Navbar } from "@/components/navbar";
-import Link from "next/link";
+"use client"
+
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { AlertTriangle, ArrowRight } from "lucide-react"
+import { Navbar } from "@/components/navbar"
+import Link from "next/link"
 
 export default function WeeksManagementPage() {
   const router = useRouter()
@@ -13,7 +14,7 @@ export default function WeeksManagementPage() {
   useEffect(() => {
     // Auto-redirect after 5 seconds
     const timer = setTimeout(() => {
-      router?.push("/dashboard/user/certificate")
+      router.push("/dashboard/user/certificate")
     }, 5000)
 
     return () => clearTimeout(timer)

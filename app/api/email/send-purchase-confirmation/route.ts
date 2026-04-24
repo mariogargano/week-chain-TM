@@ -1,6 +1,6 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { resend, FROM_EMAIL } from "@/lib/email/resend-client";
-import { PurchaseConfirmation } from "@/lib/email/templates/purchase-confirmation";
+import { type NextRequest, NextResponse } from "next/server"
+import { resend, FROM_EMAIL } from "@/lib/email/resend-client"
+import { PurchaseConfirmation } from "@/lib/email/templates/purchase-confirmation"
 
 export async function POST(request: NextRequest) {
   try {

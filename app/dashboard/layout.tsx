@@ -1,11 +1,11 @@
-import React from "react";
+import React from "react"
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="min-h-dvh">
       {children}
     </div>
   )

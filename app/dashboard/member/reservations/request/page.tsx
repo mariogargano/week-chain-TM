@@ -1,16 +1,17 @@
-"use client";
-import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+"use client"
 
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Badge } from "@/components/ui/badge"
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
   CalendarIcon,
   MapPin,
@@ -21,11 +22,11 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
-} from "lucide-react";
-import { format, addDays } from "date-fns";
-import { es } from "date-fns/locale";
-import Link from "next/link";
-import { Navbar } from "@/components/navbar";
+} from "lucide-react"
+import { format, addDays } from "date-fns"
+import { es } from "date-fns/locale"
+import Link from "next/link"
+import { Navbar } from "@/components/navbar"
 
 interface Certificate {
   id: string
@@ -296,7 +297,8 @@ export default function ReservationRequestPage() {
                           }}
                           className={`p-4 rounded-xl text-left transition-all ${
                             selectedCertificate === cert.id
-                              ? "glass-blue border-2 border-sky-500" :"glass hover:border-sky-300"
+                              ? "glass-blue border-2 border-sky-500"
+                              : "glass hover:border-sky-300"
                           }`}
                         >
                           <div className="flex items-center justify-between">
@@ -308,7 +310,8 @@ export default function ReservationRequestPage() {
                             </div>
                             <Badge className={`${
                               selectedCertificate === cert.id 
-                                ? "bg-sky-500 text-white" :"bg-slate-100 text-slate-600"
+                                ? "bg-sky-500 text-white" 
+                                : "bg-slate-100 text-slate-600"
                             }`}>
                               {cert.status}
                             </Badge>

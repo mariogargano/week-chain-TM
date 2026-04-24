@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { getLatestCapacityStatus, runCapacityEngineCalculation } from "@/lib/capacity-engine";
+import { NextResponse } from "next/server"
+import { getLatestCapacityStatus, runCapacityEngineCalculation } from "@/lib/capacity-engine"
 
 export async function GET() {
   try {
@@ -20,7 +20,7 @@ export async function GET() {
 
     if (!status) {
       // Return default status if calculation fails
-      return NextResponse?.json({
+      return NextResponse.json({
         systemStatus: "GREEN",
         capacityUtilizationPct: 0,
         silverSalesEnabled: true,
@@ -29,12 +29,12 @@ export async function GET() {
         signatureSalesEnabled: true,
         waitlistEnabled: false,
         waitlistCount: 0,
-      });
+      })
     }
 
-    return NextResponse?.json(status);
+    return NextResponse.json(status)
   } catch (error) {
     console.error("[API] Capacity status error:", error)
-    return NextResponse?.json({ error: "Failed to get capacity status" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to get capacity status" }, { status: 500 })
   }
 }

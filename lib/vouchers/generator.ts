@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
+import { createClient } from "@/lib/supabase/server"
+import { cookies } from "next/headers"
 
 export interface VoucherData {
   userId: string

@@ -1,5 +1,5 @@
-import { inngest } from "@/lib/inngest/client";
-import { createClient } from "@supabase/supabase-js";
+import { inngest } from "@/lib/inngest/client"
+import { createClient } from "@supabase/supabase-js"
 
 // Send weekly platform reports to admins
 export const sendWeeklyReport = inngest.createFunction(

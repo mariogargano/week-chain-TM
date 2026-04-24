@@ -1,11 +1,11 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Ban, ChevronLeft, Shield, AlertTriangle, Clock, CheckCircle, XCircle, Info } from "lucide-react";
-import Link from "next/link";
-
-
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Ban, ChevronLeft, Shield, AlertTriangle, Clock, CheckCircle, XCircle, Info } from "lucide-react"
+import Link from "next/link"
+import { Navbar } from "@/components/navbar"
+import { SiteFooter } from "@/components/site-footer"
 
 export default function CancellationsPage() {
   return (

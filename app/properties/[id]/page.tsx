@@ -1,10 +1,10 @@
-import { createClient } from "@/lib/supabase/server";
-import { notFound } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Star, MapPin, Users, Bed, Bath, CheckCircle2, Building2 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { createClient } from "@/lib/supabase/server"
+import { notFound } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { Star, MapPin, Users, Bed, Bath, CheckCircle2, Building2 } from "lucide-react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 
 const mockProperties = [
   {

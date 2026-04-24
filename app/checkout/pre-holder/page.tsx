@@ -1,10 +1,11 @@
-'use client';
-import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertCircle, ShoppingCart, Zap } from 'lucide-react';
-import Link from 'next/link';
+'use client'
+
+import { useState, useEffect } from 'react'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { AlertCircle, ShoppingCart, Zap } from 'lucide-react'
+import Link from 'next/link'
 
 // Example certificates (fetch from DB in production)
 const CERTIFICATES = [
@@ -75,7 +76,8 @@ export default function PreHolderCheckout({ certificateId = 2 }: PreHolderChecko
               key={cert.id}
               className={`cursor-pointer transition-all ${
                 selectedCert === cert.id
-                  ? 'border-2 border-sky-600 bg-sky-50' :'border-2 border-slate-200 hover:border-sky-300'
+                  ? 'border-2 border-sky-600 bg-sky-50'
+                  : 'border-2 border-slate-200 hover:border-sky-300'
               }`}
               onClick={() => setSelectedCert(cert.id)}
             >

@@ -3,8 +3,8 @@
  * Should run daily via Vercel Cron or similar
  */
 
-import { type NextRequest, NextResponse } from "next/server";
-import { approveDueCommissions } from "@/lib/intermediary/flows";
+import { type NextRequest, NextResponse } from "next/server"
+import { approveDueCommissions } from "@/lib/intermediary/flows"
 
 export async function GET(req: NextRequest) {
   // Verify cron secret to prevent unauthorized access

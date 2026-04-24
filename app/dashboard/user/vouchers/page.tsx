@@ -1,11 +1,12 @@
-"use client";
-import { useEffect, useState } from "react";
-import { PurchaseVoucherCard } from "@/components/purchase-voucher-card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { Loader2, Ticket, ShoppingBag } from "lucide-react";
-import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
+"use client"
+
+import { useEffect, useState } from "react"
+import { PurchaseVoucherCard } from "@/components/purchase-voucher-card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
+import { Loader2, Ticket, ShoppingBag } from "lucide-react"
+import Link from "next/link"
+import { createClient } from "@/lib/supabase/client"
 
 export default function VouchersPage() {
   const [vouchers, setVouchers] = useState<any[]>([])

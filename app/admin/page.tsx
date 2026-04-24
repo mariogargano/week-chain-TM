@@ -1,9 +1,9 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
-import { Building2, Users, DollarSign, Activity, Calendar, Shield } from "lucide-react";
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
+import { Building2, Users, DollarSign, Activity, Calendar, Shield } from "lucide-react"
 
 export default async function AdminDashboardPage() {
   const supabase = await createClient()

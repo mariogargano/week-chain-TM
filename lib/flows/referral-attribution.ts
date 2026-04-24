@@ -3,8 +3,8 @@
  * Handles 30-day attribution window for intermediary referrals
  */
 
-import { createClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
+import { createClient } from "@/lib/supabase/server"
+import { cookies } from "next/headers"
 
 const ATTRIBUTION_WINDOW_DAYS = 30
 

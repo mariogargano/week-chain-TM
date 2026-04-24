@@ -1,5 +1,6 @@
-"use client";
-import { useState } from "react";
+"use client"
+
+import { useState } from "react"
 import {
   CalendarIcon,
   ChevronLeft,
@@ -10,11 +11,11 @@ import {
   Search,
   Award,
   CalendarClock,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
+} from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card } from "@/components/ui/card"
 
 const MONTHS = [
   "Enero",
@@ -315,7 +316,9 @@ export function DashboardCalendarDemo() {
                       </p>
                       <Badge
                         className={`mt-2 text-[10px] ${
-                          res.status === "confirmed" ?"bg-green-100 text-green-700 border-green-300" :"bg-amber-100 text-amber-700 border-amber-300"
+                          res.status === "confirmed"
+                            ? "bg-green-100 text-green-700 border-green-300"
+                            : "bg-amber-100 text-amber-700 border-amber-300"
                         }`}
                       >
                         {res.status === "confirmed" ? "Confirmada" : "Pendiente"}

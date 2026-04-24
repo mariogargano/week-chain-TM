@@ -1,9 +1,9 @@
-import { createServerClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { AlertCircle, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { createServerClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { AlertCircle, ArrowLeft } from "lucide-react"
+import Link from "next/link"
 
 export default async function LoanDetailsPage({ params }: { params: { id: string } }) {
   const supabase = await createServerClient()

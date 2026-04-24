@@ -1,10 +1,11 @@
-"use client";
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Calculator, DollarSign, TrendingUp } from "lucide-react";
+"use client"
+
+import { useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { Calculator, DollarSign, TrendingUp } from "lucide-react"
 
 export default function BrokerCalculatorPage() {
   const [weeksSold, setWeeksSold] = useState<number>(0)
@@ -32,6 +33,7 @@ export default function BrokerCalculatorPage() {
         <h1 className="text-3xl font-bold">Calculadora de Comisiones</h1>
         <p className="text-muted-foreground">Calcula cuánto puedes ganar vendiendo semanas</p>
       </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Input Card */}
         <Card>
@@ -50,7 +52,7 @@ export default function BrokerCalculatorPage() {
                 type="number"
                 min="0"
                 value={weeksSold}
-                onChange={(e) => setWeeksSold(Number(e?.target?.value))}
+                onChange={(e) => setWeeksSold(Number(e.target.value))}
                 placeholder="Ej: 10"
               />
             </div>
@@ -63,7 +65,7 @@ export default function BrokerCalculatorPage() {
                 min="0"
                 step="100"
                 value={pricePerWeek}
-                onChange={(e) => setPricePerWeek(Number(e?.target?.value))}
+                onChange={(e) => setPricePerWeek(Number(e.target.value))}
                 placeholder="Ej: 3750"
               />
               <p className="text-xs text-muted-foreground">Precio promedio: $3,750 USD</p>
@@ -94,7 +96,7 @@ export default function BrokerCalculatorPage() {
           <CardContent className="space-y-6">
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground">Total de ventas</p>
-              <p className="text-3xl font-bold">${results?.totalSales?.toLocaleString()}</p>
+              <p className="text-3xl font-bold">${results.totalSales.toLocaleString()}</p>
             </div>
 
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg space-y-2">
@@ -102,7 +104,7 @@ export default function BrokerCalculatorPage() {
                 <DollarSign className="h-4 w-4" />
                 <p className="text-sm font-medium">Comisión Inmediata (6%)</p>
               </div>
-              <p className="text-2xl font-bold text-green-700">${results?.immediateCommission?.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-green-700">${results.immediateCommission.toLocaleString()}</p>
               <p className="text-xs text-green-600">Se paga al completar la venta</p>
             </div>
 
@@ -111,17 +113,18 @@ export default function BrokerCalculatorPage() {
                 <DollarSign className="h-4 w-4" />
                 <p className="text-sm font-medium">Comisión Diferida (10%)</p>
               </div>
-              <p className="text-2xl font-bold text-blue-700">${results?.deferredCommission?.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-blue-700">${results.deferredCommission.toLocaleString()}</p>
               <p className="text-xs text-blue-600">Se distribuye durante 15 años</p>
             </div>
 
             <div className="pt-4 border-t">
               <p className="text-sm text-muted-foreground mb-2">Comisión Total</p>
-              <p className="text-4xl font-bold text-purple-600">${results?.totalCommission?.toLocaleString()}</p>
+              <p className="text-4xl font-bold text-purple-600">${results.totalCommission.toLocaleString()}</p>
             </div>
           </CardContent>
         </Card>
       </div>
+
       {/* Info Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
@@ -152,5 +155,5 @@ export default function BrokerCalculatorPage() {
         </Card>
       </div>
     </div>
-  );
+  )
 }

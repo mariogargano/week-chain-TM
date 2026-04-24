@@ -1,18 +1,49 @@
-"use client";
-import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+"use client"
 
-import { Progress } from "@/components/ui/progress";
-import { Shield, AlertTriangle, CheckCircle, XCircle, Clock, Search, RefreshCw, Eye, Users, Activity, Loader2, AlertOctagon, ShieldAlert, ShieldCheck, UserCheck, BadgeCheck, FileSearch, Scale, Globe, Flag, Download, ThumbsUp, ThumbsDown,  } from "lucide-react";
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Progress } from "@/components/ui/progress"
+import {
+  Shield,
+  AlertTriangle,
+  CheckCircle,
+  XCircle,
+  Clock,
+  Search,
+  RefreshCw,
+  Eye,
+  FileText,
+  User,
+  Users,
+  Activity,
+  Loader2,
+  AlertOctagon,
+  ShieldAlert,
+  ShieldCheck,
+  UserCheck,
+  BadgeCheck,
+  Building2,
+  FileSearch,
+  Scale,
+  Fingerprint,
+  Globe,
+  Flag,
+  Download,
+  Ban,
+  ThumbsUp,
+  ThumbsDown,
+  MessageSquare,
+} from "lucide-react"
 
 interface FraudAlert {
   id: string
@@ -182,7 +213,8 @@ export default function ComplianceCenterPage() {
 
   const getKYCStatusBadge = (status: string) => {
     switch (status) {
-      case "approved": case"verified":
+      case "approved":
+      case "verified":
         return <Badge className="bg-emerald-100 text-emerald-700 border border-emerald-200"><BadgeCheck className="h-3 w-3 mr-1" />Verificado</Badge>
       case "pending":
         return <Badge className="bg-amber-100 text-amber-700 border border-amber-200"><Clock className="h-3 w-3 mr-1" />Pendiente</Badge>

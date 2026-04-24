@@ -1,16 +1,16 @@
-import { createServerClient } from "@/lib/supabase/server";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-
-import { Home, Sparkles, ArrowRight, Heart, Plane, Gift, Users, Calendar, MapPin, Clock } from "lucide-react";
-import Link from "next/link";
+import { createServerClient } from "@/lib/supabase/server"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Navbar } from "@/components/navbar"
+import { Home, Sparkles, ArrowRight, Heart, Plane, Gift, Users, Calendar, MapPin, Clock } from "lucide-react"
+import Link from "next/link"
 
 export default async function WeekInLifePage() {
   const supabase = await createServerClient()
 
   const {
     data: { user },
-  } = await supabase?.auth?.getUser()
+  } = await supabase.auth.getUser()
 
   const lifestyleFeatures = [
     {
@@ -150,16 +150,16 @@ export default async function WeekInLifePage() {
                       </div>
 
                       <div className="grid grid-cols-2 gap-4 mb-6">
-                        {stats?.map((stat, i) => (
+                        {stats.map((stat, i) => (
                           <div key={i} className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
                             <div className="flex items-center gap-2 mb-2">
                               <stat.icon className="h-4 w-4 text-blue-400" />
-                              <span className="text-xs text-slate-400">{stat?.label}</span>
+                              <span className="text-xs text-slate-400">{stat.label}</span>
                             </div>
                             <p className="text-2xl font-bold text-white">
-                              {stat?.value}
-                              {stat?.sublabel && (
-                                <span className="text-blue-400 text-sm ml-1 block">{stat?.sublabel}</span>
+                              {stat.value}
+                              {stat.sublabel && (
+                                <span className="text-blue-400 text-sm ml-1 block">{stat.sublabel}</span>
                               )}
                             </p>
                           </div>
@@ -209,7 +209,7 @@ export default async function WeekInLifePage() {
               </div>
 
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {lifestyleFeatures?.map((feature, i) => (
+                {lifestyleFeatures.map((feature, i) => (
                   <div
                     key={i}
                     className="p-6 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-100 hover:shadow-lg transition-all duration-300 group"
@@ -217,8 +217,8 @@ export default async function WeekInLifePage() {
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center mb-4 group-hover:from-blue-500/30 group-hover:to-cyan-500/30 transition-all">
                       <feature.icon className="h-6 w-6 text-blue-600" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">{feature?.title}</h3>
-                    <p className="text-slate-600">{feature?.description}</p>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">{feature.title}</h3>
+                    <p className="text-slate-600">{feature.description}</p>
                   </div>
                 ))}
               </div>
@@ -254,5 +254,5 @@ export default async function WeekInLifePage() {
         </main>
       </div>
     </div>
-  );
+  )
 }

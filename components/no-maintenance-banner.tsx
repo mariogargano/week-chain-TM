@@ -1,6 +1,7 @@
-"use client";
-import { motion } from "framer-motion";
-import { Sparkles, Home, Shield, CheckCircle2, Zap, Users } from "lucide-react";
+"use client"
+
+import { motion } from "framer-motion"
+import { Sparkles, Home, Shield, CheckCircle2, Zap, Users } from "lucide-react"
 
 export function NoMaintenanceBanner() {
   return (
@@ -8,6 +9,7 @@ export function NoMaintenanceBanner() {
       {/* Background decorations */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+
       <div className="container mx-auto max-w-6xl px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -216,5 +218,5 @@ export function NoMaintenanceBanner() {
         </motion.div>
       </div>
     </section>
-  );
+  )
 }

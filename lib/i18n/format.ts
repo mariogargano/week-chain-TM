@@ -1,4 +1,4 @@
-import type { Locale } from "./config";
+import type { Locale } from "./config"
 
 export const fmtDate = (d: Date, locale: Locale) =>
   new Intl.DateTimeFormat(locale, { year: "numeric", month: "long", day: "numeric" }).format(d)

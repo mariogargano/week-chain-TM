@@ -1,12 +1,13 @@
-"use client";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Shield, CheckCircle2, Clock, XCircle, ArrowLeft } from "lucide-react";
-import { toast } from "sonner";
-import { PersonaKYCWidget } from "@/components/persona-kyc-widget";
+"use client"
+
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { createClient } from "@/lib/supabase/client"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Shield, CheckCircle2, Clock, XCircle, ArrowLeft } from "lucide-react"
+import { toast } from "sonner"
+import { PersonaKYCWidget } from "@/components/persona-kyc-widget"
 
 export default function KYCPage() {
   const router = useRouter()
@@ -23,23 +24,27 @@ export default function KYCPage() {
   async function checkUser() {
     const {
       data: { user },
-    } = await supabase?.auth?.getUser()
+    } = await supabase.auth.getUser()
 
     if (!user) {
-      toast?.error("Inicia sesion para completar la verificacion")
-      router?.push("/auth?redirect=/kyc")
+      toast.error("Inicia sesion para completar la verificacion")
+      router.push("/auth?redirect=/kyc")
       return
     }
 
     setUser(user)
 
     // Query by user_id (primary key), not email
-    const { data: kycData } = await supabase?.from("kyc_users")?.select("*")?.eq("user_id", user?.id)?.single()
+    const { data: kycData } = await supabase
+      .from("kyc_users")
+      .select("*")
+      .eq("user_id", user.id)
+      .single()
 
     if (kycData) {
-      setKycStatus(kycData?.status)
-      if (kycData?.status === "approved") {
-        toast?.success("Tu verificacion ya fue aprobada.")
+      setKycStatus(kycData.status)
+      if (kycData.status === "approved") {
+        toast.success("Tu verificacion ya fue aprobada.")
       }
     }
 
@@ -47,12 +52,12 @@ export default function KYCPage() {
   }
 
   const handleComplete = () => {
-    toast?.success("Verificacion enviada. Revisaremos tu solicitud en breve.")
+    toast.success("Verificacion enviada. Revisaremos tu solicitud en breve.")
     setKycStatus("pending")
   }
 
   const handleError = () => {
-    toast?.error("Ocurrio un error durante la verificacion. Intenta de nuevo.")
+    toast.error("Ocurrio un error durante la verificacion. Intenta de nuevo.")
   }
 
   if (loading) {
@@ -93,7 +98,7 @@ export default function KYCPage() {
                 </div>
               </div>
               <Button
-                onClick={() => router?.push("/dashboard/member")}
+                onClick={() => router.push("/dashboard/member")}
                 className="mt-4 bg-sky-500 hover:bg-sky-600 text-white"
               >
                 Ir a mi Dashboard
@@ -144,8 +149,8 @@ export default function KYCPage() {
             </CardHeader>
             <CardContent>
               <PersonaKYCWidget
-                userId={user?.id}
-                userEmail={user?.email}
+                userId={user.id}
+                userEmail={user.email}
                 onComplete={handleComplete}
                 onError={handleError}
               />
@@ -156,7 +161,7 @@ export default function KYCPage() {
         <div className="mt-8 flex flex-col items-center gap-4">
           <Button
             variant="ghost"
-            onClick={() => router?.back()}
+            onClick={() => router.back()}
             className="text-slate-400 hover:text-white hover:bg-slate-800"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -169,5 +174,5 @@ export default function KYCPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

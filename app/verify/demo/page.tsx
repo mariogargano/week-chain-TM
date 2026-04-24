@@ -1,10 +1,11 @@
-"use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Shield, Search, QrCode, FileText } from "lucide-react";
+"use client"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Shield, Search, QrCode, FileText } from "lucide-react"
 
 export default function VerifyDemoPage() {
   const router = useRouter()
@@ -12,9 +13,9 @@ export default function VerifyDemoPage() {
   const [loading, setLoading] = useState(false)
 
   const handleVerify = () => {
-    if (!certificateId?.trim()) return
+    if (!certificateId.trim()) return
     setLoading(true)
-    router?.push(`/verify/${certificateId?.trim()}`)
+    router.push(`/verify/${certificateId.trim()}`)
   }
 
   return (
@@ -47,12 +48,12 @@ export default function VerifyDemoPage() {
                 type="text"
                 placeholder="Ej: 550e8400-e29b-41d4-a716-446655440000"
                 value={certificateId}
-                onChange={(e) => setCertificateId(e?.target?.value)}
+                onChange={(e) => setCertificateId(e.target.value)}
                 className="bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500"
               />
               <Button
                 onClick={handleVerify}
-                disabled={!certificateId?.trim() || loading}
+                disabled={!certificateId.trim() || loading}
                 className="bg-sky-500 hover:bg-sky-600 text-white min-w-[120px]"
               >
                 {loading ? "Verificando..." : "Verificar"}
@@ -108,5 +109,5 @@ export default function VerifyDemoPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

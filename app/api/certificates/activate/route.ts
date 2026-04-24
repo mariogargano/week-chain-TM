@@ -1,7 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { validateConsent } from "@/lib/consent/validator";
-import { logEvidenceEvent, extractRequestMetadata } from "@/lib/evidence/logger";
+import { type NextRequest, NextResponse } from "next/server"
+import { createClient } from "@/lib/supabase/server"
+import { validateConsent } from "@/lib/consent/validator"
+import { logEvidenceEvent, extractRequestMetadata } from "@/lib/evidence/logger"
 
 /**
  * Certificate Activation Endpoint

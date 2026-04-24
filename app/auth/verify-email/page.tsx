@@ -1,10 +1,11 @@
-"use client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Mail, ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { isDemoMode } from "@/lib/config/environment";
-import { useEffect } from "react";
+"use client"
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Mail, ArrowRight } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { isDemoMode } from "@/lib/config/environment"
+import { useEffect } from "react"
 
 export default function VerifyEmailPage() {
   const router = useRouter()
@@ -12,7 +13,7 @@ export default function VerifyEmailPage() {
   useEffect(() => {
     if (isDemoMode()) {
       setTimeout(() => {
-        router?.push("/dashboard")
+        router.push("/dashboard")
       }, 2000)
     }
   }, [router])
@@ -37,7 +38,7 @@ export default function VerifyEmailPage() {
                 : "Please check your email and click the verification link to activate your account. You can close this page once you've verified your email."}
             </p>
             {isDemoMode() && (
-              <Button onClick={() => router?.push("/dashboard")} className="w-full">
+              <Button onClick={() => router.push("/dashboard")} className="w-full">
                 Go to Dashboard
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -46,5 +47,5 @@ export default function VerifyEmailPage() {
         </Card>
       </div>
     </div>
-  );
+  )
 }

@@ -1,12 +1,13 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { AlertCircle, ArrowLeft, TrendingUp, DollarSign, Calendar, Lock } from "lucide-react";
-import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
+"use client"
+
+import { useEffect, useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { AlertCircle, ArrowLeft, TrendingUp, DollarSign, Calendar, Lock } from "lucide-react"
+import Link from "next/link"
+import { createClient } from "@/lib/supabase/client"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Badge } from "@/components/ui/badge"
 
 interface Loan {
   id: string

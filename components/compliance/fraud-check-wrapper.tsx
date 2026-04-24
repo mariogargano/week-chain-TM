@@ -1,9 +1,10 @@
-"use client";
-import type React from "react";
+"use client"
 
-import { useEffect } from "react";
-import { getDeviceFingerprint } from "@/lib/compliance/get-device-fingerprint";
-import { detectBotBehavior } from "@/lib/compliance/detect-bot-behavior";
+import type React from "react"
+
+import { useEffect } from "react"
+import { getDeviceFingerprint } from "@/lib/compliance/get-device-fingerprint"
+import { detectBotBehavior } from "@/lib/compliance/detect-bot-behavior"
 
 export function FraudCheckWrapper({ children }: { children: React.ReactNode }) {
   useEffect(() => {

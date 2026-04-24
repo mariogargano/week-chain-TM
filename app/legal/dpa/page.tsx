@@ -1,7 +1,7 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
 import {
   Shield,
   Globe,
@@ -13,8 +13,8 @@ import {
   CheckCircle,
   AlertCircle,
   ExternalLink,
-} from "lucide-react";
-import Link from "next/link";
+} from "lucide-react"
+import Link from "next/link"
 
 export const metadata = {
   title: "Acuerdo de Procesamiento de Datos (DPA) | WEEK-CHAIN",
@@ -264,21 +264,21 @@ export default function DPAPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {subprocessors?.map((processor, index) => (
+                {subprocessors.map((processor, index) => (
                   <div key={index} className="p-4 border rounded-lg hover:bg-gray-50 transition-colors">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
                       <div>
-                        <h4 className="font-semibold text-gray-900">{processor?.name}</h4>
-                        <p className="text-sm text-gray-500">{processor?.service}</p>
+                        <h4 className="font-semibold text-gray-900">{processor.name}</h4>
+                        <p className="text-sm text-gray-500">{processor.service}</p>
                       </div>
                       <div className="flex items-center gap-1 text-sm text-gray-500">
                         <Globe className="h-4 w-4" />
-                        {processor?.location}
+                        {processor.location}
                       </div>
                     </div>
-                    <p className="text-sm text-gray-600 mb-2">{processor?.purpose}</p>
+                    <p className="text-sm text-gray-600 mb-2">{processor.purpose}</p>
                     <div className="flex flex-wrap gap-2">
-                      {processor?.certifications?.map((cert, certIndex) => (
+                      {processor.certifications.map((cert, certIndex) => (
                         <Badge key={certIndex} variant="secondary" className="text-xs">
                           {cert}
                         </Badge>
@@ -526,5 +526,5 @@ export default function DPAPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

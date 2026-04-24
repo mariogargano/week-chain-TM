@@ -1,4 +1,4 @@
-import { getEnv } from "@/lib/config/env-schema";
+import { getEnv } from "@/lib/config/env-schema"
 
 const LEGALARIO_IP_ALLOWLIST = [
   "::1", // localhost IPv6

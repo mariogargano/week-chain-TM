@@ -1,13 +1,16 @@
-import { locales, defaultLocale, type Locale } from "./config";
+import { locales, defaultLocale, type Locale } from "./config"
+
+/**
+ * Read-only helpers for locale detection.
+ * For reactive hooks and setLocale, use lib/i18n/use-translations.ts
+ */
 
 export function detectLocale(): Locale {
-  // Check localStorage first
   if (typeof window !== "undefined") {
     const saved = localStorage.getItem("locale") as Locale
     if (saved && locales.includes(saved)) return saved
   }
 
-  // Check browser language
   if (typeof navigator !== "undefined") {
     const nav = navigator.language.split("-")[0] as Locale
     if (locales.includes(nav)) {
@@ -21,15 +24,6 @@ export function detectLocale(): Locale {
   return defaultLocale
 }
 
-export function setLocale(locale: Locale) {
-  if (typeof window !== "undefined") {
-    localStorage.setItem("locale", locale)
-    window.dispatchEvent(new Event("localechange"))
-    // Reload page to apply new locale
-    window.location.reload()
-  }
-}
-
 export function getLocale(): Locale {
   if (typeof window !== "undefined") {
     const saved = localStorage.getItem("locale") as Locale
@@ -38,4 +32,5 @@ export function getLocale(): Locale {
   return defaultLocale
 }
 
-export { Locale };
+// Re-export setLocale from use-translations as the single source of truth
+export { setLocale } from "./use-translations"

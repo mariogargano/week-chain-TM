@@ -1,4 +1,4 @@
-import type React from "react";
+import type React from "react"
 export function useWallet() {
   return {
     connected: false,

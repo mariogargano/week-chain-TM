@@ -1,8 +1,9 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Clock, CheckCircle, XCircle } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+"use client"
+
+import { useEffect, useState } from "react"
+import { Badge } from "@/components/ui/badge"
+import { Clock, CheckCircle, XCircle } from "lucide-react"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface RefundEligibilityBadgeProps {
   id: string

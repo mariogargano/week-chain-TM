@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 const partners = [
   { name: "Solana", initials: "SOL", bg: "bg-gradient-to-br from-purple-600 to-violet-700", text: "text-white" },
   { name: "Stripe", initials: "STR", bg: "bg-gradient-to-br from-indigo-600 to-blue-700", text: "text-white" },
@@ -28,19 +29,20 @@ export function PartnersSection() {
           </h2>
         </div>
       </div>
+
       <div className="relative">
         <div className="absolute left-0 top-0 bottom-0 w-28 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-28 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
         <div className="flex overflow-hidden mb-4">
           <div className="flex gap-6 animate-marquee-forward">
-            {allPartners?.map((p, i) => (
+            {allPartners.map((p, i) => (
               <div
                 key={i}
-                className={`flex-shrink-0 flex flex-col items-center justify-center w-28 h-28 rounded-2xl ${p?.bg} shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer`}
-                title={p?.name}
+                className={`flex-shrink-0 flex flex-col items-center justify-center w-28 h-28 rounded-2xl ${p.bg} shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer`}
+                title={p.name}
               >
-                <div className={`text-2xl font-bold ${p?.text} mb-1`}>{p?.initials}</div>
-                <div className={`text-xs font-semibold ${p?.text} text-center px-2`}>{p?.name}</div>
+                <div className={`text-2xl font-bold ${p.text} mb-1`}>{p.initials}</div>
+                <div className={`text-xs font-semibold ${p.text} text-center px-2`}>{p.name}</div>
               </div>
             ))}
           </div>
@@ -48,19 +50,19 @@ export function PartnersSection() {
 
         <div className="flex overflow-hidden">
           <div className="flex gap-6 animate-marquee-reverse">
-            {[...allPartners]?.reverse()?.map((p, i) => (
+            {[...allPartners].reverse().map((p, i) => (
               <div
                 key={i}
-                className={`flex-shrink-0 flex flex-col items-center justify-center w-28 h-28 rounded-2xl ${p?.bg} shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer`}
-                title={p?.name}
+                className={`flex-shrink-0 flex flex-col items-center justify-center w-28 h-28 rounded-2xl ${p.bg} shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer`}
+                title={p.name}
               >
-                <div className={`text-2xl font-bold ${p?.text} mb-1`}>{p?.initials}</div>
-                <div className={`text-xs font-semibold ${p?.text} text-center px-2`}>{p?.name}</div>
+                <div className={`text-2xl font-bold ${p.text} mb-1`}>{p.initials}</div>
+                <div className={`text-xs font-semibold ${p.text} text-center px-2`}>{p.name}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }

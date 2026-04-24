@@ -1,9 +1,9 @@
-"use client";
-import Image from "next/image";
-import { MapPin, Users, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+"use client"
+import Image from "next/image"
+import { MapPin, Users, ArrowRight } from "lucide-react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
 
 interface Property {
   id: string

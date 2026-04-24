@@ -1,7 +1,7 @@
-"use client";
-import { TrendingUp, DollarSign, Briefcase } from "lucide-react";
-import { ContainerScroll } from "@/components/ui/container-scroll-animation";
-import Image from "next/image";
+"use client"
+import { TrendingUp, DollarSign, Briefcase } from "lucide-react"
+import { ContainerScroll } from "@/components/ui/container-scroll-animation"
+import Image from "next/image"
 
 export function TestimonialsSection() {
   return (

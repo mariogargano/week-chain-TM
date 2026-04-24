@@ -1,9 +1,10 @@
-"use client";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/logo";
-import { Menu, X, LogIn } from "lucide-react";
-import { useState, useEffect } from "react";
+"use client"
+
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Logo } from "@/components/logo"
+import { Menu, X, LogIn } from "lucide-react"
+import { useState, useEffect } from "react"
 
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)

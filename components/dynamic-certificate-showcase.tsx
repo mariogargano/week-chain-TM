@@ -1,10 +1,28 @@
-"use client";
-import { useState, useEffect } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Shield, MapPin, Sun, Snowflake, Leaf, Flower2, QrCode, Verified, ArrowRight, Check, Users, Home, Star,  } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
+"use client"
+
+import { useState, useEffect } from "react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import {
+  Shield,
+  Calendar,
+  MapPin,
+  Sun,
+  Snowflake,
+  Leaf,
+  Flower2,
+  QrCode,
+  Verified,
+  ArrowRight,
+  Check,
+  Users,
+  Minus,
+  Plus,
+  Home,
+  Star,
+} from "lucide-react"
+import { createClient } from "@/lib/supabase/client"
 
 const PAX_CERTIFICATE_CATALOG = [
   { id: "2pax-1week", pax: 2, estancias: 1, weeks: 1, price_usd: 6500, beta_cap: 15, target: "Parejas, luna de miel, profesionales" },

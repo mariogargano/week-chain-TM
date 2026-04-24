@@ -3,8 +3,8 @@
  * Implements all side-effect actions triggered by state transitions
  */
 
-import { createClient } from "@/lib/supabase/server";
-import crypto from "crypto";
+import { createClient } from "@/lib/supabase/server"
+import crypto from "crypto"
 
 type ActionHandler = (
   entityType: string,

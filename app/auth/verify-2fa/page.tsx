@@ -1,11 +1,12 @@
-"use client";
-import { useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Shield } from "lucide-react";
+"use client"
+
+import { useState, Suspense } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Loader2, Shield } from "lucide-react"
 
 export const dynamic = "force-dynamic"
 
@@ -20,7 +21,7 @@ export default function Verify2FAPage() {
 function Verify2FAContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const nextUrl = searchParams?.get("next") || "/dashboard"
+  const nextUrl = searchParams.get("next") || "/dashboard"
 
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
@@ -37,16 +38,16 @@ function Verify2FAContent() {
         body: JSON.stringify({ code }),
       })
 
-      if (!response?.ok) {
+      if (!response.ok) {
         throw new Error("Invalid verification code")
       }
 
       // Establecer cookie de sesión 2FA
       document.cookie = "2fa_verified=true; path=/; max-age=86400" // 24 horas
 
-      router?.push(nextUrl)
+      router.push(nextUrl)
     } catch (err) {
-      setError(err instanceof Error ? err?.message : "Failed to verify code")
+      setError(err instanceof Error ? err.message : "Failed to verify code")
       setCode("")
     } finally {
       setLoading(false)
@@ -83,7 +84,7 @@ function Verify2FAContent() {
             </InputOTP>
           </div>
 
-          <Button onClick={verifyCode} disabled={code?.length !== 6 || loading} className="w-full">
+          <Button onClick={verifyCode} disabled={code.length !== 6 || loading} className="w-full">
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -112,5 +113,5 @@ function Verify2FAContent() {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

@@ -1,13 +1,14 @@
-"use client";
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Scale, FileText, AlertCircle, CheckCircle2, Clock, Building2, Users, Globe, Shield, Gavel } from "lucide-react";
-import Link from "next/link";
-import { RoleGuard } from "@/components/role-guard";
+"use client"
+
+import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Scale, FileText, AlertCircle, CheckCircle2, Clock, Building2, Users, Globe, Shield, Gavel } from "lucide-react"
+import Link from "next/link"
+import { RoleGuard } from "@/components/role-guard"
 
 export default function OfCounselDashboard() {
   return (

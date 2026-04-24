@@ -1,8 +1,9 @@
-"use client";
-import type React from "react";
+"use client"
 
-import { useState, useEffect } from "react";
-import { Lock, Mail, Send, Eye, EyeOff, Shield, Calendar, Users } from "lucide-react";
+import type React from "react"
+
+import { useState, useEffect } from "react"
+import { Lock, Mail, Send, Eye, EyeOff, Shield, Calendar, Users } from "lucide-react"
 
 const STORAGE_KEY = "week-chain-access-granted"
 

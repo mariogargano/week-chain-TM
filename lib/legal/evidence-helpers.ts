@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
-import { logEvidenceEvent } from "./canonicalizeEvent";
+import { createClient } from "@/lib/supabase/server"
+import { logEvidenceEvent } from "./canonicalizeEvent"
 
 /**
  * Helper functions for logging evidence events in WEEK-CHAIN

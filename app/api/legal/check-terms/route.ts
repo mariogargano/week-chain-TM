@@ -1,8 +1,8 @@
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import { getCurrentTermsVersion, needsReAcceptance } from "@/lib/legal/terms-versions";
-import { logger } from "@/lib/config/logger";
+import { createServerClient } from "@supabase/ssr"
+import { cookies } from "next/headers"
+import { NextResponse } from "next/server"
+import { getCurrentTermsVersion, needsReAcceptance } from "@/lib/legal/terms-versions"
+import { logger } from "@/lib/config/logger"
 
 export async function GET() {
   try {

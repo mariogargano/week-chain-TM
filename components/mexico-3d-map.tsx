@@ -1,9 +1,10 @@
-"use client";
-import { useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Building2, Palmtree, ArrowRight } from "lucide-react";
-import { useTranslations } from "@/lib/i18n/use-translations";
+"use client"
+
+import { useState, useCallback } from "react"
+import { useRouter } from "next/navigation"
+import { motion, AnimatePresence } from "framer-motion"
+import { MapPin, Building2, Palmtree, ArrowRight } from "lucide-react"
+import { useTranslations } from "@/lib/i18n/use-translations"
 
 // Colores pastel estilo WEEK-CHAIN
 const stateColors: Record<string, { fill: string; shadow: string }> = {

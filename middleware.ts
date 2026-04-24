@@ -5,7 +5,8 @@ import { updateSession } from "@/lib/supabase/middleware"
 const hits = new Map<string, { n: number; t: number }>()
 
 const SITE_PROTECTION_ENABLED = false
-const ADMIN_EMAIL = "corporativo@morises.com"
+// Use env var, never hardcode admin email
+const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "").toLowerCase()
 
 export async function middleware(request: NextRequest) {
   const ip = request.ip ?? request.headers.get("x-forwarded-for") ?? "unknown"
@@ -51,6 +52,23 @@ export async function middleware(request: NextRequest) {
 
   const response = await updateSession(request)
 
+  // ======= REFERRAL CAPTURE =======
+  // Capture ?ref=CODE from any URL on the public site and persist it as a cookie
+  // so that when the visitor signs up or purchases, we can credit the agent.
+  const refCode = request.nextUrl.searchParams.get("ref")
+  if (refCode && /^[A-Za-z0-9_-]{4,32}$/.test(refCode)) {
+    const existing = request.cookies.get("week_chain_ref")?.value
+    if (existing !== refCode) {
+      response.cookies.set("week_chain_ref", refCode, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: "/",
+        httpOnly: false, // readable by client so we can show banner
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+      })
+    }
+  }
+
   // Protected routes check
   const protectedRoutes = [
     "/dashboard/admin",
@@ -60,6 +78,7 @@ export async function middleware(request: NextRequest) {
     "/dashboard/owner",
     "/dashboard/notaria",
     "/dashboard/intermediary",
+    "/dashboard/agent",
     "/dashboard/workspace",
     "/management",
     "/notaria",
@@ -101,8 +120,8 @@ export async function middleware(request: NextRequest) {
       const pathname = request.nextUrl.pathname
       const userEmail = user.email?.toLowerCase() || ""
 
-      // Admin email always gets full access
-      if (userEmail === ADMIN_EMAIL.toLowerCase()) {
+      // Admin email from env always gets full access (fallback/bootstrap)
+      if (ADMIN_EMAIL && userEmail === ADMIN_EMAIL) {
         // Admin email - full access granted
       } else {
         // Get user's role from users table (primary source)
@@ -129,6 +148,7 @@ export async function middleware(request: NextRequest) {
           "/dashboard/staff": ["staff", "admin", "super_admin"],
           "/dashboard/user": ["user", "admin", "super_admin"],
           "/dashboard/intermediary": ["broker", "broker_elite", "admin", "super_admin"],
+          "/dashboard/agent": ["user", "broker", "broker_elite", "dao_member", "property_owner", "staff", "admin", "super_admin"],
           "/management": ["management", "admin", "super_admin"],
           "/notaria": ["notaria", "admin", "super_admin"],
         }
@@ -174,12 +194,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Security headers
-  // Allow iframe embedding from v0.app for preview, deny all others in production
-  const allowedFrameAncestors = process.env.NODE_ENV === "production" 
-    ? "https://v0.app https://*.v0.app https://vercel.com https://*.vercel.com"
-    : "*"
-  response.headers.set("X-Frame-Options", process.env.NODE_ENV === "production" ? "SAMEORIGIN" : "ALLOWALL")
+  // Security headers (allow v0 and Vercel preview iframes)
   response.headers.set("X-Content-Type-Options", "nosniff")
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin")
   response.headers.set("Permissions-Policy", "geolocation=(), microphone=(), camera=()")

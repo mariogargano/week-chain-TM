@@ -3,8 +3,8 @@
  * Called when: User clicks referral link or signs up with code
  */
 
-import { type NextRequest, NextResponse } from "next/server";
-import { createReferralAttribution } from "@/lib/intermediary/flows";
+import { type NextRequest, NextResponse } from "next/server"
+import { createReferralAttribution } from "@/lib/intermediary/flows"
 
 export async function POST(req: NextRequest) {
   try {

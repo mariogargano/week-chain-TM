@@ -1,17 +1,18 @@
-"use client";
-import type React from "react";
+"use client"
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Shield, Lock, Users, AlertCircle, Mail, Phone } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { createBrowserClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
+import type React from "react"
+
+import { useState, useEffect } from "react"
+import { motion } from "framer-motion"
+import { Shield, Lock, Users, AlertCircle, Mail, Phone } from "lucide-react"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Badge } from "@/components/ui/badge"
+import { createBrowserClient } from "@/lib/supabase/client"
+import { useRouter } from "next/navigation"
 
 export default function VirtualOfficePage() {
   const [user, setUser] = useState<any>(null)

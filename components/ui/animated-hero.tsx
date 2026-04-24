@@ -1,9 +1,10 @@
-"use client";
-import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useTranslations } from "@/lib/i18n/use-translations";
-import { Play } from "lucide-react";
-import Link from "next/link";
+"use client"
+
+import { useEffect, useState, useRef } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { useTranslations } from "@/lib/i18n/use-translations"
+import { Play } from "lucide-react"
+import Link from "next/link"
 
 const DEFAULT_TITLES = ["Vacaciones", "Certificados Verificados", "Destinos Premium", "15 Años", "Experiencias"]
 
@@ -13,13 +14,13 @@ function AnimatedHero() {
 
   const titlesRef = useRef(DEFAULT_TITLES)
 
-  if (t?.hero?.animatedTitles && JSON.stringify(t?.hero?.animatedTitles) !== JSON.stringify(titlesRef?.current)) {
-    titlesRef.current = t?.hero?.animatedTitles
+  if (t?.hero?.animatedTitles && JSON.stringify(t.hero.animatedTitles) !== JSON.stringify(titlesRef.current)) {
+    titlesRef.current = t.hero.animatedTitles
   }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setTitleNumber((prev) => (prev === titlesRef?.current?.length - 1 ? 0 : prev + 1))
+      setTitleNumber((prev) => (prev === titlesRef.current.length - 1 ? 0 : prev + 1))
     }, 3000)
     return () => clearTimeout(timeoutId)
   }, [titleNumber])
@@ -36,6 +37,7 @@ function AnimatedHero() {
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
       </div>
+
       {/* Content */}
       <div className="relative z-10 text-center px-6 sm:px-8 md:px-12 w-full max-w-[90%] sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto pt-16 sm:pt-12">
         {/* Main Title */}
@@ -69,7 +71,7 @@ function AnimatedHero() {
                 backgroundClip: "text",
               }}
             >
-              {titlesRef?.current?.[titleNumber]}
+              {titlesRef.current[titleNumber]}
             </motion.span>
           </AnimatePresence>
         </div>
@@ -100,7 +102,7 @@ function AnimatedHero() {
         </motion.div>
       </div>
     </div>
-  );
+  )
 }
 
 export { AnimatedHero }

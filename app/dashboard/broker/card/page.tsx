@@ -1,11 +1,12 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Navbar } from "@/components/navbar";
-import { RoleGuard } from "@/components/role-guard";
-import { createClient } from "@/lib/supabase/client";
+"use client"
+
+import { useEffect, useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Navbar } from "@/components/navbar"
+import { RoleGuard } from "@/components/role-guard"
+import { createClient } from "@/lib/supabase/client"
 import {
   Download,
   Share2,
@@ -19,9 +20,9 @@ import {
   Award,
   ArrowLeft,
   Smartphone,
-} from "lucide-react";
-import Link from "next/link";
-import { QRCodeSVG } from "qrcode.react";
+} from "lucide-react"
+import Link from "next/link"
+import { QRCodeSVG } from "qrcode.react"
 
 interface BrokerProfile {
   id: string

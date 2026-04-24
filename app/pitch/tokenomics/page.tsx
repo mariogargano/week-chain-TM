@@ -1,9 +1,9 @@
-import { ArrowLeft, Coins, Lock, TrendingUp, Users, Zap, Target, Shield, Flame } from "lucide-react";
-import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
+import { ArrowLeft, Coins, Lock, TrendingUp, Users, Zap, Target, Shield, Flame } from "lucide-react"
+import Link from "next/link"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Progress } from "@/components/ui/progress"
 
 export default function TokenomicsPage() {
   const totalSupply = 1000000000 // 1 billion WEEK tokens
@@ -146,22 +146,22 @@ export default function TokenomicsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {distribution?.map((item) => (
-                <div key={item?.name}>
+              {distribution.map((item) => (
+                <div key={item.name}>
                   <div className="flex justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <div className={`w-4 h-4 rounded ${item?.color}`} />
-                      <span className="font-medium">{item?.name}</span>
+                      <div className={`w-4 h-4 rounded ${item.color}`} />
+                      <span className="font-medium">{item.name}</span>
                     </div>
                     <div className="text-right">
-                      <span className="font-bold">{item?.percentage}%</span>
+                      <span className="font-bold">{item.percentage}%</span>
                       <span className="text-sm text-muted-foreground ml-2">
-                        ({(item?.amount / 1000000)?.toFixed(0)}M tokens)
+                        ({(item.amount / 1000000).toFixed(0)}M tokens)
                       </span>
                     </div>
                   </div>
-                  <Progress value={item?.percentage} className="h-3 mb-1" />
-                  <p className="text-sm text-muted-foreground">{item?.description}</p>
+                  <Progress value={item.percentage} className="h-3 mb-1" />
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -176,16 +176,16 @@ export default function TokenomicsPage() {
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {utilities?.map((utility) => (
-                <div key={utility?.title} className="flex gap-4">
+              {utilities.map((utility) => (
+                <div key={utility.title} className="flex gap-4">
                   <div className="flex-shrink-0">
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
                       <utility.icon className="h-6 w-6 text-white" />
                     </div>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">{utility?.title}</h3>
-                    <p className="text-sm text-muted-foreground">{utility?.description}</p>
+                    <h3 className="font-semibold mb-1">{utility.title}</h3>
+                    <p className="text-sm text-muted-foreground">{utility.description}</p>
                   </div>
                 </div>
               ))}
@@ -204,15 +204,15 @@ export default function TokenomicsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
-              {valueAccrual?.map((item) => (
-                <div key={item?.mechanism} className="border-l-4 border-blue-500 pl-4">
+              {valueAccrual.map((item) => (
+                <div key={item.mechanism} className="border-l-4 border-blue-500 pl-4">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-lg">{item?.mechanism}</h3>
+                    <h3 className="font-semibold text-lg">{item.mechanism}</h3>
                     <Badge variant="secondary" className="text-lg font-bold">
-                      {item?.rate}
+                      {item.rate}
                     </Badge>
                   </div>
-                  <p className="text-muted-foreground">{item?.description}</p>
+                  <p className="text-muted-foreground">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -265,12 +265,12 @@ export default function TokenomicsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {vestingSchedule?.map((item) => (
-                    <tr key={item?.group} className="border-b">
-                      <td className="py-3 px-4 font-medium">{item?.group}</td>
-                      <td className="py-3 px-4">{item?.cliff}</td>
-                      <td className="py-3 px-4">{item?.vesting}</td>
-                      <td className="py-3 px-4 text-sm text-muted-foreground">{item?.unlock}</td>
+                  {vestingSchedule.map((item) => (
+                    <tr key={item.group} className="border-b">
+                      <td className="py-3 px-4 font-medium">{item.group}</td>
+                      <td className="py-3 px-4">{item.cliff}</td>
+                      <td className="py-3 px-4">{item.vesting}</td>
+                      <td className="py-3 px-4 text-sm text-muted-foreground">{item.unlock}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -353,5 +353,5 @@ export default function TokenomicsPage() {
         </Card>
       </div>
     </div>
-  );
+  )
 }

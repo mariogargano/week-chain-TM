@@ -1,10 +1,11 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { createBrowserClient } from "@/lib/supabase/client";
-import { CheckCircle2, XCircle, AlertCircle, RefreshCw } from "lucide-react";
+"use client"
+
+import { useEffect, useState } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { createBrowserClient } from "@/lib/supabase/client"
+import { CheckCircle2, XCircle, AlertCircle, RefreshCw } from "lucide-react"
 
 interface DiagnosticResult {
   check: string

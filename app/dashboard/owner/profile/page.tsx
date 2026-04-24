@@ -1,17 +1,18 @@
-"use client";
-import type React from "react";
+"use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Navbar } from "@/components/navbar";
-import { RoleGuard } from "@/components/role-guard";
-import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, Save, Building2, CreditCard, CheckCircle, Briefcase } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import type React from "react"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Navbar } from "@/components/navbar"
+import { RoleGuard } from "@/components/role-guard"
+import { createClient } from "@/lib/supabase/client"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { ArrowLeft, Save, Building2, CreditCard, CheckCircle, Briefcase } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 
 export default function OwnerProfilePage() {
   return (

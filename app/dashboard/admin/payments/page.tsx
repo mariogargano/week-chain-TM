@@ -1,17 +1,43 @@
-"use client";
-import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { CreditCard, DollarSign, Clock, CheckCircle, XCircle, AlertTriangle, Search, RefreshCw, Plus, Copy, ExternalLink, Loader2, TrendingUp, PiggyBank, Wallet, Receipt, Ban, Eye, Download, Link, Mail, Shield, Building2,  } from "lucide-react";
+"use client"
+
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  CreditCard,
+  DollarSign,
+  Clock,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  Search,
+  RefreshCw,
+  Plus,
+  Copy,
+  ExternalLink,
+  Loader2,
+  TrendingUp,
+  PiggyBank,
+  Wallet,
+  Receipt,
+  Ban,
+  Eye,
+  Download,
+  Link,
+  Mail,
+  Shield,
+  Send,
+  Building2,
+} from "lucide-react"
 
 interface Payment {
   id: string
@@ -230,7 +256,8 @@ export default function PaymentsAdminPage() {
         return <Badge className="bg-emerald-100 text-emerald-700 border border-emerald-200"><CheckCircle className="h-3 w-3 mr-1" />Completado</Badge>
       case "pending":
         return <Badge className="bg-amber-100 text-amber-700 border border-amber-200"><Clock className="h-3 w-3 mr-1" />Pendiente</Badge>
-      case "requires_capture": case"held":
+      case "requires_capture":
+      case "held":
         return <Badge className="bg-sky-100 text-sky-700 border border-sky-200"><PiggyBank className="h-3 w-3 mr-1" />En Hold</Badge>
       case "refunded":
         return <Badge className="bg-violet-100 text-violet-700 border border-violet-200"><RefreshCw className="h-3 w-3 mr-1" />Reembolsado</Badge>

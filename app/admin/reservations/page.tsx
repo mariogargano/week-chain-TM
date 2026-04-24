@@ -1,10 +1,10 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import { Calendar, DollarSign } from "lucide-react";
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
+import { Calendar, DollarSign } from "lucide-react"
 
 export default async function AdminReservationsPage() {
   const supabase = await createClient()
@@ -76,7 +76,9 @@ export default async function AdminReservationsPage() {
                       variant={
                         reservation.status === "completed"
                           ? "default"
-                          : reservation.status === "pending" ?"secondary" :"outline"
+                          : reservation.status === "pending"
+                            ? "secondary"
+                            : "outline"
                       }
                     >
                       {reservation.status}

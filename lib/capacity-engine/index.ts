@@ -12,7 +12,7 @@ import {
   runCapacityEngineCalculation,
   getLatestCapacityStatus,
   isTierAvailable,
-} from "./engine";
+} from "./engine"
 
 export const CapacityEngine = {
   calculateTotalSupplyWeeks,
@@ -24,6 +24,3 @@ export const CapacityEngine = {
   getLatestCapacityStatus,
   isTierAvailable,
 }
-
-export { runCapacityEngineCalculation };
-export { getLatestCapacityStatus };

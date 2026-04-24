@@ -1,9 +1,10 @@
-"use client";
+"use client"
 
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Navbar } from "@/components/navbar"
+import { SiteFooter } from "@/components/site-footer"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import {
   HelpCircle,
   MessageSquare,
@@ -16,8 +17,8 @@ import {
   Book,
   Video,
   ExternalLink,
-} from "lucide-react";
-import Link from "next/link";
+} from "lucide-react"
+import Link from "next/link"
 
 export default function HelpCenterPage() {
   const helpCategories = [
@@ -125,6 +126,7 @@ export default function HelpCenterPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+
       <main className="container mx-auto px-4 py-24">
         {/* Header */}
         <div className="text-center mb-16">
@@ -161,21 +163,21 @@ export default function HelpCenterPage() {
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Categorías de Ayuda</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {helpCategories?.map((category, index) => {
-              const Icon = category?.icon
+            {helpCategories.map((category, index) => {
+              const Icon = category.icon
               return (
-                <Link key={index} href={category?.href}>
+                <Link key={index} href={category.href}>
                   <Card className="h-full border-2 border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group">
                     <CardHeader>
                       <div
-                        className={`w-14 h-14 rounded-xl bg-gradient-to-br ${category?.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
+                        className={`w-14 h-14 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
                       >
                         <Icon className="h-7 w-7 text-white" />
                       </div>
                       <CardTitle className="text-xl group-hover:text-blue-600 transition-colors">
-                        {category?.title}
+                        {category.title}
                       </CardTitle>
-                      <CardDescription className="text-sm leading-relaxed">{category?.description}</CardDescription>
+                      <CardDescription className="text-sm leading-relaxed">{category.description}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="flex items-center text-blue-600 text-sm font-semibold group-hover:gap-2 transition-all">
@@ -185,7 +187,7 @@ export default function HelpCenterPage() {
                     </CardContent>
                   </Card>
                 </Link>
-              );
+              )
             })}
           </div>
         </div>
@@ -194,7 +196,7 @@ export default function HelpCenterPage() {
         <div className="mb-16 max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Guías Rápidas</h2>
           <div className="grid sm:grid-cols-2 gap-4">
-            {quickGuides?.map((guide, index) => (
+            {quickGuides.map((guide, index) => (
               <Card
                 key={index}
                 className="border-2 border-slate-200 hover:border-purple-400 transition-all cursor-pointer"
@@ -205,11 +207,11 @@ export default function HelpCenterPage() {
                       <Book className="h-5 w-5 text-purple-600" />
                     </div>
                     <div className="flex-1">
-                      <CardTitle className="text-base mb-2">{guide?.title}</CardTitle>
-                      <CardDescription className="text-sm">{guide?.description}</CardDescription>
+                      <CardTitle className="text-base mb-2">{guide.title}</CardTitle>
+                      <CardDescription className="text-sm">{guide.description}</CardDescription>
                       <Badge variant="outline" className="mt-2 text-xs">
                         <Clock className="h-3 w-3 mr-1" />
-                        {guide?.duration}
+                        {guide.duration}
                       </Badge>
                     </div>
                   </div>
@@ -223,24 +225,24 @@ export default function HelpCenterPage() {
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Contacta con Soporte</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {contactMethods?.map((method, index) => {
-              const Icon = method?.icon
+            {contactMethods.map((method, index) => {
+              const Icon = method.icon
               return (
-                <a key={index} href={method?.href} target={method?.href?.startsWith("http") ? "_blank" : undefined}>
+                <a key={index} href={method.href} target={method.href.startsWith("http") ? "_blank" : undefined}>
                   <Card className="h-full border-2 border-slate-200 hover:shadow-lg transition-all cursor-pointer group">
                     <CardContent className="p-6">
                       <div
                         className={`w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center mb-4 group-hover:bg-slate-200 transition-colors`}
                       >
-                        <Icon className={`h-6 w-6 ${method?.color}`} />
+                        <Icon className={`h-6 w-6 ${method.color}`} />
                       </div>
-                      <h3 className="font-bold text-slate-900 mb-2">{method?.title}</h3>
-                      <p className={`text-sm font-semibold ${method?.color} mb-1`}>{method?.value}</p>
-                      <p className="text-xs text-slate-500">{method?.description}</p>
+                      <h3 className="font-bold text-slate-900 mb-2">{method.title}</h3>
+                      <p className={`text-sm font-semibold ${method.color} mb-1`}>{method.value}</p>
+                      <p className="text-xs text-slate-500">{method.description}</p>
                     </CardContent>
                   </Card>
                 </a>
-              );
+              )
             })}
           </div>
         </div>
@@ -296,5 +298,5 @@ export default function HelpCenterPage() {
         </div>
       </main>
     </div>
-  );
+  )
 }

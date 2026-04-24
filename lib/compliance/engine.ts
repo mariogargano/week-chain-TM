@@ -4,14 +4,22 @@
  * Based on the 360° REaaS Architecture Document
  */
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server"
 
 // ============================================================================
 // TYPES
 // ============================================================================
 
 export type ComplianceType = 
-  | 'kyc_individual' |'kyc_business' |'aml_check' |'pep_check' |'sanctions_check' |'profeco_contract' |'nom_151_signature' |'lfpdppp_consent' |'arco_request'
+  | 'kyc_individual'
+  | 'kyc_business'
+  | 'aml_check'
+  | 'pep_check'
+  | 'sanctions_check'
+  | 'profeco_contract'
+  | 'nom_151_signature'
+  | 'lfpdppp_consent'
+  | 'arco_request'
 
 export type ComplianceResult = {
   passed: boolean

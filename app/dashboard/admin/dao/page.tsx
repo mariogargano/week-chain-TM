@@ -1,8 +1,9 @@
-"use client";
-import { createClient } from "@/lib/supabase/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+"use client"
+
+import { createClient } from "@/lib/supabase/client"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import {
   Dialog,
   DialogContent,
@@ -11,13 +12,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Vote, TrendingUp, CheckCircle, XCircle, Clock, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Vote, TrendingUp, CheckCircle, XCircle, Clock, Plus } from "lucide-react"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 export default function DAOPage() {
   const [proposals, setProposals] = useState<any[]>([])
@@ -223,13 +224,20 @@ export default function DAOPage() {
                         <h3 className="font-semibold text-lg text-slate-800">{proposal.title}</h3>
                         <Badge
                           variant={
-                            proposal.status === "active" ?"default"
-                              : proposal.status === "passed" ?"default" :"secondary"
+                            proposal.status === "active"
+                              ? "default"
+                              : proposal.status === "passed"
+                                ? "default"
+                                : "secondary"
                           }
                           className={
-                            proposal.status === "active" ?"bg-blue-100 text-blue-700"
-                              : proposal.status === "passed" ?"bg-green-100 text-green-700"
-                                : proposal.status === "rejected" ?"bg-red-100 text-red-700" :"bg-slate-100 text-slate-700"
+                            proposal.status === "active"
+                              ? "bg-blue-100 text-blue-700"
+                              : proposal.status === "passed"
+                                ? "bg-green-100 text-green-700"
+                                : proposal.status === "rejected"
+                                  ? "bg-red-100 text-red-700"
+                                  : "bg-slate-100 text-slate-700"
                           }
                         >
                           {proposal.status === "active" && <Clock className="h-3 w-3 mr-1" />}

@@ -1,9 +1,10 @@
-"use client";
-import type React from "react";
+"use client"
 
-import Script from "next/script";
-import { useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import type React from "react"
+
+import Script from "next/script"
+import { useEffect } from "react"
+import { usePathname, useSearchParams } from "next/navigation"
 
 export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()

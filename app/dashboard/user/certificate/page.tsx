@@ -1,10 +1,11 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Navbar } from "@/components/navbar";
-import { createBrowserClient } from "@/lib/supabase/client";
+"use client"
+
+import { useEffect, useState } from "react"
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Navbar } from "@/components/navbar"
+import { createBrowserClient } from "@/lib/supabase/client"
 import {
   Download,
   Share2,
@@ -21,9 +22,9 @@ import {
   Flower2,
   FileText,
   Loader2,
-} from "lucide-react";
-import Link from "next/link";
-import QRCode from "qrcode";
+} from "lucide-react"
+import Link from "next/link"
+import QRCode from "qrcode"
 
 interface WeekCertificate {
   id: string
@@ -454,7 +455,8 @@ END:VCARD`
                     onClick={() => setSelectedCert(c)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                       selectedCert?.id === c.id
-                        ? "bg-amber-500 text-white" :"bg-slate-700 text-slate-300 hover:bg-slate-600"
+                        ? "bg-amber-500 text-white"
+                        : "bg-slate-700 text-slate-300 hover:bg-slate-600"
                     }`}
                   >
                     Semana {c.week_number}

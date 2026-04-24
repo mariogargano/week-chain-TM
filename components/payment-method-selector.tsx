@@ -1,10 +1,11 @@
-"use client";
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CreditCard, Building2, Store, Coins, AlertCircle } from "lucide-react";
-import { requiresPartialPayments, calculateOxxoPartialPayments } from "@/lib/payments/oxxo-partial";
+"use client"
+
+import { useState } from "react"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { CreditCard, Building2, Store, Coins, AlertCircle } from "lucide-react"
+import { requiresPartialPayments, calculateOxxoPartialPayments } from "@/lib/payments/oxxo-partial"
 
 interface PaymentMethodSelectorProps {
   amount: number

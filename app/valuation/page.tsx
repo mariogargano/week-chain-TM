@@ -1,5 +1,6 @@
-"use client";
-import { useState } from "react";
+"use client"
+
+import { useState } from "react"
 import {
   Building2,
   Users,
@@ -20,10 +21,10 @@ import {
   FileText,
   CheckCircle,
   Printer,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+} from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 
 export default function ValuationPage() {
   const [activeSection, setActiveSection] = useState("overview")
@@ -58,11 +59,12 @@ export default function ValuationPage() {
             </h1>
             <p className="text-xl text-slate-300 mb-2">Documento de Valuación de Negocio</p>
             <p className="text-slate-400">
-              Fecha: {new Date()?.toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" })}
+              Fecha: {new Date().toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" })}
             </p>
           </div>
         </div>
       </div>
+
       {/* Content */}
       <div className="container mx-auto px-4 max-w-6xl py-12 print:py-6">
         {/* Executive Summary */}
@@ -820,13 +822,14 @@ export default function ValuationPage() {
                 </div>
                 <div>
                   <p className="text-slate-400 text-sm">Fecha del Documento</p>
-                  <p className="font-medium">{new Date()?.toLocaleDateString("es-MX")}</p>
+                  <p className="font-medium">{new Date().toLocaleDateString("es-MX")}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
         </section>
       </div>
+
       {/* Print Styles */}
       <style jsx global>{`
         @media print {
@@ -843,5 +846,5 @@ export default function ValuationPage() {
         }
       `}</style>
     </div>
-  );
+  )
 }

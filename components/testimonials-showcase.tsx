@@ -1,9 +1,10 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Star, Quote, MapPin } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+"use client"
+
+import { useEffect, useState } from "react"
+import { Star, Quote, MapPin } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 interface Testimonial {
   id: string

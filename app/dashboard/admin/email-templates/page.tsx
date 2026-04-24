@@ -1,12 +1,13 @@
-"use client";
-import { useState, useEffect } from "react";
-import { AdminSidebar } from "@/components/admin-sidebar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { Plus, Edit, Trash2, Eye } from "lucide-react";
-import Link from "next/link";
+"use client"
+
+import { useState, useEffect } from "react"
+import { AdminSidebar } from "@/components/admin-sidebar"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+import { Plus, Edit, Trash2, Eye } from "lucide-react"
+import Link from "next/link"
 
 interface EmailTemplate {
   id: string
@@ -139,8 +140,11 @@ export default function EmailTemplatesPage() {
                         <TableCell>
                           <Badge
                             variant={
-                              template.status === "active" ?"default"
-                                : template.status === "draft" ?"secondary" :"outline"
+                              template.status === "active"
+                                ? "default"
+                                : template.status === "draft"
+                                  ? "secondary"
+                                  : "outline"
                             }
                           >
                             {template.status}

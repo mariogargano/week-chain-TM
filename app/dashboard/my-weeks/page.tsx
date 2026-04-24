@@ -1,14 +1,14 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
-import { Calendar, Home, ExternalLink, Ticket } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { PurchaseProgressTracker } from "@/components/purchase-progress-tracker";
-import { getEnvironment } from "@/lib/config/environment";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Play } from "lucide-react";
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
+import { Calendar, Home, ExternalLink, Ticket } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { PurchaseProgressTracker } from "@/components/purchase-progress-tracker"
+import { getEnvironment } from "@/lib/config/environment"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Play } from "lucide-react"
 
 export default async function MyWeeksPage() {
   const supabase = await createClient()

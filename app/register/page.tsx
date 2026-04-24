@@ -1,13 +1,14 @@
-"use client";
-import type React from "react";
-import { useState, useEffect, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { createBrowserClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+"use client"
+
+import type React from "react"
+import { useState, useEffect, Suspense } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
+import { createBrowserClient } from "@/lib/supabase/client"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/components/ui/checkbox"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
   Eye,
   EyeOff,
@@ -21,9 +22,9 @@ import {
   Gift,
   Shield,
   Sparkles,
-} from "lucide-react";
-import { toast } from "sonner";
-import Link from "next/link";
+} from "lucide-react"
+import { toast } from "sonner"
+import Link from "next/link"
 
 function RegisterRedirect() {
   const searchParams = useSearchParams()
@@ -75,7 +76,7 @@ function ReferralRegisterContent() {
     confirmPassword: "",
     fullName: "",
     phone: "",
-    accountType: "individual\" as \"individual\" | \"company",
+    accountType: "individual" as "individual" | "company",
     companyName: "",
     companyRfc: "",
     termsAccepted: false,
@@ -347,7 +348,9 @@ function ReferralRegisterContent() {
                   >
                     <div
                       className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all ${
-                        formData.accountType === "individual" ?"border-emerald-500 bg-emerald-500/10" :"border-slate-600 bg-slate-700/30 hover:border-slate-500"
+                        formData.accountType === "individual"
+                          ? "border-emerald-500 bg-emerald-500/10"
+                          : "border-slate-600 bg-slate-700/30 hover:border-slate-500"
                       }`}
                     >
                       <RadioGroupItem value="individual" id="individual" className="sr-only" />
@@ -360,7 +363,9 @@ function ReferralRegisterContent() {
                     </div>
                     <div
                       className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all ${
-                        formData.accountType === "company" ?"border-emerald-500 bg-emerald-500/10" :"border-slate-600 bg-slate-700/30 hover:border-slate-500"
+                        formData.accountType === "company"
+                          ? "border-emerald-500 bg-emerald-500/10"
+                          : "border-slate-600 bg-slate-700/30 hover:border-slate-500"
                       }`}
                     >
                       <RadioGroupItem value="company" id="company" className="sr-only" />

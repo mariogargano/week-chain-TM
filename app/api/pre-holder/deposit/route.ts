@@ -1,6 +1,6 @@
-import { createClient } from '@/lib/supabase/server';
-import { getStripe } from '@/lib/stripe';
-import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server'
+import { getStripe } from '@/lib/stripe'
+import { NextRequest, NextResponse } from 'next/server'
 
 const DEPOSIT_AMOUNT_USD = 100
 const DEPOSIT_AMOUNT_CENTS = DEPOSIT_AMOUNT_USD * 100

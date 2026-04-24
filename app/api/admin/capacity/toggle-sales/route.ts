@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { NextResponse } from "next/server"
+import { createClient } from "@/lib/supabase/server"
 
 // F-05 FIX: Whitelist of valid tier values
 const VALID_TIERS = ["silver", "gold", "platinum", "signature"] as const

@@ -1,12 +1,13 @@
-"use client";
-import { useState } from "react";
-import { Calendar, Home, Clock, AlertCircle } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { RequestReservationDialog } from "@/components/request-reservation-dialog";
-import { ConsentCheckpoint } from "@/components/consent-checkpoint";
+"use client"
+
+import { useState } from "react"
+import { Calendar, Home, Clock, AlertCircle } from "lucide-react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { RequestReservationDialog } from "@/components/request-reservation-dialog"
+import { ConsentCheckpoint } from "@/components/consent-checkpoint"
 
 interface Certificate {
   id: string

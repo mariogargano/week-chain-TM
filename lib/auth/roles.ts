@@ -1,11 +1,23 @@
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client"
 
 // F-04 FIX: Admin email moved to environment variable, not hardcoded
 // Use ADMIN_EMAIL env var or check database roles directly
 export const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || ""
 
 export type UserRole =
-  | "admin" |"super_admin" |"management" |"broker" |"broker_elite" |"notaria" |"of_counsel" |"service_provider" |"vafi_manager" |"dao_member" |"property_owner" |"staff" |"user"
+  | "admin"
+  | "super_admin"
+  | "management"
+  | "broker"
+  | "broker_elite"
+  | "notaria"
+  | "of_counsel"
+  | "service_provider"
+  | "vafi_manager"
+  | "dao_member"
+  | "property_owner"
+  | "staff"
+  | "user"
 
 export interface RoleInfo {
   role: UserRole

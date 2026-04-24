@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { easylexClient } from "@/lib/easylex/client";
+import { NextResponse } from "next/server"
+import { easylexClient } from "@/lib/easylex/client"
 
 export async function POST(request: Request) {
   try {

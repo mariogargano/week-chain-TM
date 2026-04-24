@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { isProductAvailable, getProductById, getProductBySpec } from "@/lib/capacity-engine/pax-products";
+import { NextResponse } from "next/server"
+import { cookies } from "next/headers"
+import { createClient } from "@/lib/supabase/server"
+import { isProductAvailable, getProductById, getProductBySpec } from "@/lib/capacity-engine/pax-products"
 
 export const dynamic = "force-dynamic"
 
@@ -86,6 +87,47 @@ export async function POST(req: Request) {
       .select("email, full_name")
       .eq("id", userData.user.id)
       .single()
+
+    // ----- Best-effort referral attribution from cookie -----
+    // If the visitor arrived with ?ref=CODE earlier, middleware stored the
+    // code as `week_chain_ref`. Make sure there's an attribution row before
+    // we hand off to Stripe so the webhook can credit the agent.
+    try {
+      const cookieStore = await cookies()
+      const refCode = cookieStore.get("week_chain_ref")?.value
+      if (refCode) {
+        const { data: existingAttr } = await supabase
+          .from("referral_attributions")
+          .select("id, intermediary_id")
+          .eq("lead_user_id", userData.user.id)
+          .gt("expires_at", new Date().toISOString())
+          .maybeSingle()
+
+        if (!existingAttr) {
+          const { data: agentProfile } = await supabase
+            .from("intermediary_profiles")
+            .select("id, user_id, status")
+            .eq("referral_code", refCode)
+            .eq("status", "active")
+            .maybeSingle()
+
+          // Do not self-attribute (agents shouldn't credit themselves).
+          if (agentProfile && agentProfile.user_id !== userData.user.id) {
+            const expiresAt = new Date()
+            expiresAt.setDate(expiresAt.getDate() + 30)
+            await supabase.from("referral_attributions").insert({
+              referral_code: refCode,
+              intermediary_id: agentProfile.id,
+              lead_user_id: userData.user.id,
+              lead_email: profile?.email || userData.user.email || null,
+              expires_at: expiresAt.toISOString(),
+            })
+          }
+        }
+      }
+    } catch (e) {
+      console.error("[create-checkout] attribution hook failed:", e)
+    }
 
     const session = await stripe.checkout.sessions.create({
       customer_email: profile?.email || userData.user.email,

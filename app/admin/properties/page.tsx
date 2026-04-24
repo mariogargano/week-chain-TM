@@ -1,10 +1,10 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
+import { Plus, Edit, Trash2 } from "lucide-react"
 
 export default async function AdminPropertiesPage() {
   const supabase = await createClient()
@@ -12,19 +12,19 @@ export default async function AdminPropertiesPage() {
   const {
     data: { user },
     error,
-  } = await supabase?.auth?.getUser()
+  } = await supabase.auth.getUser()
 
   if (error || !user) {
     redirect("/auth")
   }
 
-  const { data: profile } = await supabase?.from("profiles")?.select("role")?.eq("id", user?.id)?.single()
+  const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single()
 
   if (profile?.role !== "admin") {
     redirect("/dashboard")
   }
 
-  const { data: properties } = await supabase?.from("properties")?.select("*")?.order("created_at", { ascending: false })
+  const { data: properties } = await supabase.from("properties").select("*").order("created_at", { ascending: false })
 
   return (
     <div className="min-h-screen bg-background">
@@ -41,6 +41,7 @@ export default async function AdminPropertiesPage() {
           </nav>
         </div>
       </header>
+
       <div className="container mx-auto max-w-7xl px-6 py-8">
         <div className="mb-8 flex items-center justify-between">
           <div>
@@ -56,16 +57,16 @@ export default async function AdminPropertiesPage() {
         </div>
 
         <div className="space-y-4">
-          {properties && properties?.length > 0 ? (
-            properties?.map((property) => (
-              <Card key={property?.id}>
+          {properties && properties.length > 0 ? (
+            properties.map((property) => (
+              <Card key={property.id}>
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div>
-                      <CardTitle>{property?.name}</CardTitle>
-                      <p className="text-sm text-muted-foreground">{property?.location}</p>
+                      <CardTitle>{property.name}</CardTitle>
+                      <p className="text-sm text-muted-foreground">{property.location}</p>
                     </div>
-                    <Badge variant={property?.status === "active" ? "default" : "secondary"}>{property?.status}</Badge>
+                    <Badge variant={property.status === "active" ? "default" : "secondary"}>{property.status}</Badge>
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -73,18 +74,18 @@ export default async function AdminPropertiesPage() {
                     <div className="grid gap-2 text-sm">
                       <div>
                         <span className="text-muted-foreground">Total Value: </span>
-                        <span className="font-semibold">${property?.valor_total_usd?.toLocaleString() || "N/A"}</span>
+                        <span className="font-semibold">${property.valor_total_usd?.toLocaleString() || "N/A"}</span>
                       </div>
                       <div>
                         <span className="text-muted-foreground">Raised: </span>
                         <span className="font-semibold text-green-600">
-                          ${property?.recaudado_actual?.toLocaleString() || "0"}
+                          ${property.recaudado_actual?.toLocaleString() || "0"}
                         </span>
                       </div>
                     </div>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm" asChild>
-                        <Link href={`/admin/properties/${property?.id}/edit`}>
+                        <Link href={`/admin/properties/${property.id}/edit`}>
                           <Edit className="mr-2 h-4 w-4" />
                           Edit
                         </Link>
@@ -116,5 +117,5 @@ export default async function AdminPropertiesPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

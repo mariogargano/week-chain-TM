@@ -1,9 +1,36 @@
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import type { Metadata } from "next";
-import { Users, Building2, Shield, CreditCard, Calendar, FileText, CheckCircle2, ArrowRight, Database, Globe, Wallet, Award, UserCheck, Briefcase, Scale, Home, TrendingUp, MessageSquare, Bell, Settings, BarChart3, Gavel, DollarSign, RefreshCw, Layers,  } from "lucide-react";
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import type { Metadata } from "next"
+import {
+  Users,
+  Building2,
+  Shield,
+  CreditCard,
+  Calendar,
+  FileText,
+  CheckCircle2,
+  ArrowRight,
+  Database,
+  Lock,
+  Globe,
+  Wallet,
+  Award,
+  UserCheck,
+  Briefcase,
+  Scale,
+  Home,
+  TrendingUp,
+  MessageSquare,
+  Bell,
+  Settings,
+  BarChart3,
+  Gavel,
+  DollarSign,
+  RefreshCw,
+  Layers,
+} from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Explicativo de Funcionamiento | WEEK-CHAIN",

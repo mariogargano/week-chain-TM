@@ -1,12 +1,13 @@
-"use client";
-import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Building2, MapPin, DollarSign, Copy, ExternalLink, Check } from "lucide-react";
-import Image from "next/image";
-import { toast } from "sonner";
+"use client"
+
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Building2, MapPin, DollarSign, Copy, ExternalLink, Check } from "lucide-react"
+import Image from "next/image"
+import { toast } from "sonner"
 
 interface Property {
   id: string

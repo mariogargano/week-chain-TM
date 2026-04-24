@@ -1,13 +1,14 @@
-"use client";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { RoleGuard } from "@/components/role-guard";
-import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Building2, Search, Eye, CheckCircle, XCircle, Clock } from "lucide-react";
+"use client"
+
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { RoleGuard } from "@/components/role-guard"
+import { createClient } from "@/lib/supabase/client"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { Building2, Search, Eye, CheckCircle, XCircle, Clock } from "lucide-react"
 
 
 export default function AdminPropertyApprovalsPage() {
@@ -148,7 +149,9 @@ function AdminPropertyApprovalsContent() {
                           {submission.admin_reviewed_at && (
                             <Badge
                               className={
-                                submission.admin_status === "approved" ?"bg-emerald-50 text-emerald-700 border border-emerald-200" :"bg-red-50 text-red-700 border border-red-200"
+                                submission.admin_status === "approved"
+                                  ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                  : "bg-red-50 text-red-700 border border-red-200"
                               }
                             >
                               {submission.admin_status === "approved" ? "Aprobado" : "Rechazado"}

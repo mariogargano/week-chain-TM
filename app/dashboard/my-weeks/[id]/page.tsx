@@ -1,12 +1,12 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect, notFound } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
-import { ArrowLeft, Home, DollarSign, Share2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { OTAListingToggle } from "@/components/ota-listing-toggle";
-import { WeekRentalHistory } from "@/components/week-rental-history";
+import { createClient } from "@/lib/supabase/server"
+import { redirect, notFound } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
+import { ArrowLeft, Home, DollarSign, Share2 } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { OTAListingToggle } from "@/components/ota-listing-toggle"
+import { WeekRentalHistory } from "@/components/week-rental-history"
 
 export default async function WeekDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params

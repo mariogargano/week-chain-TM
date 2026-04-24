@@ -1,5 +1,6 @@
-"use client";
-import { useState } from "react";
+"use client"
+
+import { useState } from "react"
 import {
   Dialog,
   DialogContent,
@@ -7,12 +8,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Shield, FileText, Lock } from "lucide-react";
-import Link from "next/link";
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Shield, FileText, Lock } from "lucide-react"
+import Link from "next/link"
 
 interface TermsAcceptanceDialogProps {
   open: boolean

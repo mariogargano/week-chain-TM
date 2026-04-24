@@ -1,6 +1,6 @@
-import { Suspense } from "react";
-import UnifiedCheckout from "@/components/unified-checkout";
-import { Card } from "@/components/ui/card";
+import { Suspense } from "react"
+import UnifiedCheckout from "@/components/unified-checkout"
+import { Card } from "@/components/ui/card"
 
 export default function CheckoutPage() {
   return (

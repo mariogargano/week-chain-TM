@@ -1,7 +1,8 @@
-"use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, Network, Home, Users, DollarSign } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+"use client"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { TrendingUp, Network, Home, Users, DollarSign } from "lucide-react"
+import { Progress } from "@/components/ui/progress"
 
 interface BrokerStatsCardProps {
   referrals: any[]

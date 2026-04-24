@@ -1,9 +1,9 @@
-
-
-import { createClient } from "@/lib/supabase/server";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Navbar } from "@/components/navbar"
+import { SiteFooter } from "@/components/site-footer"
+import { createClient } from "@/lib/supabase/server"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   Shield,
   Globe,
@@ -17,8 +17,8 @@ import {
   BookOpen,
   ArrowRight,
   Clock,
-} from "lucide-react";
-import Link from "next/link";
+} from "lucide-react"
+import Link from "next/link"
 
 export const metadata = {
   title: "Marco de Cumplimiento Global | WEEK-CHAIN",
@@ -30,7 +30,7 @@ export default async function CompliancePage() {
   const supabase = await createClient()
   const {
     data: { user },
-  } = await supabase?.auth?.getUser()
+  } = await supabase.auth.getUser()
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -71,6 +71,7 @@ export default async function CompliancePage() {
           </div>
         </div>
       </section>
+
       {/* Why Compliance Matters */}
       <section className="bg-white px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-7xl">
@@ -111,25 +112,25 @@ export default async function CompliancePage() {
                 stat: "€20M+",
                 statLabel: "Multas Evitadas",
               },
-            ]?.map((item, i) => (
+            ].map((item, i) => (
               <Card key={i} className={`border-2 hover:shadow-2xl transition-all relative overflow-hidden group`}>
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br from-${item?.color}-50 to-transparent opacity-50 group-hover:opacity-100 transition-opacity`}
+                  className={`absolute inset-0 bg-gradient-to-br from-${item.color}-50 to-transparent opacity-50 group-hover:opacity-100 transition-opacity`}
                 />
                 <CardHeader className="relative z-10">
                   <div
-                    className={`h-14 w-14 rounded-xl bg-gradient-to-br from-${item?.color}-100 to-${item?.color}-200 flex items-center justify-center mb-4 shadow-lg`}
+                    className={`h-14 w-14 rounded-xl bg-gradient-to-br from-${item.color}-100 to-${item.color}-200 flex items-center justify-center mb-4 shadow-lg`}
                   >
-                    <item.icon className={`h-7 w-7 text-${item?.color}-600`} />
+                    <item.icon className={`h-7 w-7 text-${item.color}-600`} />
                   </div>
-                  <CardTitle className="text-xl mb-2">{item?.title}</CardTitle>
+                  <CardTitle className="text-xl mb-2">{item.title}</CardTitle>
                   <div className="flex items-baseline gap-2 mb-3">
-                    <span className={`text-2xl font-bold text-${item?.color}-600`}>{item?.stat}</span>
-                    <span className="text-xs text-slate-500">{item?.statLabel}</span>
+                    <span className={`text-2xl font-bold text-${item.color}-600`}>{item.stat}</span>
+                    <span className="text-xs text-slate-500">{item.statLabel}</span>
                   </div>
                 </CardHeader>
                 <CardContent className="relative z-10">
-                  <p className="text-slate-600">{item?.desc}</p>
+                  <p className="text-slate-600">{item.desc}</p>
                 </CardContent>
               </Card>
             ))}
@@ -145,18 +146,18 @@ export default async function CompliancePage() {
                   { year: "2016", event: "NOM-151 Certificación Digital", region: "México", color: "emerald" },
                   { year: "2018", event: "GDPR Implementado", region: "Europa", color: "blue" },
                   { year: "2024", event: "WEEK-CHAIN Lanzamiento", region: "Global", color: "purple" },
-                ]?.map((item, i) => (
+                ].map((item, i) => (
                   <div key={i} className="flex flex-col items-center">
                     <div
-                      className={`w-12 h-12 rounded-full bg-${item?.color}-500 flex items-center justify-center text-white font-bold shadow-lg mb-3 relative z-10`}
+                      className={`w-12 h-12 rounded-full bg-${item.color}-500 flex items-center justify-center text-white font-bold shadow-lg mb-3 relative z-10`}
                     >
                       <Clock className="h-5 w-5" />
                     </div>
-                    <div className={`text-center bg-white rounded-xl p-3 shadow-md border-2 border-${item?.color}-200`}>
-                      <div className={`text-sm font-bold text-${item?.color}-600 mb-1`}>{item?.year}</div>
-                      <div className="text-xs text-slate-900 font-medium mb-1">{item?.event}</div>
+                    <div className={`text-center bg-white rounded-xl p-3 shadow-md border-2 border-${item.color}-200`}>
+                      <div className={`text-sm font-bold text-${item.color}-600 mb-1`}>{item.year}</div>
+                      <div className="text-xs text-slate-900 font-medium mb-1">{item.event}</div>
                       <Badge variant="secondary" className="text-xs">
-                        {item?.region}
+                        {item.region}
                       </Badge>
                     </div>
                   </div>
@@ -166,6 +167,7 @@ export default async function CompliancePage() {
           </div>
         </div>
       </section>
+
       {/* Regional Compliance */}
       <section className="bg-gradient-to-br from-slate-50 via-white to-blue-50 px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-7xl">
@@ -375,6 +377,7 @@ export default async function CompliancePage() {
           </div>
         </div>
       </section>
+
       {/* Technical Implementation */}
       <section className="bg-white px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-7xl">
@@ -411,7 +414,7 @@ export default async function CompliancePage() {
                 desc: "Middleware requireConsent bloquea acciones sin aceptación de términos",
                 badge: "PROFECO",
               },
-            ]?.map((item, i) => (
+            ].map((item, i) => (
               <Card key={i} className="hover:shadow-lg transition-all">
                 <CardHeader>
                   <div className="flex items-center justify-between mb-4">
@@ -419,13 +422,13 @@ export default async function CompliancePage() {
                       <item.icon className="h-6 w-6 text-blue-600" />
                     </div>
                     <Badge variant="secondary" className="text-xs">
-                      {item?.badge}
+                      {item.badge}
                     </Badge>
                   </div>
-                  <CardTitle className="text-lg">{item?.title}</CardTitle>
+                  <CardTitle className="text-lg">{item.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-slate-600">{item?.desc}</p>
+                  <p className="text-sm text-slate-600">{item.desc}</p>
                 </CardContent>
               </Card>
             ))}
@@ -472,6 +475,7 @@ export default async function CompliancePage() {
           </Card>
         </div>
       </section>
+
       {/* Company Info */}
       <section className="bg-gradient-to-br from-slate-50 via-white to-blue-50 px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-7xl">
@@ -514,6 +518,7 @@ export default async function CompliancePage() {
           </Card>
         </div>
       </section>
+
       {/* CTA Section */}
       <section className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-4xl text-center">
@@ -549,5 +554,5 @@ export default async function CompliancePage() {
         </div>
       </section>
     </div>
-  );
+  )
 }

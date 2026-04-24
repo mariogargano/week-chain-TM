@@ -1,5 +1,5 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { type NextRequest, NextResponse } from "next/server"
+import { cookies } from "next/headers"
 
 // Contraseña de acceso al sitio - requiere SITE_ACCESS_PASSWORD en env
 const SITE_PASSWORD = process.env.SITE_ACCESS_PASSWORD

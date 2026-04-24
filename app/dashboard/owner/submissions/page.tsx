@@ -1,14 +1,15 @@
-"use client";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Navbar } from "@/components/navbar";
-import { RoleGuard } from "@/components/role-guard";
-import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Building2, Search, ArrowLeft, Eye, Edit, CheckCircle, Clock, XCircle, FileText } from "lucide-react";
+"use client"
+
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { Navbar } from "@/components/navbar"
+import { RoleGuard } from "@/components/role-guard"
+import { createClient } from "@/lib/supabase/client"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { Building2, Search, ArrowLeft, Eye, Edit, CheckCircle, Clock, XCircle, FileText } from "lucide-react"
 
 export default function OwnerSubmissionsPage() {
   return (

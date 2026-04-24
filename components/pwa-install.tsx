@@ -1,7 +1,8 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Download, X, Smartphone } from 'lucide-react';
+'use client'
+
+import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Download, X, Smartphone } from 'lucide-react'
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>
@@ -109,7 +110,8 @@ export function PWAInstall() {
             <h3 className="font-bold text-lg mb-1">Instalar WEEK-CHAIN</h3>
             <p className="text-sm text-white/90 mb-3">
               {isIOS
-                ? 'Toca el boton compartir y selecciona "Agregar a Inicio"' :'Instala la app para acceso rapido y notificaciones'}
+                ? 'Toca el boton compartir y selecciona "Agregar a Inicio"'
+                : 'Instala la app para acceso rapido y notificaciones'}
             </p>
             {!isIOS && deferredPrompt && (
               <Button

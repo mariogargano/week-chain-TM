@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
 import {
   RefreshCw,
   Shield,
@@ -16,7 +16,7 @@ import {
   Zap,
   Sparkle,
   Building2,
-} from "lucide-react";
+} from "lucide-react"
 
 export default function WeekManagementInfoPage() {
   return (
@@ -73,6 +73,7 @@ export default function WeekManagementInfoPage() {
           </div>
         </div>
       </section>
+
       {/* ¿Qué es WEEK Management? */}
       <section className="relative bg-white px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-7xl">
@@ -140,24 +141,24 @@ export default function WeekManagementInfoPage() {
                 color: "#C7CEEA",
                 bgGradient: "from-[#C7CEEA]/20 to-[#FF9AA2]/10",
               },
-            ]?.map((feature, i) => (
+            ].map((feature, i) => (
               <Card
                 key={i}
-                className={`border-2 bg-gradient-to-br ${feature?.bgGradient} backdrop-blur-sm hover:shadow-xl transition-all duration-500 hover:scale-105 group`}
-                style={{ borderTopColor: feature?.color, borderTopWidth: "3px" }}
+                className={`border-2 bg-gradient-to-br ${feature.bgGradient} backdrop-blur-sm hover:shadow-xl transition-all duration-500 hover:scale-105 group`}
+                style={{ borderTopColor: feature.color, borderTopWidth: "3px" }}
               >
                 <CardHeader>
                   <div
                     className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500"
-                    style={{ backgroundColor: `${feature?.color}20` }}
+                    style={{ backgroundColor: `${feature.color}20` }}
                   >
-                    <feature.icon className="h-8 w-8" style={{ color: feature?.color }} />
+                    <feature.icon className="h-8 w-8" style={{ color: feature.color }} />
                   </div>
-                  <CardTitle className="text-2xl text-slate-900">{feature?.title}</CardTitle>
+                  <CardTitle className="text-2xl text-slate-900">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-base text-slate-600 leading-relaxed">
-                    {feature?.description}
+                    {feature.description}
                   </CardDescription>
                 </CardContent>
               </Card>
@@ -165,6 +166,7 @@ export default function WeekManagementInfoPage() {
           </div>
         </div>
       </section>
+
       {/* Cómo Funciona */}
       <section className="relative bg-gradient-to-br from-[#C7CEEA]/20 via-white to-[#B5EAD7]/20 px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-7xl">
@@ -207,24 +209,24 @@ export default function WeekManagementInfoPage() {
                 icon: CheckCircle2,
                 color: "#B5EAD7",
               },
-            ]?.map((item, i) => (
+            ].map((item, i) => (
               <div key={i} className="relative group">
                 <div className="absolute -top-6 -left-6 text-[120px] font-black text-slate-100 leading-none select-none transition-all duration-500 group-hover:text-slate-200 group-hover:scale-110">
-                  {item?.step}
+                  {item.step}
                 </div>
 
                 <Card className="relative h-full border-2 bg-white hover:shadow-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2">
                   <CardHeader>
                     <div
                       className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl"
-                      style={{ backgroundColor: `${item?.color}20` }}
+                      style={{ backgroundColor: `${item.color}20` }}
                     >
-                      <item.icon className="h-8 w-8" style={{ color: item?.color }} />
+                      <item.icon className="h-8 w-8" style={{ color: item.color }} />
                     </div>
-                    <CardTitle className="text-xl text-slate-900">{item?.title}</CardTitle>
+                    <CardTitle className="text-xl text-slate-900">{item.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-slate-600 leading-relaxed">{item?.description}</CardDescription>
+                    <CardDescription className="text-slate-600 leading-relaxed">{item.description}</CardDescription>
                   </CardContent>
                 </Card>
 
@@ -238,6 +240,7 @@ export default function WeekManagementInfoPage() {
           </div>
         </div>
       </section>
+
       {/* Sistema de Intercambio */}
       <section className="relative bg-white px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-7xl">
@@ -275,21 +278,21 @@ export default function WeekManagementInfoPage() {
                     desc: "Valor reducido - Resto del año",
                     color: "#B5EAD7",
                   },
-                ]?.map((item, i) => (
+                ].map((item, i) => (
                   <div
                     key={i}
                     className="flex items-center gap-4 rounded-xl glass border-2 p-4 hover:shadow-lg transition-all duration-300"
-                    style={{ borderLeftColor: item?.color, borderLeftWidth: "4px" }}
+                    style={{ borderLeftColor: item.color, borderLeftWidth: "4px" }}
                   >
                     <div
                       className="flex h-14 w-14 items-center justify-center rounded-xl font-bold text-lg flex-shrink-0"
-                      style={{ backgroundColor: `${item?.color}20`, color: item?.color }}
+                      style={{ backgroundColor: `${item.color}20`, color: item.color }}
                     >
-                      {item?.value}
+                      {item.value}
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900">{item?.season}</h4>
-                      <p className="text-sm text-slate-600">{item?.desc}</p>
+                      <h4 className="font-bold text-slate-900">{item.season}</h4>
+                      <p className="text-sm text-slate-600">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -327,11 +330,11 @@ export default function WeekManagementInfoPage() {
                   { icon: Shield, label: "Seguro", desc: "Verificado on-chain" },
                   { icon: Star, label: "Justo", desc: "Valores transparentes" },
                   { icon: Globe, label: "Global", desc: "Todas las propiedades" },
-                ]?.map((item, i) => (
+                ].map((item, i) => (
                   <div key={i} className="text-center p-4 rounded-xl glass border border-slate-200">
                     <item.icon className="h-8 w-8 mx-auto mb-2 text-[#C7CEEA]" />
-                    <p className="font-bold text-sm text-slate-900">{item?.label}</p>
-                    <p className="text-xs text-slate-600">{item?.desc}</p>
+                    <p className="font-bold text-sm text-slate-900">{item.label}</p>
+                    <p className="text-xs text-slate-600">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -339,6 +342,7 @@ export default function WeekManagementInfoPage() {
           </div>
         </div>
       </section>
+
       {/* Beneficios */}
       <section className="relative bg-gradient-to-br from-[#FF9AA2]/20 via-[#FFB7B2]/10 to-[#FFDAC1]/20 px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-7xl">
@@ -390,29 +394,30 @@ export default function WeekManagementInfoPage() {
                 icon: TrendingUp,
                 color: "#C7CEEA",
               },
-            ]?.map((benefit, i) => (
+            ].map((benefit, i) => (
               <Card
                 key={i}
                 className="border-2 bg-white hover:shadow-xl transition-all duration-500 hover:scale-105"
-                style={{ borderTopColor: benefit?.color, borderTopWidth: "3px" }}
+                style={{ borderTopColor: benefit.color, borderTopWidth: "3px" }}
               >
                 <CardHeader>
                   <div
                     className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl"
-                    style={{ backgroundColor: `${benefit?.color}20` }}
+                    style={{ backgroundColor: `${benefit.color}20` }}
                   >
-                    <benefit.icon className="h-7 w-7" style={{ color: benefit?.color }} />
+                    <benefit.icon className="h-7 w-7" style={{ color: benefit.color }} />
                   </div>
-                  <CardTitle className="text-xl text-slate-900">{benefit?.title}</CardTitle>
+                  <CardTitle className="text-xl text-slate-900">{benefit.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-slate-600 leading-relaxed">{benefit?.desc}</CardDescription>
+                  <CardDescription className="text-slate-600 leading-relaxed">{benefit.desc}</CardDescription>
                 </CardContent>
               </Card>
             ))}
           </div>
         </div>
       </section>
+
       {/* CTA Final */}
       <section className="bg-white px-6 py-24 md:py-32">
         <div className="container mx-auto max-w-4xl text-center">
@@ -446,5 +451,5 @@ export default function WeekManagementInfoPage() {
         </div>
       </section>
     </div>
-  );
+  )
 }

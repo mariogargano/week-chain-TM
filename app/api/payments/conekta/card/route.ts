@@ -1,7 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { createConektaOrder, type ConektaOrderRequest } from "@/lib/conekta/client";
-import { createClient } from "@supabase/supabase-js";
-import { getEnvironment } from "@/lib/config/environment";
+import { type NextRequest, NextResponse } from "next/server"
+import { createConektaOrder, type ConektaOrderRequest } from "@/lib/conekta/client"
+import { createClient } from "@supabase/supabase-js"
+import { getEnvironment } from "@/lib/config/environment"
 
 function getSupabase() {
   return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)

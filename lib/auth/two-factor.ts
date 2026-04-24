@@ -1,7 +1,8 @@
-"use server";
-import { createServiceRoleClient } from "@/lib/supabase/server";
-import * as OTPAuth from "otpauth";
-import * as crypto from "crypto";
+"use server"
+
+import { createServiceRoleClient } from "@/lib/supabase/server"
+import * as OTPAuth from "otpauth"
+import * as crypto from "crypto"
 
 export interface TwoFactorSetup {
   secret: string

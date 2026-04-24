@@ -1,8 +1,9 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Navbar } from "@/components/navbar"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import {
   MapPin,
   Users,
@@ -21,9 +22,9 @@ import {
   TreePalm,
   Ticket,
   Building2,
-} from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
+} from "lucide-react"
+import Link from "next/link"
+import Image from "next/image"
 
 const ecoParksServices = [
   {

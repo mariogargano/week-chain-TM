@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Shield,
   FileText,
@@ -10,9 +10,9 @@ import {
   CheckCircle,
   XCircle,
   Banknote,
-} from "lucide-react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+} from "lucide-react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 export const metadata = {
   title: "Términos y Condiciones para Intermediarios | WEEK-CHAIN",
@@ -36,6 +36,7 @@ export default function BrokerTermsPage() {
           </div>
         </div>
       </div>
+
       {/* Content */}
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
@@ -237,7 +238,7 @@ export default function BrokerTermsPage() {
                     "Mantener actualizados sus datos de contacto y fiscales",
                     "Respetar los precios oficiales establecidos por WEEK-CHAIN™",
                     "No utilizar prácticas de venta engañosas o de alta presión",
-                  ]?.map((item, i) => (
+                  ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0 mt-0.5" />
                       <span className="text-slate-600">{item}</span>
@@ -267,7 +268,7 @@ export default function BrokerTermsPage() {
                     "Ofrecer capacitación sobre los productos y la plataforma",
                     "Notificar cambios en términos con al menos 30 días de anticipación",
                     "Mantener la confidencialidad de los datos del intermediario",
-                  ]?.map((item, i) => (
+                  ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <CheckCircle className="h-5 w-5 text-lime-600 flex-shrink-0 mt-0.5" />
                       <span className="text-slate-600">{item}</span>
@@ -301,7 +302,7 @@ export default function BrokerTermsPage() {
                     "Utilizar la marca WEEK-CHAIN™ sin autorización expresa",
                     "Realizar prácticas de venta de alta presión o engañosas",
                     "Captar dinero directamente de los clientes",
-                  ]?.map((item, i) => (
+                  ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <XCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
                       <span className="text-slate-600">{item}</span>
@@ -450,5 +451,5 @@ export default function BrokerTermsPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

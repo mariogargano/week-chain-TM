@@ -1,32 +1,33 @@
-"use client";
-import type React from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Heart, Users, Home, GraduationCap, Droplets, Sparkles, ArrowRight, Mail } from "lucide-react";
-import { useState } from "react";
-import Image from "next/image";
+"use client"
+
+import type React from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Heart, Users, Home, GraduationCap, Droplets, Sparkles, ArrowRight, Mail } from "lucide-react"
+import { useState } from "react"
+import Image from "next/image"
 
 export default function WeekCarePage() {
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("")
+  const [message, setMessage] = useState("")
 
   const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     // Newsletter subscription
-    alert("¡Gracias por suscribirte a WEEK-CARE!");
-    setEmail("");
-  };
+    alert("¡Gracias por suscribirte a WEEK-CARE!")
+    setEmail("")
+  }
 
   const handleContact = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     // Contact form submission
-    alert("¡Gracias por tu mensaje! Nos pondremos en contacto pronto.");
-    setEmail("");
-    setMessage("");
-  };
+    alert("¡Gracias por tu mensaje! Nos pondremos en contacto pronto.")
+    setEmail("")
+    setMessage("")
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-50 via-white to-pink-50">
@@ -57,8 +58,8 @@ export default function WeekCarePage() {
                 <Link href="/properties">
                   <Button
                     size="lg"
-                    className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A94] hover:to-[#FFA7A2] text-white px-8 py-6 text-lg rounded-xl shadow-lg">
-                    
+                    className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A94] hover:to-[#FFA7A2] text-white px-8 py-6 text-lg rounded-xl shadow-lg"
+                  >
                     Explorar Propiedades
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
@@ -85,16 +86,16 @@ export default function WeekCarePage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A92] hover:to-[#FFA7A2] text-white shadow-lg text-base">
-                  
+                  className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A92] hover:to-[#FFA7A2] text-white shadow-lg text-base"
+                >
                   <Heart className="w-5 h-5 mr-2" />
                   Hacer una Donación
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-[#FF9AA2] text-[#FF9AA2] hover:bg-pink-50 text-base bg-transparent">
-                  
+                  className="border-2 border-[#FF9AA2] text-[#FF9AA2] hover:bg-pink-50 text-base bg-transparent"
+                >
                   Ser Voluntario
                 </Button>
               </div>
@@ -107,19 +108,19 @@ export default function WeekCarePage() {
           <div className="container mx-auto px-4 sm:px-6">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
               {[
-              { number: "15,000+", label: "Familias Apoyadas", icon: Users },
-              { number: "48", label: "Proyectos Activos", icon: Home },
-              { number: "12", label: "Países", icon: Droplets },
-              { number: "2,500+", label: "Voluntarios", icon: Sparkles }].
-              map((stat, i) =>
-              <div key={i} className="text-center">
+                { number: "15,000+", label: "Familias Apoyadas", icon: Users },
+                { number: "48", label: "Proyectos Activos", icon: Home },
+                { number: "12", label: "Países", icon: Droplets },
+                { number: "2,500+", label: "Voluntarios", icon: Sparkles },
+              ].map((stat, i) => (
+                <div key={i} className="text-center">
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#FF9AA2] to-[#FFB7B2] rounded-full mb-4">
                     <stat.icon className="w-8 h-8 text-white" />
                   </div>
                   <div className="text-3xl sm:text-4xl font-bold text-slate-900 mb-2">{stat.number}</div>
                   <div className="text-sm text-slate-600">{stat.label}</div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </section>
@@ -151,33 +152,33 @@ export default function WeekCarePage() {
 
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {[
-              {
-                icon: Home,
-                title: "Vivienda Digna",
-                description:
-                "Proporcionamos acceso a alojamiento seguro y confortable para familias en situación vulnerable durante crisis o transiciones."
-              },
-              {
-                icon: GraduationCap,
-                title: "Educación",
-                description:
-                "Becas y programas educativos para niños y jóvenes, dándoles las herramientas para un futuro mejor."
-              },
-              {
-                icon: Droplets,
-                title: "Agua y Salud",
-                description:
-                "Proyectos de agua potable, saneamiento y atención médica básica en comunidades remotas."
-              }].
-              map((item, i) =>
-              <Card key={i} className="p-8 hover:shadow-xl transition-shadow border-2 border-slate-100">
+                {
+                  icon: Home,
+                  title: "Vivienda Digna",
+                  description:
+                    "Proporcionamos acceso a alojamiento seguro y confortable para familias en situación vulnerable durante crisis o transiciones.",
+                },
+                {
+                  icon: GraduationCap,
+                  title: "Educación",
+                  description:
+                    "Becas y programas educativos para niños y jóvenes, dándoles las herramientas para un futuro mejor.",
+                },
+                {
+                  icon: Droplets,
+                  title: "Agua y Salud",
+                  description:
+                    "Proyectos de agua potable, saneamiento y atención médica básica en comunidades remotas.",
+                },
+              ].map((item, i) => (
+                <Card key={i} className="p-8 hover:shadow-xl transition-shadow border-2 border-slate-100">
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#FF9AA2] to-[#FFB7B2] rounded-2xl mb-6">
                     <item.icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-slate-900 mb-4">{item.title}</h3>
                   <p className="text-slate-600 leading-relaxed">{item.description}</p>
                 </Card>
-              )}
+              ))}
             </div>
           </div>
         </section>
@@ -189,11 +190,11 @@ export default function WeekCarePage() {
               <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
                   <Image
-                    src="https://img.rocket.new/generatedImages/rocket_gen_img_1d92ce7a0-1772252345649.png"
+                    src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80"
                     alt="Proyecto WEEK-CARE"
                     fill
-                    className="object-cover" />
-                  
+                    className="object-cover"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 </div>
 
@@ -209,11 +210,11 @@ export default function WeekCarePage() {
                   </p>
                   <div className="space-y-4 mb-8">
                     {[
-                    "25 casas ya completadas",
-                    "120 niños beneficiados con educación",
-                    "Acceso a agua potable para toda la comunidad"].
-                    map((item, i) =>
-                    <div key={i} className="flex items-center gap-3">
+                      "25 casas ya completadas",
+                      "120 niños beneficiados con educación",
+                      "Acceso a agua potable para toda la comunidad",
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-3">
                         <div className="w-6 h-6 bg-gradient-to-br from-[#FF9AA2] to-[#FFB7B2] rounded-full flex items-center justify-center flex-shrink-0">
                           <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -221,12 +222,12 @@ export default function WeekCarePage() {
                         </div>
                         <span className="text-slate-700">{item}</span>
                       </div>
-                    )}
+                    ))}
                   </div>
                   <Button
                     size="lg"
-                    className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A92] hover:to-[#FFA7A2] text-white">
-                    
+                    className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A92] hover:to-[#FFA7A2] text-white"
+                  >
                     Apoyar este Proyecto
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
@@ -267,8 +268,8 @@ export default function WeekCarePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-[#FF9AA2] text-[#FF9AA2] hover:bg-pink-50 w-full bg-transparent">
-                  
+                  className="border-2 border-[#FF9AA2] text-[#FF9AA2] hover:bg-pink-50 w-full bg-transparent"
+                >
                   Ser Voluntario
                 </Button>
               </Card>
@@ -292,13 +293,13 @@ export default function WeekCarePage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="flex-1 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-400" />
-                
+                  className="flex-1 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-400"
+                />
                 <Button
                   type="submit"
                   size="lg"
-                  className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A92] hover:to-[#FFA7A2] text-white">
-                  
+                  className="bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A92] hover:to-[#FFA7A2] text-white"
+                >
                   Suscribirse
                 </Button>
               </form>
@@ -325,8 +326,8 @@ export default function WeekCarePage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="h-12" />
-                    
+                      className="h-12"
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">Mensaje</label>
@@ -336,14 +337,14 @@ export default function WeekCarePage() {
                       onChange={(e) => setMessage(e.target.value)}
                       required
                       rows={6}
-                      className="resize-none" />
-                    
+                      className="resize-none"
+                    />
                   </div>
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A92] hover:to-[#FFA7A2] text-white">
-                    
+                    className="w-full bg-gradient-to-r from-[#FF9AA2] to-[#FFB7B2] hover:from-[#FF8A92] hover:to-[#FFA7A2] text-white"
+                  >
                     Enviar Mensaje
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
@@ -353,6 +354,6 @@ export default function WeekCarePage() {
           </div>
         </section>
       </section>
-    </div>);
-
+    </div>
+  )
 }

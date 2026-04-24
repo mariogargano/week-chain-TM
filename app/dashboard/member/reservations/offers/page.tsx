@@ -1,12 +1,13 @@
-"use client";
-import React from "react";
+"use client"
 
-import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import React from "react"
+
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import {
   Dialog,
   DialogContent,
@@ -14,7 +15,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   MapPin,
   Calendar,
@@ -31,12 +32,12 @@ import {
   AlertCircle,
   X,
   RefreshCw,
-} from "lucide-react";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
-import Link from "next/link";
-import { Navbar } from "@/components/navbar";
-import Image from "next/image";
+} from "lucide-react"
+import { format } from "date-fns"
+import { es } from "date-fns/locale"
+import Link from "next/link"
+import { Navbar } from "@/components/navbar"
+import Image from "next/image"
 
 interface Offer {
   id: string

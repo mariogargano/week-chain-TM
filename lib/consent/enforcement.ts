@@ -1,7 +1,12 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server"
 
 export type ConsentType =
-  | "terms_acceptance" |"certificate_activation" |"reservation_request" |"offer_acceptance" |"privacy_policy" |"marketing_consent"
+  | "terms_acceptance"
+  | "certificate_activation"
+  | "reservation_request"
+  | "offer_acceptance"
+  | "privacy_policy"
+  | "marketing_consent"
 
 export interface ConsentRequirement {
   type: ConsentType

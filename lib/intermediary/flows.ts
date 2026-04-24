@@ -4,7 +4,7 @@
  * Security: All functions use service role, never expose to frontend
  */
 
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js"
 
 // Service role client (bypasses RLS for automated operations)
 const getServiceClient = () => {

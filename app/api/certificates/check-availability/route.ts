@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import { isTierAvailable } from "@/lib/capacity-engine/engine";
-import type { CertificateTier } from "@/lib/capacity-engine/types";
+import { NextResponse } from "next/server"
+import { isTierAvailable } from "@/lib/capacity-engine/engine"
+import type { CertificateTier } from "@/lib/capacity-engine/types"
 
 export async function POST(req: Request) {
   try {

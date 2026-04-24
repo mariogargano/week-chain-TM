@@ -1,7 +1,7 @@
 // WEEK-CHAIN Intermediary System
 // Single-level commission model (NO MLM)
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server"
 
 // Commission rates per tier
 export const COMMISSION_RATES = {

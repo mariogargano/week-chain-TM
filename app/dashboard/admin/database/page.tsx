@@ -1,17 +1,40 @@
-"use client";
-import { useState, useEffect, useRef } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Database, Download, Upload, RefreshCw, Search, FileText, Edit, AlertTriangle, Clock, Server, HardDrive, Layers, FileSpreadsheet, FolderOpen, Save, Eye, Copy, Loader2,  } from "lucide-react";
+"use client"
+
+import { useState, useEffect, useRef } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  Database,
+  Download,
+  Upload,
+  RefreshCw,
+  Search,
+  FileText,
+  Trash2,
+  Edit,
+  Plus,
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+  Server,
+  HardDrive,
+  Layers,
+  FileSpreadsheet,
+  FolderOpen,
+  Save,
+  Eye,
+  Copy,
+  Loader2,
+} from "lucide-react"
 
 interface TableInfo {
   name: string
@@ -690,7 +713,8 @@ export default function MasterDataPage() {
                     <div key={log.id} className="flex items-start gap-3 p-3 rounded-lg border hover:bg-sky-50/50">
                       <div className={`p-2 rounded-lg ${
                         log.action === "csv_import" ? "bg-emerald-50" :
-                        log.action === "record_update"? "bg-amber-50" : "bg-sky-50"
+                        log.action === "record_update" ? "bg-amber-50" :
+                        "bg-sky-50"
                       }`}>
                         {log.action === "csv_import" ? (
                           <Upload className="h-4 w-4 text-emerald-600" />

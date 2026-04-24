@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { ArrowLeftRight, Users, Calendar, Shield, TrendingUp, Sparkles } from "lucide-react";
+import type { Metadata } from "next"
+import { ArrowLeftRight, Users, Calendar, Shield, TrendingUp, Sparkles } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "WEEK-Market - Coordinación Interna | WEEK-CHAIN",

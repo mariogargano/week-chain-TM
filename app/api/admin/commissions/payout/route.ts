@@ -3,9 +3,9 @@
  * Protected by RLS - only finance/super_admin can execute
  */
 
-import { type NextRequest, NextResponse } from "next/server";
-import { executePayoutBatch } from "@/lib/intermediary/flows";
-import { createClient } from "@/lib/supabase/server";
+import { type NextRequest, NextResponse } from "next/server"
+import { executePayoutBatch } from "@/lib/intermediary/flows"
+import { createClient } from "@/lib/supabase/server"
 
 export async function POST(req: NextRequest) {
   try {
