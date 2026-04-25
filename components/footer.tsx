@@ -4,7 +4,6 @@ import Link from "next/link"
 import Image from "next/image"
 import {
   Facebook,
-  Twitter,
   Instagram,
   Linkedin,
   Mail,
@@ -20,6 +19,7 @@ import {
   TrendingUp,
   Star,
 } from "lucide-react"
+import { XLogo } from "./icons/x-logo"
 import { useTranslations } from "@/lib/i18n/use-translations"
 
 export function Footer() {
@@ -52,7 +52,7 @@ export function Footer() {
 
   const socialLinks = [
     { icon: Facebook, href: "https://www.facebook.com/weekchain", label: "Facebook" },
-    { icon: Twitter, href: "https://x.com/WeekChain", label: "X" },
+    { icon: XLogo, href: "https://x.com/WeekChain", label: "X" },
     { icon: Instagram, href: "https://www.instagram.com/weekchain", label: "Instagram" },
     { icon: Linkedin, href: "https://www.linkedin.com/company/weekchain", label: "LinkedIn" },
   ]

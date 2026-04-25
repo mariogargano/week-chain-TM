@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { useState } from "react"
 import {
-  Twitter,
   Instagram,
   Linkedin,
   Send,
@@ -19,6 +18,7 @@ import {
   MapPin,
   Star,
 } from "lucide-react"
+import { XLogo } from "./icons/x-logo"
 import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -65,7 +65,7 @@ export function SiteFooter() {
             </p>
             <div className="flex gap-3">
               {[
-                { icon: Twitter, label: "X (Twitter)", href: "https://x.com/WeekChain" },
+                { icon: XLogo, label: "X (Twitter)", href: "https://x.com/WeekChain" },
                 { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/weekchain" },
                 { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/weekchain" },
               ].map((s) => (
