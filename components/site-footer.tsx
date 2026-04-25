@@ -6,7 +6,6 @@ import {
   Twitter,
   Instagram,
   Linkedin,
-  Github,
   Send,
   Lock,
   HelpCircle,
@@ -66,14 +65,15 @@ export function SiteFooter() {
             </p>
             <div className="flex gap-3">
               {[
-                { icon: Twitter, label: "Twitter" },
-                { icon: Github, label: "GitHub" },
-                { icon: Linkedin, label: "LinkedIn" },
-                { icon: Instagram, label: "Instagram" },
+                { icon: Twitter, label: "X (Twitter)", href: "https://x.com/WeekChain" },
+                { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/weekchain" },
+                { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/weekchain" },
               ].map((s) => (
                 <Link
                   key={s.label}
-                  href="#"
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={s.label}
                   className="flex h-11 w-11 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors active:scale-95"
                 >

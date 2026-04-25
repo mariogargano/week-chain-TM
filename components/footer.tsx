@@ -52,7 +52,7 @@ export function Footer() {
 
   const socialLinks = [
     { icon: Facebook, href: "https://www.facebook.com/weekchain", label: "Facebook" },
-    { icon: Twitter, href: "https://twitter.com/weekchain", label: "Twitter" },
+    { icon: Twitter, href: "https://x.com/WeekChain", label: "X" },
     { icon: Instagram, href: "https://www.instagram.com/weekchain", label: "Instagram" },
     { icon: Linkedin, href: "https://www.linkedin.com/company/weekchain", label: "LinkedIn" },
   ]
