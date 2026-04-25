@@ -7,6 +7,22 @@ function getSupabase() {
   return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 }
 
+/**
+ * PCI-DSS REQUIREMENT: This endpoint only accepts an opaque Conekta.js token
+ * (tok_...). It must NEVER receive raw card numbers (PANs). If a raw card number
+ * is detected we reject the request immediately with 422 to prevent accidental
+ * storage or logging of cardholder data.
+ *
+ * Clients must tokenize the card using Conekta.js on the browser before calling
+ * this endpoint. See: https://developers.conekta.com/docs/tokenization
+ */
+function looksLikeRawPAN(value: unknown): boolean {
+  if (typeof value !== "string") return false
+  // Strip spaces/dashes and check if it is 13-19 digits (covers Visa/MC/Amex/Discover)
+  const digits = value.replace(/[\s-]/g, "")
+  return /^\d{13,19}$/.test(digits)
+}
+
 export async function POST(request: NextRequest) {
   const env = getEnvironment()
 
@@ -15,11 +31,23 @@ export async function POST(request: NextRequest) {
     const { amount, currency, customer, card, metadata } = body
 
     // Validate required fields
-    if (!amount || !customer?.email || !card?.number) {
-      return NextResponse.json({ success: false, error: "Missing required fields" }, { status: 400 })
+    if (!amount || !customer?.email || !card?.token_id) {
+      return NextResponse.json(
+        { success: false, error: "Missing required fields. 'card.token_id' must be a Conekta.js token, not a raw card number." },
+        { status: 400 }
+      )
     }
 
-    // Create Conekta order with card payment
+    // Security gate: reject if the caller accidentally sent a raw PAN instead of a token.
+    // Conekta tokens start with "tok_"; raw PANs are 13–19 digit strings.
+    if (looksLikeRawPAN(card.token_id) || (typeof card.token_id === "string" && !card.token_id.startsWith("tok_"))) {
+      return NextResponse.json(
+        { success: false, error: "Invalid token format. Use Conekta.js to tokenize the card on the client before submitting." },
+        { status: 422 }
+      )
+    }
+
+    // Create Conekta order with tokenized card payment
     const orderData: ConektaOrderRequest = {
       currency: currency || "MXN",
       customer_info: {
@@ -38,7 +66,7 @@ export async function POST(request: NextRequest) {
         {
           payment_method: {
             type: "card",
-            token_id: card.number, // In production, this would be a tokenized card
+            token_id: card.token_id, // Opaque Conekta.js token — never a raw PAN
           },
         },
       ],
