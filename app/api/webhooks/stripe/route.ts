@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createCommissionFromOrder } from "@/lib/flows/commission-creation"
 import { reverseCommission } from "@/lib/flows/anti-fraud-hold"
+import { emitCertificate } from "@/lib/flows/certificate-emission"
 import { createClient } from "@/lib/supabase/server"
 import crypto from "crypto"
 
@@ -105,7 +106,26 @@ export async function POST(req: NextRequest) {
         if (certError) {
           console.error("[stripe-wh] Error upserting user_certificates_v2:", certError)
         } else {
-          // STEP B: Upsert week_token linked to certificate
+          // STEP B1: Emit certificate with new flow (Phase 2)
+          try {
+            const svcType = (maxPax === 4 ? "PAX4" : maxPax === 6 ? "PAX6" : maxPax === 8 ? "PAX8" : "PAX2") as
+              | "PAX2"
+              | "PAX4"
+              | "PAX6"
+              | "PAX8"
+            await emitCertificate({
+              userId,
+              svcType,
+              checkoutSessionId: stripeSessionId,
+              amount,
+              currency: session.currency?.toUpperCase() || "USD",
+            })
+          } catch (emitError) {
+            console.error("[stripe-wh] Certificate emission error (non-fatal):", emitError)
+            // Don't fail the whole webhook - certificate_v2 was already created
+          }
+
+          // STEP B2: Upsert week_token linked to certificate
           const certIdShort = `WC-${new Date().getFullYear()}-${cert.id.slice(0, 5).toUpperCase()}`
           const hashPayload = `${cert.id}:${userId}:${stripeSessionId}:${Date.now()}`
           const blockchainHash = crypto.createHash("sha256").update(hashPayload).digest("hex")
