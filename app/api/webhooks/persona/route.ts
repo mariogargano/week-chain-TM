@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import crypto from "crypto"
 import { createClient } from "@/lib/supabase/server"
 import { logger } from "@/lib/config/logger"
+import { sendKYCApprovedEmail, sendKYCRejectedEmail } from "@/lib/email/send"
 
 /**
  * Persona Webhook Handler
@@ -87,10 +88,17 @@ export async function POST(request: Request) {
 
     // If KYC approved, trigger certificate activation and update user status
     if (kycNewStatus === "approved") {
-      // 1. Find pending certificate and activate it
+      // 1. Fetch user data for email
+      const { data: userData } = await supabase
+        .from("users")
+        .select("email, full_name")
+        .eq("id", referenceId)
+        .maybeSingle()
+
+      // 2. Find pending certificate and activate it
       const { data: pendingCert, error: certError } = await supabase
         .from("certificates")
-        .select("id, user_id, status")
+        .select("id, certificate_number, user_id, status")
         .eq("user_id", referenceId)
         .eq("status", "pending_kyc")
         .maybeSingle()
@@ -108,6 +116,34 @@ export async function POST(request: Request) {
         } else {
           logger.info("[persona-webhook] Certificate activated", { certificateId: pendingCert.id })
         }
+      }
+
+      // 3. Update user onboarding status
+      const { error: userError } = await supabase
+        .from("users")
+        .update({
+          onboarding_status: "holder_verified",
+          holder_since: new Date().toISOString(),
+        })
+        .eq("id", referenceId)
+
+      if (userError) {
+        logger.error("[persona-webhook] Failed to update user status", userError)
+      } else {
+        logger.info("[persona-webhook] User onboarding status updated to holder_verified", {
+          userId: referenceId,
+        })
+      }
+
+      // 4. Send approval email
+      if (userData?.email) {
+        await sendKYCApprovedEmail({
+          email: userData.email,
+          fullName: userData.full_name || "Usuario",
+          certificateNumber: pendingCert?.certificate_number || `WC-${new Date().getFullYear()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
+        }).catch(err => logger.error("[persona-webhook] Email send failed (non-fatal)", err))
+      }
+    }
       }
 
       // 2. Update user onboarding status
@@ -128,13 +164,30 @@ export async function POST(request: Request) {
       }
 
       // TODO: Send email notification of KYC approval
-      // sendEmail({ userId: referenceId, template: "kyc-approved" })
+      await sendKYCApprovedEmail({
+        email: userData.email,
+        fullName: userData.full_name || "Usuario",
+        certificateNumber: pendingCert.certificate_number || certificateNumber,
+      }).catch(err => logger.error("[persona-webhook] Email send failed (non-fatal)", err))
     }
 
     if (kycNewStatus === "failed") {
       logger.info("[persona-webhook] KYC rejected, user can retry", { userId: referenceId })
-      // TODO: Send email notification of KYC rejection
-      // sendEmail({ userId: referenceId, template: "kyc-rejected" })
+      
+      // Fetch user data for email
+      const { data: userData } = await supabase
+        .from("users")
+        .select("email, full_name")
+        .eq("id", referenceId)
+        .maybeSingle()
+
+      if (userData?.email) {
+        await sendKYCRejectedEmail({
+          email: userData.email,
+          fullName: userData.full_name || "Usuario",
+          reason: "Tu documentación no cumple con nuestros estándares. Por favor intenta nuevamente con documentos más claros.",
+        }).catch(err => logger.error("[persona-webhook] Email send failed (non-fatal)", err))
+      }
     }
 
     return NextResponse.json({ ok: true }, { status: 200 })
