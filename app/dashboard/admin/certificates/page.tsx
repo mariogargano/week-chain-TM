@@ -1,47 +1,32 @@
-"use client"
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+import { CertificatesClient } from "./client"
 
-import { useState, useEffect } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import { Slider } from "@/components/ui/slider"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import {
-  Ticket,
-  Settings,
-  DollarSign,
-  Users,
-  Calendar,
-  TrendingUp,
-  AlertTriangle,
-  CheckCircle,
-  XCircle,
-  Play,
-  Ban,
-  RefreshCw,
-  Plus,
-  Edit,
-  Save,
-  Loader2,
-  Layers,
-  Activity,
-  Shield,
-  Clock,
-  Hash,
-  QrCode,
-  Eye,
-  Copy,
-  Download,
-  BarChart3,
-  PieChart,
-  Zap,
-} from "lucide-react"
+export const dynamic = "force-dynamic"
+
+export default async function AdminCertificatesPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) redirect("/auth")
+
+  const { data: userData } = await supabase.from("users").select("role").eq("id", user.id).maybeSingle()
+
+  if (userData?.role !== "admin" && userData?.role !== "super_admin") {
+    redirect("/dashboard/member")
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold">Panel de Certificados SVC</h1>
+        <p className="text-muted-foreground">Gestiona certificados activos, transferencias y suspensiones</p>
+      </div>
+      <CertificatesClient />
+    </div>
+  )
+}
+
 
 interface CertificateProduct {
   id: string
