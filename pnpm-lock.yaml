@@ -116,6 +116,24 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: 1.1.6
         version: 1.1.6(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@react-email/body':
+        specifier: ^0.3.0
+        version: 0.3.0(react@19.1.0)
+      '@react-email/button':
+        specifier: ^0.2.1
+        version: 0.2.1(react@19.1.0)
+      '@react-email/container':
+        specifier: ^0.0.16
+        version: 0.0.16(react@19.1.0)
+      '@react-email/heading':
+        specifier: ^0.0.16
+        version: 0.0.16(react@19.1.0)
+      '@react-email/html':
+        specifier: ^0.0.12
+        version: 0.0.12(react@19.1.0)
+      '@react-email/text':
+        specifier: ^0.1.6
+        version: 0.1.6(react@19.1.0)
       '@solana/pay':
         specifier: 0.2.6
         version: 0.2.6(bufferutil@4.1.0)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.0.2)(utf-8-validate@5.0.10)
@@ -2365,12 +2383,54 @@ packages:
   '@randlabs/myalgo-connect@1.4.2':
     resolution: {integrity: sha512-K9hEyUi7G8tqOp7kWIALJLVbGCByhilcy6123WfcorxWwiE1sbQupPyIU5f3YdQK6wMjBsyTWiLW52ZBMp7sXA==}
 
+  '@react-email/body@0.3.0':
+    resolution: {integrity: sha512-uGo0BOOzjbMUo3lu+BIDWayvn5o6Xyfmnlla5VGf05n8gHMvO1ll7U4FtzWe3hxMLwt53pmc4iE0M+B5slG+Ug==}
+    engines: {node: '>=20.0.0'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    peerDependencies:
+      react: ^18.0 || ^19.0 || ^19.0.0-rc
+
+  '@react-email/button@0.2.1':
+    resolution: {integrity: sha512-qXyj7RZLE7POy9BMKSoqQ00tOXThjOZSUnI2Yu9i29IHngPlmrNayIWBoVKtElES7OWwypUcpiajwi1mUWx6/A==}
+    engines: {node: '>=20.0.0'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    peerDependencies:
+      react: ^18.0 || ^19.0 || ^19.0.0-rc
+
+  '@react-email/container@0.0.16':
+    resolution: {integrity: sha512-QWBB56RkkU0AJ9h+qy33gfT5iuZknPC7Un/IjZv9B0QmMIK+WWacc0cH6y2SV5Cv/b99hU94fjEMOOO4enpkbQ==}
+    engines: {node: '>=20.0.0'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    peerDependencies:
+      react: ^18.0 || ^19.0 || ^19.0.0-rc
+
+  '@react-email/heading@0.0.16':
+    resolution: {integrity: sha512-jmsKnQm1ykpBzw4hCYHwBkt5pW2jScXffPeEH5ZRF5tZeF5b1pvlFTO9han7C0pCkZYo1kEvWiRtx69yfCIwuw==}
+    engines: {node: '>=20.0.0'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    peerDependencies:
+      react: ^18.0 || ^19.0 || ^19.0.0-rc
+
+  '@react-email/html@0.0.12':
+    resolution: {integrity: sha512-KTShZesan+UsreU7PDUV90afrZwU5TLwYlALuCSU0OT+/U8lULNNbAUekg+tGwCnOfIKYtpDPKkAMRdYlqUznw==}
+    engines: {node: '>=20.0.0'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    peerDependencies:
+      react: ^18.0 || ^19.0 || ^19.0.0-rc
+
   '@react-email/render@1.0.1':
     resolution: {integrity: sha512-W3gTrcmLOVYnG80QuUp22ReIT/xfLsVJ+n7ghSlG2BITB8evNABn1AO2rGQoXuK84zKtDAlxCdm3hRyIpZdGSA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
       react-dom: ^18.0 || ^19.0 || ^19.0.0-rc
+
+  '@react-email/text@0.1.6':
+    resolution: {integrity: sha512-TYqkioRS45wTR5il3dYk/SbUjjEdhSwh9BtRNB99qNH1pXAwA45H7rAuxehiu8iJQJH0IyIr+6n62gBz9ezmsw==}
+    engines: {node: '>=20.0.0'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    peerDependencies:
+      react: ^18.0 || ^19.0 || ^19.0.0-rc
 
   '@renovatebot/pep440@4.2.1':
     resolution: {integrity: sha512-2FK1hF93Fuf1laSdfiEmJvSJPVIDHEUTz68D3Fi9s0IZrrpaEcj6pTFBTbYvsgC5du4ogrtf5re7yMMvrKNgkw==}
@@ -5643,6 +5703,7 @@ packages:
 
   uuid@8.0.0:
     resolution: {integrity: sha512-jOXGuXZAWdsTH7eZLtyXMqUb9EcWMGZNbL9YcGBJl4MH4nrxHmZJhEHvyLFrkxo+28uLb/NYRcStH48fnD0Vzw==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuid@8.3.2:
@@ -8382,6 +8443,26 @@ snapshots:
       '@randlabs/communication-bridge': 1.0.1
     optional: true
 
+  '@react-email/body@0.3.0(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
+
+  '@react-email/button@0.2.1(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
+
+  '@react-email/container@0.0.16(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
+
+  '@react-email/heading@0.0.16(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
+
+  '@react-email/html@0.0.12(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
+
   '@react-email/render@1.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       html-to-text: 9.0.5
@@ -8389,6 +8470,10 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       react-promise-suspense: 0.3.4
+
+  '@react-email/text@0.1.6(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
 
   '@renovatebot/pep440@4.2.1':
     optional: true

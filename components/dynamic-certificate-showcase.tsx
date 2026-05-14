@@ -441,14 +441,6 @@ export function DynamicCertificateShowcase() {
                       <Shield className="h-4 w-4 text-sky-500" />
                       <span className="text-xs text-slate-500 font-mono">{certNumber}</span>
                     </div>
-                    <img
-                      src="/week-chain-logo-white.jpg"
-                      alt="WEEK-CHAIN"
-                      className="h-4 opacity-50"
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none"
-                      }}
-                    />
                   </div>
                 </div>
               </div>

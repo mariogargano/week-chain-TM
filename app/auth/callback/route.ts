@@ -88,6 +88,7 @@ export async function GET(request: NextRequest) {
       role: assignedRole,
       account_type: "individual",
       referral_code: generateReferralCode(),
+      onboarding_status: "registered", // New user just signed up
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }, { onConflict: "id" })

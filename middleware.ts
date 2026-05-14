@@ -116,6 +116,21 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(loginUrl)
       }
 
+      // ONBOARDING FLOW: If user is in "registered" status and not already in onboarding,
+      // redirect them to complete KYC and profile setup before accessing dashboard
+      if (request.nextUrl.pathname.startsWith("/dashboard/member") && 
+          !request.nextUrl.pathname.startsWith("/dashboard/member/onboarding")) {
+        const { data: userData } = await supabase
+          .from("users")
+          .select("onboarding_status")
+          .eq("id", user.id)
+          .maybeSingle()
+
+        if (userData?.onboarding_status === "registered") {
+          return NextResponse.redirect(new URL("/dashboard/member/onboarding", request.url))
+        }
+      }
+
       // RBAC: Check role-based access
       const pathname = request.nextUrl.pathname
       const userEmail = user.email?.toLowerCase() || ""
