@@ -32,11 +32,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
-export const metadata = {
-  title: "Marco de Cumplimiento Global | WEEK-CHAIN",
-  description:
-    "Entiende cómo WEEK-CHAIN implementa compliance en consumer protection, privacy, AML/KYC y audit trail. Conóceme nuestro plan global.",
-}
+// Metadata moved to layout.tsx or removed - cannot export from "use client" components
 
 export default function CompliancePage() {
   return (

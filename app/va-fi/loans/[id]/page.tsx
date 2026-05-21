@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button"
 import { AlertCircle, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
-export default async function LoanDetailsPage({ params }: { params: { id: string } }) {
+export default async function LoanDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const supabase = await createServerClient()
 
   const {
@@ -19,7 +20,7 @@ export default async function LoanDetailsPage({ params }: { params: { id: string
   const { data: loan } = await supabase
     .from("vafi_loans")
     .select("*, nft_mints(*, weeks(*))")
-    .eq("id", params.id)
+    .eq("id", id)
     .eq("borrower_id", user.id)
     .single()
 
