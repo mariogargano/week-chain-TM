@@ -2,8 +2,9 @@ import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
-export async function GET(request: Request, { params }: { params: { propertyId: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ propertyId: string }> }) {
   try {
+    const { propertyId } = await params
     const cookieStore = await cookies()
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -33,7 +34,7 @@ export async function GET(request: Request, { params }: { params: { propertyId: 
           verified
         )
       `)
-      .eq("id", params.propertyId)
+      .eq("id", propertyId)
       .single()
 
     if (error) {
