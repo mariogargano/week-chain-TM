@@ -144,33 +144,8 @@ export async function POST(request: Request) {
         }).catch(err => logger.error("[persona-webhook] Email send failed (non-fatal)", err))
       }
     }
-      }
 
-      // 2. Update user onboarding status
-      const { error: userError } = await supabase
-        .from("users")
-        .update({
-          onboarding_status: "holder_verified",
-          holder_since: new Date().toISOString(),
-        })
-        .eq("id", referenceId)
-
-      if (userError) {
-        logger.error("[persona-webhook] Failed to update user status", userError)
-      } else {
-        logger.info("[persona-webhook] User onboarding status updated to holder_verified", {
-          userId: referenceId,
-        })
-      }
-
-      // TODO: Send email notification of KYC approval
-      await sendKYCApprovedEmail({
-        email: userData.email,
-        fullName: userData.full_name || "Usuario",
-        certificateNumber: pendingCert.certificate_number || certificateNumber,
-      }).catch(err => logger.error("[persona-webhook] Email send failed (non-fatal)", err))
-    }
-
+    // If KYC failed, send rejection email
     if (kycNewStatus === "failed") {
       logger.info("[persona-webhook] KYC rejected, user can retry", { userId: referenceId })
       
