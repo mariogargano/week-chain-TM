@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge"
 import { ThumbsUp, ThumbsDown, Clock, Users } from "lucide-react"
 import Link from "next/link"
 
-export default async function ProposalDetailPage({ params }: { params: { id: string } }) {
+export default async function ProposalDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const supabase = await createServerClient()
 
   const {
@@ -18,7 +19,7 @@ export default async function ProposalDetailPage({ params }: { params: { id: str
   }
 
   // Fetch proposal
-  const { data: proposal } = await supabase.from("dao_proposals").select("*").eq("id", params.id).single()
+  const { data: proposal } = await supabase.from("dao_proposals").select("*").eq("id", id).single()
 
   if (!proposal) {
     notFound()
@@ -28,7 +29,7 @@ export default async function ProposalDetailPage({ params }: { params: { id: str
   const { data: userVote } = await supabase
     .from("dao_votes")
     .select("*")
-    .eq("proposal_id", params.id)
+    .eq("proposal_id", id)
     .eq("voter_id", user.id)
     .single()
 
@@ -47,7 +48,7 @@ export default async function ProposalDetailPage({ params }: { params: { id: str
 
     // Record vote
     await supabase.from("dao_votes").insert({
-      proposal_id: params.id,
+      proposal_id: id,
       voter_id: user.id,
       support,
       voting_power: votingPower,
@@ -56,12 +57,12 @@ export default async function ProposalDetailPage({ params }: { params: { id: str
     // Update proposal vote counts
     const field = support ? "votes_for" : "votes_against"
     await supabase.rpc("increment_vote", {
-      proposal_id: params.id,
+      proposal_id: id,
       field_name: field,
       increment_by: votingPower,
     })
 
-    redirect(`/dao/proposals/${params.id}`)
+    redirect(`/dao/proposals/${id}`)
   }
 
   const totalVotes = (proposal.votes_for || 0) + (proposal.votes_against || 0)

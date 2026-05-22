@@ -6,13 +6,13 @@ export const dynamic = "force-dynamic"
 
 export async function POST(request: Request) {
   try {
-    const supabase = await createClient()
-    const adminCheck = await checkAdminAuth(supabase)
+    const adminCheck = await checkAdminAuth()
 
-    if (!adminCheck.isAdmin) {
-      return NextResponse.json({ error: adminCheck.reason || "Unauthorized" }, { status: 403 })
+    if (!adminCheck) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 })
     }
 
+    const supabase = await createClient()
     const body = await request.json()
     const { testimonial_id, approved } = body
 
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
       .update({
         is_approved: approved === true,
         approved_at: approved === true ? new Date().toISOString() : null,
-        approved_by: approved === true ? adminCheck.adminUser.id : null,
+        approved_by: approved === true ? adminCheck.user.id : null,
       })
       .eq("id", testimonial_id)
       .select()

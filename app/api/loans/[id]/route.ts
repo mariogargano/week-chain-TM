@@ -6,8 +6,9 @@ function getSupabase() {
   return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 }
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const supabase = getSupabase()
     const { data: loan, error } = await supabase
       .from("loans")
@@ -15,7 +16,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
         *,
         collaterals (*)
       `)
-      .eq("id", params.id)
+      .eq("id", id)
       .single()
 
     if (error || !loan) {
@@ -29,13 +30,14 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const supabase = getSupabase()
     const body = await req.json()
 
     const validation = UpdateLoanStatusSchema.safeParse({
-      loanId: params.id,
+      loanId: id,
       ...body,
     })
 
@@ -46,7 +48,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     const { status } = validation.data
 
     // Update loan status
-    const { data: loan, error } = await supabase.from("loans").update({ status }).eq("id", params.id).select().single()
+    const { data: loan, error } = await supabase.from("loans").update({ status }).eq("id", id).select().single()
 
     if (error) {
       console.error("[v0] Error updating loan:", error)

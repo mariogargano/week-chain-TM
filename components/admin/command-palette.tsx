@@ -67,7 +67,6 @@ const items: PaletteItem[] = [
 
   { label: "Usuarios", href: "/dashboard/admin/users", icon: Users, group: "Comercial" },
   { label: "Red de brokers", href: "/dashboard/admin/broker-network", icon: Briefcase, group: "Comercial", keywords: ["week-agent", "4%"] },
-  { label: "Pre-holders", href: "/dashboard/admin/pre-holders", icon: Sparkles, group: "Comercial" },
   { label: "Vouchers", href: "/dashboard/admin/vouchers", icon: BadgeCheck, group: "Comercial", keywords: ["descuento", "codigo"] },
   { label: "Testimonios", href: "/dashboard/admin/testimonials", icon: Sparkles, group: "Comercial" },
 

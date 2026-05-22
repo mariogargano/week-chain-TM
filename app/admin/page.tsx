@@ -36,7 +36,7 @@ export default async function AdminDashboardPage() {
       weeks (price)
     `)
 
-  const totalRevenue = allReservations?.reduce((sum, res: any) => sum + (res.weeks?.price || 0), 0) || 0
+  const totalRevenue = allReservations?.reduce((sum: number, res: { weeks?: { price?: number } }) => sum + (res.weeks?.price || 0), 0) || 0
 
   const { count: activeProperties } = await supabase
     .from("properties")

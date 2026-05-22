@@ -1,14 +1,15 @@
 import { createClient } from "@/lib/supabase/server"
 import { NextResponse } from "next/server"
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const supabase = await createClient()
 
     const { data: property, error: propertyError } = await supabase
       .from("properties")
       .select("*")
-      .eq("id", params.id)
+      .eq("id", id)
       .single()
 
     if (propertyError) {
@@ -19,7 +20,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const { data: weeks, error: weeksError } = await supabase
       .from("weeks")
       .select("*")
-      .eq("property_id", params.id)
+      .eq("property_id", id)
       .order("week_number", { ascending: true })
 
     if (weeksError) {

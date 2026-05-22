@@ -113,10 +113,8 @@ const groups: Group[] = [
     label: "Comercial",
     icon: Briefcase,
     items: [
-      { title: "Usuarios", href: "/dashboard/admin/users", icon: Users, description: "Holders y pre-holders" },
+      { title: "Usuarios", href: "/dashboard/admin/users", icon: Users, description: "Holders" },
       { title: "Red de brokers", href: "/dashboard/admin/broker-network", icon: Network, description: "WEEK-Agent 4%" },
-      { title: "Pre-holders", href: "/dashboard/admin/pre-holders", icon: Sparkles, description: "Reservas anticipadas" },
-      { title: "Preventa", href: "/dashboard/admin/presale", icon: ShoppingBag, description: "Pipeline" },
       { title: "Vouchers", href: "/dashboard/admin/vouchers", icon: BadgeCheck, description: "Codigos promocionales" },
       { title: "Marketing", href: "/dashboard/admin/marketing", icon: Sparkles, description: "Campanas" },
       { title: "Testimonios", href: "/dashboard/admin/testimonials", icon: MessageSquare, description: "Resenas" },

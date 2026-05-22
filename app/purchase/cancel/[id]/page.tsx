@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
@@ -22,7 +22,8 @@ interface Payment {
   } | null
 }
 
-export default function CancelPurchasePage({ params }: { params: { id: string } }) {
+export default function CancelPurchasePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
   const router = useRouter()
   const supabase = createClient()
 
@@ -49,7 +50,7 @@ export default function CancelPurchasePage({ params }: { params: { id: string } 
         const { data, error } = await supabase
           .from("payments")
           .select("*, properties(name)")
-          .eq("id", params.id)
+          .eq("id", id)
           .eq("user_id", user.id)
           .single()
 
