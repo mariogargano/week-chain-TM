@@ -6,6 +6,15 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { Mail, Calendar } from "lucide-react"
 
+interface User {
+  id: string
+  email: string
+  full_name?: string
+  role?: string
+  created_at?: string
+  kyc_status?: string
+}
+
 export default async function AdminUsersPage() {
   const supabase = await createClient()
 
@@ -24,7 +33,7 @@ export default async function AdminUsersPage() {
     redirect("/dashboard")
   }
 
-  const { data: users } = await supabase.from("users").select("*").order("created_at", { ascending: false })
+  const { data: users } = await supabase.from("users").select("*").order("created_at", { ascending: false }) as { data: User[] | null }
 
   return (
     <div className="min-h-screen bg-background">

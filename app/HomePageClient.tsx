@@ -315,7 +315,7 @@ export function HomePageClient() {
                   className="w-full sm:w-auto sm:min-w-[240px] bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white text-sm md:text-base font-semibold h-12 md:h-14 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-sky-200"
                 >
                   <Link href="/auth">
-                    {cta.startButton || fallback.cta.startButton}
+                    {("startButton" in cta ? cta.startButton : (cta as { primary?: string }).primary) || fallback.cta.startButton}
                     <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" aria-hidden="true" />
                   </Link>
                 </Button>
@@ -325,7 +325,7 @@ export function HomePageClient() {
                   variant="outline"
                   className="w-full sm:w-auto sm:min-w-[240px] border-2 border-sky-200 text-sky-700 hover:bg-sky-50 text-sm md:text-base font-semibold h-12 md:h-14 rounded-xl transition-all duration-300 bg-transparent"
                 >
-                  <Link href="/properties">{cta.viewPropertiesButton || fallback.cta.viewPropertiesButton}</Link>
+                  <Link href="/properties">{("viewPropertiesButton" in cta ? cta.viewPropertiesButton : (cta as { secondary?: string }).secondary) || fallback.cta.viewPropertiesButton}</Link>
                 </Button>
               </div>
             </div>

@@ -6,6 +6,15 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { Plus, Edit, Trash2 } from "lucide-react"
 
+interface Property {
+  id: string
+  name: string
+  location: string
+  status: string
+  valor_total_usd?: number
+  recaudado_actual?: number
+}
+
 export default async function AdminPropertiesPage() {
   const supabase = await createClient()
 
@@ -24,7 +33,7 @@ export default async function AdminPropertiesPage() {
     redirect("/dashboard")
   }
 
-  const { data: properties } = await supabase.from("properties").select("*").order("created_at", { ascending: false })
+  const { data: properties } = await supabase.from("properties").select("*").order("created_at", { ascending: false }) as { data: Property[] | null }
 
   return (
     <div className="min-h-screen bg-background">
