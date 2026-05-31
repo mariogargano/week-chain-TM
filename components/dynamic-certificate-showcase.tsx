@@ -371,15 +371,40 @@ export function DynamicCertificateShowcase() {
           <div
             className={`relative transition-all duration-500 ease-in-out order-2 lg:order-1 ${isAnimating ? "opacity-0 scale-95 translate-y-2" : "opacity-100 scale-100 translate-y-0"}`}
           >
-            <div className="relative w-full max-w-md mx-auto">
-              {/* Card */}
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10">
+            {/* 3D Container with perspective */}
+            <div className="relative w-full max-w-md mx-auto" style={{ perspective: "1000px" }}>
+              {/* Floating Security Badges - 3D positioned */}
+              <div className="absolute -left-4 top-1/4 z-20 hidden lg:flex flex-col gap-3 animate-float">
+                <div className="bg-gradient-to-r from-emerald-500/90 to-emerald-600/90 backdrop-blur-sm text-white text-xs font-semibold px-3 py-2 rounded-lg shadow-lg shadow-emerald-500/30 flex items-center gap-2 transform -rotate-6 hover:rotate-0 transition-transform">
+                  <Verified className="h-4 w-4" />
+                  NOM-151
+                </div>
+                <div className="bg-gradient-to-r from-sky-500/90 to-blue-600/90 backdrop-blur-sm text-white text-xs font-semibold px-3 py-2 rounded-lg shadow-lg shadow-sky-500/30 flex items-center gap-2 transform rotate-3 hover:rotate-0 transition-transform">
+                  <Shield className="h-4 w-4" />
+                  Blockchain
+                </div>
+              </div>
+
+              <div className="absolute -right-4 top-1/3 z-20 hidden lg:flex flex-col gap-3 animate-float-delayed">
+                <div className="bg-gradient-to-r from-amber-500/90 to-orange-600/90 backdrop-blur-sm text-white text-xs font-semibold px-3 py-2 rounded-lg shadow-lg shadow-amber-500/30 flex items-center gap-2 transform rotate-6 hover:rotate-0 transition-transform">
+                  <QrCode className="h-4 w-4" />
+                  QR Verificable
+                </div>
+                <div className="bg-gradient-to-r from-violet-500/90 to-purple-600/90 backdrop-blur-sm text-white text-xs font-semibold px-3 py-2 rounded-lg shadow-lg shadow-violet-500/30 flex items-center gap-2 transform -rotate-3 hover:rotate-0 transition-transform">
+                  <Calendar className="h-4 w-4" />
+                  15 Años
+                </div>
+              </div>
+
+              {/* Card with 3D transform on hover */}
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10 transform-gpu transition-all duration-500 hover:scale-[1.02] group"
+                   style={{ transformStyle: "preserve-3d" }}>
                 {/* Background Image */}
                 <div className="relative h-48 md:h-56">
                   <img
                     src={data.image || "/placeholder.svg"}
                     alt={data.destination}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90" />
 
@@ -429,7 +454,7 @@ export function DynamicCertificateShowcase() {
                         <p className="text-xs text-slate-500 uppercase tracking-wider">Vigencia</p>
                         <p className="text-sky-400 font-semibold">15 Años</p>
                       </div>
-                      <div className="h-12 w-12 bg-white rounded-lg p-1.5 flex items-center justify-center">
+                      <div className="h-12 w-12 bg-white rounded-lg p-1.5 flex items-center justify-center shadow-lg group-hover:shadow-sky-500/20 transition-shadow">
                         <QrCode className="h-full w-full text-slate-900" />
                       </div>
                     </div>
@@ -441,13 +466,36 @@ export function DynamicCertificateShowcase() {
                       <Shield className="h-4 w-4 text-sky-500" />
                       <span className="text-xs text-slate-500 font-mono">{certNumber}</span>
                     </div>
+                    <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">
+                      <Verified className="h-3 w-3 mr-1" />
+                      Verificado
+                    </Badge>
                   </div>
                 </div>
+
+                {/* 3D Shine effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               </div>
 
               {/* Decorative elements */}
               <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-sky-500/20 rounded-full blur-2xl" />
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl" />
+            </div>
+
+            {/* Mobile Security Features - shown below card on mobile */}
+            <div className="flex flex-wrap justify-center gap-2 mt-4 lg:hidden">
+              <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+                <Verified className="h-3 w-3 mr-1" />
+                NOM-151
+              </Badge>
+              <Badge className="bg-sky-500/20 text-sky-400 border-sky-500/30">
+                <Shield className="h-3 w-3 mr-1" />
+                Blockchain
+              </Badge>
+              <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
+                <QrCode className="h-3 w-3 mr-1" />
+                QR Verificable
+              </Badge>
             </div>
 
             {/* Dots indicator */}
