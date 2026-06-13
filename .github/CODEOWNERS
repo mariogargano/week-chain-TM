@@ -1,0 +1,31 @@
+# WEEK-CHAIN Code Ownership Policy
+
+# Global owners
+* @mariogargano
+
+# Security-sensitive files
+/lib/security/ @mariogargano
+/lib/auth/ @mariogargano
+/middleware.ts @mariogargano
+/.github/workflows/ @mariogargano
+
+# Payment processing
+/lib/payments/ @mariogargano
+/app/api/payments/ @mariogargano
+
+# Monitoring & logging
+/lib/monitoring/ @mariogargano
+/lib/logger.ts @mariogargano
+
+# Database
+/lib/supabase/ @mariogargano
+/scripts/audit-rls.sql @mariogargano
+
+# Tests
+/__tests__/ @mariogargano
+/jest.config.js @mariogargano
+
+# Documentation
+/CI_PRODUCTION_CHECKLIST.md @mariogargano
+/COMPLIANCE_ROADMAP.md @mariogargano
+/INCIDENT_RESPONSE.md @mariogargano

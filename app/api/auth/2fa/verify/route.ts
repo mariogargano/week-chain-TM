@@ -1,34 +1,72 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase/server"
-import { verifyTwoFactorCode } from "@/lib/auth/two-factor"
+import { NextResponse, NextRequest } from 'next/server';
+import { twoFactorAuth } from '@/lib/auth/two-factor';
 
 export async function POST(request: NextRequest) {
   try {
-    const { code } = await request.json()
+    const { userId, token, method = 'totp' } = await request.json();
 
-    if (!code) {
-      return NextResponse.json({ error: "Code is required" }, { status: 400 })
+    if (!userId || !token) {
+      return NextResponse.json(
+        { error: 'Missing userId or token' },
+        { status: 400 }
+      );
     }
 
-    const supabase = await createServerClient()
+    let isValid = false;
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    if (method === 'totp') {
+      // Get user's TOTP secret
+      const { createServerClient } = await import('@supabase/ssr');
+      const supabase = createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!,
+        {
+          cookies: {
+            getAll() {
+              return [];
+            },
+            setAll() {},
+          },
+        }
+      );
 
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+      const { data, error } = await supabase
+        .from('user_2fa')
+        .select('secret_encrypted')
+        .eq('user_id', userId)
+        .eq('method', 'totp')
+        .eq('enabled', true)
+        .single();
+
+      if (error || !data) {
+        return NextResponse.json(
+          { error: '2FA not enabled for this user' },
+          { status: 403 }
+        );
+      }
+
+      isValid = twoFactorAuth.verifyTOTPToken(data.secret_encrypted, token);
+    } else if (method === 'backup') {
+      // Verify backup code
+      isValid = await twoFactorAuth.verifyBackupCode(userId, token);
     }
-
-    const isValid = await verifyTwoFactorCode(user.id, code)
 
     if (!isValid) {
-      return NextResponse.json({ error: "Invalid code" }, { status: 400 })
+      return NextResponse.json(
+        { error: 'Invalid verification code' },
+        { status: 401 }
+      );
     }
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json({
+      success: true,
+      message: '2FA verification successful',
+    });
   } catch (error) {
-    console.error("2FA verify error:", error)
-    return NextResponse.json({ error: "Failed to verify 2FA code" }, { status: 500 })
+    console.error('Error in 2FA verification:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
